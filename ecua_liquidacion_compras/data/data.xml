@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.sequence.type" id="account_liquidacion_view">
+			<field name="name">Liquidación en Compras</field>
+			<field name="code">liq_seq</field>
+		</record>
+		
+		<record id="liquidacion_sequence" model="ir.sequence">
+            <field name="name">Sequencia Liquidación de Compras</field>
+            <field name="code">liq_seq</field>
+            <field eval="6" name="padding"/>
+            <field name="prefix">LIQUIDC-%(y)s-%(month)s-%(day)s</field>
+        </record>
+        
+        <record id="liquidacion_journal" model="account.journal">
+            <field name="name">Diario de Liquidacion en Compras</field>
+            <field name="code">DLIQ</field>
+            <field name="type">purchase</field>
+            <field name="liquidation">True</field>
+            <field name="view_id" ref="account.account_journal_view"/>
+            <field name="sequence_id" ref="liquidacion_sequence"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+	</data>
+</openerp>

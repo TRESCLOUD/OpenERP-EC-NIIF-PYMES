@@ -1,0 +1,368 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_facturas_manual
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-06-23 00:42+0000\n"
+"PO-Revision-Date: 2012-06-22 19:44-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,total_sin_descuento:0
+msgid "Sub Total"
+msgstr "Sub Total"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,foreign:0
+msgid "Foreing?"
+msgstr "Extranjero?"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:589
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check!"
+msgstr "No existe autorización para este número de secuencia, por favor verifique!"
+
+#. module: ecua_facturas_manual
+#: constraint:account.invoice:0
+#: code:addons/ecua_facturas_manual/objects/invoice.py:624
+#, python-format
+msgid "The number of Invoice is incorrect, it must be like 00X-00X-000XXXXXX, X is a number"
+msgstr "El número de Factura es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X debe ser un número"
+
+#. module: ecua_facturas_manual
+#: sql_constraint:account.invoice:0
+msgid "There is another Liquidation of Purchases with this number, please check"
+msgstr "Existe otra Liquidación de compras con este número, por favor verifique"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,automatic:0
+msgid "Automatic?"
+msgstr "Automática?"
+
+#. module: ecua_facturas_manual
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "¡Error! No se pueden crear compañías recursivas."
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,automatic_number:0
+#: field:account.invoice.print.wizard,number:0
+msgid "Number"
+msgstr "Número"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,printer_id:0
+msgid "Printer Point"
+msgstr "Punto de Emisión"
+
+#. module: ecua_facturas_manual
+#: sql_constraint:account.invoice:0
+msgid "There's another credit note with this number!"
+msgstr "Existe otra nota de crédito con este número!"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice.print.wizard:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: ecua_facturas_manual
+#: help:account.invoice,prints_number:0
+msgid "You can't reprint a invoice twice or more times"
+msgstr "No puedes imprimir una factura 2 o mas veces"
+
+#. module: ecua_facturas_manual
+#: field:res.company,lines_invoice:0
+msgid "Invoice Lines"
+msgstr "Líneas de Factura"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,authorization:0
+#: field:account.invoice,authorization_purchase:0
+#: field:account.invoice,authorization_sales:0
+#: field:account.invoice,authorization_supplier_purchase_id:0
+msgid "Authorization"
+msgstr "Autorización"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,total_descuento:0
+msgid "Descuento Total"
+msgstr "Descuento Total"
+
+#. module: ecua_facturas_manual
+#: sql_constraint:sale.order:0
+msgid "Order Reference must be unique !"
+msgstr "¡La referencia del pedido debe ser única!"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/sale_order.py:79
+#: code:addons/ecua_facturas_manual/objects/sale_order.py:96
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice.print.wizard:0
+msgid "You're printing invoice:"
+msgstr "Usted esta imprimiendo la factura:"
+
+#. module: ecua_facturas_manual
+#: model:ir.module.module,shortdesc:ecua_facturas_manual.module_meta_information
+msgid "Ecuadorian Invoice"
+msgstr "Facturas ecuatorianas"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,invoice_number:0
+#: field:account.invoice,invoice_number_in:0
+#: field:account.invoice,invoice_number_out:0
+msgid "Invoice Number"
+msgstr "Número de factura"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/sale_order.py:97
+#, python-format
+msgid "There is no active authorization for create invoice in this Agency: \"%s\""
+msgstr "No existe autorización activa para crear facturas en esta agencia: \"%s\""
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,flag:0
+msgid "Flag"
+msgstr "Flag"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:487
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check"
+msgstr "No existe autorización para este número de secuencia"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:480
+#, python-format
+msgid "Not exist authorization for the document, please check"
+msgstr "No existe autorización para este documento, por favor verifique"
+
+#. module: ecua_facturas_manual
+#: constraint:account.invoice:0
+msgid "The number of Liquidation is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la liquidación es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, Donde X es un número"
+
+#. module: ecua_facturas_manual
+#: model:ir.actions.report.xml,name:ecua_facturas_manual.invoice_report
+msgid "Facturas"
+msgstr "Facturas"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice.line,price_unit_final:0
+msgid "Price Unit Final"
+msgstr "Precio Unitario Final"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,create_date:0
+msgid "Creation date"
+msgstr "Fecha de Creación"
+
+#. module: ecua_facturas_manual
+#: help:account.invoice,invoice_number_in:0
+#: help:account.invoice,invoice_number_out:0
+msgid "Unique number of the invoice."
+msgstr "Número Único de la Factura."
+
+#. module: ecua_facturas_manual
+#: model:ir.model,name:ecua_facturas_manual.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:480
+#: code:addons/ecua_facturas_manual/objects/invoice.py:483
+#: code:addons/ecua_facturas_manual/objects/invoice.py:487
+#: code:addons/ecua_facturas_manual/objects/invoice.py:575
+#: code:addons/ecua_facturas_manual/objects/invoice.py:589
+#: code:addons/ecua_facturas_manual/objects/invoice.py:620
+#, python-format
+msgid "Invalid action!"
+msgstr "Acción no Válida!"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice.print.wizard:0
+msgid "Plase Check that is Correct Invoice, because you cannot print more twice the same invoice"
+msgstr "Por favor verifique que es la factura correcta, usted no debe imprimir dos veces la misma factura"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:477
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: ecua_facturas_manual
+#: constraint:account.invoice:0
+msgid "The number of Credit Note is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de nota de crédito es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un dígito"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:575
+#, python-format
+msgid "The date entered is not valid for the authorization"
+msgstr "La fecha ingresada no es válida para la autorización"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,total_retencion:0
+msgid "Total Retenido"
+msgstr "Total Retenido"
+
+#. module: ecua_facturas_manual
+#: help:account.invoice,invoice_number:0
+msgid "Unique number of the invoice, computed automatically when the invoice is created."
+msgstr "Número de factura automático, es creado automáticamente cuando la factura es creada"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:483
+#, python-format
+msgid "Not exist number for the document, please check"
+msgstr "No existe número para el documento, por favor verifique"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,prints_number:0
+msgid "Prints Number"
+msgstr "Número de Impresiones"
+
+#. module: ecua_facturas_manual
+#: model:ir.model,name:ecua_facturas_manual.model_account_invoice_print_wizard
+msgid "account.invoice.print.wizard"
+msgstr "account.invoice.print.wizard"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,total_descuento_per:0
+msgid "Total"
+msgstr "Total"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,shop_id:0
+msgid "Shop"
+msgstr "Agencia"
+
+#. module: ecua_facturas_manual
+#: field:account.invoice,total_iva:0
+msgid "Total IVA"
+msgstr "Total IVA"
+
+#. module: ecua_facturas_manual
+#: model:ir.actions.act_window,name:ecua_facturas_manual.action_account_invoice_print_options
+msgid "Print_Invoice"
+msgstr "Imprimir Factura"
+
+#. module: ecua_facturas_manual
+#: help:account.invoice,authorization_purchase:0
+msgid "This Number is necesary for SRI reports"
+msgstr "Este número es necesario para reportes del SRI"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/sale_order.py:80
+#, python-format
+msgid "There is no sales journal defined for this Agency: \"%s\" (id:%d)"
+msgstr "No existe diario de ventas definido para la agencia: \"%s\" (id:%d)"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:129
+#: code:addons/ecua_facturas_manual/objects/invoice.py:141
+#, python-format
+msgid "Your User doesn't have shops assigned"
+msgstr "Su usuario no tiene permisos para realizar esta operación"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:620
+#, python-format
+msgid "You can delete Invoice in state Draft"
+msgstr "Usted no puede borrar facturas"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/sale_order.py:54
+#, python-format
+msgid "Customer Invoices"
+msgstr "Facturas de Clientes"
+
+#. module: ecua_facturas_manual
+#: model:ir.module.module,description:ecua_facturas_manual.module_meta_information
+msgid ""
+"\n"
+"    SRI is the regulator of the tax laws in Ecuador, \n"
+"    the agency issued permits for the printing of \n"
+"    bills for each company and each agency stated, \n"
+"    this data must be stored on invoices issued and \n"
+"    received for subsequent statement, \n"
+"    the module now only the model for manually register \n"
+"    and add a field agency for subsequent generation of invoice numbers\n"
+"    "
+msgstr ""
+"\n"
+"    SRI es la institución reguladora de las leyes de impuestos en Ecuador, \n"
+"    agencia que emite permisos para la impresión de  \n"
+"    documentos para cada compañia y cada agencia, \n"
+"Estos datos deben ser almacenados en facturas emitidas y \n"
+"recibidas para la declaración posterior\n"
+"    El módulo contiene el modelo para un registro manual \n"
+"    y agregar una agencia para la siguiente generación del número de factura\n"
+"   "
+
+#. module: ecua_facturas_manual
+#: help:res.company,lines_invoice:0
+msgid "Number of lines per invoice"
+msgstr "Número de Líneas por Factura"
+
+#. module: ecua_facturas_manual
+#: model:ir.model,name:ecua_facturas_manual.model_account_invoice_line
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice:0
+msgid "Re-Open"
+msgstr "Reabrir"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:506
+#: model:ir.model,name:ecua_facturas_manual.model_account_invoice
+#, python-format
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice:0
+#: view:account.invoice.print.wizard:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_facturas_manual
+#: model:ir.model,name:ecua_facturas_manual.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: ecua_facturas_manual
+#: code:addons/ecua_facturas_manual/objects/invoice.py:477
+#, python-format
+msgid "Partner %s doesn't have CEDULA/RUC, you must input for validate."
+msgstr "El cliente/proveedor %s no tiene asignada CEDULA/RUC, usted debe ingresar el dato para poder validar."
+
+#. module: ecua_facturas_manual
+#: view:account.invoice:0
+msgid "Print Invoice"
+msgstr "Imprimir factura"
+
+#. module: ecua_facturas_manual
+#: view:account.invoice.print.wizard:0
+msgid "Print Info"
+msgstr "Información de Impresión"
+

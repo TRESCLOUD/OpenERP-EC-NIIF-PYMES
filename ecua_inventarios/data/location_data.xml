@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="stock.stock_location_stock" model="stock.location">
+            <field name="name">Stock</field>
+            <field name="check_stock_out">True</field>
+        </record>
+    </data>
+</openerp>

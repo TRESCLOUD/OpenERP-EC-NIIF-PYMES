@@ -1,0 +1,89 @@
+<openerp>
+	<data>
+
+
+		<record model="ir.ui.view" id="account_petty_cash_replenishment_tree_view">
+			<field name="name">account.petty.cash.replenishment.tree</field>
+			<field name="model">account.petty.cash.replenishment</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reposición de Caja Chica">
+					<field name="name" />
+					<field name="petty_cash_journal_id" />
+					<field name="bank_journal_id" />
+					<field name="start_date" />
+					<field name="end_date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_petty_cash_replenishment_form_view">
+			<field name="name">account.petty.cash.replenishment.form</field>
+			<field name="model">account.petty.cash.replenishment</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Reposición de Caja Chica">
+					<group colspan="4" col="6">
+						<field name="name" />
+						<field name="start_date"
+							on_change="onchange_data(petty_cash_journal_id,start_date,end_date)" />
+						<field name="end_date"
+							on_change="onchange_data(petty_cash_journal_id,start_date,end_date)" />
+					</group>
+					<separator string="Diarios" colspan="4" />
+					<field name="petty_cash_journal_id" domain="[('type','=','cash')]"
+						on_change="onchange_data(petty_cash_journal_id,start_date,end_date)" widget="selection"/>
+					<field name="bank_journal_id" domain="[('type','=','bank')]" widget="selection"/>
+					<notebook colspan="4">
+						<page string="Líneas de Compras/Gastos">
+							<field name="move_ids" colspan="4" nolabel="1"
+								attrs="{'readonly':['|',('petty_cash_journal_id','=',False),'|',('start_date','=',False),('end_date','=',False)]}" />
+							<separator string="Notas" colspan="4" />
+							<field name="note" colspan="4" nolabel="1" />
+						</page>
+						<page string="Movimiento">
+							<field name="move_id" />
+						</page>
+					</notebook>
+					<group colspan="4" col="10">
+						<field name="state" colspan="4" />
+						<button name="action_aprove" states="draft" string="Aprobar"
+							type="object" icon="terp-camera_test" />
+						<button name="action_cancel" states="done" string="Cancelar"
+							type="object" icon="terp-stock_effects-object-colorize" />
+						<button name="%(petty_cash_replenishment_report)d" string="Reporte"
+							type="action" icon="gtk-print" states="done" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_petty_cash_replenishment_search_view">
+			<field name="name">account.petty.cash.replenishment.form</field>
+			<field name="model">account.petty.cash.replenishment</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Reposición de Caja Chica">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="action_account_petty_cash_replenishment_tree_view">
+			<field name="name">Reposición de Caja Chica</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.petty.cash.replenishment</field>
+			<!-- <field name="domain">[('field_name','condition',criteria)]</field> -->
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="account_petty_cash_replenishment_tree_view" />
+		</record>
+
+		<menuitem id="account_petty_cash_replenishment_menu" parent="account.menu_finance_bank_and_cash"
+			action="action_account_petty_cash_replenishment_tree_view" />
+
+
+	</data>
+</openerp>

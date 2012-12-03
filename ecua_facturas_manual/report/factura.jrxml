@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" language="groovy" pageWidth="612" pageHeight="425" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="03b7ccf0-7f60-4792-a2a4-f1517e5a9de4">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="OPENERP_RELATIONS" value="[&apos;invoice_line&apos;]"/>
+	<queryString language="xPath">
+		<![CDATA[/data/record]]>
+	</queryString>
+	<field name="Nombre-name" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Empresa-partner_id/Nombre-name]]></fieldDescription>
+	</field>
+	<field name="Calle-street" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Direccion_de_factura-address_invoice_id/Calle-street]]></fieldDescription>
+	</field>
+	<field name="Phone_2-phone2" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/Direccion_de_factura-address_invoice_id/Phone_2-phone2]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.String">
+		<fieldDescription><![CDATA[/data/record/id]]></fieldDescription>
+	</field>
+	<field name="Total-amount_total" class="java.lang.Float">
+		<fieldDescription><![CDATA[/data/record/Total-amount_total]]></fieldDescription>
+	</field>
+	<field name="Name-name" class="java.lang.String">
+		<fieldDescription><![CDATA[Lineas_de_factura-invoice_line/Producto-product_id/Name-name]]></fieldDescription>
+	</field>
+	<field name="Cantidad-quantity" class="java.lang.Float">
+		<fieldDescription><![CDATA[Lineas_de_factura-invoice_line/Cantidad-quantity]]></fieldDescription>
+	</field>
+	<field name="Precio_unidad-price_unit" class="java.lang.Float">
+		<fieldDescription><![CDATA[Lineas_de_factura-invoice_line/Precio_unidad-price_unit]]></fieldDescription>
+	</field>
+	<field name="Subtotal-price_subtotal" class="java.lang.Float">
+		<fieldDescription><![CDATA[Lineas_de_factura-invoice_line/Subtotal-price_subtotal]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8bc89958-e67f-4b8f-8c10-c5045697cd7f" x="100" y="0" width="472" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression><![CDATA[$F{Nombre-name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9535dfde-b5bc-4186-a7c4-2bfbf8bec597" x="100" y="20" width="272" height="20"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{Calle-street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0d3e0c23-9dc3-424a-ad66-ba9805ca0077" x="472" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Phone_2-phone2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a2f30e0d-67d8-461c-a6c3-ecfb898072bf" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e75034c9-36c0-463d-abc3-4bd852ddc46a" x="372" y="20" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5a18dae2-fa73-44de-897b-abfd7a45e12d" x="0" y="20" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0c52740b-93ee-4451-b3ef-75b64cedd01a" x="0" y="0" width="272" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e590566-fd6b-4c7f-8fae-2403505773a2" x="272" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7ac9c1b7-48cf-40e1-8577-473ac2f93b6b" x="372" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[P. Unit.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="64fc9212-3031-499c-a258-f57edab0a01b" x="472" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SubTotal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="64" splitType="Stretch">
+			<textField>
+				<reportElement uuid="fc3e53ab-41b3-48e4-8d75-1e7bc0ee6d93" x="0" y="0" width="272" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Name-name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="a1650287-5df4-4cb7-9752-15960c3b58e5" x="272" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Cantidad-quantity}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="721766b5-c819-443b-9b8c-e19ab4124d17" x="372" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Precio_unidad-price_unit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="572d8b99-7030-4cb0-95c7-c7136f6a8624" x="472" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Subtotal-price_subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="21" splitType="Stretch">
+			<textField pattern="###0.00;-###0.00">
+				<reportElement uuid="0f04d87f-e76c-4e52-a119-cf412e5af5bc" x="472" y="1" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total-amount_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="04ac4fd9-1314-4994-8c0e-d49387c6d48e" x="372" y="1" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sales_form_view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page//field[@name='picking_ids']" position="after">
+					<separator colspan="4" string="Delivery Notes"/>
+                     <field colspan="4" name="remision_ids" nolabel="1"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

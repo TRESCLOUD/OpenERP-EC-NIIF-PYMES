@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+    
+            <record id="sale.shop" model="sale.shop">
+            	<field name="user_ids" eval="[(6, 0, [ref(base.user_admin)])]"></field>
+            	<field name="number">001</field>
+            	<field name="address_id" ref="base.main_address"/>
+            	<field name="sales_journal_id" search="[('type','=','sale'),('name','=','Sales Journal')]"></field>
+            	<field name="purchases_journal_id" search="[('type','=','purchase'),('name','=','Purchase Journal')]"></field>
+            </record>
+            
+            <record id="default_printer_print" model="sri.printer.point">
+	            <field name="name">001</field>
+	            <field name="number">001</field>
+	            <field name="shop_id" ref="sale.shop"/>
+            </record>
+    </data>
+</openerp>

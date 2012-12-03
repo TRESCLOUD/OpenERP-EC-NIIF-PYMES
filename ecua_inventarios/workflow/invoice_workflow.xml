@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <record id="account.act_open" model="workflow.activity">
+            <field name="wkf_id" ref="account.wkf"/>
+            <field name="name">open</field>
+            <field name="action">action_date_assign()
+action_move_create()
+action_number()
+check_stock_move()
+write_stock_move()
+write({'state':'open'})</field>
+            <field name="kind">function</field>
+        </record>
+
+    
+		<record id="ecua_notas_credito_manual.act_open_refund" model="workflow.activity">
+			<field name="wkf_id" ref="account.wkf" />
+			<field name="name">open_refund</field>
+			<field name="action">action_date_assign()
+action_move_credit_note_create()
+action_number()
+check_stock_move()
+write_stock_move()
+write({'state':'open'})</field>
+			<field name="kind">function</field>
+		</record>
+    </data>
+</openerp>

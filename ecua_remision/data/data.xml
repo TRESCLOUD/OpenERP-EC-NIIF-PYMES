@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="1">
+		<record model="ir.sequence.type" id="account_retention_view">
+			<field name="name">Delivery Note</field>
+			<field name="code">rem_seq</field>
+		</record>
+	</data>
+</openerp>
+ 

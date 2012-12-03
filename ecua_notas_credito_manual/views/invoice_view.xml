@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_credit_note_customer_form_view">
+			<field name="name">account.credit.note.customer.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="/form/notebook/page/group/group//button[@name='%(account.action_account_invoice_refund)d']"
+					position="replace">
+					<button name="%(ecua_notas_credito_manual.action_account_credit_note_options)d"
+						type='action' string='Credit Note' states='open,paid' icon="gtk-execute" context="{'sales':True}"/>
+				</xpath>
+				<xpath expr="/form/notebook/page[@string='Payments']"
+					position="after">
+					<page string="Credit Notes">
+						<field name="credit_note_ids" nolabel="1" colspan="4" 
+						widget="one2many" readonly="1" domain="[('state', '=', 'paid'),('type','=','out_refund')]"
+						context="{'type':'out_refund', 
+						'journal_type':'sale_refund', 
+						'tree_view_ref' : 'ecua_notas_credito_manual.credit_note_out_tree',
+						'form_view_ref' : 'ecua_notas_credito_manual.customer_credit_note_invoice_view_form'}">
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_credit_note_supplier_form_view">
+			<field name="name">account.credit.note.invoice.supplier.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="/form/notebook/page/group/group/button[@name='%(account.action_account_invoice_refund)d']"
+					position="replace">
+					<button name="%(ecua_notas_credito_manual.action_account_credit_note_options)d"
+						type='action' string='Credit Note' states='open,paid' icon="gtk-execute" />
+				</xpath>
+				<xpath expr="/form/notebook/page[@string='Payments']"
+					position="after">
+					<page string="Credit Notes">
+						<field name="credit_note_ids" nolabel="1" colspan="4" widget="one2many" readonly="1" domain="[('state', '=', 'paid'), ('type','=','in_refund')]"
+						context="{'type':'in_refund', 
+						'journal_type':'purchase_refund', 
+						'tree_view_ref' : 'ecua_notas_credito_manual.credit_note_in_tree',
+						'form_view_ref' : 'ecua_notas_credito_manual.invoice_supplier_credit_note_form'}">
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sale_order_multi_form_view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/group//field[@name='shop_id']" position="replace">
+					<field name="shop_id" on_change="onchange_shop_id(shop_id)" />
+				</xpath>
+				<xpath expr="/form/group//field[@name='shipped']" position="after">
+					<field name="printer_id" required="1"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

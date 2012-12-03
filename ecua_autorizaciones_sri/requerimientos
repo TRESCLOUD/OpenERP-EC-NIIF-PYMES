@@ -1,0 +1,3 @@
+Es necesario que cada tipo de documento solicite su secuencia en funcion de
+los parametros que deben tener, compañia, agencia o tienda y punto de impresion
+los diarios de cada tipo de transaccion solo guardaran una relacion informativa

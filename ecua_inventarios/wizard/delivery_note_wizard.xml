@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+		<record id="view_account_invoice_delivery_note_wizard" model="ir.ui.view">
+			<field name="name">account.invoice.delivery.note.wizard.form</field>
+			<field name="model">account.invoice.delivery.note.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Delivery Note Options">
+					<separator string="Delivery Note Options" colspan="4" />
+						<label align="0.0" width="550" colspan="4"
+							string="This wizard create a new out picking and stock moves for all products in your invoice" />
+					<group colspan="4">
+						<field name="carrier_id" on_change="onchange_carrier_id(carrier_id)" required="1"/>
+	                	<field name="placa" required="1"/>
+					</group>
+					<separator colspan="4" />
+					<group colspan="4" col="6">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button string='Continue' icon="gtk-execute" name="create_delivery_note"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_account_invoice_delivery_note_wizard" model="ir.actions.act_window">
+			<field name="name">Credit Note</field>
+			<field name="res_model">account.invoice.delivery.note.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_invoice_delivery_note_wizard" />
+			<field name="target">new</field>
+		</record>
+    
+    </data>
+</openerp>

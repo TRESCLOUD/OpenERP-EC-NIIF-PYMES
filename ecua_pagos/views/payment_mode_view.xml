@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+            
+            <record model="ir.ui.view" id="account_payment_mode_tree_view">
+                <field name="name">account.payment.modes.tree</field>
+                <field name="model">account.payment.modes</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Payment/Receipt Mode">
+                        <field name="name"/>
+                        <field name="journal_id"/>
+                        <field name="application"/>
+                        <field name="type"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="account_payment_mode_form_view">
+                <field name="name">account.payment.modes.form</field>
+                <field name="model">account.payment.modes</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Payment/Receipt Mode">
+                        <field name="name"/>
+                        <field name="journal_id"/>
+                        <field name="application"/>
+                        <field name="type"/>
+                        <field name="is_own_account"/>
+                        <field name="own_account_id"/>
+                        <field name="active"/>
+                        <field name="is_check"/>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="account_payment_mode_search_view">
+                <field name="name">account.payment.modes.form</field>
+                <field name="model">account.payment.modes</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Payment/Receipt Mode">
+                        <field name="name"/>
+                    </search>
+                </field>
+            </record>
+            
+            <record model="ir.actions.act_window" id="action_account_payment_mode_tree_view">
+                <field name="name">Payment/Receipt Modes</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">account.payment.modes</field>
+		   <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="view_id" ref="account_payment_mode_tree_view"/>
+            </record>
+
+			<menuitem id="account_payment_mode_menu" parent="account.menu_configuration_misc" action="action_account_payment_mode_tree_view"/>
+    
+    
+    </data>
+</openerp>

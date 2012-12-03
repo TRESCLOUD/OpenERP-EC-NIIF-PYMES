@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+		<!-- Delete Menus -->
+		<delete id="account.menu_action_invoice_tree3" model="ir.ui.menu"/>
+		<delete id="account.menu_action_invoice_tree4" model="ir.ui.menu"/>
+    </data>
+</openerp>

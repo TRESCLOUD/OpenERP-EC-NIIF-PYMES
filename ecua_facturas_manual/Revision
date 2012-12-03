@@ -1,0 +1,2 @@
+En la interface web, los documentos no consiguen los numeros automaticamente, 
+ya que el evento onchange no es llamado por la interfase

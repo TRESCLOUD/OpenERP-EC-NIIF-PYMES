@@ -1,0 +1,13 @@
+Las notas de credito deben ser en compras o en ventas
+
+Ventas
+	Representan un documento a favor del cliente, que representa la devolución de un producto o servicio
+	o la corrección en el valor emitido de una factura de venta, esta puede ser hecha efectiva en dinero
+	en efectivo o la entrega de otros productos o servicios en remplazo de los devueltos
+Compras
+	Representa un documento a favor de la empresa(Nosotros) que sirve para canjear ya sea por producto,
+	servicios o efectivo segun sea el caso o politicas del proveedor que la emita
+	
+Tentativamente serian una modificación de 'account.invoice', actualmente el openerp posee un concepto
+que se llama factura rectificativa, se debe analizar la estructura del wizard y los impactos contables
+para revisar si se encuentra acorde a lo que solicita la norma vigente en ecuador

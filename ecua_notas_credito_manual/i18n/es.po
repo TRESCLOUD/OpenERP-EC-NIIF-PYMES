@@ -1,0 +1,562 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_notas_credito_manual
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-12-22 12:20+0000\n"
+"PO-Revision-Date: 2011-12-22 07:21-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: ecua_notas_credito_manual
+#: help:account.credit.note.wizard,date:0
+msgid "This date will be used as the date for Credit Note and Period will be chosen accordingly!"
+msgstr "Esta fecha sera usada como la fecha de la Nota de Crédito y el período sera asignado de acuerdo a ella!"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:113
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:137
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check!"
+msgstr "No existe autorización para este número de secuencia, por favor verifique!"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Other Info"
+msgstr "Otra información"
+
+#. module: ecua_notas_credito_manual
+#: selection:account.credit.note.wizard,filter_credit_note:0
+msgid "Modify"
+msgstr "Modificar"
+
+#. module: ecua_notas_credito_manual
+#: field:account.invoice,autorization_credit_note_id:0
+msgid "Autorization"
+msgstr "# Autorización"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,period_id:0
+msgid "Force period"
+msgstr "Forzar Período"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:388
+#, python-format
+msgid ""
+"The amount total of credit note %s %s, can't be bigger than amount total of invoice %s %s!, Can't Validate\" %(credit_note.number, credit_note.amount_total, invoice.number, invoice.amount_total)))\n"
+"        #Si ya se encuentra parcialmente conciliada y es mayor al residual debe lanzar un error\n"
+"        if invoice.state == open:\n"
+"            if credit_note.amount_total > invoice.residual:\n"
+"                raise osv.except_osv(_('Warning!'), _(\"The amount total of credit note %s is %s, can't be bigger than residual of invoice %s %s! Can't Validate\" %(credit_note.number, credit_note.amount_total, invoice.number, invoice.residual)))\n"
+"        else:\n"
+"            #Se verifica que no se emita notas de credit para devolucion que superen el valor total de la nota de credito\n"
+"            credit_notes_ids = inv_obj.search(cr, uid, [('invoice_rectification_id','=', invoice.id), ('id', '!=', credit_note.id), ('state', '=', 'open')])\n"
+"            if credit_notes_ids:\n"
+"                total = 0\n"
+"                for cn in inv_obj.browse(cr, uid, credit_notes_ids):\n"
+"                    total += cn.amount_total\n"
+"                total += credit_note.amount_total\n"
+"                if total > invoice.amount_total:\n"
+"                    raise osv.except_osv(_('Warning!'), _(\"The sum of total amounts of Credit Notes in Invoice %s %s, can't be bigger than total %s! Can't Validate\" %(invoice.number, total, invoice.amount_total)))                    \n"
+"        return True\n"
+"\n"
+"    def button_reset_taxes(self, cr, uid, ids, context=None):\n"
+"        for inv in self.browse(cr, uid, ids, context):\n"
+"            if inv.automatic:\n"
+"                if inv.type == \"out_refund\":\n"
+"                    self.write(cr, uid, inv.id, {'automatic_number':inv.number_credit_note_out})\n"
+"        return super(account_invoice, self).button_reset_taxes(cr, uid, ids, context)\n"
+"\n"
+"    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):\n"
+"        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)\n"
+"        res = super(account_invoice,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)\n"
+"        if view_type == 'form':\n"
+"            for field in res['fields']:\n"
+"                if user.company_id.generate_automatic:\n"
+"                    if field == 'automatic_number':\n"
+"                        doc = etree.XML(res['arch'])\n"
+"                        nodes = doc.xpath(\"//field[@name='automatic_number']"
+msgstr ""
+"The amount total of credit note %s %s, can't be bigger than amount total of invoice %s %s!, Can't Validate\" %(credit_note.number, credit_note.amount_total, invoice.number, invoice.amount_total)))\n"
+"        #Si ya se encuentra parcialmente conciliada y es mayor al residual debe lanzar un error\n"
+"        if invoice.state == open:\n"
+"            if credit_note.amount_total > invoice.residual:\n"
+"                raise osv.except_osv(_('Warning!'), _(\"The amount total of credit note %s is %s, can't be bigger than residual of invoice %s %s! Can't Validate\" %(credit_note.number, credit_note.amount_total, invoice.number, invoice.residual)))\n"
+"        else:\n"
+"            #Se verifica que no se emita notas de credit para devolucion que superen el valor total de la nota de credito\n"
+"            credit_notes_ids = inv_obj.search(cr, uid, [('invoice_rectification_id','=', invoice.id), ('id', '!=', credit_note.id), ('state', '=', 'open')])\n"
+"            if credit_notes_ids:\n"
+"                total = 0\n"
+"                for cn in inv_obj.browse(cr, uid, credit_notes_ids):\n"
+"                    total += cn.amount_total\n"
+"                total += credit_note.amount_total\n"
+"                if total > invoice.amount_total:\n"
+"                    raise osv.except_osv(_('Warning!'), _(\"The sum of total amounts of Credit Notes in Invoice %s %s, can't be bigger than total %s! Can't Validate\" %(invoice.number, total, invoice.amount_total)))                    \n"
+"        return True\n"
+"\n"
+"    def button_reset_taxes(self, cr, uid, ids, context=None):\n"
+"        for inv in self.browse(cr, uid, ids, context):\n"
+"            if inv.automatic:\n"
+"                if inv.type == \"out_refund\":\n"
+"                    self.write(cr, uid, inv.id, {'automatic_number':inv.number_credit_note_out})\n"
+"        return super(account_invoice, self).button_reset_taxes(cr, uid, ids, context)\n"
+"\n"
+"    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):\n"
+"        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)\n"
+"        res = super(account_invoice,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)\n"
+"        if view_type == 'form':\n"
+"            for field in res['fields']:\n"
+"                if user.company_id.generate_automatic:\n"
+"                    if field == 'automatic_number':\n"
+"                        doc = etree.XML(res['arch'])\n"
+"                        nodes = doc.xpath(\"//field[@name='automatic_number']"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,journal_id:0
+msgid "Refund Journal"
+msgstr "Diario de Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: sql_constraint:account.invoice:0
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:54
+#, python-format
+msgid "There's another credit note with this number!"
+msgstr "Existe otra nota de crédito con este número!"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Date of Credit Note"
+msgstr "Fecha"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.actions.report.xml,name:ecua_notas_credito_manual.credit_note_report
+msgid "Nota de Crédito"
+msgstr "Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,date:0
+msgid "Operation date"
+msgstr "Fecha de Operación"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "Credit Note Options"
+msgstr "Opciones de Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: sql_constraint:account.invoice:0
+msgid "There is another invoice in sales with this number, please verify"
+msgstr "Hay otra factura en compras con ese número, por favor verificar"
+
+#. module: ecua_notas_credito_manual
+#: field:account.invoice,authorization_credit_note_purchase:0
+msgid "Authorization"
+msgstr "# Autorización"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:192
+#, python-format
+msgid ""
+"You must create Credit Note to Partner %s, It must be same of the invoice!\" % credit_note.invoice_rectification_id.partner_id.name))\n"
+"                if not credit_note.autorization_credit_note_id:\n"
+"                    raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))\n"
+"                if not credit_note.automatic:\n"
+"                    if not credit_note.number_credit_note_out:\n"
+"                        raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))\n"
+"                    shop = credit_note.shop_id.id\n"
+"                    auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'credit_note', credit_note.company_id.id, shop, credit_note.number_credit_note_out, credit_note.printer_id.id, context)\n"
+"                    if not auth['authorization']:\n"
+"                        raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))\n"
+"                    doc_id = document_obj.search(cr, uid, [('name','=','credit_note'),('printer_id','=',credit_note.printer_id.id),('shop_id','=',credit_note.shop_id.id),('sri_authorization_id','=',credit_note.autorization_credit_note_id.id)])\n"
+"                    document_obj.add_document(cr, uid, doc_id, context)\n"
+"                    self.write(cr, uid, [credit_note.id], {'invoice_number': credit_note.number_credit_note_out, 'flag': True, 'authorization':credit_note.autorization_credit_note_id.number}, context)\n"
+"                else:\n"
+"                    if not credit_note.number_credit_note_out:\n"
+"                        b = True\n"
+"                        vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'credit_note', credit_note.company_id.id, credit_note.shop_id.id, credit_note.printer_id.id)\n"
+"                        while b :\n"
+"                            number_out = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])\n"
+"                            if not self.pool.get('account.credit_note').search(cr, uid, [('type','=','out_refund'),('invoice_number','=',number_out), ('automatic','=',True),('id','not in',tuple(ids))],):\n"
+"                                b=False\n"
+"                    else:\n"
+"                        number_out = credit_note.number_credit_note_out\n"
+"                    doc_id = document_obj.search(cr, uid, [('name','=','credit_note'),('printer_id','=',credit_note.printer_id.id),('shop_id','=',credit_note.shop_id.id),('sri_authorization_id','=',credit_note.autorization_credit_note_id.id)])                            \n"
+"                    document_obj.add_document(cr, uid, doc_id, context)\n"
+"                    self.write(cr, uid, [credit_note.id], {'invoice_number': number_out,'number_credit_note_out': number_out, 'flag': True, 'authorization':credit_note.autorization_credit_note_id.number}, context)\n"
+"            elif credit_note.type=='in_refund':\n"
+"                for inv in inv_obj.search(cr, uid, [('partner_id.id', '=', credit_note.partner_id.id), ('type','=','in_refund'), ('id','not in',tuple(ids))]):\n"
+"                    if credit_note.number_credit_note_in:\n"
+"                        if inv_obj.browse(cr, uid, [inv,], context)[0].number_credit_note_in == credit_note.number_credit_note_in:\n"
+"                            raise osv.except_osv(_('Error!'), _(\"There is an credit_note with number %s for supplier %s"
+msgstr ""
+"You must create Credit Note to Partner %s, It must be same of the invoice!\" % credit_note.invoice_rectification_id.partner_id.name))\n"
+"                if not credit_note.autorization_credit_note_id:\n"
+"                    raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))\n"
+"                if not credit_note.automatic:\n"
+"                    if not credit_note.number_credit_note_out:\n"
+"                        raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))\n"
+"                    shop = credit_note.shop_id.id\n"
+"                    auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'credit_note', credit_note.company_id.id, shop, credit_note.number_credit_note_out, credit_note.printer_id.id, context)\n"
+"                    if not auth['authorization']:\n"
+"                        raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))\n"
+"                    doc_id = document_obj.search(cr, uid, [('name','=','credit_note'),('printer_id','=',credit_note.printer_id.id),('shop_id','=',credit_note.shop_id.id),('sri_authorization_id','=',credit_note.autorization_credit_note_id.id)])\n"
+"                    document_obj.add_document(cr, uid, doc_id, context)\n"
+"                    self.write(cr, uid, [credit_note.id], {'invoice_number': credit_note.number_credit_note_out, 'flag': True, 'authorization':credit_note.autorization_credit_note_id.number}, context)\n"
+"                else:\n"
+"                    if not credit_note.number_credit_note_out:\n"
+"                        b = True\n"
+"                        vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'credit_note', credit_note.company_id.id, credit_note.shop_id.id, credit_note.printer_id.id)\n"
+"                        while b :\n"
+"                            number_out = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])\n"
+"                            if not self.pool.get('account.credit_note').search(cr, uid, [('type','=','out_refund'),('invoice_number','=',number_out), ('automatic','=',True),('id','not in',tuple(ids))],):\n"
+"                                b=False\n"
+"                    else:\n"
+"                        number_out = credit_note.number_credit_note_out\n"
+"                    doc_id = document_obj.search(cr, uid, [('name','=','credit_note'),('printer_id','=',credit_note.printer_id.id),('shop_id','=',credit_note.shop_id.id),('sri_authorization_id','=',credit_note.autorization_credit_note_id.id)])                            \n"
+"                    document_obj.add_document(cr, uid, doc_id, context)\n"
+"                    self.write(cr, uid, [credit_note.id], {'invoice_number': number_out,'number_credit_note_out': number_out, 'flag': True, 'authorization':credit_note.autorization_credit_note_id.number}, context)\n"
+"            elif credit_note.type=='in_refund':\n"
+"                for inv in inv_obj.search(cr, uid, [('partner_id.id', '=', credit_note.partner_id.id), ('type','=','in_refund'), ('id','not in',tuple(ids))]):\n"
+"                    if credit_note.number_credit_note_in:\n"
+"                        if inv_obj.browse(cr, uid, [inv,], context)[0].number_credit_note_in == credit_note.number_credit_note_in:\n"
+"                            raise osv.except_osv(_('Error!'), _(\"There is an credit_note with number %s for supplier %s"
+
+#. module: ecua_notas_credito_manual
+#: constraint:sale.shop:0
+msgid "This field is only for numbers"
+msgstr "Este campo es solo para números"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.actions.act_window,name:ecua_notas_credito_manual.action_customer_credit_note_menu
+#: model:ir.actions.act_window,name:ecua_notas_credito_manual.action_supplier_credit_note_menu
+msgid "Notas de Crédito"
+msgstr "Notas de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,automatic:0
+msgid "Automatic"
+msgstr "Automático"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Total Amount"
+msgstr "Importe total"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "Modify Invoice: Create a new credit note ready for editing."
+msgstr "Modificar: Crea una nueva nota de crédito lista para la edición."
+
+#. module: ecua_notas_credito_manual
+#: field:account.invoice,invoice_rectification_id:0
+msgid "Canceled Invoice"
+msgstr "Factura"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Credit Note - Customer"
+msgstr "Nota de Crédito - Cliente"
+
+#. module: ecua_notas_credito_manual
+#: sql_constraint:account.invoice:0
+msgid "There is another Liquidation of Purchases with this number, please check"
+msgstr "There is another Liquidation of Purchases with this number, please check"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:201
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check"
+msgstr "Do not exist authorization for this number of secuence, please check"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Re-Open"
+msgstr "Reabrir"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Credit Note - Supplier"
+msgstr "Nota de Crédito - Proveedor"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ecua_notas_credito_manual
+#: field:sale.shop,credit_note_sale_journal_id:0
+msgid "Credit Note Sales Journal"
+msgstr "Diario de Notas de Crédito en Ventas"
+
+#. module: ecua_notas_credito_manual
+#: help:account.invoice,authorization_credit_note_purchase:0
+msgid "This Number is necesary for SRI reports"
+msgstr "Este número es necesario para los reportes del SRI"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:194
+#, python-format
+msgid "Not exist authorization for the document, please check"
+msgstr "No existe autorización para este documento, por favor verifique"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Lines of Credit Note"
+msgstr "Líneas de Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,credit_note_ids:0
+#: view:account.invoice:0
+#: field:account.invoice,credit_note_ids:0
+msgid "Credit Notes"
+msgstr "Notas de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: constraint:account.invoice:0
+msgid "The number of Liquidation is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la liquidación es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, Donde X es un número"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,printer_id:0
+msgid "Printer Point"
+msgstr "Punto de Impresión"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Payment Date"
+msgstr "Fecha de pago"
+
+#. module: ecua_notas_credito_manual
+#: field:sale.shop,credit_note_purchase_journal_id:0
+msgid "Credit Note Purchases Journal"
+msgstr "Diario de Notas de Crédito en Compras"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "Multi Credit Note: You can select some credit notes to reconcile actual invoice."
+msgstr "Múltiples Notas de Crédito: Usted Puede seleccionar varias notas de crédito para conciliar la factura actual."
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Compute Taxes"
+msgstr "Calcular impuestos"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Get Invoice Lines"
+msgstr "Obtener Líneas de Factura"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,filter_credit_note:0
+msgid "Filter"
+msgstr "Opción"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.module.module,description:ecua_notas_credito_manual.module_meta_information
+msgid ""
+"\n"
+"    This module provide : Support for credit notes on Ecuadorian Legislation\n"
+"    "
+msgstr ""
+"\n"
+"    This module provide : Support for credit notes on Ecuadorian Legislation\n"
+"    "
+
+#. module: ecua_notas_credito_manual
+#: constraint:account.invoice:0
+msgid "The number of Credit Note is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de nota de crédito es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un dígito"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "Continue"
+msgstr "Continuar"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:113
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:137
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:192
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:194
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:197
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:201
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:251
+#, python-format
+msgid "Invalid action!"
+msgstr "Invalid action!"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:197
+#, python-format
+msgid "Not exist number for the document, please check"
+msgstr "Not exist number for the document, please check"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Approve"
+msgstr "Aprobar"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+#: view:account.invoice:0
+#: model:ir.actions.act_window,name:ecua_notas_credito_manual.action_account_credit_note_options
+#: model:ir.ui.menu,name:ecua_notas_credito_manual.menu_customer_credit_note
+#: model:ir.ui.menu,name:ecua_notas_credito_manual.menu_supplier_credit_note
+msgid "Credit Note"
+msgstr "Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.model,name:ecua_notas_credito_manual.model_account_credit_note_wizard
+msgid "account.credit.note.wizard"
+msgstr "Asistente de Notas de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,shop_id:0
+msgid "Shop"
+msgstr "Agencia"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Pay Credit Note"
+msgstr "Pagar Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "You must select the credit notes to reconcile current invoice, the total amount of credit notes can't be bigger of residual value of current invoice"
+msgstr "Usted debe seleccionar las Notas de Crédito para conciliar la factura actual, el monto total de las Notas de Crédito, no puede ser mayor al saldo residual de la factura actual"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:251
+#, python-format
+msgid "The date entered is not valid for the authorization"
+msgstr "The date entered is not valid for the authorization"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Residual Amount"
+msgstr "Importe residual"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Set to Draft"
+msgstr "Cambiar a borrador"
+
+#. module: ecua_notas_credito_manual
+#: help:account.credit.note.wizard,journal_id:0
+msgid "You can select here the journal to use for the refund invoice that will be created. If you leave that field empty, it will use the same journal as the current invoice."
+msgstr "You can select here the journal to use for the refund invoice that will be created. If you leave that field empty, it will use the same journal as the current invoice."
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:222
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: ecua_notas_credito_manual
+#: constraint:account.credit.note.wizard:0
+#: code:addons/ecua_notas_credito_manual/wizard/wizard_credit_note.py:67
+#, python-format
+msgid "The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número es incorrecto, este debe ser de la forma 00X-00X-000XXXXXX, X es un número"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.model,name:ecua_notas_credito_manual.model_sale_shop
+msgid "Sales Shop"
+msgstr "Tienda ventas"
+
+#. module: ecua_notas_credito_manual
+#: field:account.credit.note.wizard,authorization:0
+#: field:account.credit.note.wizard,automatic_number:0
+#: field:account.credit.note.wizard,number:0
+#: field:account.invoice,number_credit_note_in:0
+#: field:account.invoice,number_credit_note_out:0
+msgid "Number"
+msgstr "Número"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+msgid "Cancel Invoice: Create new credit note, validate and reconcile the current invoice for total value. If there some pay for current invoice, please use modify option"
+msgstr "Cancelar Factura: Creara una nueva Nota de Crédito, la validara y conciliara la factura actual por el valor total, si existen algunos pagos hechos en esta factura, por favor use la opción modificar"
+
+#. module: ecua_notas_credito_manual
+#: constraint:account.invoice:0
+msgid "The number of Invoice is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la factura es incorrecto, debe ser 001-00X-000XXXXXXXX, X es un número"
+
+#. module: ecua_notas_credito_manual
+#: selection:account.credit.note.wizard,filter_credit_note:0
+msgid "Multi Credit Note"
+msgstr "Múltiples Notas de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:388
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:392
+#: code:addons/ecua_notas_credito_manual/objects/invoice.py:402
+#, python-format
+msgid "Warning!"
+msgstr "Warning!"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.model,name:ecua_notas_credito_manual.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ecua_notas_credito_manual
+#: view:account.credit.note.wizard:0
+#: selection:account.credit.note.wizard,filter_credit_note:0
+#: view:account.invoice:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Print Credit Note"
+msgstr "Imprimir Nota de Crédito"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Untaxed Amount"
+msgstr "Base imponible"
+
+#. module: ecua_notas_credito_manual
+#: model:ir.module.module,shortdesc:ecua_notas_credito_manual.module_meta_information
+msgid "Credit Note - Ecuador"
+msgstr "Credit Note - Ecuador"
+
+#. module: ecua_notas_credito_manual
+#: view:account.invoice:0
+msgid "Additional Information"
+msgstr "Información adicional"
+

@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_account_remision_process_manual_form">
+        <field name="name">account.remision.form</field>
+        <field name="model">account.remision</field>
+        <field name="type">form</field>
+        <field name="priority" eval="17"></field>
+        <field name="arch" type="xml">
+            <form string="Delivery Notes">
+            	<group col="6" colspan="4">
+                <field name="number" required="1"/>
+                <field name="shop_id" invisible="0" required="1"/>
+                <field name="printer_id" invisible="0" required="1"/>
+                <field name="invoice_id" on_change="onchange_invoice(invoice_id)"/>
+                </group>
+                <field name="authorizacion_id" required="1"/>
+               	<field name="stock_picking_id" on_change="onchange_picking(stock_picking_id)" required="1"/>
+                <notebook colspan="4">
+                	<page string="Transfer Information">
+	                	<field name="partner_id" required="1"/>
+	                	<field name="delivery_address" required="1"/>
+	                	<field name="transfer_date" required="1"/>
+	                	<field name="delivery_date" required="1"/>
+	                	<field name="delivery_carrier" on_change="onchange_carrier_id(delivery_carrier)" required="1"/>
+	                	<field name="placa" required="1"/>
+	                	<separator string="Delivery Note Lines" colspan="4"/>
+	                	<field name="remision_line" colspan="4" nolabel="1" />
+                	</page>
+                	<page string="Transfer Motive">
+                		<separator string="Motive" colspan="4"/>
+	                	<field name="motive" colspan="4" nolabel="1"/>
+                	</page>
+				</notebook>
+				<group colspan="4" col="8">
+					<field name="type"/>
+	                <field name="state" readonly="1"/>
+					<button name="action_cancel" states="done" string="Cancel"
+						icon="gtk-cancel" type="object"/>
+					<button name="action_set_draft" states="canceled" string="Set to draft"
+						icon="terp-stock_effects-object-colorize" type="object"/>
+                    <button name="%(delivery_note_report)d" string="Print Delivery Note" type="action" icon="gtk-print" states="done"/>
+
+				</group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_remision_form">
+        <field name="name">account.remision.form</field>
+        <field name="model">account.remision</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Notes">
+                <field name="number" select="1" readonly="1"/>
+                <field name="authorizacion_id" select="0" readonly="1"/>
+                <notebook colspan="4">
+                	<page string="Transfer Information">
+	                	<field name="partner_id" select="0" readonly="1"/>
+	                	<field name="delivery_address" select="0" readonly="1"/>
+	                	<field name="transfer_date" select="2" readonly="1" required="1"/>
+	                	<field name="delivery_date" select="0" readonly="1" required="1"/>
+	                	<field name="delivery_carrier" select="0" attrs="{'invisible':[('type','=','internal')]}" readonly="1"/>
+	                	<field name="placa" required="1"/>
+	                	<separator string="Delivery Note Lines" colspan="4"/>
+	                	<field name="remision_line" colspan="4" nolabel="1" select="0" readonly="1"/>
+                	</page>
+                	<page string="Transfer Motive">
+                		<separator string="Motive" colspan="4"/>
+	                	<field name="motive" colspan="4" nolabel="1"/>
+                	</page>
+                	<page string="Reference">
+	                	<field name="stock_picking_id" readonly="1"/>
+                	</page>
+				</notebook>
+				<group colspan="4" col="6">
+					<field name="type" select="1" readonly="1" invisible="1"/>
+	                <field name="state" readonly="1"/>
+					<button name="action_cancel" states="done" string="Cancel"
+						icon="gtk-cancel" type="object"/>
+					<button name="action_set_draft" states="canceled" string="Set to draft"
+						icon="terp-stock_effects-object-colorize" type="object"/>
+                    <button name="%(delivery_note_report)d" string="Print Delivery Note" type="action" icon="gtk-print" states="done"/>
+				</group>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_account_remision_tree">
+        <field name="name">account.remision.tree</field>
+        <field name="model">account.remision</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery Note" colors="blue:state in ('draft');black:state in ('confirmed');gray:state in ('canceled')">
+                <field name="number" readonly="1"/>
+                <field name="partner_id" readonly="1"/>
+                <field name="transfer_date" readonly="1"/>
+                <field name="delivery_date" readonly="1"/>
+                <field name="delivery_address" readonly="1"/>
+                <field name="delivery_carrier" readonly="1"/>
+                <field name="type"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_account_remision">
+        <field name="name">Delivery Notes</field>
+        <field name="res_model">account.remision</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+		<record id="action_account_remision_tree" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_account_remision_tree" />
+			<field name="act_window_id" ref="action_account_remision" />
+		</record>
+
+		<record id="action_account_remision_form" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_account_remision_process_manual_form" />
+			<field name="act_window_id" ref="action_account_remision" />
+		</record>
+
+    <menuitem id="delivery_notes_menu" name="Guías de Remisión" parent="stock.menu_stock_root" />
+		
+			<menuitem id="remision" name="Guías de Remisión"
+			parent="delivery_notes_menu" action="action_account_remision" />
+
+        
+    <record model="ir.ui.view" id="view_account_remision_line_form">
+        <field name="name">account.remision.line.form</field>
+        <field name="model">account.remision.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Note Lines">
+                <field name="product_id" select="2"/>
+                <field name="product_uom" select="2"/>
+                <field name="quantity" select="1"/>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_account_remision_line_tree">
+        <field name="name">account.remision.line.tree</field>
+        <field name="model">account.remision.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Delivery note line">
+                <field name="product_id"/>
+                <field name="product_uom" select="2"/>
+                <field name="quantity"/>
+            </tree>
+        </field>
+    </record>
+
+</data>
+</openerp>

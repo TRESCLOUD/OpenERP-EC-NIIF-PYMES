@@ -1,0 +1,11 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_remision","account.remision","model_account_remision","base.group_user",1,0,0,0
+"access_remision_line","account.remision.line","model_account_remision_line","base.group_user",1,0,0,0
+"access_remision_warehouse_man","account.remision","model_account_remision","stock.group_stock_manager",1,1,1,1
+"access_remision_line_warehouse_man","account.remision.line","model_account_remision_line","stock.group_stock_manager",1,1,1,1
+"access_remision_warehouse_user","account.remision","model_account_remision","stock.group_stock_user",1,1,1,1
+"access_remision_line_warehouse_user","account.remision.line","model_account_remision_line","stock.group_stock_user",1,1,1,1
+"access_remision_cancel_wizard","account.cancel.remision.wizard","model_account_cancel_remision_wizard","stock.group_stock_user",1,1,1,1
+"access_remision_line_cancel_wizard","account.cancel.remision.line.wizard","model_account_cancel_remision_line_wizard","stock.group_stock_user",1,1,1,1
+"access_remision_man_cancel_wizard","account.cancel.remision.wizard","model_account_cancel_remision_wizard","stock.group_stock_manager",1,1,1,1
+"access_remision_man_line_cancel_wizard","account.cancel.remision.line.wizard","model_account_cancel_remision_line_wizard","stock.group_stock_manager",1,1,1,1
