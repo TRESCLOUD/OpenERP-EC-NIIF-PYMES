@@ -1,10 +1,9 @@
-OpenERP-EC-NIIF-PYMES
-=====================
-
-Branch Master - Vacia
-
-Branch 6.0 - Contabilidad y RRHH Niif Pymes para OpenERP 6.0
-
+OpenERP-EC-NIIF-PYMES 6.1
+=========================
 Branch 6.1 - Contabilidad y RRHH Niif Pymes para OpenERP 6.1
 
-Branch 7.0 - Contabilidad y RRHH Niif Pymes para OpenERP 7.0
+Incluye para la versión 6.1
+- Modulos contables
+- Modulos de recursos humanos
+- Otros modulos relacionados a PYMES
+
