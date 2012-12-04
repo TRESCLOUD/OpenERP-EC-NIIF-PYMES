@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+		<record id="view_verificar_ruc_cedula_tree_inh" model="ir.ui.view">
+			<field name="name">res.partner.verificador_ruc_cedula.tree</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<xpath expr="/tree/field[@name='ref']" position="replace">
+					<field string="CEDULA/RUC" name="ref"/>
+					<field  name="status"/>
+				</xpath>
+			</field>
+		</record>
+    </data>
+</openerp>

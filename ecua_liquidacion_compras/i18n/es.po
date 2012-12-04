@@ -1,0 +1,296 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_liquidacion_compras
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-07-19 02:02+0000\n"
+"PO-Revision-Date: 2012-07-18 21:04-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_liquidacion_compras
+#: constraint:account.invoice:0
+msgid "The number of Invoice is incorrect, it must be like 00X-00X-000XXXXXX, X is a number"
+msgstr "El número de Factura es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X debe ser un número"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Retenciones"
+msgstr "Retenciones"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:59
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check!"
+msgstr "No existe autorización para este número de secuencia, por favor verifique!"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Other Info"
+msgstr "Otra información"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Withholding Line"
+msgstr "Líneas de Retención"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Total Retenciones IVA"
+msgstr "Total Retenciones IVA"
+
+#. module: ecua_liquidacion_compras
+#: sql_constraint:account.journal:0
+msgid "The name of the journal must be unique per company !"
+msgstr "¡El nombre del diaro debe ser único por compañía!"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Liquidation of Purchase"
+msgstr "Liquidación de Compras"
+
+#. module: ecua_liquidacion_compras
+#: sql_constraint:account.invoice:0
+msgid "There's another credit note with this number!"
+msgstr "Existe otra nota de crédito con este número!"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Residual Amount"
+msgstr "Importe residual"
+
+#. module: ecua_liquidacion_compras
+#: field:account.invoice,authorization_liquidation:0
+msgid "Authorization"
+msgstr "Autorización"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Untaxed Amount"
+msgstr "Base imponible"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Lines of Liquidation of Purchase"
+msgstr "Líneas de liquidación de compras"
+
+#. module: ecua_liquidacion_compras
+#: model:ir.model,name:ecua_liquidacion_compras.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Input Retention Number"
+msgstr "Datos de Retención"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Set to Draft"
+msgstr "Cambiar a borrador"
+
+#. module: ecua_liquidacion_compras
+#: sql_constraint:account.invoice:0
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:269
+#, python-format
+msgid "There is another Liquidation of Purchases with this number, please check"
+msgstr "Existe otra Liquidación de compras con este número, por favor verifique"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:120
+#, python-format
+msgid "Do not exist authorization for this number of secuence, please check"
+msgstr "No existe autorización para este número de secuencia, por favor verifique"
+
+#. module: ecua_liquidacion_compras
+#: sql_constraint:account.journal:0
+msgid "The code of the journal must be unique per company !"
+msgstr "¡El código del diario debe ser único por compañía!"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Payment Date"
+msgstr "Fecha de pago"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:113
+#, python-format
+msgid "Not exist authorization for the document, please check"
+msgstr "No existe autorización para este documento, por favor verifique"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Liquidation of Purchases"
+msgstr "Liquidación de Compras"
+
+#. module: ecua_liquidacion_compras
+#: constraint:account.invoice:0
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:267
+#, python-format
+msgid "The number of Liquidation is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la liquidación es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, Donde X es un número"
+
+#. module: ecua_liquidacion_compras
+#: model:ir.module.module,description:ecua_liquidacion_compras.module_meta_information
+msgid "  "
+msgstr "  "
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Withholdings"
+msgstr "Retenciones"
+
+#. module: ecua_liquidacion_compras
+#: model:ir.model,name:ecua_liquidacion_compras.model_sale_shop
+msgid "Sales Shop"
+msgstr "Tienda ventas"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Pay Invoice"
+msgstr "Pagar factura"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Compute Taxes"
+msgstr "Calcular impuestos"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Taxes"
+msgstr "Impuestos"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:59
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:113
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:116
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:120
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:163
+#, python-format
+msgid "Invalid action!"
+msgstr "Acción no Válida!"
+
+#. module: ecua_liquidacion_compras
+#: model:ir.actions.act_window,name:ecua_liquidacion_compras.action_liquidation_menu
+#: model:ir.actions.report.xml,name:ecua_liquidacion_compras.liquidacion_report
+#: model:ir.module.module,shortdesc:ecua_liquidacion_compras.module_meta_information
+#: model:ir.ui.menu,name:ecua_liquidacion_compras.menu_liquidacion_compras
+msgid "Liquidación de Compras"
+msgstr "Liquidación de Compras"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:163
+#, python-format
+msgid "The date entered is not valid for the authorization"
+msgstr "La fecha ingresada no es válida para la autorización"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Date of Liquidation"
+msgstr "Fecha"
+
+#. module: ecua_liquidacion_compras
+#: code:addons/ecua_liquidacion_compras/objects/liquidacion_compra.py:116
+#, python-format
+msgid "Not exist number for the document, please check"
+msgstr "No existe número para el documento, por favor verifique"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Approve"
+msgstr "Aprobar"
+
+#. module: ecua_liquidacion_compras
+#: constraint:account.invoice:0
+msgid "The number of Credit Note is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de nota de crédito es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un dígito"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Print Liquidation"
+msgstr "Imprimir Liquidación"
+
+#. module: ecua_liquidacion_compras
+#: field:account.invoice,liquidation:0
+#: field:account.journal,liquidation:0
+msgid "Liquidation"
+msgstr "Liquidación"
+
+#. module: ecua_liquidacion_compras
+#: constraint:sale.shop:0
+msgid "This field is only for numbers"
+msgstr "Este campo es solo para números"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Total Retained"
+msgstr "Total Retenido"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Withholding Lines"
+msgstr "Líneas de Retención"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Total Retenciones Renta"
+msgstr "Total Retenciones Renta"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+#: field:account.invoice,number_liquidation:0
+msgid "Number"
+msgstr "Número"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Re-Open"
+msgstr "Reabrir"
+
+#. module: ecua_liquidacion_compras
+#: model:ir.model,name:ecua_liquidacion_compras.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_liquidacion_compras
+#: field:sale.shop,liquidation_journal_id:0
+msgid "Liquidation of Purchases Journal"
+msgstr "Diario de Liquidación de Compras"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Total Amount"
+msgstr "Importe total"
+
+#. module: ecua_liquidacion_compras
+#: view:account.invoice:0
+msgid "Additional Information"
+msgstr "Información adicional"
+

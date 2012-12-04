@@ -1,0 +1,18 @@
+La instalación debe hacerse siempre despues de cargar el plan contable, no es un gran problema, pero 
+podria mejorarse el instalador si solicitara estas cuentas manualmente
+
+En las retenciones en ventas es necesario que el boton no permita ingresar retenciones en caso de ya tener una
+asignada, deberia permitir modificarla unicamente en caso de haber alguna que no esta aprobada ya, en caso de
+ya estar aprobada no permitir ingresar mas o indicar un mensaje alertando este evento
+
+Se realizo pruebas en facturas en compras con una autorizacion ingresada entre el 1 y el 100, que vence en 2012
+el numero 001-001-000000012 y no cambio el campo autorizacion y no me permitio aprovar la factura
+
+En las retenciones en compras, si el ingreso es manual el sistema deberia informarle si la serie que ingresa
+es posible, caso contrario no le permite validar
+
+En generación automática deberia solicitar la agencia y el punto de emisión
+
+Corregir el cambio de vista de la tienda, este modulo debe modificarla para solicitar los diarios de retenciones
+
+La fecha en el wizard debe mantenerse

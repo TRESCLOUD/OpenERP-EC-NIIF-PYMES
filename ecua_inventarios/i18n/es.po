@@ -1,0 +1,267 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_inventarios
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-06-23 01:02+0000\n"
+"PO-Revision-Date: 2012-06-22 20:06-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_inventarios
+#: field:account.invoice,delivered:0
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: ecua_inventarios
+#: constraint:account.invoice:0
+msgid "The number of Invoice is incorrect, it must be like 00X-00X-000XXXXXX, X is a number"
+msgstr "El número de factura es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un número"
+
+#. module: ecua_inventarios
+#: sql_constraint:account.invoice:0
+msgid "There is another Liquidation of Purchases with this number, please check"
+msgstr "Existe otra Liquidación de compras con este número, por favor verifique"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/stock.py:84
+#, python-format
+msgid "Available Real Stock in Location '%s' for product '%s' is %s %s, can't done move for %s %s"
+msgstr "El stock real disponible en la ubicación '%s' para el producto '%s' es %s %s, no puede hacer el movimiento por la cantidad %s %s"
+
+#. module: ecua_inventarios
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
+msgstr "Debe asignar un lote de producción para este producto"
+
+#. module: ecua_inventarios
+#: model:ir.module.module,shortdesc:ecua_inventarios.module_meta_information
+msgid "Stock Control"
+msgstr "Control de Inventarios"
+
+#. module: ecua_inventarios
+#: field:account.invoice.line,lot_required:0
+msgid "Lot Required"
+msgstr "Lote Requerido"
+
+#. module: ecua_inventarios
+#: field:account.invoice,location_id:0
+#: field:account.invoice.line,location_id:0
+#: model:ir.model,name:ecua_inventarios.model_stock_location
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: ecua_inventarios
+#: field:account.invoice,remision_ids:0
+msgid "Remisions"
+msgstr "Guías de Remisión"
+
+#. module: ecua_inventarios
+#: field:account.invoice.line,prodlot_id:0
+msgid "Lote"
+msgstr "Lote"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/wizard/delivery_note_wizard.py:123
+#, python-format
+msgid "Out Picking"
+msgstr "Albarán de Salida"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/sale.py:46
+#: code:addons/ecua_inventarios/object/sale.py:63
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: ecua_inventarios
+#: help:account.invoice,delivered:0
+msgid "It indicates that an invoice has been delivered."
+msgstr "Esto indica que esta factura ha sido entregada."
+
+#. module: ecua_inventarios
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
+msgstr "Está intentando asignar un lote que no es del mismo producto"
+
+#. module: ecua_inventarios
+#: field:stock.location,check_stock_out:0
+msgid "Check Stock Out?"
+msgstr "Verificar Disponibilidad de Stock?"
+
+#. module: ecua_inventarios
+#: help:stock.location,check_stock_out:0
+msgid "When you make a stock move with this location as source check availability and can't make move if not enought stock"
+msgstr "Cuanto realice un movimiento de stock con esta ubicación como origen, se verificara la disponibilidad y no permitirá realizar el movimiento si no existe suficiente stock"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/invoice.py:112
+#, python-format
+msgid "Sales Refund - RS %s"
+msgstr "Devolución en Ventas - NCC %s"
+
+#. module: ecua_inventarios
+#: view:account.invoice:0
+msgid "Create Delivery Note"
+msgstr "Crear Nota de Entrega"
+
+#. module: ecua_inventarios
+#: view:account.invoice.delivery.note.wizard:0
+msgid "This wizard create a new out picking and stock moves for all products in your invoice"
+msgstr "Este asistente creara una nueva nota de entrega y todos los movimientos de stock de los productos en su factura"
+
+#. module: ecua_inventarios
+#: model:ir.module.module,description:ecua_inventarios.module_meta_information
+msgid ""
+"\n"
+"    Control of stock moves, can't change state of a stock move without disponibility\n"
+"    "
+msgstr ""
+"\n"
+"    Control of stock moves, can't change state of a stock move without disponibility\n"
+"    "
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/sale.py:64
+#, python-format
+msgid "There is no active authorization for create invoice in this Agency: \"%s\""
+msgstr "No existe una autorización activa para crear la factura en la agencia: \"%s\""
+
+#. module: ecua_inventarios
+#: field:account.invoice,picking_ids:0
+msgid "Pickings"
+msgstr "Albaranes"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/stock.py:83
+#, python-format
+msgid "Stock Error!!!"
+msgstr "Error de Inventarios!!!"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/invoice.py:107
+#, python-format
+msgid "Purchase Refund - RP %s"
+msgstr "Devolución en Compras - NCP %s"
+
+#. module: ecua_inventarios
+#: constraint:account.invoice:0
+msgid "The number of Credit Note is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de nota de crédito es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un dígito"
+
+#. module: ecua_inventarios
+#: view:account.invoice.delivery.note.wizard:0
+msgid "Continue"
+msgstr "Continuar"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/wizard/delivery_note_wizard.py:53
+#, python-format
+msgid "Sales - SI %s"
+msgstr "Ventas - FC %s"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/invoice.py:202
+#, python-format
+msgid "No ha seleccionado a la Empresa !"
+msgstr "No ha seleccionado a la Empresa !"
+
+#. module: ecua_inventarios
+#: sql_constraint:account.invoice:0
+msgid "There's another credit note with this number!"
+msgstr "Existe otra nota de crédito con este número!"
+
+#. module: ecua_inventarios
+#: model:ir.actions.act_window,name:ecua_inventarios.action_account_invoice_delivery_note_wizard
+msgid "Credit Note"
+msgstr "Nota de Crédito"
+
+#. module: ecua_inventarios
+#: constraint:account.invoice:0
+msgid "The number of Liquidation is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la liquidación es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, Donde X es un número"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/invoice.py:117
+#, python-format
+msgid "Purchase Input - SI %s"
+msgstr "Ingreso por Compras - FP %s"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/sale.py:47
+#, python-format
+msgid "There is no sales journal defined for this Agency: \"%s\" (id:%d)"
+msgstr "No existe un diario de ventas definido para la agencia: \"%s\" (id:%d)"
+
+#. module: ecua_inventarios
+#: model:ir.model,name:ecua_inventarios.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
+
+#. module: ecua_inventarios
+#: code:addons/ecua_inventarios/object/invoice.py:202
+#, python-format
+msgid "Debe seleccionar a la empresa primero !"
+msgstr "Debe seleccionar a la empresa primero !"
+
+#. module: ecua_inventarios
+#: field:account.invoice,warehouse_id:0
+msgid "Warehouse"
+msgstr "Almacén"
+
+#. module: ecua_inventarios
+#: model:ir.model,name:ecua_inventarios.model_account_invoice_line
+#: field:stock.move,invoice_line_id:0
+msgid "Invoice Line"
+msgstr "Línea de factura"
+
+#. module: ecua_inventarios
+#: field:account.invoice,picking_number:0
+msgid "Remision Number"
+msgstr "Número de Guía"
+
+#. module: ecua_inventarios
+#: field:account.invoice,delivery_note:0
+msgid "Delivery Note"
+msgstr "Guía de Remisión"
+
+#. module: ecua_inventarios
+#: view:account.invoice.delivery.note.wizard:0
+msgid "Delivery Note Options"
+msgstr "Opciones de Guía de Remisión"
+
+#. module: ecua_inventarios
+#: model:ir.model,name:ecua_inventarios.model_account_invoice
+#: field:stock.move,invoice_id:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ecua_inventarios
+#: view:account.invoice.delivery.note.wizard:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_inventarios
+#: model:ir.model,name:ecua_inventarios.model_account_invoice_delivery_note_wizard
+msgid "account.invoice.delivery.note.wizard"
+msgstr "account.invoice.delivery.note.wizard"
+
+#. module: ecua_inventarios
+#: field:account.invoice.delivery.note.wizard,carrier_id:0
+msgid "Carrier"
+msgstr "Transportista"
+
+#. module: ecua_inventarios
+#: view:account.invoice:0
+#: view:account.invoice.line:0
+#: field:account.invoice.line,move_ids:0
+msgid "Stock Moves"
+msgstr "Movimientos de Stock"
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<!--  record model="ir.ui.view" id="sale_shop_multi_form_view_retention">
+			<field name="name">sale.shop.form</field>
+			<field name="model">sale.shop</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="ecua_autorizaciones_sri.sale_shop_multi_form_view" />
+			<field name="arch" type="xml">
+				<field name="purchases_journal_id" position="after">
+					<field name="withholding_journal_id"></field>
+				</field>
+			</field>
+		</record-->
+
+	</data>
+</openerp>

@@ -1,0 +1,13 @@
+19-07-11
+
+El campo autorizacion debe tener llamar a la vista que es solo lectura   ***
+
+El asistente de instalacion deber tener campos diferentes para los tipos de diarios que se usan compras y ventas  ***
+
+Los campos para agregado de lineas de autorizacion deben tener eventos onchange parecidos a los de facturas y pedidos de compras
+
+El campo journal deber ser con el widget selection   ***
+
+Debe crearse una vista tipo busqueda para poder buscar por partner(nombre), y por numero, por fecha de creacion, y poder agrupar por partner
+
+Se debe tener un onchange para cuando se selecciona al cliente

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="1" model="type.document">
+			<field name="name">Factura</field>
+		</record>
+
+		<record id="2" model="type.document">
+			<field name="name">Retención</field>
+		</record>
+
+		<record id="3" model="type.document">
+			<field name="name">Nota de Crédito</field>
+		</record>
+
+		<record id="4" model="type.document">
+			<field name="name">Nota de Débito</field>
+		</record>
+
+		<record id="5" model="type.document">
+			<field name="name">Guía de Remisión</field>
+		</record>
+
+	</data>
+</openerp>

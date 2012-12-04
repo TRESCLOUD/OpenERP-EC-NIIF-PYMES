@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		 <record model="ir.ui.view" id="account_invoice_ice_form_view">
+                <field name="name">account.invoice.form</field>
+                <field name="model">account.invoice</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="ecua_facturas_manual.account_invoice_sales_form_view"/>
+                <field name="arch" type="xml">
+                	<field name="total_iva" position="before">
+						<field name="total_ice" />     	
+						<label string="" colspan="2" />
+						<field name="base_iva" />                	
+						<label string="" colspan="2" />
+						<field name="base_iva_0" />
+						<label string="" colspan="2" />
+                	</field>
+                </field>
+            </record>
+            
+		 	<record model="ir.ui.view" id="account_invoice_ice_form_view2">
+                <field name="name">account.invoice.form</field>
+                <field name="model">account.invoice</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="account.invoice_form"/>
+                <field name="arch" type="xml">
+       				<xpath
+					expr="/form/notebook/page/group/group//button[@name='invoice_open']"
+					position="replace">
+                    <button name="invoice_open" states="draft,proforma2" string="Validate" icon="gtk-go-forward" invisible="1"/>
+                    <button name="action_check_ice" states="draft,proforma2" string="Validate" icon="gtk-go-forward" type="object"/>
+				</xpath>
+                </field>
+            </record>
+
+		<record model="ir.ui.view" id="account_invoice_tree_new_view">
+			<field name="name">account.invoice.tree.new</field>
+			<field name="model">account.invoice</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="arch" type="xml">
+				<field name="amount_untaxed" position="replace">
+					<field name="total_sin_descuento" sum="Total sin Descuento"></field>
+					<field name="base_iva" sum="Base IVA 12"></field>
+					<field name="base_iva_0" sum="Base IVA 0"></field>
+					<field name="total_iva" sum="Total IVA"></field>
+					<field name="total_descuento" sum="Total Descuento"></field>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

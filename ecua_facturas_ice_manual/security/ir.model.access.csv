@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_wizard_invoice_base","account.invoice.ice.wizard","model_account_invoice_ice_wizard","base.group_user",1,1,1,1
+"access_wizard_invoice","account.invoice.ice.wizard","model_account_invoice_ice_wizard","account.group_account_manager",1,1,1,1
+"access_wizard_sale_order_base","sale.order.ice.wizard","model_sale_order_ice_wizard","base.group_user",1,1,1,1
+"access_wizard_sale_order","sale.order.ice.wizard","model_sale_order_ice_wizard","account.group_account_manager",1,1,1,1
+"access_account_ice_type_base","account.ice.type","model_account_ice_type","base.group_user",1,0,0,0
+"access_account_ice_type","account.ice.type","model_account_ice_type","account.group_account_manager",1,1,1,1

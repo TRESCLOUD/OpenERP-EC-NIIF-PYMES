@@ -1,0 +1,817 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_retenciones_manual
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-07-19 02:02+0000\n"
+"PO-Revision-Date: 2012-07-18 21:05-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_retenciones_manual
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_retention_wizard_sales
+msgid "Agree Retention"
+msgstr "Agregar Retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+#: model:ir.actions.report.xml,name:ecua_retenciones_manual.retention_report
+msgid "Retenciones"
+msgstr "Retenciones"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.invoice:0
+msgid "The number of Invoice is incorrect, it must be like 00X-00X-000XXXXXX, X is a number"
+msgstr "El número de Factura es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X debe ser un número"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Withholding Line"
+msgstr "Línea de Retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,tax_id:0
+#: field:account.retention.wizard.line,tax_id:0
+msgid "Tax Code"
+msgstr "Código de Impuesto"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Set to draft"
+msgstr "Cambiar a Borrador"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: view:account.retention.line:0
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,description:0
+#: field:account.retention.wizard.line,description:0
+msgid "Impuesto"
+msgstr "Impuesto"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:268
+#, python-format
+msgid "Amount of retention is bigger than residual value of invoice, please verify"
+msgstr "El Monto de la retención no debe ser mayor que el valor residual de la factura, por favor verifique"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: view:account.retention.line:0
+#: field:account.retention.line,invoice_id:0
+#: field:account.retention.line,invoice_without_retention_id:0
+msgid "Document"
+msgstr "Documento"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/cancel_retentions_wizard.py:73
+#, python-format
+msgid "Error Cannot Cancel"
+msgstr "Error no se pudo cancelar"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,retention_percentage:0
+#: field:account.retention.line,retention_percentage_manual:0
+#: field:account.retention.wizard.line,retention_percentage:0
+msgid "Percentaje Value"
+msgstr "Porcentaje"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.retention:0
+msgid "The number of retention is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la retención es incorrecta, por ejemplo debe ser 001-00X-000XXXXXXXX, donde X es un número"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.wizard:0
+msgid "Approve Late"
+msgstr "Aprobar después"
+
+#. module: ecua_retenciones_manual
+#: field:account.cancel.retention.wizard,company_id:0
+#: field:account.retention,company_id:0
+#: field:account.retention.line,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.wizard.line,wizard_id:0
+msgid "wizard"
+msgstr "Asistente"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.retention:0
+msgid "The authorization must be only numbers"
+msgstr "La autorización debe ser solo números"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:401
+#, python-format
+msgid "Not exist authorization for the document, please check"
+msgstr "No existe autorización para el documento, por favor verifique"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: selection:account.retention,state:0
+msgid "Approved"
+msgstr "Aprobado"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.invoice:0
+msgid "The number of Liquidation is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de la liquidación es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, Donde X es un número"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,tax_base:0
+#: field:account.retention.wizard.line,tax_base:0
+msgid "Tax Base"
+msgstr "Base Imponible"
+
+#. module: ecua_retenciones_manual
+#: model:ir.ui.menu,name:ecua_retenciones_manual.retentions_purchases
+msgid "Retention of Purchases"
+msgstr "Retenciones de Compras"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:276
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:122
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:187
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:189
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:191
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:193
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:234
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:237
+#, python-format
+msgid "Error!"
+msgstr "Error!"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.wizard:0
+msgid "Approve Now"
+msgstr "Aprobar Ahora"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:404
+#, python-format
+msgid "Not exist number for the document, please check"
+msgstr "Not exist number for the document, please check"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:203
+#, python-format
+msgid "You have to configure account base code and account tax code on the '%s' tax!"
+msgstr "Usted no tiene configurada la cuenta del código base y la cuenta del código de impuesto en el impuesto '%s'!"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,automatic:0
+#: selection:account.retention,transaction_type:0
+#: field:account.retention.wizard,automatic:0
+#: selection:account.retention.wizard,type:0
+msgid "Automatic"
+msgstr "Automático"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,shop_id:0
+#: field:account.retention.wizard,shop_id:0
+msgid "Shop"
+msgstr "Agencia"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.line:0
+msgid "Proveedor"
+msgstr "Proveedor"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,period_id:0
+msgid "Fiscal Period"
+msgstr "Período Fiscal"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.line:0
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:260
+#, python-format
+msgid "IR Retention Journal doesn't have debit account assigned!, can't complete operation"
+msgstr "La cuenta de débito del diario de Retenciones de la Fuente, no ha sido asignada, no es posible continuar la operación"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.wizard:0
+msgid "_Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_retenciones_manual
+#: selection:account.retention.line,description:0
+#: selection:account.retention.wizard.line,description:0
+msgid "RENTA"
+msgstr "RENTA"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: field:account.retention,partner_id:0
+#: view:account.retention.line:0
+#: field:account.retention.line,partner_id:0
+#: field:account.retention.wizard,partner_id:0
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: ecua_retenciones_manual
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_account_retention_purchase
+msgid "Retention Purchases"
+msgstr "Retención en Compras"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:46
+#, python-format
+msgid "Cannot delete retention(s) that are already assigned Number!"
+msgstr "No puede borrar retenciones que ya se encuentran aprobadas!"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_retention_wizard_line
+msgid "account.retention.wizard.line"
+msgstr "Línea de Retención"
+
+#. module: ecua_retenciones_manual
+#: sql_constraint:account.invoice:0
+msgid "There is another Liquidation of Purchases with this number, please check"
+msgstr "Existe otra Liquidación de compras con este número, por favor verifique"
+
+#. module: ecua_retenciones_manual
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "¡Error! No se pueden crear compañías recursivas."
+
+#. module: ecua_retenciones_manual
+#: field:account.cancel.retention.line.wizard,number:0
+#: field:account.retention,number:0
+#: field:account.retention.wizard,automatic_number:0
+#: field:account.retention.wizard,number:0
+msgid "Number"
+msgstr "Número"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,transaction_type:0
+msgid "Transaction type"
+msgstr "Tipo de Transacción"
+
+#. module: ecua_retenciones_manual
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_account_retention_line_tree_view
+#: model:ir.ui.menu,name:ecua_retenciones_manual.account_retention_line_menu
+msgid "Retentions in Purchases Lines"
+msgstr "Lineas de Reteciones en Compras"
+
+#. module: ecua_retenciones_manual
+#: sql_constraint:account.retention:0
+msgid "There is another Retention generated with this number, please verify"
+msgstr "Hay otro número de retención generado con este número, por favor verifique"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_retention_wizard
+msgid "account.retention.wizard"
+msgstr "Asistente de Retención"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_retention_line
+msgid "account.retention.line"
+msgstr "Línea de Retención"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:78
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,invoice_id:0
+msgid "Number of document"
+msgstr "Número de Documento"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: field:account.retention,creation_date:0
+#: field:account.retention.line,creation_date:0
+#: field:account.retention.line,creation_date_invoice:0
+#: field:account.retention.line,creation_date_retention:0
+#: field:account.retention.wizard,creation_date:0
+msgid "Creation Date"
+msgstr "Fecha de Emisión"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.wizard,invoice_id:0
+msgid "Number of Invoice"
+msgstr "Número de Factura"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Input Retention Number"
+msgstr "Datos de Retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.invoice,retention_line_ids:0
+#: view:account.retention:0
+#: field:account.retention,retention_line_ids:0
+#: view:account.retention.line:0
+#: view:account.retention.wizard:0
+msgid "Retention Lines"
+msgstr "Líneas de Retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,state:0
+msgid "state"
+msgstr "Estado"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/invoice.py:64
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:46
+#, python-format
+msgid "Invalid action !"
+msgstr "Acción Inválida !"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:270
+#, python-format
+msgid "The date of retention can not be least than the date of invoice"
+msgstr "La fecha de la retención no puede ser anterior a la fecha de la factura"
+
+#. module: ecua_retenciones_manual
+#: model:ir.module.module,shortdesc:ecua_retenciones_manual.module_meta_information
+msgid "Ecuadorian Retentions"
+msgstr "Retenciones Ecuatorianas"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+#: view:account.retention:0
+msgid "Total Retenciones IVA"
+msgstr "Total Retenciones IVA"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,printer_id:0
+#: field:account.retention.wizard,printer_id:0
+msgid "Printer Point"
+msgstr "Punto de Emisión"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_cancel_retention_wizard
+msgid "account.cancel.retention.wizard"
+msgstr "account.cancel.retention.wizard"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:276
+#, python-format
+msgid "There is an retention with number %s of client %s"
+msgstr "Existe otra retención de número %s del cliente %s"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:203
+#, python-format
+msgid "No Account Base Code and Account Tax Code!"
+msgstr "No existe cuenta para el código de la base, ni cuenta para el código del impuesto!"
+
+#. module: ecua_retenciones_manual
+#: selection:account.retention,transaction_type:0
+#: selection:account.retention.wizard,type:0
+msgid "Manual"
+msgstr "Manual"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:197
+#, python-format
+msgid "Withholding"
+msgstr "Retención"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:237
+#, python-format
+msgid "number to be entered to approve the retention"
+msgstr "El número debe ser ingresado para aprobar la retención"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.invoice:0
+msgid "The number of Credit Note is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número de nota de crédito es incorrecto, este debe tener la forma 00X-00X-000XXXXXX, X es un dígito"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.wizard:0
+msgid "Confirm Information"
+msgstr "Confirmar Información"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:52
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:64
+#, python-format
+msgid "Your User doesn't have shops assigned"
+msgstr "Su usuario no tiene autorización para esta operación"
+
+#. module: ecua_retenciones_manual
+#: selection:account.retention.line,description:0
+#: selection:account.retention.wizard.line,description:0
+msgid "IVA"
+msgstr "IVA"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "State"
+msgstr "Estado"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Withholding Lines"
+msgstr "Líneas de Retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.wizard,lines_ids:0
+msgid "Retention line"
+msgstr "Línea de Retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,number_purchase:0
+#: field:account.retention,number_sale:0
+#: view:account.retention.line:0
+msgid "Retention Number"
+msgstr "Número de Retención"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/invoice.py:64
+#, python-format
+msgid "You must enter at least one invoice line"
+msgstr "Usted debe ingresar al menos una línea de factura"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,total:0
+#: view:account.retention.line:0
+msgid "Total Retenido"
+msgstr "Total Retenido"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_retention
+msgid "account.retention"
+msgstr "Retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Add Retention"
+msgstr "Agregar Retención"
+
+#. module: ecua_retenciones_manual
+#: selection:account.retention,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: ecua_retenciones_manual
+#: sql_constraint:account.invoice:0
+msgid "There's another credit note with this number!"
+msgstr "Existe otra nota de crédito con este número!"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+#: view:account.retention:0
+msgid "Retentions"
+msgstr "Retenciones"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: field:account.retention,authorization_purchase:0
+#: field:account.retention,authorization_sale:0
+#: field:account.retention,authorization_sale_id:0
+#: field:account.retention.wizard,authorization_purchase:0
+#: field:account.retention.wizard,authorization_sale:0
+#: field:account.retention.wizard,authorization_sale_id:0
+msgid "Authorization"
+msgstr "Autorización"
+
+#. module: ecua_retenciones_manual
+#: field:account.cancel.retention.line.wizard,status:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:272
+#, python-format
+msgid "The date of retention can not be more than 5 days from the date of the invoice"
+msgstr "La fecha de la retención no puede se mayor en 5 días calendario a la fecha de la factura"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:306
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:328
+#, python-format
+msgid "RET CLI: %s"
+msgstr "RET CLI: %s"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,retained_value:0
+#: field:account.retention.line,retained_value_manual:0
+msgid "Reatained Value"
+msgstr "Valor Retenido"
+
+#. module: ecua_retenciones_manual
+#: model:ir.module.module,description:ecua_retenciones_manual.module_meta_information
+msgid ""
+" This module provide a data structure to store withholdings of VAT and \n"
+"        Source Withholding\n"
+"        "
+msgstr ""
+" Este módulo provee una estructura de datos para almacenar retenciones de IVA y \n"
+"        RENTA"
+
+#. module: ecua_retenciones_manual
+#: field:account.cancel.retention.wizard,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.wizard,type:0
+msgid "type"
+msgstr "Tipo"
+
+#. module: ecua_retenciones_manual
+#: model:ir.ui.menu,name:ecua_retenciones_manual.retentions_sales
+msgid "Retention of Sales"
+msgstr "Retención de Ventas"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:401
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:404
+#, python-format
+msgid "Invalid action!"
+msgstr "Acción Inválida!"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid " Retention Lines"
+msgstr "Lineas de Retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.cancel.retention.wizard:0
+msgid "You have to input numbers of retention(s) that you'll create in canceled state and Date to cancel"
+msgstr "Usted debe ingresar los números de las retenciones que se crearan en estado cancelado y la fecha de su cancelación"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:78
+#, python-format
+msgid "Please define a sequence on the journal !"
+msgstr "Por favor defina la secuencia del Diario !"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:393
+#, python-format
+msgid "You can't aprove a retention without retention lines"
+msgstr "No se puede aprobar una retención sin líneas de retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Cliente"
+msgstr "Cliente"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,total_renta:0
+msgid "Total Renta"
+msgstr "Total Renta"
+
+#. module: ecua_retenciones_manual
+#: help:account.retention,authorization_sale:0
+#: help:account.retention.wizard,authorization_sale:0
+msgid "This Number is necesary for SRI reports"
+msgstr "Este número es necesario para los reportes de SRI"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Total Retained"
+msgstr "Total Retenido"
+
+#. module: ecua_retenciones_manual
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_account_retention_sale
+msgid "Retention Sales"
+msgstr "Retención en Ventas"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes contables"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: view:account.retention.line:0
+#: field:account.retention.line,period_id:0
+msgid "Period"
+msgstr "Período"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/cancel_retentions_wizard.py:75
+#, python-format
+msgid "Already Exist Retention"
+msgstr "Ya existe esta retención"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,invoice_retention_id:0
+#: model:ir.model,name:ecua_retenciones_manual.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:193
+#, python-format
+msgid "must enter at least one tax to approve the retention"
+msgstr "Debe ingresar al menos un impuesto para aprobar la retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.cancel.retention.wizard:0
+#: view:account.retention:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_retenciones_manual
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_retention_wizard_purchase
+msgid "Complete data Retention"
+msgstr "Información Completa de la Retención"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:191
+#, python-format
+msgid "Authorization to be entered to approve the retention"
+msgstr "El número de autorización debe ser ingresado para aprobar la retención"
+
+#. module: ecua_retenciones_manual
+#: model:ir.model,name:ecua_retenciones_manual.model_account_cancel_retention_line_wizard
+msgid "account.cancel.retention.line.wizard"
+msgstr "account.cancel.retention.line.wizard"
+
+#. module: ecua_retenciones_manual
+#: field:account.cancel.retention.line.wizard,wizard_id:0
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: ecua_retenciones_manual
+#: field:res.company,journal_iva_id:0
+msgid "IVA Journal"
+msgstr "Diario de IVA"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:187
+#, python-format
+msgid "Number to be entered to approve the retention"
+msgstr "El Número debe ser ingresado para aprobar la retención"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:122
+#, python-format
+msgid "No existe autorización activa para generar retenciones"
+msgstr "No existe autorización activa para generar retenciones"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Search Retention"
+msgstr "Buscar Retención"
+
+#. module: ecua_retenciones_manual
+#: selection:account.retention,state:0
+msgid "Canceled"
+msgstr "Cancelado"
+
+#. module: ecua_retenciones_manual
+#: field:res.company,journal_ir_id:0
+msgid "IR Journal"
+msgstr "Diario de Impuesto a la Renta"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+#: view:account.retention.line:0
+msgid "Invoice Number"
+msgstr "Número de Factura"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:189
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:234
+#, python-format
+msgid "Date to be entered to approve the retention"
+msgstr "La Fecha debe ser ingresada para Aprobar la Retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention,total_iva:0
+msgid "Total IVA"
+msgstr "Total IVA"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+msgid "Withholdings"
+msgstr "Retenciones"
+
+#. module: ecua_retenciones_manual
+#: view:res.company:0
+msgid "Ecuadorian Accounting"
+msgstr "Contabilidad Ecuatoriana"
+
+#. module: ecua_retenciones_manual
+#: view:account.cancel.retention.wizard:0
+#: field:account.cancel.retention.wizard,line_ids:0
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.line:0
+#: field:account.retention.line,fiscalyear_id:0
+#: field:account.retention.wizard.line,fiscalyear_id:0
+msgid "Fiscal Year"
+msgstr "Año Fiscal"
+
+#. module: ecua_retenciones_manual
+#: view:account.cancel.retention.wizard:0
+msgid "Continue"
+msgstr "Continuar"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Print Retention"
+msgstr "Imprimir Retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.cancel.retention.wizard:0
+#: model:ir.actions.act_window,name:ecua_retenciones_manual.action_account_cancel_retentions_wizard
+#: model:ir.ui.menu,name:ecua_retenciones_manual.cancel_retention_menu
+msgid "Cancel Retentions"
+msgstr "Cancelar Retenciones"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:148
+#, python-format
+msgid "The residual value of invoice is lower than total value of withholding"
+msgstr "El valor residual de la factura es menor que el monto total de la retención"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.line:0
+msgid "Total Base"
+msgstr "Total Base"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention.line:0
+msgid "Search Retention Line"
+msgstr "Buscar Líneas de Reteción"
+
+#. module: ecua_retenciones_manual
+#: field:account.retention.line,sequence:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: ecua_retenciones_manual
+#: constraint:account.cancel.retention.line.wizard:0
+#: constraint:account.retention.wizard:0
+#: code:addons/ecua_retenciones_manual/wizard/cancel_retentions_wizard.py:108
+#: code:addons/ecua_retenciones_manual/wizard/retention_wizard.py:89
+#, python-format
+msgid "The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number"
+msgstr "El número es incorrecto, este debe tener la forma 001-00X-000XXXXXX, X es un número"
+
+#. module: ecua_retenciones_manual
+#: view:account.invoice:0
+#: view:account.retention:0
+msgid "Total Retenciones Renta"
+msgstr "Total Retenciones Renta"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/objects/retenciones.py:258
+#, python-format
+msgid "Iva Retention Journal doesn't have debit account assigned!, can't complete operation"
+msgstr "La cuenta de débito del diario de Retenciones de IVA, no ha sido asignada, no es posible continuar la operación"
+
+#. module: ecua_retenciones_manual
+#: code:addons/ecua_retenciones_manual/wizard/cancel_retentions_wizard.py:71
+#, python-format
+msgid "Canceled Correct"
+msgstr "Cancelación Correcta"
+
+#. module: ecua_retenciones_manual
+#: view:account.retention:0
+msgid "Reference of document"
+msgstr "Referencia del Documento"
+
+#. module: ecua_retenciones_manual
+#: field:account.invoice,retention_ids:0
+#: view:account.retention:0
+#: field:account.retention,account_voucher_ids:0
+#: field:account.retention.line,retention_id:0
+#: view:account.retention.wizard:0
+#: view:account.retention.wizard.line:0
+#: field:account.voucher,retention_id:0
+msgid "Retention"
+msgstr "Retención"
+

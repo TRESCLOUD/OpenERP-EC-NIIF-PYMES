@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_invoice_sales_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page[@string='Payments']"
+					position="after">
+					<page string="Retentions">
+						<field name="retention_ids" nolabel="1" widget="one2many"
+							readonly="1"
+							context="{'form_view_ref' : 'ecua_retenciones_manual.view_account_retention_sale_form'}">
+							<tree string="Withholdings">
+								<field name="number" />
+								<field name="period_id" />
+								<field name="creation_date" />
+								<field name="total_iva" sum="Total Retenciones IVA" />
+								<field name="total_renta" sum="Total Retenciones Renta" />
+								<field name="state" />
+							</tree>
+						</field>
+					</page>
+				</xpath>
+				<xpath
+					expr="/form/notebook/page/group/group//button[@name='action_cancel_draft']"
+					position="after">
+					<group colspan="1" states="open">
+						<button name="%(action_retention_wizard_sales)d" string="Add Retention"
+							type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('retention_ids','!=',[])]}"
+							context="{'sales': True}" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_invoice_purchase_form_view">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page[@string='Payments']"
+					position="after">
+					<page string="Retenciones">
+						<field name="retention_ids" nolabel="1" readonly="1" widget="one2many"
+							colspan="4"
+							context="{'form_view_ref' : 'ecua_retenciones_manual.view_account_retention_purchase_form'}">
+							<tree string="Withholdings">
+								<field name="number" />
+								<field name="period_id" />
+								<field name="creation_date" />
+								<field name="total_iva" sum="Total Retenciones IVA" />
+								<field name="total_renta" sum="Total Retenciones Renta" />
+								<field name="state" />
+							</tree>
+						</field>
+						<field name="retention_line_ids" nolabel="1" readonly="1"
+							colspan="4" widget="one2many">
+							<tree string="Withholding Lines">
+								<field name="fiscalyear_id" />
+								<field name="period_id" />
+								<field name="description" />
+								<field name="tax_id" />
+								<field name="tax_base" />
+								<field name="retention_percentage" />
+								<field name="retained_value" sum="Total Retained" />
+							</tree>
+							<form string="Withholding Line">
+								<field name="fiscalyear_id" />
+								<field name="period_id" />
+								<field name="description" />
+								<field name="tax_id" />
+								<field name="tax_base" />
+								<field name="retention_percentage" />
+								<field name="retained_value" />
+							</form>
+						</field>
+					</page>
+				</xpath>
+				<xpath
+					expr="/form/notebook/page/group/group//button[@name='action_cancel_draft']"
+					position="after">
+					<group colspan="1" states="draft">
+						<button name="%(action_retention_wizard_purchase)d" string="Input Retention Number"
+							type="action" icon="terp-gtk-jump-to-ltr" attrs="{'invisible':[('retention_ids','=',[])]}" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>
