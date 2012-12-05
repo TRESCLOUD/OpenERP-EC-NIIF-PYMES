@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+            
+            <record model="ir.ui.view" id="hr_family_burden_tree_view">
+                <field name="name">hr.family.burden.tree</field>
+                <field name="model">hr.family.burden</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Family Burden">
+                        <field name="name"/>
+                        <field name="last_name"/>
+                        <field name="birth_date"/>
+                        <field name="relationship"/>
+                        <field name="age"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="hr_family_burden_form_view">
+                <field name="name">hr.family.burden.form</field>
+                <field name="model">hr.family.burden</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Family Burden">
+                        <field name="name" colspan="4"/>
+                        <field name="last_name" colspan="4"/>
+                        <field name="birth_date" attrs="{'required': [('relationship','=','child')]}"/>
+                        <field name="relationship"/>
+                    </form>
+                </field>
+            </record>
+    
+    </data>
+</openerp>

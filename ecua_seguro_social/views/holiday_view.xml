@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        <record model="ir.ui.view" id="edit_holiday_status_form">
+            <field name="name">hr.holidays.status.form</field>
+            <field name="model">hr.holidays.status</field>
+            <field name="type">form</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Leave Type">
+                    <group colspan="4" col="6">
+                        <field name="name"/>
+                        <field name="color_name"/>
+                        <field name="categ_id" widget="selection" groups="base.group_extended"/>
+                    </group>
+                    <notebook colspan="4">
+                      <page string="Details">
+                          <group colspan="2" col="2" name="selection">
+                              <separator string="Validation" colspan="2"/>
+                              <field name="double_validation"/>
+                              <field name="limit"/>
+                          </group>
+                          <group name="second" colspan="2" col="2">
+                              <separator string="Misc" colspan="2"/>
+                              <field name="active"/>
+                          </group>
+                      </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+	</data>
+</openerp>

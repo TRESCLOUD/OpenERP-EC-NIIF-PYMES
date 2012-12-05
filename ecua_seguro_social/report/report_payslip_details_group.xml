@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+		<record id="payslip_group_report_id" model="ir.actions.report.xml">
+			<field name="name">Nominas</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">hr.payslip.run</field>
+			<field name="report_name">payslip_group</field>
+			<field name="report_type">aeroo</field>
+			<field name="in_format">oo-odt</field>
+      		<field name='out_format' eval="ref('report_aeroo.report_mimetypes_odt_odt')"/>
+			<field name="report_rml">ecua_seguro_social/report/report_payslip_details_group.odt</field>
+			<field name="parser_state">default</field>
+			<field name="tml_source">file</field>
+		</record>    
+    </data>
+</openerp>

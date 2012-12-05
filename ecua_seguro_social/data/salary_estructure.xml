@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="hr_contract_empleado" model="hr.contract.type">
+            <field name="name">Empleado</field>
+        </record> 
+        
+        <!-- Contract Wage Types -->
+        <record id="hr.hr_contract_monthly_basic" model="hr.contract.wage.type">
+            <field name="name">Salario Basico Mensual</field>
+            <field name="type">basic</field>
+            <field name="period_id" ref="hr_contract.hr_contract_wage_type_period_monthly" />
+        </record>
+
+        <record id="INGR" model="hr.salary.rule.category">
+            <field name="name">Ingresos</field>
+            <field name="code">INGR</field>
+            <field name="type">input</field>
+        </record>
+        
+        <record id="OINGR" model="hr.salary.rule.category">
+            <field name="name">Otros Ingresos</field>
+            <field name="code">OINGR</field>
+            <field name="type">input</field>
+        </record>
+
+        <record id="EGRE" model="hr.salary.rule.category">
+            <field name="name">Egresos</field>
+            <field name="code">EGRE</field>
+            <field name="type">output</field>
+        </record>
+		
+        <record id="CONT" model="hr.salary.rule.category">
+            <field name="name">Contribución de la Compañia</field>
+            <field name="code">CONT</field>
+            <field name="type">input</field>
+        </record>
+
+
+
+		<record id="SALBAS" model="hr.salary.rule.percentage.base">
+			<field name="name">Salario Básico</field>
+			<field name="base">contract.wage</field>
+		</record>
+
+		<record id="S292" model="hr.salary.rule.percentage.base">
+			<field name="name">Salario Básico Unificado - 292</field>
+			<field name="base">292</field>
+		</record>
+
+		<record id="SALBRU" model="hr.salary.rule.percentage.base">
+			<field name="name">Total Ingresos</field>
+			<field name="base">categories.INGR</field>
+		</record>
+		
+		<record id="Ingresos" model="hr.salary.rule.percentage.base">
+			<field name="name">Ingresos + Otros Ingresos</field>
+			<field name="base">categories.INGR + categories.OINGR</field>
+		</record>
+
+		<record id="SALNET" model="hr.salary.rule.percentage.base">
+			<field name="name">Salario Neto</field>
+			<field name="base">categories.INGR + categories.OINGR - categories.EGRE</field>
+		</record>
+
+		<!-- Registro de IESS -->
+		
+		<record id="iess_partner" model="res.partner">
+			<field name="name">INSTITUTO ECUATORIANO DE SEGURIDAD SOCIAL</field>
+		</record>
+		
+		<!-- Reglas Salariales -->
+
+        <record id="hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Salario Básico</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="INGR"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+        </record>
+
+        <record id="hr_iess_personal" model="hr.salary.rule">
+            <field name="name">IESS Personal</field>
+            <field name="sequence" eval="17"/>
+            <field name="code">IESSPERSONAL</field>
+            <field name="category_id" ref="EGRE"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base" ref="SALBRU"></field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">9.35</field>            
+			<field name="pay_to_other">True</field>
+			<field name="partner_id" ref="iess_partner"></field>
+        </record>
+
+        <record id="hr_iess_patronal" model="hr.salary.rule">
+            <field name="name">IESS Patronal</field>
+            <field name="sequence" eval="18"/>
+            <field name="code">IESSPATRONAL</field>
+            <field name="category_id" ref="CONT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base" ref="SALBRU"></field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">12.15</field>            
+			<field name="pay_to_other">True</field>
+			<field name="partner_id" ref="iess_partner"></field>
+        </record>
+
+        <record id="hr_decimo_cuarto" model="hr.salary.rule">
+            <field name="name">Décimo Cuarto</field>
+            <field name="sequence" eval="19"/>
+            <field name="code">DCUARTO</field>
+            <field name="category_id" ref="CONT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base" ref="S292"></field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">8.333</field>            
+			<field name="pay_to_other">True</field>
+        </record>
+
+
+        <record id="hr_decimo_tercero" model="hr.salary.rule">
+            <field name="name">Décimo Tercero</field>
+            <field name="sequence" eval="20"/>
+            <field name="code">DTERCERO</field>
+            <field name="category_id" ref="CONT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base" ref="SALBRU"></field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">8.333</field>            
+			<field name="pay_to_other">True</field>
+        </record>
+
+        <record id="hr_fondos_reserva" model="hr.salary.rule">
+            <field name="name">Fondos de Reserva Pagados</field>
+            <field name="sequence" eval="21"/>
+            <field name="code">FRESERVAP</field>
+            <field name="category_id" ref="OINGR"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">percentage</field>
+            <field name="amount_percentage_base" ref="SALBRU"></field>
+            <field name="quantity">1</field>
+            <field name="amount_percentage">8.333</field>
+        </record>
+
+        <!-- Salary Structure -->
+
+         <record id="structure_base" model="hr.payroll.structure">
+            <field name="code">BASE</field>
+            <field name="name">SALARIO UNIFICADO IESS</field>
+            <field eval="[(6, 0, [ref('hr_rule_basic'),ref('hr_iess_personal'),ref('hr_iess_patronal'),ref('hr_decimo_cuarto'),ref('hr_decimo_tercero'),ref('hr_fondos_reserva'), ])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+
+
+    </data>
+
+</openerp>

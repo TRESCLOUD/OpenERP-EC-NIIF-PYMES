@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="wkf_advance" model="workflow">
+            <field name="name">account.hr.advances.basic</field>
+            <field name="osv">account.hr.advances</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="act_proforma" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_advance"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="act_done_advance" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_advance"/>
+            <field name="name">done</field>
+            <field name="action">proforma_advance()</field>
+            <field name="kind">function</field>
+        </record>
+
+        
+        <record id="act_cancel_advance" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_advance"/>
+            <field name="name">cancel</field>
+            <field name="flow_stop">True</field>
+            <field name="action">cancel_advance()</field>
+            <field name="kind">function</field>
+        </record>
+        
+        <record id="t2" model="workflow.transition">
+            <field name="act_from" ref="act_proforma"/>
+            <field name="act_to" ref="act_done_advance"/>
+            <field name="signal">proforma_advance</field>
+            <field name="condition">True</field>
+        </record>
+
+        <record id="t6" model="workflow.transition">
+            <field name="act_from" ref="act_proforma"/>
+            <field name="act_to" ref="act_cancel_advance"/>
+            <field name="signal">cancel_advance</field>
+        </record>
+        
+        <record id="t7" model="workflow.transition">
+            <field name="act_from" ref="act_done_advance"/>
+            <field name="act_to" ref="act_cancel_advance"/>
+            <field name="signal">cancel_advance</field>
+        </record>
+
+    </data>
+</openerp>

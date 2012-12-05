@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="JOR8HORAS" model="resource.calendar">
+			<field name="name">JORNADA 8 HORAS</field>
+		</record>
+
+		<record id="LUNES" model="resource.calendar.attendance">
+			<field name="name">LUNES</field>
+			<field name="hour_from">9</field>
+			<field name="hour_to">17</field>
+			<field name="dayofweek">0</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="MARTES" model="resource.calendar.attendance">
+			<field name="name">MARTES</field>
+			<field name="hour_from">9</field>
+			<field name="hour_to">17</field>
+			<field name="dayofweek">1</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="MIERCOLES" model="resource.calendar.attendance">
+			<field name="name">MIÉRCOLES</field>
+			<field name="hour_from">9</field>
+			<field name="hour_to">17</field>
+			<field name="dayofweek">2</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="JUEVES" model="resource.calendar.attendance">
+			<field name="name">JUEVES</field>
+			<field name="hour_from">9</field>
+			<field name="hour_to">17</field>
+			<field name="dayofweek">3</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="VIERNES" model="resource.calendar.attendance">
+			<field name="name">VIERNES</field>
+			<field name="hour_from">9</field>
+			<field name="hour_to">17</field>
+			<field name="dayofweek">4</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="JORNADASUPLE" model="resource.calendar.interval">
+			<field name="name">JORNADA SUPLEMENTARIA</field>
+			<field name="code">SUPLE</field>
+			<field name="hour_from">6</field>
+			<field name="hour_to">0</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+
+		<record id="JORNADAEXTRA" model="resource.calendar.interval">
+			<field name="name">JORNADA EXTRAORDINARIA</field>
+			<field name="code">EXTRA</field>
+			<field name="hour_from">0</field>
+			<field name="hour_to">6</field>
+			<field name="calendar_id" ref="JOR8HORAS"></field>
+		</record>
+		
+	</data>
+</openerp>

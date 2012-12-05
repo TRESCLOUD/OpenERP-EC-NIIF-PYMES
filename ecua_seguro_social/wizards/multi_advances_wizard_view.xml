@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="hr_multi_advance_wizard_form_start_view">
+			<field name="name">hr.multi.advance.wizard.form</field>
+			<field name="model">hr.multi.advance.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Advances Options">
+					<separator string="Select Option" colspan="4"/>
+					<field name="option" colspan="4" required="1"/>
+					<group colspan="4">
+						<label colspan="4" string="One Amount: The same value is assigned as a advance for every Employee "/>
+						<label colspan="4" string="Multi Amounts: You must assign every value for employees selected, Values Selected will be defaults for every employee, you can modify" />
+					</group>
+					<separator string="Advances Options" colspan="4"/>
+					<group colspan="4" >
+					<field name="period_id" required="1" widget="selection"/>
+					<field name="journal_id" widget="selection"
+						domain="[('type','in',('bank','cash'))]" required="1"/>
+					<field name="date" required="1"/>
+					<field name="amount" required="1"/>
+					</group>
+					<separator string="Description on Voucher" colspan="4"/>
+					<field name="name" required="1"  colspan="4"></field>
+					<field name="employee_ids" nolabel="1" colspan="4" required="1" width="700"/>
+					<group colspan="4">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button name="get_option" string="Continue" type="object" icon="gtk-media-play"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_multi_advance_wizard_form_one_amount_view">
+			<field name="name">hr.multi.advance.wizard.form</field>
+			<field name="model">hr.multi.advance.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Advances Options">
+					<separator string="Payment Lines" colspan="4"/>
+					<field name="line_ids" nolabel="1" width="800" height="300" colspan="4" readonly="1">
+						<tree string="Lines">
+							<field name="employee_id"/>
+							<field name="journal_id"/>
+							<field name="amount"/>
+							<field name="date"/>
+							<field name="period_id"/>
+							<field name="name"/>
+						</tree>
+						<form string="Line">
+							<field name="employee_id" required="1" />
+							<field name="journal_id" widget="selection" domain="[('type','in',('bank','cash'))]" required="1"/>
+							<field name="amount" required="1"/>
+							<field name="date"/>
+							<field name="period_id" required="1"/>
+							<field name="name" required="1"/>
+						</form>
+					</field>
+					<group colspan="4">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button name="generate_vouchers" string="Generate Vouchers" type="object" icon="gtk-execute"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_multi_advance_wizard_form_multi_amount_view">
+			<field name="name">hr.multi.advance.wizard.form</field>
+			<field name="model">hr.multi.advance.wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Advances Options">
+					<separator string="Payment Lines" colspan="4"/>
+					<field name="line_ids" nolabel="1" width="800" height="300" colspan="4">
+						<tree string="Lines" editable="button">
+							<field name="employee_id"/>
+							<field name="journal_id" widget="selection" domain="[('type','in',('bank','cash'))]"/>
+							<field name="amount"/>
+							<field name="date"/>
+							<field name="period_id" widget="selection"/>
+							<field name="name"/>
+						</tree>
+						<form string="Line">
+							<field name="employee_id" required="1" />
+							<field name="journal_id" widget="selection" domain="[('type','in',('bank','cash'))]" required="1"/>
+							<field name="amount" required="1"/>
+							<field name="date"/>
+							<field name="period_id" required="1"/>
+							<field name="name" required="1"/>
+						</form>
+					</field>
+					<group colspan="4">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button name="generate_vouchers" string="Generate Vouchers" type="object" icon="gtk-execute"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record id="hr_advances_wizard_action" model="ir.actions.act_window">
+			<field name="name">Advances Wizard</field>
+			<field name="res_model">hr.multi.advance.wizard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="hr_multi_advance_wizard_form_start_view" />
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem icon="STOCK_EXECUTE" name="Advances Wizard" parent="menu_hr_payables"
+			action="hr_advances_wizard_action" id="menu_advances_wizard" groups="account.group_account_manager,base.group_hr_manager"/>
+	</data>
+</openerp>

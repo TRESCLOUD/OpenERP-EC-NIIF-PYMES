@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Erase data from original hr modules -->
+        <!-- Contract Wage Types -->
+        <delete id="hr_contract.hr_contract_monthly_gross" model="hr.contract.wage.type"/>
+        <delete id="hr_contract.hr_contract_monthly_net" model="hr.contract.wage.type"/>
+        <delete id="hr_payroll.hr_contract_monthly_basic" model="hr.contract.wage.type"/>
+              
+        <delete id="hr_contract.hr_contract_type_emp" model="hr.contract.type"/>
+        <delete id="hr_contract.hr_contract_type_wrkr" model="hr.contract.type"/>
+        <delete id="hr_contract.hr_contract_type_sub" model="hr.contract.type"/>      
+
+        <!-- Category -->
+        <delete id="hr_payroll.HRA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.CA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.MA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.TELA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.LTA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.NA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.TA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.FA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.DA" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.PF" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.PT" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.WF" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.TDS" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.LWP" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.FC" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.ESI" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.OTHERD" model="hr.allounce.deduction.categoty"/>
+        <delete id="hr_payroll.OTHERA" model="hr.allounce.deduction.categoty"/>
+
+		<!-- Borrado de Workflows Antiguos -->
+		<delete id="hr_payroll.t1" model="workflow.transition"/>
+		<delete id="hr_payroll.t2" model="workflow.transition"/>
+		<delete id="hr_payroll.t3" model="workflow.transition"/>
+		<delete id="hr_payroll.t4" model="workflow.transition"/>
+		<delete id="hr_payroll.t7" model="workflow.transition"/>
+		<delete id="hr_payroll.t8" model="workflow.transition"/>
+		<delete id="hr_payroll.t9" model="workflow.transition"/>
+		<delete id="hr_payroll.t11" model="workflow.transition"/>
+		<delete id="hr_payroll.t12" model="workflow.transition"/>
+		<delete id="hr_payroll_account.act_account_check" model="workflow.activity"/>
+		<delete id="hr_payroll.act_new" model="workflow.activity"/>
+		<delete id="hr_payroll.act_draft" model="workflow.activity"/>
+		<delete id="hr_payroll.act_hr_check" model="workflow.activity"/>
+		<delete id="hr_payroll.act_confirm" model="workflow.activity"/>
+		<delete id="hr_payroll.act_cancel" model="workflow.activity"/>
+		<delete id="hr_payroll.act_done" model="workflow.activity"/>
+		<delete id="hr_payroll.wkf" model="workflow"/>
+		
+		<!-- Delete Menus -->
+		<delete id="hr_payroll.menu_hr_allounce_deduction_tree" model="ir.ui.menu"/>
+		<delete id="hr_payroll.menu_hr_company_contribution_tree" model="ir.ui.menu"/>
+		<delete id="hr_payroll.hr_menu_payment_advice" model="ir.ui.menu"/>
+		<delete id="hr_contract.hr_menu_contract_wage_type_period" model="ir.ui.menu"/>
+		<delete id="hr_contract.hr_menu_contract_wage_type" model="ir.ui.menu"/>
+		<delete id="hr_payroll.hr_menu_payment_advice" model="ir.ui.menu"/>
+		<delete id="hr_expense.menu_expense_all" model="ir.ui.menu"/>
+		<delete id="hr_expense.next_id_49" model="ir.ui.menu"/>
+		
+		<!-- reports -->
+		
+	    <delete id="hr_payroll.salary_payslip" model="ir.actions.report.xml"/>  
+	    <delete id="hr_payroll.payroll_advice" model="ir.actions.report.xml"/>  
+	    <delete id="hr_payroll.year_salary_report" model="ir.actions.report.xml"/>  
+	    <delete id="hr_payroll.year_payroll_register" model="ir.actions.report.xml"/>  
+	    <delete id="hr_payroll.year_employees_detail" model="ir.actions.report.xml"/>  
+	    <delete id="hr_payroll.salary_structure_register" model="ir.actions.report.xml"/>  
+		
+		
+		<!-- Menus de Reportes -->
+		
+	    <delete id="hr_payroll.menu_wizard_print_year_salary" model="ir.ui.menu"/>  
+	    <delete id="hr_payroll.menu_hr_payroll_employees_detail" model="ir.ui.menu"/>  
+		
+        
+        <!-- Decimal Precision -->
+        
+        <record forcecreate="True" id="decimal_payroll" model="decimal.precision">
+            <field name="name">Payroll</field>
+            <field name="digits">3</field>
+        </record>
+        
+        <!-- Groups -->
+
+    <!--  record model="res.groups" id="group_hr_manager">
+        <field name="name">Hr Manager</field>
+    </record-->
+
+    </data>
+</openerp>

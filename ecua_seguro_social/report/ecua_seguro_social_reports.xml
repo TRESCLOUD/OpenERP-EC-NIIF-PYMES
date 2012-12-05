@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+    
+    <!-- 
+    	     <report 
+          	auto="False" 
+          	id="hr_payroll.year_employees_detail" 
+          	model="hr.payslip" 
+          	name="employees.salary" 
+          	rml="ecua_seguro_social/report/report_employees_detail.rml"
+          	menu = "False" 
+          	string="Employees Salary Detail" />
+    	 -->	
+    		<!--  
+            <report
+            auto="False"
+            id="payslip_report"
+            model="hr.payslip"
+            name="test.pdf"
+            rml="ecua_seguro_social/report/report_payslip.rml"
+            string="Employee PaySlip" />
+			-->
+			<!--  
+        <report
+            auto="False"
+            id="payslip_details_report"
+            model="hr.payslip"
+            name="paylip.details"
+            rml="ecua_seguro_social/report/report_payslip_details.rml"
+            string="PaySlip Details" />
+			-->
+			<!-- 
+        <report
+            auto="False"
+            menu="False"
+            id="contribution_register"
+            model="hr.contribution.register"
+            name="contribution.register.lines"
+            rml="ecua_seguro_social/report/report_contribution_register.rml"
+            string="PaySlip Lines By Conribution Register" />
+            -->
+    </data>
+</openerp>

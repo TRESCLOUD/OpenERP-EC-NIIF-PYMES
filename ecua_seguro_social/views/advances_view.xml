@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="view_account_advance_supplier_filter" model="ir.ui.view">
+			<field name="name">account.hr.advance.line</field>
+			<field name="model">account.hr.advances.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Advance Details">
+					<field name="account_id" />
+					<field name="name" />
+					<field name="amount" />
+				</form>
+			</field>
+		</record>
+
+		<record id="view_account_advance_supp_graph" model="ir.ui.view">
+			<field name="name">account.hr.advances.supp.graph</field>
+			<field name="model">account.hr.advances</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Employee Advances Analisys" type="bar">
+					<field name="employee_id" />
+					<field name="amount" operator="+" />
+				</graph>
+			</field>
+		</record>
+
+		<record id="view_account_advances_tree" model="ir.ui.view">
+			<field name="name">account.hr.advances.tree</field>
+			<field name="model">account.hr.advances</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Employee Advances">
+					<field name="number" />
+					<field name="employee_id" />
+					<field name="journal_id" />
+					<field name="date" />
+					<field name="period_id" />
+					<field name="amount" />
+					<field name="currency_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_account_advance_supplier_filter" model="ir.ui.view">
+			<field name="name">account.hr.advance.supplier</field>
+			<field name="model">account.hr.advances</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Search Employee Advances">
+					<group col='8' colspan='4'>
+						<filter icon="terp-document-new" string="Draft"
+							domain="[('state','=','draft')]" help="Advances in Draft State" />
+						<filter icon="terp-camera_test" string="Done"
+							domain="[('state','=','posted')]" help="Advances in Done State" />
+						<separator orientation="vertical" />
+						<field name="employee_id"/>
+						<field name="date" />
+						<field name="number" />
+					</group>
+					<newline />
+					<group col="8" colspan="4">
+						<field name="journal_id" widget="selection"
+							context="{'journal_id': self, 'set_visible':False}" domain="[('type','in',('bank','cash'))]" />
+						<field name="period_id" groups="base.group_extended" />
+					</group>
+					<newline />
+					<group expand="0" string="Extended Filters..." col="8"
+						colspan="4">
+						<field name="ref" />
+						<field name="name" />
+						<field name="amount" />
+					</group>
+					<newline />
+					<group expand="0" string="Agrupar por..." colspan="4" col="10">
+						<filter string="Employee" icon="terp-personal" domain="[]"
+							context="{'group_by':'employee_id'}" />
+						<filter string="Journal" icon="terp-folder-orange" domain="[]"
+							context="{'group_by':'journal_id'}" />
+						<filter string="Period" icon="terp-go-month" domain="[]"
+							context="{'group_by':'period_id','visible':True}" />
+						<filter string="State" icon="terp-stock_effects-object-colorize"
+							domain="[]" context="{'group_by':'state'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_advance_supp_form">
+			<field name="name">account.hr.advance.supplier.form</field>
+			<field name="model">account.hr.advances</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Employees Advances">
+					<group col="6" colspan="4">
+						<field name="employee_id" on_change="onchange_employee(employee_id)" />
+						<field name="partner_id" />
+						<field name="date" />
+						<field name="journal_id" widget="selection" select="1"
+							domain="[('type','in',['cash', 'bank'])]" />
+						<field name="type" required="1" invisible="1" />
+						<field name="name" colspan="2" />
+						<field name="ref" select="1" />
+						<field name="account_id" invisible="1" />
+					</group>
+					<notebook colspan="4">
+						<page string="Payment Options">
+							<group colspan="4">
+							<field name="payment_policy" colspan="4" on_change="onchange_payment_policy(payment_policy)"/>
+							<field name="date_policy" attrs="{'invisible':[('payment_policy', '=', 'many_payments')],  'required': [('payment_policy', '=', 'one_payment')]}" colspan="4"/>
+							<field name="period_to_pay_id" widget="selection" attrs="{'invisible':['|', ('payment_policy', '=', 'many_payments'), ('date_policy', '=', 'date')], 'required': [('date_policy', '=', 'period'),]}" colspan="4"/>
+							<field name="date_to_pay" attrs="{'invisible':['|', ('payment_policy', '=', 'many_payments'), ('date_policy', '=', 'period')], 'required': [('date_policy', '=', 'date'),]}" colspan="4"/>
+							<field name="amount_to_pay" attrs="{'invisible':[('payment_policy', '=', 'many_payments')], 'required': [('payment_policy', '=', 'one_payment')]}" colspan="4"/>
+							</group>
+							<field name="line_ids" nolabel="1" colspan="4" context="{'type':'out_advance'}" attrs="{'invisible':[('payment_policy', '=', 'one_payment')]}">
+								<tree string="Details">
+									<field name="account_id" on_change="onchange_account(parent.employee_id)" invisible="1"/>
+									<field name="name" />
+									<field name="date_policy" required="1"/>
+									<field name="date_to_pay" />
+									<field name="period_to_pay_id"/>
+									<field name="amount" sum="Total" />
+									<field name="type" invisible="1" default_get="{'type':'dr'}" />
+								</tree>
+								<form string="Detail">
+									<field name="account_id" on_change="onchange_account(parent.employee_id)" invisible="1"/>
+									<field name="name" />
+									<field name="amount" />
+									<field name="date_policy" required="1"/>
+									<field name="date_to_pay" attrs="{'invisible':[('date_policy', '=', 'period')], 'required': [('date_policy', '=', 'date'),]}"/>
+									<field name="period_to_pay_id" widget="selection" attrs="{'invisible':[('date_policy', '=', 'date')], 'required': [('date_policy', '=', 'period')]}"/>
+									<field name="type" invisible="1" default_get="{'type':'dr'}" />
+								</form>
+							</field>
+							<group col="2" colspan="3">
+								<separator string="Notes" colspan="2" />
+								<field name="note" colspan="2" nolabel="1" />
+							</group>
+							<group col="2" colspan="1">
+								<group col="2" colspan="1">
+									<separator string="Other Info" colspan="2" />
+									<field name="number" />
+								</group>
+								<group col="4" colspan="1">
+									<separator string="Total" colspan="4" />
+									<field name="amount" string="Total" readonly="1" />
+									<button name="dummy" string="Calcular" type="object"
+										states="draft" icon="terp-stock_format-scientific" />
+								</group>
+							</group>
+						</page>
+						<page string="Salary Rules" groups="base.group_extended" 
+							attrs="{'invisible': [('state','!=','posted')]}">
+							<field name="rule_ids" nolabel="1" readonly="1" colspan="4"/>
+						</page>
+						<page string="Account Details" groups="base.group_extended"
+							attrs="{'invisible': [('state','!=','posted')]}">
+							<group col="6" colspan="4">
+								<field name="period_id" />
+							</group>
+							<field name="move_ids" colspan="4" nolabel="1" readonly="1">
+								<tree string="Detalle de Asiento">
+									<field name="move_id" />
+									<field name="ref" />
+									<field name="date" />
+									<field name="partner_id" />
+									<field name="account_id" />
+									<field name="name" string="Detalle" />
+									<field name="debit" />
+									<field name="credit" />
+									<field name="state" />
+									<field name="reconcile_id" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+					<group col="10" colspan="4">
+						<field name="state" />
+						<button name="cancel_advance" string="Cancelar" type="object"
+							states="posted" icon="terp-stock_effects-object-colorize"
+							confirm="Seguro de romper conciliación ?" />
+						<button name="proforma_advance" string="Aprobar" states="draft"
+							icon="terp-camera_test" />
+						<button name="action_cancel_draft" type="object" states="cancel"
+							string="Volver a Borrador" icon="terp-stock_effects-object-colorize" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_supplier_advance" model="ir.actions.act_window">
+			<field name="name">Employee Advances</field>
+			<field name="res_model">account.hr.advances</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,graph</field>
+			<field name="domain">[('type','=','out_advance')]</field>
+			<field name="context">{'type':'out_advance'}</field>
+			<field name="search_view_id" ref="view_account_advance_supplier_filter" />
+			<field name="view_id" eval="False" />
+			<field name="target">current</field>
+		</record>
+		<record id="action_supplier_advance_tree" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="act_window_id" ref="action_supplier_advance" />
+		</record>
+		<record id="action_supplier_adv_form" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_account_advance_supp_form" />
+			<field name="act_window_id" ref="action_supplier_advance" />
+		</record>
+
+		<menuitem action="action_supplier_advance" icon="STOCK_JUSTIFY_FILL"
+			sequence="12" id="menu_action_supplier_advance" parent="menu_hr_payables" groups="account.group_account_manager,base.group_hr_manager"/>
+
+
+	</data>
+</openerp>

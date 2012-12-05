@@ -1,0 +1,2479 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* ecua_seguro_social
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-03-29 15:17+0000\n"
+"PO-Revision-Date: 2012-03-30 09:47-0500\n"
+"Last-Translator: Christopher Ormaza <cormaza@ecuadorenlinea.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,title:0
+msgid "Title"
+msgstr "Título"
+
+#. module: ecua_seguro_social
+#: selection:hr.contract,schedule_pay:0
+msgid "Monthly"
+msgstr "Mensual"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Payment Ref"
+msgstr "Ref. pago"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip.worked_days,number_of_days:0
+msgid "Number of Days"
+msgstr "Número de Días"
+
+#. module: ecua_seguro_social
+#: help:resource.calendar.interval,hour_from:0
+msgid "Working time will start from"
+msgstr "El tiempo de trabajo comenzara en"
+
+#. module: ecua_seguro_social
+#: field:hr.payroll.structure,parent_id:0
+#: field:hr.salary.rule.category,parent_id:0
+msgid "Parent"
+msgstr "Padre"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip.input,amount:0
+msgid "It is used in computation. For e.g. A rule for sales having 1% commission of basic salary for per product can defined in expression like result = inputs.SALEURO.amount * contract.wage*0.01."
+msgstr "Esta es usado en el cálculo. Por ejemplo una regla de ventas teniendo comisión de 1%  del salario básico por productos puede definirse una expresión como 'result = inputs.SALEURO.amount * contract.wage*0.01'."
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.wizard_payslip
+msgid "Payslip Wizard"
+msgstr "Asistente de Rol de Pagos"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,residual:0
+msgid "Residual"
+msgstr "Residual"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_payslip_lines_contribution_register
+msgid "PaySlip Lines by Contribution Registers"
+msgstr "Líneas de Nómina por Contribución de Compañia"
+
+#. module: ecua_seguro_social
+#: field:hr.contract,journal_id:0
+msgid "Salary Journal"
+msgstr "Diario de Salarios"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Search Vouchers"
+msgstr "Buscar comprobantes"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,move_line_id:0
+msgid "Journal Item"
+msgstr "Movimiento Contable"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,amount:0
+#: field:hr.multi.advance.wizard,amount:0
+#: field:hr.multi.advance.wizard.line,amount:0
+#: field:hr.payslip.input,amount:0
+#: field:hr.payslip.line2,amount:0
+msgid "Amount"
+msgstr "Monto"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,status:0
+msgid "Ongoing"
+msgstr "En curso"
+
+#. module: ecua_seguro_social
+#: view:hr.holidays.status:0
+msgid "Validation"
+msgstr "Validación"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\employee.py:67
+#: code:addons\ecua_seguro_social\wizards\hr_payroll_payslips_by_employees.py:52
+#, python-format
+msgid "Warning !"
+msgstr "Advertencia!"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,use_partner_account:0
+#: help:hr.payslip.line2,use_partner_account:0
+#: help:hr.salary.rule,use_partner_account:0
+msgid "If you use this option if input or output will be used counterparties with the accounts configured on the employee, as the case output - Credit, or input - Debit"
+msgstr "Si usted usa esta opción, el ingreso o egreso sera usada en contrapartidas con las cuentas configuradas en el empleado, como el caso de Egreso - Crédito, o Ingresos - Débito"
+
+#. module: ecua_seguro_social
+#: field:hr.contract,analytic_account_id:0
+#: field:hr.extra.input.output,analytic_account_id:0
+#: field:hr.payslip.line2,analytic_account_id:0
+#: field:hr.salary.rule,analytic_account_id:0
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:243
+#: code:addons\ecua_seguro_social\objects\advances.py:279
+#: code:addons\ecua_seguro_social\objects\advances.py:320
+#: code:addons\ecua_seguro_social\objects\payroll.py:522
+#, python-format
+msgid "Configuration Error!"
+msgstr "Configuration Error!"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,use_partner_account:0
+#: field:hr.payslip.line2,use_partner_account:0
+#: field:hr.salary.rule,use_partner_account:0
+msgid "Use partner account?"
+msgstr "¿Usar cuentas del Empleado?"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Working Schedule"
+msgstr "Planificación de trabajo"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,partner_id:0
+#: field:account.hr.advances.line,partner_id:0
+#: model:ir.model,name:ecua_seguro_social.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Detalle de Asiento"
+msgstr "Detalle de Asiento"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:480
+#, python-format
+msgid "There is another payslip between dates that you configurated for employee %s"
+msgstr "Existe otra nómina entre el rango de fechas que ha configurado para el empleado %s"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:594
+#, python-format
+msgid "You have to configure debit and credit accounts for '%s' Payslip Line!"
+msgstr "Usted debe configurar la cuenta de débito y crédito para '%s' Línea Salarial!"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: field:account.hr.advances,state:0
+#: view:account.voucher:0
+#: field:hr.education.level,status:0
+#: field:hr.payslip.run,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule:0
+msgid "Search Salary Rule"
+msgstr "Buscar Regla Salarial"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,ref:0
+msgid "Ref"
+msgstr "Ref."
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Search Contract"
+msgstr "Buscar contrato"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Other Information"
+msgstr "Otra información"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Line"
+msgstr "Línea"
+
+#. module: ecua_seguro_social
+#: view:resource.calendar:0
+#: field:resource.calendar,calendar_inverval_ids:0
+#: view:resource.calendar.interval:0
+#: field:resource.calendar.interval,calendar_ids:0
+msgid "Hours Interval"
+msgstr "Intervalos de Horarios"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:479
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,active:0
+#: help:hr.payslip.line2,active:0
+#: help:hr.salary.rule,active:0
+msgid "If the active field is set to false, it will allow you to hide the salary rule without removing it."
+msgstr "Si el campo activo está en falso,  le permitirá ocultar la regla salarial sin eliminarlo."
+
+#. module: ecua_seguro_social
+#: field:hr.employee,age:0
+#: field:hr.family.burden,age:0
+msgid "Age"
+msgstr "Edad"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,move_id:0
+msgid "Asiento Contable"
+msgstr "Asiento Contable"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,condition_range_min:0
+#: field:hr.payslip.line2,condition_range_min:0
+#: field:hr.salary.rule,condition_range_min:0
+msgid "Minimum Range"
+msgstr "Rango Mínimo"
+
+#. module: ecua_seguro_social
+#: selection:hr.multi.advance.wizard,option:0
+msgid "One Amount"
+msgstr "Monto Único"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,amount_unreconciled:0
+msgid "Saldo Pendiente"
+msgstr "Saldo Pendiente"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\contract.py:131
+#: constraint:hr.contract:0
+#, python-format
+msgid "Error! contract start-date must be lower then contract end-date."
+msgstr "Error! La fecha de inicio del contrato debe ser anterior a la fecha de finalización."
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_supplier_advance
+#: model:ir.model,name:ecua_seguro_social.model_account_hr_advances
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_action_supplier_advance
+msgid "Employee Advances"
+msgstr "Anticipos de Empleados"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,last_name:0
+#: field:hr.family.burden,last_name:0
+msgid "Last Name"
+msgstr "Apellido Paterno"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Communication"
+msgstr "Comunicación"
+
+#. module: ecua_seguro_social
+#: help:resource.calendar.interval,hour_to:0
+msgid "Working time will end at"
+msgstr "El tiempo de trabajo finalizará a las"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,amount_select:0
+#: view:hr.payslip.line2:0
+#: field:hr.payslip.line2,amount_select:0
+#: field:hr.salary.rule,amount_select:0
+msgid "Amount Type"
+msgstr "Tipo de Monto"
+
+#. module: ecua_seguro_social
+#: field:hr.allounce.deduction.categoty,category_id:0
+#: view:hr.extra.input.output:0
+#: field:hr.extra.input.output,category_id:0
+#: field:hr.payslip.line2,category_id:0
+#: view:hr.salary.rule:0
+#: field:hr.salary.rule,category_id:0
+msgid "Category"
+msgstr "Categoría"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Trial Period"
+msgstr "Periodo de pruebas"
+
+#. module: ecua_seguro_social
+#: constraint:hr.employee:0
+msgid "Payable Account of Partner must be same employee_account!"
+msgstr "La cuenta por pagar de la empresa debe ser la misma que la cuenta del empleado!"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,date_policy:0
+#: field:account.hr.advances.line,date_policy:0
+msgid "Date Policy"
+msgstr "Política de Fecha"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,partner_id:0
+#: field:hr.payslip.line2,partner_id:0
+#: field:hr.salary.rule,partner_id:0
+msgid "Beneficiary"
+msgstr "Beneficiario"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,date_from:0
+#: field:hr.payslip.run,date_start:0
+#: field:payslip.lines.contribution.register,date_from:0
+msgid "Date From"
+msgstr "Fecha Desde"
+
+#. module: ecua_seguro_social
+#: selection:hr.salary.rule.category,type:0
+msgid "Input"
+msgstr "Ingreso"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "Conditions"
+msgstr "Condiciones"
+
+#. module: ecua_seguro_social
+#: sql_constraint:res.partner:0
+msgid "The value of CEDULA/RUC must be unique, this value already exists"
+msgstr "El valor de CEDULA/RUC debe ser único, este valor ya existe es sus registros"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Status"
+msgstr "Estado"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,at_present:0
+msgid "At present?"
+msgstr "Actualmente?"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Worked Day"
+msgstr "Día Trabajado"
+
+#. module: ecua_seguro_social
+#: view:hr.payroll.structure:0
+msgid "Employee Function"
+msgstr "Función del empleado"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,wife_id:0
+msgid "Wife / Husband"
+msgstr "Esposo(a)"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,date_due:0
+msgid "Fecha Límite"
+msgstr "Fecha Límite"
+
+#. module: ecua_seguro_social
+#: constraint:hr.employee:0
+msgid "Error ! You cannot create recursive Hierarchy of Employees."
+msgstr "¡Error! No se puede crear una jerarquía recursiva de empleados."
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,date_to_pay:0
+#: field:account.hr.advances.line,date_to_pay:0
+msgid "Date to Pay"
+msgstr "Fecha de Pago"
+
+#. module: ecua_seguro_social
+#: view:wizard.payslip:0
+msgid "This Wizard help to create a voucher for payment and conciliation of payslip"
+msgstr "Este asistente le ayudara a crear el comprobante contable para el pago y conciliación contable del rol de pagos"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:hr.payslip:0
+#: view:hr.payslip.run:0
+msgid "Done"
+msgstr "Realizado"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\wizards\hr_payroll_payslips_by_employees.py:52
+#, python-format
+msgid "You must select employee(s) to generate payslip(s)"
+msgstr "Usted debe seleccionar empleado(s) Para generar el(los) rol(es) de pago"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1311
+#: code:addons\ecua_seguro_social\objects\payroll.py:1398
+#, python-format
+msgid "Wrong quantity defined for salary rule %s (%s)"
+msgstr "Cantidad erronea definida para la regla salarial %s (%s)"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip.line2,salary_rule_id:0
+msgid "Rule"
+msgstr "Regla"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:243
+#: code:addons\ecua_seguro_social\objects\advances.py:279
+#, python-format
+msgid "There's not a category rule with code EGRE, please check System Configuration "
+msgstr "No existe una categoría de reglas salariales con código EGRE, por favor verifique su configuración del sistema"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,account_debit:0
+#: field:hr.extra.input.output,account_debit:0
+#: field:hr.payslip.line2,account_debit:0
+#: field:hr.salary.rule,account_debit:0
+msgid "Debit Account"
+msgstr "Cuenta de Débito"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:378
+#, python-format
+msgid "Please define a sequence on the journal !"
+msgstr "Por favor defina la secuencia del diario"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.report.xml,name:ecua_seguro_social.payslip_general_report_id
+msgid "Nómina del Empleado"
+msgstr "Nómina del Empleado"
+
+#. module: ecua_seguro_social
+#: field:hr.rule.input,input_id:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_rule_input
+msgid "Salary Rule Input"
+msgstr "Ingreso de Regla de Salario"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,quantity:0
+#: field:hr.payslip.line2,quantity:0
+#: field:hr.salary.rule,quantity:0
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: ecua_seguro_social
+#: help:hr.multi.advance.wizard,name:0
+msgid "%s will be replaced by name of employee"
+msgstr "%s sera remplazado por el nombre del empleado"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: field:account.hr.advances.line,period_id:0
+#: view:account.voucher:0
+#: view:hr.education.level:0
+#: field:hr.multi.advance.wizard,period_id:0
+#: field:hr.multi.advance.wizard.line,period_id:0
+#: field:wizard.payslip,period_id:0
+msgid "Period"
+msgstr "Período"
+
+#. module: ecua_seguro_social
+#: selection:hr.multi.advance.wizard,option:0
+msgid "Multi Amount"
+msgstr "Multiples Montos"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip,struct_id:0
+msgid "Defines the rules that have to be applied to this payslip, accordingly to the contract chosen. If you let empty the field contract, this field isn't mandatory anymore and thus the rules applied will be all the rules set on the structure of all contracts of the employee valid for the chosen period"
+msgstr "Define las reglas que han de aplicarse a esta nómina, de acuerdo con el contrato elegido. Si usted deja vacío el  campo del contrato, este campo ya no es obligatorio y por lo tanto las reglas aplicadas serán las reglas establecidas en la estructura de todos los contratos de los empleados válido para el período elegido"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip,credit_note:0
+msgid "Indicates this payslip has a refund of another"
+msgstr "Indica que esta nómina tiene un reembolso de otro"
+
+#. module: ecua_seguro_social
+#: field:hr.multi.advance.wizard.line,wizard_id:0
+msgid "Wizard"
+msgstr "Asistenten"
+
+#. module: ecua_seguro_social
+#: selection:hr.family.burden,relationship:0
+msgid "Wife/Husband"
+msgstr "Esposo(a)/Conviviente"
+
+#. module: ecua_seguro_social
+#: view:payroll.employees.detail:0
+msgid "Print Report"
+msgstr "Imprimir Reporte"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_payroll_employees_detail
+msgid "Employees Salary Statement"
+msgstr "Declaración Salarial de Empleados"
+
+#. module: ecua_seguro_social
+#: field:res.company,default_struct_id:0
+msgid "Default Salary Structure"
+msgstr "Estructura Salarial por Defecto"
+
+#. module: ecua_seguro_social
+#: help:hr.employee,remaining_leaves:0
+msgid "Total number of legal leaves allocated to this employee, change this value to create allocation/leave requests."
+msgstr "Número Total de Ausencias Legales asignadas a este empleado, cambie este valor para crear la asignación / solicitudes de permisos."
+
+#. module: ecua_seguro_social
+#: view:hr.contribution.register:0
+msgid "Contribution Registers"
+msgstr "Registro de Contribución de Compañías"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_multi_advance_wizard_line
+msgid "hr.multi.advance.wizard.line"
+msgstr "hr.multi.advance.wizard.line"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_education_area
+msgid "hr.education.area"
+msgstr "hr.education.area"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Payment"
+msgstr "Pago"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: field:hr.payslip.line2,extra_i_o_id:0
+msgid "Extra Input/Output"
+msgstr "Ingresos/Egresos Adicionales"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,amount_fix:0
+#: selection:hr.extra.input.output,amount_select:0
+#: field:hr.payslip.line2,amount_fix:0
+#: selection:hr.payslip.line2,amount_select:0
+#: field:hr.salary.rule,amount_fix:0
+#: selection:hr.salary.rule,amount_select:0
+msgid "Fixed Amount"
+msgstr "Monto Fijo"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,sequence:0
+#: help:hr.payslip.line2,sequence:0
+#: help:hr.salary.rule,sequence:0
+msgid "Use to arrange calculation sequence"
+msgstr "Utilizado para organizar la secuencia de cálculo"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Continue"
+msgstr "Continue"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,number:0
+msgid "Número"
+msgstr "Número"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,appears_on_payslip:0
+#: help:hr.payslip.line2,appears_on_payslip:0
+#: help:hr.salary.rule,appears_on_payslip:0
+msgid "Used for the display of rule on payslip"
+msgstr "Usado para mostrar la regla en la Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.employees:0
+msgid "This wizard will generate payslips for all selected employee(s) based on the dates and credit note specified on Payslips Run."
+msgstr "Este asistente generará Nómimas de todos los empleados seleccionados basados en las fechas especificadas en el Registro de Nóminas"
+
+#. module: ecua_seguro_social
+#: selection:hr.extra.input.output,condition_select:0
+#: selection:hr.payslip.line2,condition_select:0
+#: selection:hr.salary.rule,condition_select:0
+msgid "Always True"
+msgstr "Siempre Verdadero"
+
+#. module: ecua_seguro_social
+#: view:res.company:0
+msgid "Human Resources Configuration"
+msgstr "Configuración de Recursos Humanos"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:account.voucher:0
+#: field:hr.multi.advance.wizard,journal_id:0
+#: field:hr.multi.advance.wizard.line,journal_id:0
+#: field:wizard.payslip,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,type:0
+#: field:account.hr.advances.line,type:0
+msgid "Tipo"
+msgstr "Tipo"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Master's"
+msgstr "Master"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.line2:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_salary_rule_category
+msgid "Salary Rule Category"
+msgstr "Categoría de Regla Salarial"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,payment_policy:0
+msgid "Payment Policy"
+msgstr "Política de Pago"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,partner_id:0
+#: help:hr.payslip.line2,partner_id:0
+#: help:hr.salary.rule,partner_id:0
+msgid "The accounting entries will be done with this Partner as data, to keep their accounts receivable or payable, Let in blank if you are using for provisions"
+msgstr "Las entradas contable serán hechas con la información de esta Empresa, para mantener sus cuentas por cobrar o pagar, No asigne ninguna Empresa para usar el registro como provisión Contable"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,input_ids:0
+#: field:hr.payslip,inputs:0
+#: field:hr.payslip.line2,input_ids:0
+#: view:hr.salary.rule:0
+#: field:hr.salary.rule,input_ids:0
+msgid "Inputs"
+msgstr "Ingresos"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip.input,payslip_id:0
+#: field:hr.payslip.line2,slip_id:0
+#: field:hr.payslip.worked_days,payslip_id:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule:0
+msgid "Input Data"
+msgstr "Datos de Ingresos"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:account.voucher:0
+msgid "Payment Options"
+msgstr "Opciones de Pago"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,amount_select:0
+#: help:hr.payslip.line2,amount_select:0
+#: help:hr.salary.rule,amount_select:0
+msgid "The computation method for the rule amount."
+msgstr "El método de cálculo para el monto de la regla."
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Seguro de romper conciliación ?"
+msgstr "Seguro de romper conciliación ?"
+
+#. module: ecua_seguro_social
+#: field:res.company,default_account_debit_id:0
+msgid "Default Debit Account Employee"
+msgstr "Cuenta de Débito por Defecto en Empleado"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Multi Amounts: You must assign every value for employees selected, Values Selected will be defaults for every employee, you can modify"
+msgstr "Múltiples Montos: Usted debe asignar el valor a pagar a cada empleado seleccionado, los valores seleccionados serán usados por defecto para cada empleado, usted puede modificarlos"
+
+#. module: ecua_seguro_social
+#: constraint:hr.employee:0
+msgid "Validation Error: Invalid Identification No"
+msgstr "Error de Validación: Número de cédula erroneo"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Payment Information"
+msgstr "Información de pago"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: selection:account.hr.advances,state:0
+#: view:account.voucher:0
+#: view:hr.payslip:0
+#: view:hr.payslip.run:0
+#: selection:hr.payslip.run,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Total Working Days"
+msgstr "Total de Días Trabajados"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,account_id:0
+msgid "Cuenta de Banco"
+msgstr "Cuenta de Banco"
+
+#. module: ecua_seguro_social
+#: view:payslip.lines.contribution.register:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: ecua_seguro_social
+#: field:hr.salary.rule.category,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Account Details"
+msgstr "Detalles de Cuenta"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Print Payslip"
+msgstr "Imprimir Nómina"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\employee.py:72
+#, python-format
+msgid "Allocation for %s"
+msgstr "Asignación para %s"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Miscellaneous"
+msgstr "Varios"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,amount_percentage_base:0
+#: help:hr.payslip.line2,amount_percentage_base:0
+#: help:hr.salary.rule,amount_percentage_base:0
+#: help:hr.salary.rule.percentage.base,base:0
+msgid "result will be affected to a variable"
+msgstr "Resultado será afectado para una variable"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "One Amount: The same value is assigned as a advance for every Employee "
+msgstr "Monto Único: El mismo valor sera asignado como anticipo para cada empleado seleccionado"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Job"
+msgstr "Trabajo"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule.category:0
+msgid "Salary Categories"
+msgstr "Categorías de Salarios"
+
+#. module: ecua_seguro_social
+#: view:hr.payroll.structure:0
+msgid "Payroll Structures"
+msgstr "Estructuras de Nómina"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:80
+#, python-format
+msgid "Invalid action !"
+msgstr "Acción Inválida!"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,condition_range_max:0
+#: help:hr.payslip.line2,condition_range_max:0
+#: help:hr.salary.rule,condition_range_max:0
+msgid "The maximum amount, applied for this rule."
+msgstr "El monto máximo, aplicado para esta regla."
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+#: field:hr.employee,extra_input_output_ids:0
+msgid "Extra Payments/Deductions"
+msgstr "Ingresos/Egresos Adicionales"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,child_ids:0
+#: field:hr.payslip.line2,child_ids:0
+#: field:hr.salary.rule,child_ids:0
+msgid "Child Salary Rule"
+msgstr "Regla Salarial Hijo"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,pay_to_other:0
+#: help:hr.payslip.line2,pay_to_other:0
+#: help:hr.salary.rule,pay_to_other:0
+msgid "If payment is made to another Partner and is part of the employee's salary, check this option, you must specify the beneficiary of the rule"
+msgstr "Si el Ingreso se hace a otra Empresa y forma parte del salario del empleado, marque esta opción, debe especificar el beneficiario de la  Regla Salarial"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule.category:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_hr_salary_rule_category
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_hr_salary_rule_category
+msgid "Salary Rule Categories"
+msgstr "Categorías de Regla Salarial"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:532
+#, python-format
+msgid "Payslip of %s"
+msgstr "Rol de Pagos para %s"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Postal Address"
+msgstr "Dirección Postal"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,helper:0
+msgid "Helper"
+msgstr "Ayuda"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Calcular"
+msgstr "Calcular"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip.input,contract_id:0
+#: help:hr.payslip.worked_days,contract_id:0
+msgid "The contract for which applied this input"
+msgstr "El contrato para el cual aplica este ingreso"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "Computation"
+msgstr "Computación"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances.line,type:0
+msgid "Débito"
+msgstr "Débito"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Medical Examination"
+msgstr "Examen médico"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1326
+#: code:addons\ecua_seguro_social\objects\payroll.py:1413
+#, python-format
+msgid "Wrong python code defined for salary rule %s (%s) "
+msgstr "Código Python erroneo, definido para la regla salarial %s (%s) "
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,date:0
+#: field:account.hr.advances.line,date_original:0
+msgid "Fecha"
+msgstr "Fecha"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,loan:0
+msgid "Loan?"
+msgstr "Prestamo?"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Contracts"
+msgstr "Contratos"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Total Amount"
+msgstr "Importe total"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Compute Sheet"
+msgstr "Calcular hoja"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,date_to_pay:0
+#: field:hr.multi.advance.wizard,date:0
+#: field:hr.multi.advance.wizard.line,date:0
+#: field:wizard.payslip,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:account.voucher:0
+msgid "Extended Filters..."
+msgstr "Filtros Extendidos..."
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Unreconcile"
+msgstr "Romper conciliación"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_payroll_employees_detail
+msgid "payroll.employees.detail"
+msgstr "payroll.employees.detail"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,note:0
+msgid "Notas"
+msgstr "Notas"
+
+#. module: ecua_seguro_social
+#: view:payroll.employees.detail:0
+msgid "Year Salary"
+msgstr "Año del Salario"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Are you sure to unreconcile this record ?"
+msgstr "¿Seguro que desea romper la conciliación de este registro?"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: model:ir.model,name:ecua_seguro_social.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1349
+#: code:addons\ecua_seguro_social\objects\payroll.py:1436
+#, python-format
+msgid "Wrong python condition defined for salary rule %s (%s)"
+msgstr "Condición Python erronea, definida para la regla salarial %s (%s)"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,condition_python:0
+#: field:hr.payslip.line2,condition_python:0
+#: field:hr.salary.rule,condition_python:0
+msgid "Python Condition"
+msgstr "Condición Python"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:698
+#, python-format
+msgid "Refund Payslip"
+msgstr "Rol de Pagos de Devolución"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Primary education"
+msgstr "Educación Primaria"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,code:0
+#: field:hr.payslip.input,code:0
+#: field:hr.payslip.line2,code:0
+#: field:hr.payslip.worked.hours.interval,code:0
+#: field:hr.payslip.worked_days,code:0
+#: field:hr.rule.input,code:0
+#: field:hr.salary.rule,code:0
+#: field:hr.salary.rule.category,code:0
+#: field:resource.calendar.interval,code:0
+msgid "Code"
+msgstr "Código"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,amount_python_compute:0
+#: selection:hr.extra.input.output,amount_select:0
+#: field:hr.payslip.line2,amount_python_compute:0
+#: selection:hr.payslip.line2,amount_select:0
+#: field:hr.salary.rule,amount_python_compute:0
+#: selection:hr.salary.rule,amount_select:0
+msgid "Python Code"
+msgstr "Código Python"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Search Employee Advances"
+msgstr "Buscar Anticipos de Empleados"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip.run,bank_statement_id:0
+msgid "Bank Statement"
+msgstr "Extracto Bancario"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,account_credit:0
+#: field:hr.extra.input.output,account_credit:0
+#: field:hr.payslip.line2,account_credit:0
+#: field:hr.salary.rule,account_credit:0
+msgid "Credit Account"
+msgstr "Cuenta de Crédito"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Details By Salary Rule Category"
+msgstr "Detalles por Categoría de Regla Salarial"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1320
+#: code:addons\ecua_seguro_social\objects\payroll.py:1407
+#, python-format
+msgid "Wrong percentage base or quantity defined for salary rule %s (%s)"
+msgstr "Porcentaje Base o Cantidad erronea definida para la regla salarial %s (%s)"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: view:hr.payslip.line2:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_payroll_structure
+msgid "Salary Structure"
+msgstr "Estructura salarial"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.multi.advance.wizard:0
+#: view:hr.payslip:0
+#: view:hr.payslip.employees:0
+#: view:payslip.lines.contribution.register:0
+#: view:wizard.payslip:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,mother_last_name:0
+msgid "Mother Last Name"
+msgstr "Apellido Materno"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Personal Information"
+msgstr "Información personal"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Information"
+msgstr "Información"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Other Info"
+msgstr "Otra Información"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_view_hr_payslip_form2
+msgid "Employee Payslips"
+msgstr "Nóminas de Empleados"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Current"
+msgstr "Actual"
+
+#. module: ecua_seguro_social
+#: field:resource.calendar.interval,hour_to:0
+msgid "Work to"
+msgstr "Trabajar para"
+
+#. module: ecua_seguro_social
+#: selection:hr.salary.rule.category,type:0
+msgid "Other"
+msgstr "Otro"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1343
+#: code:addons\ecua_seguro_social\objects\payroll.py:1430
+#, python-format
+msgid "Wrong range condition defined for salary rule %s (%s)"
+msgstr "Condición de rango erronea, definida para la regla salarial %s (%s)"
+
+#. module: ecua_seguro_social
+#: help:hr.multi.advance.wizard,journal_id:0
+msgid "Journal of Payment"
+msgstr "Diario de Pago"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\wizards\multi_advances_wizard.py:65
+#: code:addons\ecua_seguro_social\wizards\multi_advances_wizard.py:158
+#: constraint:hr.multi.advance.wizard:0
+#: constraint:hr.multi.advance.wizard.line:0
+#, python-format
+msgid "Error: Amount must be bigger than zero"
+msgstr "Error: El monto debe ser mayor que cero"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_allounce_deduction_categoty
+msgid "Allowance Deduction Heads"
+msgstr "Cabeceras prima/deducción"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Credits"
+msgstr "Haber"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,pay_to_other:0
+#: field:hr.payslip.line2,pay_to_other:0
+#: field:hr.salary.rule,pay_to_other:0
+msgid "Pay to Other? / Provision?"
+msgstr "¿Pagar a Otro? / ¿Provisión?"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Identification Info."
+msgstr "Información de Identificación."
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,worked_days_line_ids:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_worked_days
+msgid "Payslip Worked Days"
+msgstr "Días Trabajados"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\wizards\multi_advances_wizard.py:54
+#, python-format
+msgid "Advance to %s"
+msgstr "Anticipo de %s"
+
+#. module: ecua_seguro_social
+#: field:hr.contribution.register,name:0
+#: field:hr.education.area,name:0
+#: field:hr.extra.input.output,name:0
+#: field:hr.family.burden,name:0
+#: field:hr.multi.advance.wizard.line,name:0
+#: field:hr.payslip.line2,name:0
+#: field:hr.payslip.run,name:0
+#: field:hr.salary.rule,name:0
+#: field:hr.salary.rule.category,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,name:0
+msgid "Concepto"
+msgstr "Concepto"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Duration"
+msgstr "Duración"
+
+#. module: ecua_seguro_social
+#: field:res.company,default_account_credit_id:0
+msgid "Default Credit Account Employee"
+msgstr "Cuenta de Crédito para Empleados por Defecto"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,other_inputs:0
+msgid "Other Inputs"
+msgstr "Otros Ingresos"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,education_ids:0
+msgid "Childrens"
+msgstr "Hijos/Convivientes"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip.input,code:0
+#: help:hr.payslip.worked.hours.interval,code:0
+#: help:hr.payslip.worked_days,code:0
+#: help:hr.rule.input,code:0
+msgid "The code that can be used in the salary rules"
+msgstr "El código puede ser usado en la Regla Salarial"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_salary_rule_percentage_base
+msgid "hr.salary.rule.percentage.base"
+msgstr "hr.salary.rule.percentage.base"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "Accounting"
+msgstr "Contabilidad"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Aprobar"
+msgstr "Aprobar"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:320
+#, python-format
+msgid "You can't cancel advance, salary rules are paid"
+msgstr "Usted no puede cancelar el anticipo, las reglas salariales ya se encuentran pagadas"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "System Info"
+msgstr "Información del Sistema"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,period_to_pay_id:0
+#: help:hr.multi.advance.wizard,period_id:0
+msgid "Period to Pay"
+msgstr "Período para Pago"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,account_tax_id:0
+#: field:hr.payslip.line2,account_tax_id:0
+#: field:hr.salary.rule,account_tax_id:0
+msgid "Tax Code"
+msgstr "Código de Impuesto"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.contract:0
+#: view:hr.extra.input.output:0
+#: view:hr.payslip:0
+#: view:hr.payslip.line2:0
+#: view:hr.salary.rule:0
+msgid "Group By..."
+msgstr "Agrupar por..."
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+msgid "Print All Payslips"
+msgstr "Imprimir todas las nóminas"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Secondary education"
+msgstr "Educación Secundaria"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Bill Payment"
+msgstr "Pago factura"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Bachelor's"
+msgstr "Universitario"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_payslip_payment
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_action_payslip_payment
+msgid "Payslip Vouchers"
+msgstr "Comprobantes de Rol de Pagos"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+#: view:hr.payslip.run:0
+msgid "Set to Draft"
+msgstr "Cambiar a borrador"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "Accounting Options"
+msgstr "Opciones de Contabilidad"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Validate"
+msgstr "Validar"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.employees:0
+#: view:wizard.payslip:0
+msgid "Generate"
+msgstr "Generar"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,amount_original:0
+msgid "Monto Inicial"
+msgstr "Monto Inicial"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:hr.contract:0
+#: view:hr.employee:0
+#: view:hr.payslip:0
+#: view:hr.salary.rule.category:0
+#: view:wizard.payslip:0
+#: field:wizard.payslip,note:0
+msgid "Notes"
+msgstr "Notas"
+
+#. module: ecua_seguro_social
+#: constraint:hr.employee:0
+msgid "Error ! You cannot select a department for which the employee is the manager."
+msgstr "¡Error! No puede seleccionar un departamento que tenga el empleado como responsable."
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Salary Computation"
+msgstr "Cálculo de la nómina"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,company_contribution:0
+#: field:hr.payslip.line2,company_contribution:0
+#: field:hr.salary.rule,company_contribution:0
+msgid "Company Contribution?"
+msgstr "¿Contribución de Compañía?"
+
+#. module: ecua_seguro_social
+#: view:payslip.lines.contribution.register:0
+msgid "Contribution Register's Payslip Lines"
+msgstr "Líneas de Nómina de la Contribución de la Compañia"
+
+#. module: ecua_seguro_social
+#: field:res.company,default_working_hours_id:0
+msgid "Default Working Schedule"
+msgstr "Jornada Laboral por Defecto"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Higher education"
+msgstr "Universidad Incompleta"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:777
+#, python-format
+msgid "Normal Working Days paid at 100%"
+msgstr "Días trabajados para normal %100"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,condition_range_max:0
+#: field:hr.payslip.line2,condition_range_max:0
+#: field:hr.salary.rule,condition_range_max:0
+msgid "Maximum Range"
+msgstr "Rango Máximo"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Categories"
+msgstr "Categorías"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\employee.py:74
+#, python-format
+msgid "Leave Request for %s"
+msgstr "Solicitud de Ausencia para %s"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.report.xml,name:ecua_seguro_social.payslip_group_report_id
+msgid "Nominas"
+msgstr "Nominas"
+
+#. module: ecua_seguro_social
+#: view:hr.education.level:0
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule:0
+msgid "Children definition"
+msgstr "Definición de Hijos"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,account_id:0
+msgid "Advance Account"
+msgstr "Cuenta de Anticipo"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Payslip Payment"
+msgstr "Pago de Rol de Pago"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,amount_percentage_base:0
+#: field:hr.payslip.line2,amount_percentage_base:0
+#: field:hr.salary.rule,amount_percentage_base:0
+#: field:hr.salary.rule.percentage.base,base:0
+msgid "Percentage based on"
+msgstr "Porcentaje Basado en"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Employees Advances"
+msgstr "Anticipos de Empleados"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:378
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule.percentage.base:0
+msgid "Percentage Base"
+msgstr "Base de Porcentaje"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.act_payslip_lines
+msgid "Payslip Lines"
+msgstr "Líneas de Nómina"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:hr.payroll.structure:0
+#: field:hr.payroll.structure,rule_ids:0
+#: view:hr.salary.rule:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_salary_rule_form
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_action_hr_salary_rule_form
+msgid "Salary Rules"
+msgstr "Reglas Salariales"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:688
+#, python-format
+msgid "Refund: "
+msgstr "Devolución: "
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,appears_on_payslip:0
+#: field:hr.payslip.line2,appears_on_payslip:0
+#: field:hr.salary.rule,appears_on_payslip:0
+msgid "Appears on Payslip"
+msgstr "Se muestra en Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+#: view:hr.family.burden:0
+msgid "Family Burden"
+msgstr "Carga Familiar"
+
+#. module: ecua_seguro_social
+#: view:hr.education.level:0
+msgid "Info"
+msgstr "Información"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Worked Days & Inputs"
+msgstr "Días Trabajados e Ingresos"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,details_by_salary_rule_category:0
+msgid "Details by Salary Rule Category"
+msgstr "Detalles por Categorías de Regla Salarial"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Advances Options"
+msgstr "Opciones de Anticipos"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_payslip_lines_contribution_register
+msgid "PaySlip Lines"
+msgstr "Líneas de Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.education.level:0
+msgid "Education Levels"
+msgstr "Niveles de Educación"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,credit_note:0
+#: field:hr.payslip.run,credit_note:0
+msgid "Credit Note"
+msgstr "Nota de Crédito"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_resource_calendar_interval
+msgid "resource.calendar.interval"
+msgstr "resource.calendar.interval"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "To Review"
+msgstr "A revisar"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_input
+msgid "Payslip Input"
+msgstr "Recibo de Ingreso"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+msgid "Extra Inputs/Outputs"
+msgstr "Ingresos/Egresos Adicionales"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_wizard_payslip
+msgid "wizard.payslip"
+msgstr "wizard.payslip"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Job Info"
+msgstr "Información del trabajo"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:522
+#, python-format
+msgid "You must configure correct Partner for employee '%s' "
+msgstr "Usted debe configurar correctamente la empresa para el empleado '%s' "
+
+#. module: ecua_seguro_social
+#: model:ir.module.module,shortdesc:ecua_seguro_social.module_meta_information
+msgid "Ecuadorian Human Resources"
+msgstr "Recursos Humanos en Ecuador"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,start_date:0
+#: field:payroll.employees.detail,date_from:0
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Generate Voucher"
+msgstr "Generar Comprobante"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip.run,credit_note:0
+msgid "If its checked, indicates that all payslips generated from here are refund payslips."
+msgstr "Esta opción  marcada, indica que todas las nóminas generadas desde aquí son nóminas de reembolso"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,line_ids:0
+#: field:account.hr.advances,rule_ids:0
+msgid "Detalle de Anticipo"
+msgstr "Detalle de Anticipo"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,amount_to_pay:0
+msgid "Amount to Advance"
+msgstr "Monto de Anticipo"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_view_hr_employee_grade_form
+msgid "Salary Structures"
+msgstr "Estructuras Salariales"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_hr_payslip_run_tree
+msgid "Payslips Run"
+msgstr "Registro de Nóminas"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.hr_advances_wizard_action
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_advances_wizard
+msgid "Advances Wizard"
+msgstr "Asistente de Anticipos"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,date_policy:0
+#: selection:account.hr.advances.line,date_policy:0
+msgid "By Period"
+msgstr "Por Período"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,type:0
+msgid "Anticipo Clientes"
+msgstr "Anticipo Clientes"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,active:0
+#: field:hr.payslip.line2,active:0
+#: field:hr.salary.rule,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: ecua_seguro_social
+#: view:hr.salary.rule:0
+msgid "Child Rules"
+msgstr "Reglas Hijas"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+msgid "Search Payslip Runs"
+msgstr "Buscar Registro de Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.line2:0
+msgid "Search Payslip Lines"
+msgstr "Buscar Líneas de Nómina"
+
+#. module: ecua_seguro_social
+#: field:hr.contract,schedule_pay:0
+msgid "Scheduled Pay"
+msgstr "Pago Programado"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "Company contribution"
+msgstr "Contribución de Compañía"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,period_id:0
+#: field:account.hr.advances,period_to_pay_id:0
+msgid "Periodo"
+msgstr "Periodo"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes contables"
+
+#. module: ecua_seguro_social
+#: view:hr.holidays.status:0
+msgid "Misc"
+msgstr "Misc."
+
+#. module: ecua_seguro_social
+#: help:account.hr.advances,payment_policy:0
+msgid "One Payment: Only one discount on the payroll of the selected date, Many Payments: You can create many discount and distribute amount and dates to pay "
+msgstr "Un solo pago: Un solo descuento en rol de pago de la fecha o período seleccionado, Múltiples Pagos: Usted puede crear múltiples descuentos y distribuir los montos en diferentes fechas o períodos de pago"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+#: view:hr.salary.rule:0
+msgid "General"
+msgstr "General"
+
+#. module: ecua_seguro_social
+#: model:ir.module.module,description:ecua_seguro_social.module_meta_information
+msgid "Human Resources for Ecuadorian localisation"
+msgstr "Localización para Recursos Humanos en Ecuador"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_employees
+msgid "Generate payslips for all selected employees"
+msgstr "Generar Nóminas para todos los empleados seleccionados"
+
+#. module: ecua_seguro_social
+#: field:hr.contribution.register,register_line_ids:0
+msgid "Register Line"
+msgstr "Línea de Registro"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\employee.py:67
+#, python-format
+msgid "To use this feature, you must have only one leave type without the option 'Allow to Override Limit' set. (%s Found)."
+msgstr "Para usar esta característica. usted debe tener solo un tipo de ausencia sin la opción 'Permitir sobrepasar el límite' asignada (%s Encontradas)."
+
+#. module: ecua_seguro_social
+#: selection:hr.payslip.run,state:0
+msgid "Open"
+msgstr "Abrir"
+
+#. module: ecua_seguro_social
+#: field:hr.family.burden,birth_date:0
+msgid "Birth Date"
+msgstr "Fecha de Nacimiento"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Agrupar por..."
+msgstr "Agrupar por..."
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.line2:0
+msgid "Calculations"
+msgstr "Cálculos"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\wizards\wizard_payslip.py:104
+#, python-format
+msgid "Payment of Employee"
+msgstr "Pago del Empleado"
+
+#. module: ecua_seguro_social
+#: view:hr.education.level:0
+#: field:hr.education.level,level:0
+#: view:hr.employee:0
+msgid "Education Level"
+msgstr "Nivel de Educación"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,total_wage:0
+msgid "Total Basic Salary"
+msgstr "Total de Salario Básico"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Address"
+msgstr "Dirección"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,state:0
+#: view:account.voucher:0
+msgid "Posted"
+msgstr "Contabilizado"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,end_date:0
+#: field:payroll.employees.detail,date_to:0
+msgid "End Date"
+msgstr "Fecha Final"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,paid:0
+msgid "Paid?"
+msgstr "¿Pagado?"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,level:0
+msgid "Ph.D."
+msgstr "Doctorado"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+#: field:hr.multi.advance.wizard,line_ids:0
+#: field:hr.payslip,line_i_o_ids:0
+msgid "Lines"
+msgstr "Líneas"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,payment_policy:0
+msgid "One Payment"
+msgstr "Un solo pago"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "PaySlip Run"
+msgstr "Registro de Nómina"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_hr_salary_rule_percentage_base_tree_view
+#: model:ir.ui.menu,name:ecua_seguro_social.hr_salary_rule_percentage_base_menu
+msgid "Percentage Bases"
+msgstr "Bases de Porcentajes"
+
+#. module: ecua_seguro_social
+#: view:hr.extra.input.output:0
+msgid "Search Extra Input/Output"
+msgstr "Buscar Ingresos/Egresos Adicionales"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_extra_input_output_form
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_action_hr_extra_input_output_form
+msgid "Extra Inputs Outputs"
+msgstr "Ingresos y Egresos Adicionales"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1081
+#, python-format
+msgid "Salary Slip of %s for %s"
+msgstr "Rol de Pagos de %s para %s"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.action_hr_payslip_by_employees
+msgid "Generate Payslips"
+msgstr "Nóminas Generadas"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+msgid "Print Payslip Run"
+msgstr "Imprimir Registro de Nómina"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "States"
+msgstr "Estados"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Names"
+msgstr "Nombres"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Open Balance"
+msgstr "Abrir balance"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:232
+#, python-format
+msgid "Payment of Advance on %s"
+msgstr "Pago del Anticipo de %s"
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: field:account.hr.advances,amount:0
+#: field:hr.payslip.line2,total:0
+msgid "Total"
+msgstr "Total"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:594
+#, python-format
+msgid "Accounting Error!"
+msgstr "Error Contable!"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,condition_select:0
+#: field:hr.payslip.line2,condition_select:0
+#: field:hr.salary.rule,condition_select:0
+msgid "Condition Based on"
+msgstr "Condición Basada en"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,type:0
+msgid "Anticipo Proveedores"
+msgstr "Anticipo Proveedores"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,payment_policy:0
+msgid "Many Payments"
+msgstr "Múltiples Pagos"
+
+#. module: ecua_seguro_social
+#: help:hr.salary.rule.category,parent_id:0
+msgid "Linking a salary category to its parent is used only for the reporting purpose."
+msgstr "El enlace a una categoría como su padre es únicamente usado para propósitos de reportes."
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Internal Notes"
+msgstr "Notas internas"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,outputs:0
+msgid "Ouputs"
+msgstr "Egresos"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:631
+#: code:addons\ecua_seguro_social\objects\payroll.py:643
+#, python-format
+msgid "Adjustment Entry"
+msgstr "Asiento de Ajuste"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,parent_rule_id:0
+#: field:hr.payslip.line2,parent_rule_id:0
+#: field:hr.salary.rule,parent_rule_id:0
+msgid "Parent Salary Rule"
+msgstr "Regla Salarial Padre"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: view:hr.payslip.run:0
+#: field:hr.payslip.run,slip_ids:0
+#: model:ir.actions.act_window,name:ecua_seguro_social.act_hr_employee_payslip_list
+msgid "Payslips"
+msgstr "Nóminas"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: view:hr.holidays.status:0
+msgid "Details"
+msgstr "Details"
+
+#. module: ecua_seguro_social
+#: field:hr.contribution.register,company_id:0
+#: field:hr.extra.input.output,company_id:0
+#: field:hr.payslip.line2,company_id:0
+#: field:hr.salary.rule,company_id:0
+#: field:hr.salary.rule.category,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_salary_rule
+msgid "hr.salary.rule"
+msgstr "hr.salary.rule"
+
+#. module: ecua_seguro_social
+#: model:ir.ui.menu,name:ecua_seguro_social.menu_hr_payables
+msgid "Payslips Vouchers"
+msgstr "Comprobante de Rol de Pagos"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: view:hr.payslip.line2:0
+msgid "Quantity/Rate"
+msgstr "Cantidad/Precio"
+
+#. module: ecua_seguro_social
+#: help:hr.multi.advance.wizard,date:0
+msgid "Date of Voucher"
+msgstr "Fecha del Comprobante"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,institution:0
+msgid "Institution"
+msgstr "Institución"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Detalle"
+msgstr "Detalle"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:81
+#, python-format
+msgid "Cannot delete Advance(s) which                     are already opened or paid !"
+msgstr "No puede borrar un anticipo que ya se encuentra asentado!"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,status:0
+msgid "Abandoned"
+msgstr "Abandonado"
+
+#. module: ecua_seguro_social
+#: field:resource.calendar.interval,hour_from:0
+msgid "Work from"
+msgstr "Trabajo desde"
+
+#. module: ecua_seguro_social
+#: selection:hr.education.level,status:0
+msgid "Graduated"
+msgstr "Graduado"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,date_policy:0
+#: selection:account.hr.advances.line,date_policy:0
+msgid "By Date"
+msgstr "Por Fecha"
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Position"
+msgstr "Cargo"
+
+#. module: ecua_seguro_social
+#: view:resource.calendar.interval:0
+msgid "Hours Intervals"
+msgstr "Intervalos de Horas"
+
+#. module: ecua_seguro_social
+#: view:hr.holidays.status:0
+msgid "Leave Type"
+msgstr "Tipo de ausencia"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_education_level
+msgid "hr.education.level"
+msgstr "hr.education.level"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,education_area_id:0
+msgid "Education Area"
+msgstr "Área de Estudios"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,move_id:0
+msgid "Accounting Entry"
+msgstr "Asiento Contable"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,condition_range:0
+#: help:hr.payslip.line2,condition_range:0
+#: help:hr.salary.rule,condition_range:0
+msgid "This will use to computer the % fields values, in general its on basic, but You can use all categories code field in small letter as a variable name i.e. hra, ma, lta, etc...., also you can use, static varible basic"
+msgstr "Esto sera usado para calcular el % de los valores de los campos, en general este es basic, pero usted puede usar todos códigos de categorías en letras pequeñas como un nombre de variable p.e. hra, ma, lta, etc...., también puede usar, la variable estática basic"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,condition_python:0
+#: help:hr.payslip.line2,condition_python:0
+#: help:hr.salary.rule,condition_python:0
+msgid "Applied this rule for calculation if condition is true. You can specify condition like basic > 1000."
+msgstr "Esta regla se aplicara si el resultado del cálculo retorna un valor True. Usted puede especificar una condición como 'basic > 1000'."
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.employees:0
+msgid "Payslips by Employees"
+msgstr "Nóminas por Empleados"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,account_credit_partner:0
+#: field:hr.payslip.line2,account_credit_partner:0
+#: field:hr.salary.rule,account_credit_partner:0
+msgid "Credit Account of Partner?"
+msgstr "¿Cuenta de Crédito de la Empresa?"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,quantity:0
+#: help:hr.salary.rule,quantity:0
+msgid "It is used in computation for percentage and fixed amount.For e.g. A rule for Meal Voucher having fixed amount of 1€ per worked day can have its quantity defined in expression like worked_days.WORK100.number_of_days."
+msgstr "Esto es usado para el cálculo del porcentaje y el monto fijo.Por Ejemplo. Una regla de pago por almuerzo diario de $1 por dia trabajado puede tener esta cantidad definida en una expresión como esta  'worked_days.WORK100.number_of_days'."
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+#: field:account.hr.advances,employee_id:0
+#: view:account.voucher:0
+#: view:hr.contract:0
+#: field:hr.education.level,employee_id:0
+#: view:hr.employee:0
+#: view:hr.extra.input.output:0
+#: field:hr.extra.input.output,employee_id:0
+#: field:hr.family.burden,employee_id:0
+#: field:hr.multi.advance.wizard.line,employee_id:0
+#: view:hr.payslip:0
+#: field:hr.payslip.line2,employee_id:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,payslip_net:0
+msgid "Net"
+msgstr "Neto"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,amount_percentage:0
+#: help:hr.payslip.line2,amount_percentage:0
+#: help:hr.salary.rule,amount_percentage:0
+msgid "For example, enter 50.0 to apply a percentage of 50%"
+msgstr "Por ejemplo, ingrese 50.0 para aplicar un porcentaje del 50%"
+
+#. module: ecua_seguro_social
+#: field:hr.multi.advance.wizard,option:0
+msgid "Option"
+msgstr "Opción"
+
+#. module: ecua_seguro_social
+#: field:hr.family.burden,relationship:0
+msgid "Relationship"
+msgstr "Relación"
+
+#. module: ecua_seguro_social
+#: field:account.voucher,extra_i_o_ids:0
+msgid "Extra Payments Outputs"
+msgstr "Egresos e Ingresos Extras"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: field:hr.payslip,voucher_ids:0
+msgid "Vouchers"
+msgstr "Compronbantes"
+
+#. module: ecua_seguro_social
+#: field:hr.multi.advance.wizard,employee_ids:0
+#: view:hr.payslip:0
+#: view:hr.payslip.employees:0
+#: field:hr.payslip.employees,employee_ids:0
+#: view:hr.payslip.line2:0
+#: view:payroll.employees.detail:0
+#: field:payroll.employees.detail,employee_ids:0
+msgid "Employees"
+msgstr "Empleados"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,amount_percentage:0
+#: selection:hr.extra.input.output,amount_select:0
+#: field:hr.payslip.line2,amount_percentage:0
+#: selection:hr.payslip.line2,amount_select:0
+#: field:hr.salary.rule,amount_percentage:0
+#: selection:hr.salary.rule,amount_select:0
+msgid "Percentage (%)"
+msgstr "Porcentaje (%)"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,register_id:0
+#: help:hr.payslip.line2,register_id:0
+#: help:hr.salary.rule,register_id:0
+msgid "Eventual third party involved in the salary payment of the employees."
+msgstr "Terceros eventuales involucrados en el pago de salarios de los empleados."
+
+#. module: ecua_seguro_social
+#: field:hr.payslip.worked.hours.interval,number_of_hours:0
+#: field:hr.payslip.worked_days,number_of_hours:0
+msgid "Number of Hours"
+msgstr "Número de Horas"
+
+#. module: ecua_seguro_social
+#: field:account.voucher,payslip_id:0
+#: view:hr.payslip:0
+msgid "Payslip"
+msgstr "Nómina"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,date_to:0
+#: field:hr.payslip.run,date_end:0
+#: field:payslip.lines.contribution.register,date_to:0
+msgid "Date To"
+msgstr "Fecha  Hasta"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances.line,type:0
+msgid "Crédito"
+msgstr "Crédito"
+
+#. module: ecua_seguro_social
+#: selection:hr.extra.input.output,condition_select:0
+#: selection:hr.payslip.line2,condition_select:0
+#: selection:hr.salary.rule,condition_select:0
+msgid "Range"
+msgstr "Rango"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Payslip Info"
+msgstr "Información de Nómina"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Volver a Borrador"
+msgstr "Volver a Borrador"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,move_ids:0
+msgid "Detalle de Asientos"
+msgstr "Detalle de Asientos"
+
+#. module: ecua_seguro_social
+#: selection:account.hr.advances,state:0
+msgid "Canceled"
+msgstr "Cancelado"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,company_contributions:0
+msgid "Company Contribution"
+msgstr "Contribución Empresa"
+
+#. module: ecua_seguro_social
+#: help:hr.employee,total_wage:0
+msgid "Sum of all current contract's wage of employee."
+msgstr "Suma de todos los salarios actuales de los contratos del empleado."
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Contact Information"
+msgstr "Información de contacto"
+
+#. module: ecua_seguro_social
+#: help:hr.payslip,residual:0
+msgid "Remaining amount due."
+msgstr "Saldo restante."
+
+#. module: ecua_seguro_social
+#: view:hr.employee:0
+msgid "Accounting Info"
+msgstr "Información Contable"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,account_debit_partner:0
+#: field:hr.payslip.line2,account_debit_partner:0
+#: field:hr.salary.rule,account_debit_partner:0
+msgid "Debit Account of Partner?"
+msgstr "Cuenta de Débito de la Compañía?"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Description on Voucher"
+msgstr "Description on Voucher"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: ecua_seguro_social
+#: help:wizard.payslip,date:0
+msgid "Effective date for posting, If you left in blank the system use today as the date"
+msgstr "Fecha efectiva del asiento, Si usted lo deja en blanco el sistema usara la fecha actual"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+msgid "Overpassed"
+msgstr "Sobrepasado"
+
+#. module: ecua_seguro_social
+#: selection:hr.family.burden,relationship:0
+msgid "Child"
+msgstr "Hijo"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,condition_range_min:0
+#: help:hr.payslip.line2,condition_range_min:0
+#: help:hr.salary.rule,condition_range_min:0
+msgid "The minimum amount, applied for this rule."
+msgstr "La cantidad mínima, aplicada para esta regla."
+
+#. module: ecua_seguro_social
+#: selection:hr.extra.input.output,condition_select:0
+#: selection:hr.payslip.line2,condition_select:0
+#: selection:hr.salary.rule,condition_select:0
+msgid "Python Expression"
+msgstr "Expresión Python"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,remaining_leaves:0
+msgid "Remaining Legal Leaves"
+msgstr "Vacaciones Restantes"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,journal_id:0
+msgid "Metodo de Pago"
+msgstr "Metodo de Pago"
+
+#. module: ecua_seguro_social
+#: constraint:res.company:0
+msgid "Error! You can not create recursive companies."
+msgstr "¡Error! No se pueden crear compañías recursivas."
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+#: field:hr.payslip.input,contract_id:0
+#: field:hr.payslip.line2,contract_id:0
+#: field:hr.payslip.worked_days,contract_id:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_contract
+#: model:ir.ui.menu,name:ecua_seguro_social.next_id_56
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: ecua_seguro_social
+#: view:hr.contract:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_contract_type
+msgid "Contract Type"
+msgstr "Tipo de contrato"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Journal Items"
+msgstr "Apuntes contables"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\payroll.py:1311
+#: code:addons\ecua_seguro_social\objects\payroll.py:1320
+#: code:addons\ecua_seguro_social\objects\payroll.py:1326
+#: code:addons\ecua_seguro_social\objects\payroll.py:1343
+#: code:addons\ecua_seguro_social\objects\payroll.py:1349
+#: code:addons\ecua_seguro_social\objects\payroll.py:1398
+#: code:addons\ecua_seguro_social\objects\payroll.py:1407
+#: code:addons\ecua_seguro_social\objects\payroll.py:1413
+#: code:addons\ecua_seguro_social\objects\payroll.py:1430
+#: code:addons\ecua_seguro_social\objects\payroll.py:1436
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: ecua_seguro_social
+#: view:hr.contribution.register:0
+msgid "Contribution"
+msgstr "Contribución"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_run
+msgid "hr.payslip.run"
+msgstr "hr.payslip.run"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_multi_advance_wizard
+msgid "hr.multi.advance.wizard"
+msgstr "hr.multi.advance.wizard"
+
+#. module: ecua_seguro_social
+#: help:hr.extra.input.output,code:0
+#: help:hr.payslip.line2,code:0
+#: help:hr.salary.rule,code:0
+msgid "The code of salary rules can be used as reference in computation of other rules. In that case, it is case sensitive."
+msgstr "El código de la regla salarial puede ser usado como referencia en el cálculo de reglas. En ese caso su uso diferencia entre mayúsculas y minúsculas, ."
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances,currency_id:0
+msgid "Moneda"
+msgstr "Moneda"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,voucher_id:0
+msgid "Voucher"
+msgstr "Comprobante"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:284
+#, python-format
+msgid "Payment of Advance %s of %s"
+msgstr "Pago de Anticipo %s of %s"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip.run:0
+#: selection:hr.payslip.run,state:0
+#: view:payroll.employees.detail:0
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,register_id:0
+#: view:hr.payslip.line2:0
+#: field:hr.payslip.line2,register_id:0
+#: field:hr.salary.rule,register_id:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_contribution_register
+msgid "Contribution Register"
+msgstr "Contribución de Compañía"
+
+#. module: ecua_seguro_social
+#: view:account.hr.advances:0
+msgid "Employee Advances Analisys"
+msgstr "Análisis de Anticipos de Empleados"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Worked Days"
+msgstr "Días Trabajados"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_extra_input_output
+msgid "hr.extra.input.output"
+msgstr "hr.extra.input.output"
+
+#. module: ecua_seguro_social
+#: view:hr.contribution.register:0
+#: field:hr.contribution.register,note:0
+#: view:hr.extra.input.output:0
+#: field:hr.extra.input.output,note:0
+#: field:hr.multi.advance.wizard,name:0
+#: field:hr.payslip.input,name:0
+#: view:hr.payslip.line2:0
+#: field:hr.payslip.line2,note:0
+#: field:hr.payslip.worked.hours.interval,name:0
+#: field:hr.payslip.worked_days,name:0
+#: field:hr.rule.input,name:0
+#: view:hr.salary.rule:0
+#: field:hr.salary.rule,note:0
+#: field:hr.salary.rule.category,note:0
+#: field:hr.salary.rule.percentage.base,name:0
+#: field:resource.calendar.interval,name:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Select Option"
+msgstr "Select Option"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_resource_calendar
+msgid "Resource Calendar"
+msgstr "Calendario recurso"
+
+#. module: ecua_seguro_social
+#: field:hr.employee,second_name:0
+msgid "Second Name"
+msgstr "Segundo Nombre"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_family_burden
+msgid "hr.family.burden"
+msgstr "hr.family.burden"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,payslip_run_id:0
+msgid "Payslip Run"
+msgstr "Registro de Nómina"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,struct_id:0
+msgid "Structure"
+msgstr "Estructura"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,advance_id:0
+#: field:hr.extra.input.output,advance_id:0
+msgid "Advance"
+msgstr "Anticipo"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+#: view:hr.payslip:0
+msgid "Supplier Invoices and Outstanding transactions"
+msgstr "Facturas de proveedor y transiciones de salida"
+
+#. module: ecua_seguro_social
+#: view:account.voucher:0
+msgid "Voucher Entries"
+msgstr "Comprobantes"
+
+#. module: ecua_seguro_social
+#: field:hr.education.level,country_id:0
+msgid "Country"
+msgstr "Pais"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+#: view:hr.payslip.line2:0
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_line2
+msgid "Payslip Line"
+msgstr "Línea de nómina"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\advances.py:248
+#, python-format
+msgid "Payment of Advance %s"
+msgstr "Pago de Anticipo %s"
+
+#. module: ecua_seguro_social
+#: field:hr.payslip,input_line_ids:0
+msgid "Payslip Inputs"
+msgstr "Nóminas Ingresadas"
+
+#. module: ecua_seguro_social
+#: selection:hr.salary.rule.category,type:0
+msgid "Output"
+msgstr "Egresos"
+
+#. module: ecua_seguro_social
+#: field:account.hr.advances.line,name:0
+msgid "Descripción"
+msgstr "Descripción"
+
+#. module: ecua_seguro_social
+#: view:hr.multi.advance.wizard:0
+msgid "Generate Vouchers"
+msgstr "Generar Comprobante"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_hr_payslip_worked_hours_interval
+msgid "hr.payslip.worked.hours.interval"
+msgstr "hr.payslip.worked.hours.interval"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,sequence:0
+#: field:hr.payslip.input,sequence:0
+#: field:hr.payslip.line2,sequence:0
+#: field:hr.payslip.worked_days,sequence:0
+#: field:hr.salary.rule,sequence:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: ecua_seguro_social
+#: model:ir.model,name:ecua_seguro_social.model_account_hr_advances_line
+msgid "Detalle de Anticipos"
+msgstr "Detalle de Anticipos"
+
+#. module: ecua_seguro_social
+#: model:ir.actions.report.xml,name:ecua_seguro_social.nomina_general_report_id
+msgid "Nómina General"
+msgstr "Nómina General"
+
+#. module: ecua_seguro_social
+#: view:hr.payslip:0
+msgid "Search Payslips"
+msgstr "Buscar nóminas"
+
+#. module: ecua_seguro_social
+#: code:addons\ecua_seguro_social\objects\employee.py:267
+#: sql_constraint:hr.employee:0
+#, python-format
+msgid "The identification number must be unique !"
+msgstr "El número de identificación debe ser único!"
+
+#. module: ecua_seguro_social
+#: view:wizard.payslip:0
+msgid "Payment Wizard"
+msgstr "Asistente de Pago"
+
+#. module: ecua_seguro_social
+#: field:hr.extra.input.output,condition_range:0
+#: field:hr.payslip.line2,condition_range:0
+#: field:hr.salary.rule,condition_range:0
+msgid "Range Based on"
+msgstr "Rango Basado en"
+
+#. module: ecua_seguro_social
+#: field:res.company,default_salary_journal_id:0
+msgid "Default Salary Journal"
+msgstr "Diario de Salarios por Defecto"
+

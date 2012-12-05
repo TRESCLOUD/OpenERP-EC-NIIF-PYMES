@@ -1,0 +1,23 @@
+Informe
+	Por Mes
+	Informe que contenga a todos los departamentos
+	Empleados Por Departamento
+	En Las columnas debe mostrar cada uno de los rubros que tiene la estructura salarial del empleado
+	
+Calculo de Impuesto a La Renta al sobrepasar la base imponible (Formulario 107)
+
+Utilidades Por empleado
+	Registro de Cargas
+		Hijos
+		Esposa
+	Los Hijos Al cumplir 18 años salen del cálculo de las utilidades
+	
+	Para el calculo de las utilidades se toma el valor entero de utilidades / para el total de empleados 
+	+ la suma de todas las cargas/2
+	
+
+Avances Tipos de avances:
+Para cobrar en el Mismo Período
+Para cobrar en otros Periodos -Se debe poder crear las lineas que indicaran en que períodos se realizara el anticipo, esto puede ser por medio de la fecha o por medio del periodo contable
+En el Workflow de "advances" el aprobarlo creara todas los registros de "extra_input_output" para ser descontado directamente de la nómina ese mes
+	

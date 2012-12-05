@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_wizard_payslip" model="ir.ui.view">
+			<field name="name">wizard.payslip.form</field>
+			<field name="model">wizard.payslip</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Payment Wizard">
+					<separator
+						string="This Wizard help to create a voucher for payment and conciliation of payslip"
+						colspan="4" />
+					<group colspan="4" col="6">
+						<field name="date" />
+						<field name="period_id" />
+						<field name="journal_id" widget="selection"/>
+					</group>
+					<separator
+						string="Notes"
+						colspan="4" />
+					<field name="note" nolabel="1" colspan="4"></field>
+					<group colspan="4">
+						<button icon="gtk-cancel" name="act_cancel" special="cancel"
+							string="Cancel" type="object" />
+						<button icon="gtk-execute" name="create_voucher" string="Generate"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="wizard_payslip" model="ir.actions.act_window">
+			<field name="name">Payslip Wizard</field>
+			<field name="res_model">wizard.payslip</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_wizard_payslip" />
+			<field name="target">new</field>
+		</record>
+
+	</data>
+</openerp>
