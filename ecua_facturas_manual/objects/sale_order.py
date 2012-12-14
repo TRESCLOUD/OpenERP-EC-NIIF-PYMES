@@ -75,37 +75,37 @@ class sale_order(osv.osv):
         return result.keys()
 
     _columns = {
-        'base_iva_0': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='Base IVA 0',
+        'base_iva_0': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='Base IVA 0',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums'),
-        'base_iva_12': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='Base IVA 12',
+        'base_iva_12': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='Base IVA 12',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums'),
-        'iva': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='IVA',
+        'iva': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='IVA',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums'),
-        'amount_untaxed': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='Untaxed Amount',
+        'amount_untaxed': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='Untaxed Amount',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums', help="The amount without tax."),
-        'amount_tax': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='Taxes',
+        'amount_tax': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='Taxes',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums', help="The tax amount."),
-        'amount_total': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Sale Price'), string='Total',
+        'amount_total': fields.function(_amount_all2, method=True, digits_compute= dp.get_precision('Account'), string='Total',
             store = {
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),

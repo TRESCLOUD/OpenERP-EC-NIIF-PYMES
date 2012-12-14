@@ -24,3 +24,4 @@ import sale_order, stock_picking
 import delivery_note
 import stock_move
 import carrier
+import partner

@@ -15,6 +15,7 @@
 							context="{'form_view_ref' : 'ecua_retenciones_manual.view_account_retention_sale_form'}">
 							<tree string="Withholdings">
 								<field name="number" />
+								<field name="authorization_sale_id" />
 								<field name="period_id" />
 								<field name="creation_date" />
 								<field name="total_iva" sum="Total Retenciones IVA" />
@@ -50,11 +51,14 @@
 							context="{'form_view_ref' : 'ecua_retenciones_manual.view_account_retention_purchase_form'}">
 							<tree string="Withholdings">
 								<field name="number" />
+								<field name="authorization_purchase" />
 								<field name="period_id" />
 								<field name="creation_date" />
 								<field name="total_iva" sum="Total Retenciones IVA" />
 								<field name="total_renta" sum="Total Retenciones Renta" />
 								<field name="state" />
+								<button name="%(retention_report)d" string="Print Retention"
+									type="action" icon="gtk-print" states="approved" />
 							</tree>
 						</field>
 						<field name="retention_line_ids" nolabel="1" readonly="1"

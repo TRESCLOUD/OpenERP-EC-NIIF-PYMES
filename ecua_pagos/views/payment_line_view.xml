@@ -1,7 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
-    
-    
-    </data>
+	<data>
+
+
+		<record model="ir.ui.view" id="account_payment_line_receipt_tree_view">
+			<field name="name">account.payment.line.tree</field>
+			<field name="model">account.payment.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Payment Line">
+					<field name="mode_id" />
+					<field name="check_type" />
+					<field name="bank_id" />
+					<field name="amount" sum="Total Payment Lines"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_payment_line_receipt_form_view">
+			<field name="name">account.payment.line.form</field>
+			<field name="model">account.payment.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Payment Line">
+					<group colspan="4" string="Info.">
+						<field name="mode_id" widget="selection" on_change="onchange_mode_id(mode_id)"/>
+						<field name="name"/>
+						<field name="amount"/>
+					</group>
+					<field name="is_check" invisible="1"/>
+					<field name="is_credit_card" invisible="1"/>
+					<group colspan="4" col="6" string="Check info" attrs="{'invisible': [('is_check','=',False)]}">
+						<field name="check_type" attrs="{'required':[('is_check','=',True)]}"/>
+						<field name="bank_id" attrs="{'required':[('is_check','=',True)]}"/>
+						<field name="deposit_date" attrs="{'invisible':[('check_type','=','today')], 'required':[('check_type','=','postdated')]}"></field>
+					</group>
+					<group colspan="4" string="Credit Card Info." attrs="{'invisible': [('is_credit_card','=',False)]}">						<field name="check_type" attrs="{'required':[('is_check','=',True)]}"/>
+						<field colspan="4" name="authorization" attrs="{'required':[('is_check','=',True)]}"/>
+					</group>
+					<field name="type" invisible="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_payment_line_search_view">
+			<field name="name">account.payment.line.form</field>
+			<field name="model">account.payment.line</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Payment Line">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+	</data>
 </openerp>

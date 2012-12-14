@@ -30,52 +30,100 @@ from tools.translate import _
 class account_payment_line(osv.osv):
     
     def _check_amount(self, cr, uid, ids, context=None):
-        res=True
+        res = True
         for payment in self.browse(cr, uid, ids):
             if payment.amount <= 0:
-                res=False
+                res = False
         return res
 
-    _name="account.payment.line"
+    _name = "account.payment.line"
     
-    _columns={
-              'name':fields.char('Reference/Number', size=255, required=False, readonly=False),
-              'authorization':fields.char('Authorization', size=255, required=False, readonly=False),
-              'beneficiary':fields.char('Beneficiary', size=255, required=False, readonly=False),
-              'voucher_id':fields.many2one('account.voucher', 'Voucher', required=False),
-              'mode_id':fields.many2one('account.payment.modes', 'Mode', required=False),
-              'amount': fields.float('Amount', digits_compute=dp.get_precision('Account')),
-              'move_line_id':fields.many2one('account.move.line', 'Move Line', required=False),
-              'type':fields.selection([
-                  ('receipt','Receipt'),
-                  ('payment','Payment'),
-                   ],    'Type', select=True, readonly=True),
-              'state':fields.selection([
-                  ('draft','Draft'),
-                  ('done','Done'),
-                   ], 'State', select=True, readonly=True),
+    _columns = {
+                'name':fields.char('Reference/Number', size=255, required=True, readonly=False),
+                'authorization':fields.char('Credit Card Authorization', size=255, required=False, readonly=False),
+                'beneficiary':fields.char('Beneficiary', size=255, required=False, readonly=False),
+                'voucher_id':fields.many2one('account.voucher', 'Voucher', required=False),
+                'mode_id':fields.many2one('account.payment.modes', 'Mode', required=True),
+                'amount': fields.float('Amount', digits_compute=dp.get_precision('Account')),
+                'move_line_id':fields.many2one('account.move.line', 'Move Line', required=False),
+                'type':fields.selection([
+                    ('receipt', 'Receipt'),
+                    ('payment', 'Payment'),
+                     ], 'Type', select=True, readonly=False),
+                'state':fields.selection([
+                    ('draft', 'Draft'),
+                    ('pending', 'Pending'),
+                    ('done', 'Done'),
+                    ('cancel', 'Cancel'),
+                     ], 'State', select=True, readonly=True),
+                'check_type':fields.selection([
+                    ('today', 'Today'),
+                    ('postdated', 'Postdated'),
+                     ], 'Check Type', select=True, readonly=False),
+                'deposit_id':fields.many2one('account.deposit.slip', 'Deposit Slip', required=False),
+                'is_cash':fields.boolean('is Check?', required=False),
+                'is_check':fields.boolean('is Check?', required=False),
+                'is_credit_card':fields.boolean('is Credit Card?', required=False),
+                'bank_id':fields.many2one('res.partner.bank', 'Bank Account', required=False),
+                'received_date': fields.date('Received Date'),
+                'deposit_date': fields.date('Deposit Date'),
+                'payment_date': fields.date('Payment Date'),
+                'return_date': fields.date('Return Date'),
     }
 
-    _defaults={
+    _defaults = {
                'state': 'draft',
+               'check_type': 'today',
     }
-    
+        
     def default_get(self, cr, uid, fields_list, context=None):
         if not context:
-            context={}
+            context = {}
         values = super(account_payment_line, self).default_get(cr, uid, fields_list, context)
         if 'type' in fields_list:
             values['type'] = context.get('type_payment', 'receipt')
         return values
     
-    def onchange_payment_line(self, cr, uid, ids, payment_line, context=None):
+    def onchange_mode_id(self, cr, uid, ids, mode_id, partner_id=None, context=None):
         if not context:
-            context={}
+            context = {}
         value = {}
         domain = {}
-        
+        mode_obj = self.pool.get('account.payment.modes')
+        if mode_id:
+            mode = mode_obj.browse(cr, uid, mode_id)
+            if mode.type == 'cash':
+                value.update({
+                             'is_check': False,
+                             'is_credit_card': False,
+                             })
+            if mode.type == 'credit_card':
+                value.update({
+                             'is_check': False,
+                             'is_credit_card': True,
+                             })
+            if mode.type == 'bank':
+                if partner_id:
+                    domain.update({
+                                   'bank_id': [('partner_id','=', partner_id)]
+                                   })
+                value.update({
+                             'is_check': mode.is_check,
+                             'is_credit_card': False,
+                             })
         return {'value': value, 'domain': domain }
     
-    _constraints = [(_check_amount,_('Amount must be bigger than 0!'),['amount'])]
+    _constraints = [(_check_amount, _('Amount must be bigger than 0!'), ['amount'])]
+
+    def _check_deposit_date(self, cr, uid, ids, context=None): 
+        if not context:
+            context = {}
+        now = time.strftime('%Y-%m-%d')
+        for line in self.browse(cr, uid, ids):
+            if line.type == 'receipt' and line.is_check and line.check_type == 'postdated':
+                if line.deposit_date <= time.strftime('%Y-%m-%d'):
+                    return False
+        return True
+    _constraints = [(_check_deposit_date, _('Error: You must select a date after today to check postdated'), ['deposit_date']), ] 
 
 account_payment_line()

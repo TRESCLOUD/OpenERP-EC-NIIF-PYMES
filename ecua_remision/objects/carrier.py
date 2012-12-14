@@ -27,11 +27,40 @@ from lxml import etree
 import decimal_precision as dp
 
 class delivery_carrier(osv.osv):
+    def check_ced(self, ced):
+        try:
+            valores = [ int(ced[x]) * (2 - x % 2) for x in range(9) ]
+            suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
+            veri = 10 - (suma - (10*(suma/10)))
+            if int(ced[9]) == int(str(veri)[-1:]):
+                return True
+            else:
+                return False
+        except:
+            return False
+
+    def _check_ced(self, cr, uid, ids):
+        val = True 
+        for carrier in self.pool.get('delivery.carrier').browse(cr, uid, ids, None):
+            if carrier.cedula:
+                val = self.check_ced(carrier.cedula)
+        return val
     
+    def get_price(self, cr, uid, ids, field_name, arg=None, context=None):
+        return super(delivery_carrier, self).get_price(cr, uid, ids, field_name, arg, context)
     _inherit = "delivery.carrier"
-    
     _columns = {
-                'placa':fields.char('Placa', size=8,), 
-                    }
+        'name': fields.char('Nombre del Conductor', size=64, required=True),
+        'partner_id': fields.many2one('res.partner', 'Carrier Partner', required=False),
+        'product_id': fields.many2one('product.product', 'Delivery Product', required=False),
+        'grids_id': fields.one2many('delivery.grid', 'carrier_id', 'Delivery Grids'),
+        'price' : fields.function(get_price, method=True,string='Price'),
+        'active': fields.boolean('Active', help="If the active field is set to False, it will allow you to hide the delivery carrier without removing it."),
+        'placa':fields.char('Placa', size=8,), 
+        'cedula':fields.char('Cedula', size=10, required=True, readonly=False), 
+        
+        
+    }
+    _constraints = [(_check_ced, 'Error de Validación: El numero de Cédula del Transportista no es correcto', ['cedula'])]
     
 delivery_carrier()

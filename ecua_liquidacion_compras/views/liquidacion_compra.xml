@@ -6,6 +6,7 @@
 			<field name="name">account.invoice.tree</field>
 			<field name="model">account.invoice</field>
 			<field name="type">tree</field>
+			<field name="priority">18</field>
 			<field name="arch" type="xml">
 				<tree
 					colors="blue:state in ('draft');black:state in ('proforma','proforma2','open');gray:state in ('cancel')"
@@ -37,6 +38,7 @@
 			<field name="name">account.invoice.supplier.liquidation.form</field>
 			<field name="model">account.invoice</field>
 			<field name="type">form</field>
+			<field name="priority">18</field>
 			<field name="arch" type="xml">
 				<form string="Liquidation of Purchases">
 					<group col="8" colspan="4">
@@ -239,10 +241,8 @@
 			<field name="res_model">account.invoice</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="domain">[('type','=','in_invoice'),('liquidation','=',True)]
-			</field>
-			<field name="context">{'type':'in_invoice', 'liquidation':True,
-				'journal_type': 'purchase'}</field>
+			<field name="domain">[('type','=','in_invoice'),('liquidation','=',True)]</field>
+			<field name="context">{'type':'in_invoice', 'liquidation':True, 'journal_type': 'purchase'}</field>
 			<field name="view_id" eval="False" />
 		</record>
 
@@ -269,10 +269,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form,calendar,graph</field>
 			<field eval="False" name="view_id" />
-			<field name="domain">[('type','=','in_invoice'),('liquidation','!=',True)]
-			</field>
-			<field name="context">{'type':'in_invoice', 'journal_type': 'purchase'}
-			</field>
+			<field name="domain">[('type','=','in_invoice'),('liquidation','!=',True)]</field>
+			<field name="context">{'type':'in_invoice', 'journal_type': 'purchase'}</field>
 			<field name="search_view_id" ref="account.view_account_invoice_filter" />
 			<field name="help">With Supplier Invoices you can enter and manage
 				invoices issued by your suppliers. OpenERP can also generate draft

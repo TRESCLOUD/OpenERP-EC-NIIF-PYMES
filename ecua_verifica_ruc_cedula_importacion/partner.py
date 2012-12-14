@@ -197,14 +197,13 @@ class res_partner(osv.osv):
     def create(self, cr, uid, values, context=None):
         if not context:
             context = {}
-        context['skip_validation'] = True
+        context['skip_ruc_validation'] = True
         ref = None
         values['status'] = True
         try:
             ref = values['ref']
             if not ref:
                 values['type_ref']=''
-                return super(res_partner, self).create(cr, uid, values, context)
             for i in ref:
                 int(i)
             if(len(ref)==13):
@@ -213,24 +212,20 @@ class res_partner(osv.osv):
                     #verify if partner is a private company
                     if self.verifica_ruc_spri(ref):
                         values['type_ref']='ruc'
-                        return super(res_partner, self).create(cr, uid, values, context)
                     elif self.verifica_id_cons_final(ref):
                         values['type_ref']='consumidor'
-                        return super(res_partner, self).create(cr, uid, values, context)
                     else:
                         values['status'] = False
                 elif(int(dato[2])==6):
                     #verify if partner is a statal company
                     if self.verifica_ruc_spub(ref):
                         values['type_ref']='ruc'
-                        return super(res_partner, self).create(cr, uid, values, context)
                     else:
                         values['status'] = False
                 elif(int(dato[2])<6):
                     #verify if partner is a natural person 
                     if self.verifica_ruc_pnat(ref):
                         values['type_ref']='ruc'
-                        return super(res_partner, self).create(cr, uid, values, context)
                     else:
                         values['status'] = False
                 else:   
@@ -239,7 +234,6 @@ class res_partner(osv.osv):
                 #verify the dni or Cedula of partner 
                 if self.verifica_cedula(ref):
                     values['type_ref']='cedula'
-                    return super(res_partner, self).create(cr, uid, values, context)
                 else:
                     values['status'] = False
             else:
@@ -249,13 +243,14 @@ class res_partner(osv.osv):
         except TypeError:
             values['status'] = False
         except KeyError:
-            return super(res_partner, self).create(cr, uid, values, context)
+            values['status'] = False
+        return super(res_partner, self).create(cr, uid, values, context)
 
 
     def write(self, cr, uid, ids, values,context=None):
         if not context:
             context = {}
-        context['skip_validation'] = True
+        context['skip_ruc_validation'] = True
         ref = None
         values['status'] = True
         try:
@@ -307,6 +302,7 @@ class res_partner(osv.osv):
         except TypeError:
             values['status'] = False
         except KeyError:
-            return super(res_partner, self).write(cr, uid, ids, values, context)
+            values['status'] = False
+        return super(res_partner, self).write(cr, uid, ids, values, context)
 
 res_partner()

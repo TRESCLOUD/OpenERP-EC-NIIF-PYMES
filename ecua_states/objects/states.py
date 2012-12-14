@@ -23,6 +23,26 @@
 
 from osv import osv, fields
 
+class res_parroquia(osv.osv):
+    '''
+    Open ERP Model
+    '''
+    _name = 'res.parroquia'
+    _description = 'Parroquias'
+
+    _columns = {
+            'name':fields.char('Nombre', size=255, required=True, readonly=False),
+            'city_id':fields.many2one('city.city', 'Ciudad', required=True), 
+            'type':fields.selection([
+                ('urbana','Urbana'),
+                ('rural','Rural'),
+                 ],    'Tipo', select=True, readonly=False,required=True),
+            
+        }
+    _defaults = {  
+        'type': 'urbana',  
+        }
+res_parroquia()
 
 class region(osv.osv):
     _name = 'res.region'
@@ -151,6 +171,8 @@ class city(osv.osv):
         'name': fields.char('City', size=64, required=True, select=1),
         'sector_id': fields.one2many('res.partner.parish','name', 'Sector and Parish'),
         'zipcode': fields.char('ZIP', size=64, required=True, select=1),
+        'parroquia_ids':fields.one2many('res.parroquia', 'city_id', 'Parroquias', required=False), 
+        
     }
 city()
 
@@ -170,7 +192,7 @@ res_partner_sector()
 
 class res_partner_address(osv.osv): 
     _inherit = "res.partner.address"
-
+    
     def _get_zip(self, cr, uid, ids, field_name, arg, context):
         res={}
         for obj in self.browse(cr,uid,ids):
@@ -303,8 +325,33 @@ class res_partner_address(osv.osv):
         'city': fields.function(_get_city, fnct_search=_city_search, method=True, type="char", string='City', size=128, store=True),
         'region_id': fields.function(_get_region, fnct_search=_region_id_search, obj="res.region.state", method=True, type="many2one", string='Region', store=True), 
         'state_id': fields.function(_get_state, fnct_search=_state_id_search, obj="res.country.state", method=True, type="many2one", string='State', store=True), 
-        'country_id': fields.function(_get_country, fnct_search=_country_id_search, obj="res.country" ,method=True, type="many2one", string='Country', store=True), 
+        'country_id': fields.function(_get_country, fnct_search=_country_id_search, obj="res.country" ,method=True, type="many2one", string='Country', store=True),
+        'parroquia_id':fields.many2one('res.parroquia', 'Parroquia', required=False),  
     }
+    
+    def onchange_location(self, cr, uid, ids, location, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        if location:
+            loc = self.pool.get('city.city').browse(cr, uid, location)
+            value.update({
+                          'zip': loc.zipcode or None,
+                          'city': loc.name or None,
+                          'country_id': loc.state_id and loc.state_id.country_id and loc.state_id.country_id.id or None,
+                          'state_id': loc.state_id and loc.state_id.id or None,
+                          'parroquia_id': None,
+                          })
+        else:
+            value.update({
+                          'zip': None,
+                          'city': None,
+                          'country_id': None,
+                          'state_id': None,
+                          'parroquia_id': None,
+                          })
+        return {'value': value, 'domain': domain }
 res_partner_address()
 
 

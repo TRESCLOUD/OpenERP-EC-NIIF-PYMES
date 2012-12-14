@@ -113,6 +113,30 @@
 			</field>
 		</record>
 
+
+		<record model="ir.ui.view" id="view_account_retention_purchase_tree">
+			<field name="name">account.retention.tree</field>
+			<field name="model">account.retention</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Retentions"
+					colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
+					<field name="number" />
+					<field name="authorization_purchase" />
+					<field name="invoice_id" string="Reference of document" />
+					<field name="partner_id" string="Cliente" />
+					<field name="period_id" />
+					<field name="creation_date" />
+					<field name="transaction_type" />
+					<field name="total_iva" sum="Total Retenciones IVA" />
+					<field name="total_renta" sum="Total Retenciones Renta" />
+					<field name="state" />
+					<button name="%(retention_report)d" string="Print Retention"
+						type="action" icon="gtk-print" states="approved" />
+				</tree>
+			</field>
+		</record>
+
 		<record id="account_retention_filter_view" model="ir.ui.view">
 			<field name="name">account.retention.select</field>
 			<field name="model">account.retention</field>
@@ -295,8 +319,7 @@
 			<field name="name">Retentions in Purchases Lines</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">account.retention.line</field>
-			<field name="domain">[('invoice_id.type','in',('in_invoice','in_refund')),('invoice_id.state','in',('open',
-				'paid'))]</field>
+			<field name="domain">[('invoice_id.type','in',('in_invoice','in_refund')),('invoice_id.state','in',('open','paid'))]</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="account_retention_line_tree_view" />

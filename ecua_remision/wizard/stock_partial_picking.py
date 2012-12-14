@@ -126,8 +126,8 @@ class stock_partial_picking(osv.osv_memory):
         vals_aut=self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'delivery_note')
         bool=False
         remision_id=False
-        for object in self.browse(cr, uid, ids, context=context):
-            if (object.delivery_note):
+        for picking in self.browse(cr, uid, ids, context=context):
+            if (picking.delivery_note):
                 user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
                 bool = user.company_id.generate_automatic
                 stock_picking=stock_picking_obj.browse(cr, uid, picking_ids, context)
@@ -144,8 +144,8 @@ class stock_partial_picking(osv.osv_memory):
                         else:
                             shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
                             company = self.pool.get('res.company').search(cr, uid,[])[0]
-                            number = object['number']
-                            auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'delivery_note', company, object.shop_id.id, number,object.printer_id.id ,context)
+                            number = picking['number']
+                            auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'delivery_note', company, picking.shop_id.id, number,picking.printer_id.id ,context)
                             if not auth['authorization']:
                                 raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
                             else:
@@ -156,8 +156,8 @@ class stock_partial_picking(osv.osv_memory):
                                 carrier= picking['carrier_id']['id']
                                 placa = picking.carrier_id and picking.carrier_id.placa
                             else:
-                                carrier= object['carrier_id']['id']
-                                placa = object.carrier_id and picking.carrier_id.placa
+                                carrier= picking['carrier_id']['id']
+                                placa = picking.carrier_id and picking.carrier_id.placa
                             vals_remi= {
                                         'number': number,
                                         'number_out': number,
@@ -175,7 +175,7 @@ class stock_partial_picking(osv.osv_memory):
                                         'sale_order':picking['sale_id']['id'],
                                         'invoice_id':picking.invoice_id.id or None,
                                         'type': self.defined_type_remision(picking['type']),
-                                        'automatic': object.automatic,
+                                        'automatic': picking.automatic,
                                         }
                             remision_id = remision_obj.create(cr, uid, vals_remi, context)
                             for line in picking.move_lines:
@@ -200,7 +200,7 @@ class stock_partial_picking(osv.osv_memory):
                                         'printer_id':picking['printer_id']['id'],
                                         'invoice_id':picking.invoice_id.id or None,
                                         'type': self.defined_type_remision(picking['type']),
-                                        'automatic': object.automatic,
+                                        'automatic': picking.automatic,
                                         }
                             remision_id = remision_obj.create(cr, uid, vals_remi, context)
                             for line in picking.move_lines:
@@ -221,7 +221,7 @@ class stock_partial_picking(osv.osv_memory):
                             else:
                                 shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
                                 company = self.pool.get('res.company').search(cr, uid,[])[0]
-                                number = object['number']
+                                number = picking['number']
                                 auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'delivery_note', company, shop, number, context)
                                 if not auth['authorization']:
                                     raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
@@ -233,8 +233,8 @@ class stock_partial_picking(osv.osv_memory):
                                     carrier= picking['carrier_id']['id']
                                     placa = picking.carrier_id and picking.carrier_id.placa
                                 else:
-                                    carrier= object['carrier_id']['id']
-                                    placa = object.carrier_id and picking.carrier_id.placa
+                                    carrier= picking['carrier_id']['id']
+                                    placa = picking.carrier_id and picking.carrier_id.placa
                                 vals_remi= {
                                             'number': number,
                                             'number_out': number,
@@ -252,7 +252,7 @@ class stock_partial_picking(osv.osv_memory):
                                             'invoice_id':picking.invoice_id.id or None,
                                             'sale_order':picking['sale_id']['id'],
                                             'type': self.defined_type_remision(picking['type']),
-                                            'automatic': object.automatic,
+                                            'automatic': picking.automatic,
                                             }
                                 remision_id = remision_obj.create(cr, uid, vals_remi, context)
                                 for line in picking.move_lines:
@@ -277,7 +277,7 @@ class stock_partial_picking(osv.osv_memory):
                                             'invoice_id':picking.invoice_id.id or None,
                                             'printer_id':picking['printer_id']['id'],
                                             'type': self.defined_type_remision(picking['type']),
-                                            'automatic': object.automatic,
+                                            'automatic': picking.automatic,
                                             }
                                 remision_id = remision_obj.create(cr, uid, vals_remi, context)
                                 for line in picking.move_lines:

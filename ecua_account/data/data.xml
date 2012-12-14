@@ -1,0 +1,16 @@
+<openerp>
+	<data noupdate="1">
+		<record id="product.decimal_sale" model="decimal.precision">
+			<field name="name">Sale Price</field>
+			<field name="digits">4</field>
+		</record>
+		<record id="product.decimal_purchase" model="decimal.precision">
+			<field name="name">Purchase Price</field>
+			<field name="digits">4</field>
+		</record>
+		<record id="decimal_invoice_line" model="decimal.precision">
+			<field name="name">Invoice Line Price</field>
+			<field name="digits">4</field>
+		</record>
+	</data>
+</openerp>

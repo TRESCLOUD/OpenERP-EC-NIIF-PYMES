@@ -74,6 +74,7 @@ class retention_wizard(osv.osv_memory):
                 'automatic_number':fields.char('Number', size=17, readonly=True),
                 'creation_date': fields.date('Creation Date'),
                 'authorization_purchase':fields.many2one('sri.authorization', 'Authorization', required=False),
+                'authorization_purchase_helper':fields.many2one('sri.authorization', 'Authorization', required=False),
                 'authorization_sale':fields.char('Authorization', size=10, help='This Number is necesary for SRI reports'),
                 'authorization_sale_id':fields.many2one('sri.authorization.supplier', 'Authorization', ),
                 'shop_id':fields.many2one('sale.shop', 'Shop'),
@@ -162,19 +163,21 @@ class retention_wizard(osv.osv_memory):
                 auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',curr_shop.id), ('state','=',True),])
                 if auth_line_id:
                     values['authorization_purchase'] = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id
+                    values['authorization_purchase_helper'] = values['authorization_purchase']
                     if automatic:
                         values['automatic_number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, company_id, curr_shop.id, printer_id, 'account.retention', 'number_purchase', context)
                         values['number'] = values['automatic_number']
                         values['creation_date'] = time.strftime('%Y-%m-%d')
                 else:
                     values['authorization_purchase'] = None
+                    values['authorization_purchase_helper'] = None
                     values['automatic'] = False
                     values['creation_date'] = None
         return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
     
     def create_retention(self, cr, uid, ids, context=None):
-	if not context:
-	    context = {}
+        if not context:
+	       context = {}
         retention_obj = self.pool.get('account.retention')
         retention_line_obj = self.pool.get('account.retention.line')
         auth_s_obj = self.pool.get('sri.authorization.supplier')
@@ -225,7 +228,8 @@ class retention_wizard(osv.osv_memory):
         return {'type': 'ir.actions.act_window_close'}
     
     def approve_late(self, cr, uid, ids, context=None):
-        objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_id'])
+        user = self.pool.get('res.users').browse(cr, uid, uid)
+        invoice = self.pool.get(context['active_model']).browse(cr , uid, context['active_id'])
         for obj in self.browse(cr, uid, ids, context=None):
             if obj.type == 'manual':
                 retention = self.create_retention(cr, uid, ids, context)
@@ -235,8 +239,11 @@ class retention_wizard(osv.osv_memory):
                 if not obj.automatic:
                     if not obj.number:
                         raise osv.except_osv(_('Error!'), _('number to be entered to approve the retention'))
-                self.pool.get('account.retention').write(cr, uid, [objs.retention_ids[0].id, ], {'number_purchase':obj.number}, context)
-                self.pool.get('account.retention').write(cr, uid, [objs.retention_ids[0].id, ], {'automatic': obj.automatic,'creation_date': obj.creation_date, 'authorization_purchase': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
+                auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'withholding', user.company_id.id, obj.shop_id.id, obj.number, obj.shop_id.id, context)
+                if not auth['authorization']:
+                    raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
+                self.pool.get('account.retention').write(cr, uid, [invoice.retention_ids[0].id, ], {'number_purchase':obj.number}, context)
+                self.pool.get('account.retention').write(cr, uid, [invoice.retention_ids[0].id, ], {'automatic': obj.automatic,'creation_date': obj.creation_date, 'authorization_purchase': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
         return {'type': 'ir.actions.act_window_close'}
     
     def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
@@ -287,7 +294,19 @@ class retention_wizard_line(osv.osv_memory):
             'description': fields.selection([('iva', 'IVA'), ('renta', 'RENTA'), ], 'Impuesto'),
             'tax_base': fields.float('Tax Base', digits_compute=dp.get_precision('Account')),
             'retention_percentage': fields.float('Percentaje Value', digits_compute=dp.get_precision('Account')),
+            'total_withholding': fields.float('Total Withholding', digits_compute=dp.get_precision('Account')), 
             'tax_id':fields.many2one('account.tax.code', 'Tax Code'),
             }
+    
+    def onchange_base(self, cr, uid, ids, base, percentage, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        if base and percentage:
+            value['total_withholding'] = base * (percentage/100)
+        else:
+            value['total_withholding'] = 0
+        return {'value': value, 'domain': domain }
     
 retention_wizard_line()

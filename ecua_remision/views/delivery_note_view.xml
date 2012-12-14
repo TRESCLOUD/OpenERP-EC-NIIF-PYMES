@@ -56,7 +56,7 @@
                 <field name="number" select="1" readonly="1"/>
                 <field name="authorizacion_id" select="0" readonly="1"/>
                 <notebook colspan="4">
-                	<page string="Transfer Information">
+                	<page string="Transfer Informationssssss">
 	                	<field name="partner_id" select="0" readonly="1"/>
 	                	<field name="delivery_address" select="0" readonly="1"/>
 	                	<field name="transfer_date" select="2" readonly="1" required="1"/>

@@ -71,27 +71,27 @@ class purchase_order(osv.osv):
     _inherit = 'purchase.order'
 
     _columns = {
-        'base_iva_0': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='Base IVA 0',
+        'base_iva_0': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='Base IVA 0',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums"),
-        'base_iva_12': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='Base IVA 12',
+        'base_iva_12': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='Base IVA 12',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums"),
-        'iva': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='IVA',
+        'iva': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='IVA',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums"),
-        'amount_untaxed': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='Untaxed Amount',
+        'amount_untaxed': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='Untaxed Amount',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums", help="The amount without tax"),
-        'amount_tax': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='Taxes',
+        'amount_tax': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='Taxes',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums", help="The tax amount"),
-        'amount_total': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Purchase Price'), string='Total',
+        'amount_total': fields.function(_amount_all, method=True, digits_compute= dp.get_precision('Account'), string='Total',
             store={
                 'purchase.order.line': (_get_order, None, 10),
             }, multi="sums",help="The total amount"),

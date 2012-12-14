@@ -8,7 +8,7 @@
 			<field name="arch" type="xml">
 				<form string="Invoice">
 					<group colspan="4" col="8">
-						<field name="journal_id" groups="base.group_user"
+						<field name="journal_id" 
 							on_change="onchange_journal_id(journal_id)" widget="selection" />
 						<field name="number" />
 						<field name="type" invisible="1" />
@@ -19,7 +19,7 @@
 						<newline />
 						<field string="Customer" name="partner_id"
 							on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
-							groups="base.group_user" context="{'search_default_customer': 1}" />
+							context="{'search_default_customer': 1}" />
 						<field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" />
 						<field name="fiscal_position" groups="base.group_extended"
 							widget="selection" />
@@ -56,7 +56,7 @@
 							</group>
 							<group col="4" colspan="2">
 								<button colspan="2" name="button_reset_taxes" states="draft"
-									string="Compute Taxes" type="object" groups="base.group_user"
+									string="Compute Taxes" type="object" 
 									icon="terp-stock_format-scientific" />
 								<field name="amount_untaxed" />
 								<field name="amount_tax" />
@@ -65,7 +65,7 @@
 								<newline />
 								<field name="state" />
 								<field name="residual" />
-								<group col="8" colspan="4" groups="base.group_user">
+								<group col="8" colspan="4" >
 									<button name="invoice_cancel" states="draft,proforma2,sale,open"
 										string="Cancel" icon="gtk-cancel" />
 									<button name="%(account.action_account_invoice_refund)d"
@@ -108,7 +108,7 @@
 									<field name="date" />
 									<field name="ref" />
 									<field name="name" />
-									<field name="journal_id" groups="base.group_user" />
+									<field name="journal_id" />
 									<field name="debit" />
 									<field name="credit" />
 									<field name="amount_currency" />
@@ -433,6 +433,33 @@
 				</field>
 			</field>
 		</record>
+
+        <record id="account.invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="type">tree</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state in ('draft');black:state in ('proforma','proforma2','open');gray:state in ('cancel')" string="Invoice">
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="partner_id" />
+                    <field name="name"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="currency_id"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                    <button name="invoice_open" states="draft,proforma2" string="Approve" icon="terp-camera_test"/>
+                </tree>
+            </field>
+        </record>
 
 	</data>
 </openerp>

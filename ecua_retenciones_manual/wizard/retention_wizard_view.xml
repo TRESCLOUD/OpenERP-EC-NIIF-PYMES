@@ -25,8 +25,9 @@
 							<tree string="Retention Lines" editable="top">
 								<field name="fiscalyear_id" widget="selection" required="1" />
 								<field name="description" required="1" />
-								<field name="tax_base" required="1" />
-								<field name="retention_percentage" required="1" />
+								<field name="tax_base" required="1" on_change="onchange_base(tax_base, retention_percentage)"/>
+								<field name="retention_percentage" required="1" on_change="onchange_base(tax_base, retention_percentage)"/>
+								<field name="total_withholding" readonly="1" sum="Total Retención"></field>
 							</tree>
 						</field>
 					</group>
@@ -73,8 +74,10 @@
 								invisible="0" />
 							<field name="automatic_number" />
 							<field name="number"
-								attrs="{'readonly':[('automatic','=',True)], 'required':[('automatic','!=',True)]}" />
+								attrs="{'readonly':[('automatic','=',True)], 'required':[('automatic','!=',True)]}" 
+								on_change="onchange_data(automatic, shop_id,printer_id,{'manual':False})"/>
 							<field name="creation_date" required="1" />
+							<field name="authorization_purchase_helper" readonly="1" />
 							<field name="authorization_purchase" invisible="1" />
 							<field name="invoice_id" invisible="1" />
 							<field name="automatic" invisible="1" />

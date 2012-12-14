@@ -63,3 +63,14 @@ class account_invoice(osv.osv):
         return res
 
 account_invoice()
+
+class account_invoice_line(osv.osv):
+    '''
+    Open ERP Model
+    '''
+    _inherit = 'account.invoice.line'
+
+    _columns = {
+        'price_unit': fields.float('Unit Price', required=True, digits_compute= dp.get_precision('Invoice Line Price')),
+        }
+account_invoice_line()

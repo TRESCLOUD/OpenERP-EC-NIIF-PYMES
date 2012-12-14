@@ -23,14 +23,18 @@
                 <field name="type">form</field>
                 <field name="arch" type="xml">
                     <form string="Payment/Receipt Mode">
-                        <field name="name"/>
-                        <field name="journal_id"/>
+                    	<group colspan="4" col="6">
+	                        <field name="name"/>
+	                        <field name="journal_id" domain="[('type','in',('bank','cash'))]" widget="selection"/>
+	                        <field name="active"/>
+                    	</group>
                         <field name="application"/>
                         <field name="type"/>
-                        <field name="is_own_account"/>
-                        <field name="own_account_id"/>
-                        <field name="active"/>
-                        <field name="is_check"/>
+                        <group colspan="4" attrs="{'invisible':[('type','!=','bank')]}">
+	                        <field name="is_check" colspan="4"/>
+	                        <field name="postdated_account_id" attrs="{'invisible':[('is_check','=',False)], 'required':[('is_check','=',True)]}" domain="[('type','=','receivable')]"/>
+	                        <field name="rejected_account_id" attrs="{'invisible':[('is_check','=',False)], 'required':[('is_check','=',True)]}" domain="[('type','=','receivable')]"/>
+                        </group>
                     </form>
                 </field>
             </record>
@@ -42,6 +46,9 @@
                 <field name="arch" type="xml">
                     <search string="Payment/Receipt Mode">
                         <field name="name"/>
+                        <field name="journal_id"/>
+                        <field name="application"/>
+                        <field name="type"/>
                     </search>
                 </field>
             </record>

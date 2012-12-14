@@ -25,6 +25,7 @@
                  'base',
                  'account',
                  'sale',
+                 'stock',
                  'purchase',
                  'report_aeroo',
                  'report_aeroo_ooo',

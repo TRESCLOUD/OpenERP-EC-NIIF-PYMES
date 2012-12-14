@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="delivery_res_partner_form_view">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page[@string='History']" position="before">
+					<page string="Transportistas">
+						<field name="delivery_ids" nolabel="1" context="{'tree_view_ref':'ecua_remision.delivery_carrier_tree_view','form_view_ref':'ecua_remision.delivery_carrier_form_view'}"/>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

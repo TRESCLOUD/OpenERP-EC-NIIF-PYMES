@@ -17,9 +17,9 @@
 #########################################################################
 
 import voucher
+import deposit_slip
 import payment_mode
 import payment_line
-import check_book
-import check
 import journal
 import invoice
+import partner

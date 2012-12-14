@@ -64,3 +64,25 @@ class account_voucher(osv.osv):
         return {'value': value, 'domain': domain }
     
 account_voucher()
+
+class account_voucher_line(osv.osv):
+    
+    _inherit = 'account.voucher.line' 
+    
+    _columns = {
+                'reconcile':fields.boolean('Full Reconcile'),
+                    }
+    
+    def onchange_reconcile(self, cr, uid, ids, reconcile, amount, amount_unreconciled, context=None):
+        vals = { 'amount': 0.0}
+        if reconcile:
+            vals = { 'amount': amount_unreconciled}
+        return {'value': vals}
+
+    def onchange_amount(self, cr, uid, ids, amount, amount_unreconciled, context=None):
+        vals = {}
+        if amount:
+            vals['reconcile'] = (amount == amount_unreconciled)
+        return {'value': vals}
+
+account_voucher_line()

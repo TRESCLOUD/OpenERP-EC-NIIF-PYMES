@@ -9,11 +9,38 @@
 			<field name="inherit_id" ref="delivery.view_delivery_carrier_form" />
 			<field name="arch" type="xml">
 				<field name="product_id" position="after">
-					<field name="placa" required="1"/>
+					<field name="placa" required="1" />
+				</field>
+				<field name="partner_id"  position="replace">
+				</field>
+				<field name="product_id" position="replace">
+				</field>
+				<field name="active" position="replace">
 				</field>
 				<field name="name" position="replace">
-					<field name="name" string="Nombre"/>
+					<field name="name" string="Nombre del Conductor" />
 				</field>
+				<field name="name" position="after">
+					<field name="cedula" />
+				</field>
+				<field name="placa" position="after">
+					<field name="active" />
+				</field>
+			</field>
+		</record>
+		
+		
+		<record model="ir.ui.view" id="delivery_carrier_tree_view">
+			<field name="name">delivery.carrier.tree</field>
+			<field name="model">delivery.carrier</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Transportistas">
+					<field name="name" string="Nombre del Conductor" />
+					<field name="cedula" />
+					<field name="placa" />
+					
+				</tree>
 			</field>
 		</record>
 	</data>

@@ -1,4 +1,3 @@
-
 # -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
@@ -21,28 +20,22 @@
 #You should have received a copy of the GNU General Public License      
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
-
 from osv import osv
 from osv import fields
 import decimal_precision as dp
 from tools.translate import _
 
-class account_check_book(osv.osv):
+class change_standard_price(osv.osv_memory):
     '''
     Open ERP Model
     '''
-    _name = 'account.check.book'
-    _description = 'account.check.book'
+    _inherit = 'stock.change.standard.price'
 
     _columns = {
-            'name':fields.char('Number', size=64, required=False, readonly=False),
-            'check_ids':fields.one2many('account.check', 'check_book_id', 'Checks', required=False),
-            'bank_id':fields.many2one('res.partner.bank', 'Bank Account', required=False),
-            'received_date': fields.date('Received Date'),
-            'deposit_date': fields.date('Deposit Date'),
-            'payment_date': fields.date('Payment Date'),
-            'return_date': fields.date('Return Date'),
-            'initial_seq': fields.integer('Initial Sequence'),
-            'final_seq': fields.integer('Final Sequence'),
+        'new_price': fields.float('Price', required=True, digits_compute=dp.get_precision('Purchase Price'),
+                                  help="If cost price is increased, stock variation account will be debited "
+                                        "and stock output account will be credited with the value = (difference of amount * quantity available).\n"
+                                        "If cost price is decreased, stock variation account will be creadited and stock input account will be debited."),
+            
         }
-account_check_book()
+change_standard_price()

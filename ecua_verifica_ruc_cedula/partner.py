@@ -198,6 +198,10 @@ class res_partner(osv.osv):
     
     
     def create(self, cr, uid, values, context=None):
+        if not context:
+            context = {}
+        if context.get('skip_ruc_validation'):
+            return super(res_partner, self).create(cr, uid, values, context)
         ref = None
         try:
             ref = values['ref']
@@ -252,6 +256,10 @@ class res_partner(osv.osv):
 
 
     def write(self, cr, uid, ids, values,context=None):
+        if not context:
+            context = {}
+        if context.get('skip_ruc_validation'):
+            return super(res_partner, self).write(cr, uid, ids, values, context)
         ref = None
         try:
             ref = values['ref']

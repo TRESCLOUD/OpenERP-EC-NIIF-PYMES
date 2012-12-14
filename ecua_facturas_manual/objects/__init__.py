@@ -19,3 +19,4 @@ import invoice
 import sale_order
 import purchase_order
 import invoice_line
+import picking

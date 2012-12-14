@@ -44,6 +44,7 @@
                         'views/sale_order_view.xml',
                         'wizard/stock_partial_picking_wizard.xml',
                         'wizard/cancel_delivery_notes_wizard.xml',
+                        'views/partner_view.xml',
                         #'workflow/delivery_note_workflow.xml',
                         'security/ir.model.access.csv'],
         "installable": True

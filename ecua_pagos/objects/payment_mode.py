@@ -33,26 +33,28 @@ class account_payment_mode(osv.osv):
     _name = 'account.payment.modes'
     
     _columns = {
-                'name':fields.char('Name', size=255, required=False, readonly=False),
-                'journal_id':fields.many2one('account.journal', 'Journal', required=False),
+                'name':fields.char('Name', size=255, required=True, readonly=False),
+                'journal_id':fields.many2one('account.journal', 'Journal', required=True),
                 'application':fields.selection([
                     ('customer','Customers'),
                     ('supplier','Suppliers'),
                     ('both','Both'),
                      ], 'Application', select=True, readonly=False, required=True),
-                'is_own_account':fields.boolean('Own Account?', required=False),
-                'own_account_id':fields.many2one('account.invoice', 'Invoice', required=False),
                 'active':fields.boolean('Active?', required=False),
                 'type':fields.selection([
                     ('cash','Cash'),
                     ('bank','Bank'),
                     ('credit_card','Credit Card'),
-                     ],    'Type', select=True, readonly=False),
-                'is_check':fields.boolean('check?', required=False),  
+                     ], 'Type', select=True, required=True),
+                'is_check':fields.boolean('is Check?', required=False),
+                'bank_id':fields.many2one('res.partner.bank', 'Bank Account', required=False),
+                'postdated_account_id':fields.many2one('account.account', 'Postdated Account', required=False),
+                'rejected_account_id':fields.many2one('account.account', 'Rejected Account', required=False),
                     }
     
     _defaults = {  
         'application': 'both',
+        'active': True,
         }
 
 account_payment_mode()

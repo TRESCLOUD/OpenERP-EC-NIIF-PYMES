@@ -26,6 +26,7 @@
                  'ecua_facturas_manual',
                  'ecua_notas_credito_manual',
                  'ecua_liquidacion_compras',
+                 'report_aeroo',
                  'report_aeroo_ooo',
                  ],
     "description": """Some Improvements in Vouchers
@@ -34,6 +35,7 @@
     "init_xml": ['data/init.xml',],
     "update_xml": [
                    'report/voucher_report.xml',
+                   'views/payment_line_view.xml',
                    'views/payment_mode_view.xml',
                    'views/voucher_view.xml',
     ],
