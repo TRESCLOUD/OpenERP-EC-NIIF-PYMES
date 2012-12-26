@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		 <record model="ir.ui.view" id="account_voucher_payment_form_view">
+                <field name="name">account.voucher.form</field>
+                <field name="model">account.voucher</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                    <notebook position="inside">
+                       <page string="Documentos">
+<!-- 	                        <field name="voucher_bool"/> -->
+							<newline/>
+<!-- 	                        <group string="Impresion de Cheques" 
+	                        attrs="{'invisible': [('voucher_bool','==',True)]}">
+ -->								<separator/>
+		                        <field name="numero_cheque"/>
+		                        <field name="cuenta_cheque"/>
+		                        <field name="banco_cheque"/>
+		                        <field name="valor_cheque"/>
+	<!-- 	                        <field name="otro_nombre" on_change="onchange_otro_nombre(otro_nombre)"/>  -->
+								<separator/>
+		                        <field name="otro_nombre"/>
+		                        <field name="nombre_cheque" 
+		                        attrs="{'invisible': [('otro_nombre','==',False)],'required': [('otro_nombre','==',True)]}"/>
+	<!-- 	                        <field name="valor_texto_cheque"/> -->
+								<separator/>
+		                        <field name="fecha_cheque"/>
+		                        <field name="ciudad_cheque"/>
+								<separator/>
+		                        <button name="print_report" string="Imprimir cheque" type="object" icon="gtk-print"/>
+<!-- 	                        </group>
+ -->							<newline/>
+                       </page>
+                    </notebook>
+                </field>
+            </record>
+
+		 <record model="ir.ui.view" id="account_voucher_receipt_form_view">
+                <field name="name">account.voucher.form</field>
+                <field name="model">account.voucher</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+                <field name="arch" type="xml">
+                    <notebook position="inside">
+                       <page string="Documentos">
+<!-- 	                        <field name="voucher_bool"/> -->
+							<newline/>
+<!-- 	                        <group string="Informacion de Vouchers"
+	                        attrs="{'invisible': [('voucher_bool','==',False)]}">
+ -->								<separator/>
+		                        <field name="lote_voucher" required="1"/>
+<!-- 		                        attrs="{'required': [('voucher_bool','==',True)]}"/> -->
+		                        <field name="institucion_id" required="1"/>
+<!-- 		                        attrs="{'required': [('voucher_bool','==',True)]}"/> -->
+<!-- 	                        </group>
+ -->                       </page>
+                    </notebook>
+                </field>
+            </record>
+
+		 <record model="ir.ui.view" id="account_journal_form_view">
+                <field name="name">account.journal.form</field>
+                <field name="model">account.journal</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="account.view_account_journal_form"/>
+                <field name="arch" type="xml">
+	                <xpath  expr="/form/notebook/page[@string='General Information']" position="inside">
+	                    <field name="imprimir_cheque"/>
+	                    <field name="ingresar_voucher"/>
+	                </xpath>
+                </field>
+            </record>
+	</data>
+</openerp>

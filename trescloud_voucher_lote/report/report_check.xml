@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="impresion_cheque_report" model="ir.actions.report.xml">
+			<field name="name">Impresion Cheque</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">account.voucher</field>
+			<field name="report_name">impresion_cheque</field>
+			<field name="report_type">aeroo</field>
+			<field name="in_format">oo-odt</field>
+			<field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')" />
+			<field name="report_rml">intervascu_check/report/report_check.odt</field>
+			<field name="parser_state">default</field>
+			<field name="tml_source">file</field>
+		</record>
+
+<!--		<ir_set>
+			<field eval="'action'" name="key" />
+			<field eval="'client_print_multi'" name="key2" />
+			<field eval="['account.voucher']" name="models" />
+			<field name="name">voucher</field>
+			<field eval="'ir.actions.report.xml,'+str(impresion_cheque)" name="value" />
+			<field eval="True" name="isobject" />
+ 			<field eval="True" name="replace" />  
+		</ir_set>   -->
+
+	</data>
+</openerp>
