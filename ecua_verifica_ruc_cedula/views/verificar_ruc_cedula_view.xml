@@ -20,7 +20,7 @@
 						<group colspan="1" col="2">
 							<field name="customer" select="1" />
 							<field name="supplier" />
-							<field name="foreing" />
+							<field name="foreing" context="{'skip_ruc_validation' : True}"/>
 							<!--                            <field name="employee"/>-->
 						</group>
 					</group>
@@ -97,8 +97,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<xpath expr="/form/group//field[@name='ref']" position="replace">
-					<field string="CEDULA/RUC" name="ref"
-						attrs="{'readonly':[('foreing','=',True)]}" select="1">
+					<field string="CEDULA/RUC" name="ref" select="1">
+<!-- 						attrs="{'readonly':[('foreing','=',True)]}"  --> 
 					</field>
 					<field string="type" name="type_ref" invisible="1">
 					</field>

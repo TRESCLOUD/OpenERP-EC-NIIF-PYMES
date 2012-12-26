@@ -200,9 +200,14 @@ class res_partner(osv.osv):
     def create(self, cr, uid, values, context=None):
         if not context:
             context = {}
-        if context.get('skip_ruc_validation'):
+        # If foreing is True don't have to verify the CI/RUC
+        # It's no necesary to check foreing in values, because ALWAYS contain it
+        foreing = values['foreing']
+            
+        if context.get('skip_ruc_validation') or foreing:
             return super(res_partner, self).create(cr, uid, values, context)
         ref = None
+
         try:
             ref = values['ref']
             if not ref:
@@ -258,7 +263,17 @@ class res_partner(osv.osv):
     def write(self, cr, uid, ids, values,context=None):
         if not context:
             context = {}
-        if context.get('skip_ruc_validation'):
+
+        # If foreing is True don't have to verify the CI/RUC
+        # First, check if change the value of foreing, else use the stored value
+        foreing = False
+        
+        if 'foreing' in values:
+            foreing = values['foreing']
+        else:
+            foreing = self.pool.get('res.partner').browse(cr, uid, ids[0]).foreing
+            
+        if context.get('skip_ruc_validation') or foreing:
             return super(res_partner, self).write(cr, uid, ids, values, context)
         ref = None
         try:
