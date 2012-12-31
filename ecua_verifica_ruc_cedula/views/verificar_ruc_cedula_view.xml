@@ -20,7 +20,7 @@
 						<group colspan="1" col="2">
 							<field name="customer" select="1" />
 							<field name="supplier" />
-							<field name="foreing" context="{'skip_ruc_validation' : True}"/>
+							<field name="foreing" />
 							<!--                            <field name="employee"/>-->
 						</group>
 					</group>
