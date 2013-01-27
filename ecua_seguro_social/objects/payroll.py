@@ -430,6 +430,13 @@ class hr_payslip(osv.osv):
             #      |----|
             #      .
             #    |----|
+            '''
+                Control de existencia de Contract por TRESCloud -ANDREA GARCIA TORRES
+            '''
+            if not contract:
+                raise osv.except_osv(_('Warning!'),
+                                             _("There is not contract for employee") )
+                
             case1 = payslip_obj.search(cr, uid, [('id','!=', payslip.id),
                                                  ('employee_id','=', employee.id), 
                                                  ('contract_id','=', contract.id),
