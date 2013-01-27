@@ -42,6 +42,8 @@
                      #agregadas dependencias de aeroo reports
                      'report_aeroo',
                      'report_aeroo_ooo',
+                     #AGregadas dependencias de contabilidad ecuatoriana
+                     'ecua_states',
                      ],
         "init_xml" : [
                         #'data/data_init.xml',

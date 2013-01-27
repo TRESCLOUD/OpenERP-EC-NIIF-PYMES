@@ -200,9 +200,12 @@ class res_partner(osv.osv):
     def create(self, cr, uid, values, context=None):
         if not context:
             context = {}
+        
         # If foreing is True don't have to verify the CI/RUC
-        # It's no necesary to check foreing in values, because ALWAYS contain it
-        foreing = values['foreing']
+        foreing = False
+
+        if 'foreing' in values:
+            foreing = values['foreing']
             
         if context.get('skip_ruc_validation') or foreing:
             return super(res_partner, self).create(cr, uid, values, context)
