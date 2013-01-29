@@ -62,6 +62,9 @@ class sri_ats(osv.osv):
             return '05'
         elif type=='consumidor':
             return '07'
+        #en caso de que el tipo sea "False", se asume que es extranjero
+        elif type == False:
+            return '06'
         
     def formato_numero(self,valor):
         tup= valor.split('.')
