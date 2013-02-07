@@ -295,7 +295,7 @@ class sri_ats(osv.osv):
                     inv_ventas = self.pool.get('account.invoice').browse(cr, uid, inv_vent_ids, context)
                     for inv in inv_ventas:
                         base=base+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("411",)])
-                        base_0=base+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("415","416","413","414")])
+                        base_0=base_0+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("415","416","413","414")]) # Pablo Vizhnay Modificado: 7/02/2013 15h37
                         iva=iva+self.valor([n.amount for n in inv.tax_line if n.tax_code_id.code in ("421",)])
                         if inv.retention_ids:
                             for ret in inv.retention_ids:
