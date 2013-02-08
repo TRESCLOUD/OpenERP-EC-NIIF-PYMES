@@ -49,7 +49,11 @@ class sri_ats(osv.osv):
                 elem.tail = i
 
     def tipo_identificacion_compra(self,type):
-        if type=='ruc':
+        # Modificado "TEMPORALMENTE" por problemas en la herencia y modificacion
+        # del objeto res.partner, modulo trescloud_diagnossis_patient
+        # TODO: Esta solucion DEBE ser temporal (07-02-2013)
+        # Original: if type=='ruc':
+        if type=='ruc' or not type:
             return '01'
         elif type=='cedula':
             return '02'
