@@ -345,6 +345,11 @@
 			</field>
 		</record>
 
+<!-- P.R. Domain que no permite seleccionar todos los proveedores, eliminado
+						on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						domain="['|',('type_ref','=','ruc'),('foreing','=',True)]"
+						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
+-->
 		<record model="ir.ui.view" id="account_invoice_purchase_form_view">
 			<field name="name">account.invoice.form</field>
 			<field name="model">account.invoice</field>
@@ -357,14 +362,13 @@
 					<field name="authorization_supplier_purchase_id"
 						attrs="{'required':[('foreign','=',False)], 'invisible':[('foreign','=',True)]}"
 						on_change="onchange_authorization(authorization_supplier_purchase_id)"
-						domain="[('partner_id', '=', partner_id),('type','=','invoice')]"
+						domain="[('partner_id', '=', partner_id),('type','=','invoice')]" 
 						context="{'document_type':'invoice', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}">
 					</field>
 				</xpath>
 				<xpath expr="/form/group//field[@name='partner_id']" position="replace">
 					<field string="Supplier" name="partner_id"
 						on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
-						domain="['|',('type_ref','=','ruc'),('foreing','=',True)]"
 						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
 				</xpath>
 				<xpath expr="/form/group/field[@name='number']" position="replace">
