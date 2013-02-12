@@ -25,7 +25,7 @@
 		<record id="04" model="sri.transaction.usage">
 			<field name="code">04</field>
 			<field name="name">VENTA</field>
-			<field name="type_identification">ruc</field>		<!-- Agregado el tipo de documento 18 -->
+			<field name="type_identification">ruc</field>	<!-- Agregado el tipo de documento 18 -->
 			<field name="voucher_type_ids" eval="[(6,0,[ref('04'),ref('05'),ref('07'),ref('08'),ref('09'),ref('15'),ref('18'),ref('21'),ref('41'),ref('42'),ref('43'),ref('44'),ref('45'),ref('47'),ref('48'),ref('49'),ref('50'),ref('51'),ref('52')])]"/>
 		</record>
 
