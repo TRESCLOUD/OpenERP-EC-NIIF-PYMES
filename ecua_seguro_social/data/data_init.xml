@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!-- Erase data from original hr modules -->
+        <!-- Erase data from original hr modules --> 
         <!-- Contract Wage Types -->
         <delete id="hr_contract.hr_contract_monthly_gross" model="hr.contract.wage.type"/>
         <delete id="hr_contract.hr_contract_monthly_net" model="hr.contract.wage.type"/>
         <delete id="hr_payroll.hr_contract_monthly_basic" model="hr.contract.wage.type"/>
-              
         <delete id="hr_contract.hr_contract_type_emp" model="hr.contract.type"/>
         <delete id="hr_contract.hr_contract_type_wrkr" model="hr.contract.type"/>
         <delete id="hr_contract.hr_contract_type_sub" model="hr.contract.type"/>      
