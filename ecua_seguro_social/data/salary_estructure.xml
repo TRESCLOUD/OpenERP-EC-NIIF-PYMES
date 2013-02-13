@@ -60,7 +60,7 @@
 
 		<record id="SALNET" model="hr.salary.rule.percentage.base">
 			<field name="name">Salario Neto</field>
-			<field name="base">contract.wage</field>
+			<field name="base">categories.INGR + categories.OINGR - categories.EGRE</field>
 		</record>
 
 		<!-- Registro de IESS -->
