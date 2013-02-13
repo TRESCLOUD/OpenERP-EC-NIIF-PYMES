@@ -43,9 +43,9 @@
 			<field name="base">contract.wage</field>
 		</record>
 
-		<record id="S292" model="hr.salary.rule.percentage.base">
-			<field name="name">Salario Básico Unificado - 292</field>
-			<field name="base">292</field>
+		<record id="S318" model="hr.salary.rule.percentage.base">
+			<field name="name">Salario Básico Unificado - 318</field>
+			<field name="base">318</field>
 		</record>
 
 		<record id="SALBRU" model="hr.salary.rule.percentage.base">
@@ -60,7 +60,7 @@
 
 		<record id="SALNET" model="hr.salary.rule.percentage.base">
 			<field name="name">Salario Neto</field>
-			<field name="base">categories.INGR + categories.OINGR - categories.EGRE</field>
+			<field name="base">contract.wage</field>
 		</record>
 
 		<!-- Registro de IESS -->
@@ -78,7 +78,7 @@
             <field name="category_id" ref="INGR"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage</field>
+            <field name="amount_python_compute">result = payslip.worked_days_line_ids[0].number_of_days* (contract.wage / 30)</field>
         </record>
 
         <record id="hr_iess_personal" model="hr.salary.rule">
@@ -116,7 +116,7 @@
             <field name="category_id" ref="CONT"/>
             <field name="condition_select">none</field>
             <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="S292"></field>
+            <field name="amount_percentage_base" ref="S318"></field>
             <field name="quantity">1</field>
             <field name="amount_percentage">8.333</field>            
 			<field name="pay_to_other">True</field>
