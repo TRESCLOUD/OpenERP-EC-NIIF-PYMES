@@ -14,15 +14,18 @@
 					<group colspan="4" col="8">
 						<group colspan="6" col="4">
 							<separator string="Identification Info." colspan="4" />
-							<field name="identification_id" required="1" colspan="2" />
+							<field name="identification_id" attrs="{'required':[('foreign','=',False)]}" string="Cedula"/>
+							<field name="passport_id" attrs="{'invisible':[('foreign','=',False)]}" />
 							<field name="user_id" on_change="onchange_user(user_id)"
 								colspan="2" />
+							<field name="foreign"/>
+								
 							<separator string="Names" colspan="4" />
 							<field colspan="2" name="name" />
 							<field colspan="2" name="second_name" />
 							<newline />
-							<field colspan="2" name="last_name" required="1" />
-							<field colspan="2" name="mother_last_name" />
+							<field colspan="2" name="last_name" string="Primer Apellido" required="1" />
+							<field colspan="2" name="mother_last_name" string="Segundo Apellido" />
 							<newline />
 						</group>
 						<group colspan="2" col="1">
@@ -109,7 +112,7 @@
 								<separator string="Job Info" colspan="2" />
 								<group colspan="2">
 									<field name="manager" select="1" invisible="0" />
-									<field name="passport_id" invisible="0" />
+									
 								</group>
 								<field name="vehicle" select="1" invisible="0" />
 								<field name="vehicle_distance" select="1" invisible="1" />
@@ -193,8 +196,8 @@
 			<field name="arch" type="xml">
 				<xpath expr="/tree/field[@name='name']" position="after">
 					<field name="second_name" />
-					<field name="last_name" />
-					<field name="mother_last_name" />
+					<field name="last_name" string="Primer Apellido" />
+					<field name="mother_last_name" string="Segundo Apellido" />
 				</xpath>
 				<xpath expr="/tree/field[@name='name']" position="before">
 					<field name="identification_id" />
@@ -210,8 +213,8 @@
 			<field name="arch" type="xml">
 				<xpath expr="/search/field[@name='name']" position="after">
 					<field name="second_name" />
-					<field name="last_name" />
-					<field name="mother_last_name" />
+					<field name="last_name" string="Primer Apellido"/>
+					<field name="mother_last_name" string="Segundo Apellido"/>
 				</xpath>
 				<xpath expr="/search/field[@name='name']" position="before">
 					<field name="identification_id" />

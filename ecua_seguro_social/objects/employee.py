@@ -92,7 +92,7 @@ class hr_employee(osv.osv):
     _inherit = 'hr.employee'
 
     _columns = {
-        'identification_id':fields.char('Identification No', size=10,),
+        'identification_id':fields.char('Cedula', size=10,), # pablo vizhnay 14/02/2013 8h53 am
         #Es necesario que se asigne una cuenta de tipo payable a la cuenta del empleado
         #para la generacion correcta de los asientos
         'employee_account':fields.property(
@@ -124,28 +124,31 @@ class hr_employee(osv.osv):
         'account_debit': fields.many2one('account.account', 'Debit Account', domain=[('type','=','receivable')]),
         'account_credit': fields.many2one('account.account', 'Credit Account', domain=[('type','=','payable')]),
         'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),
+        'foreign':fields.boolean('Foreign?'), 
         }
     
- #   def _get_account_debit(self, cr, uid, context=None):
- #       if not context:
- #           context={}
- #       user = self.pool.get('res.users').browse(cr, uid, uid, context)
- #       company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
- #       return company.default_account_debit_id.id or None
+    def _get_account_debit(self, cr, uid, context=None):
+        if not context:
+            context={}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context)
+        company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
+        return company.default_account_debit_id.id or None
 
-  #  def _get_account_credit(self, cr, uid, context=None):
-  #      if not context:
-  #          context={}
-   #     user = self.pool.get('res.users').browse(cr, uid, uid, context)
- #       company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
-  #      return company.default_account_credit_id.id or None
+    def _get_account_credit(self, cr, uid, context=None):
+        if not context:
+            context={}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context)
+        company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
+        return company.default_account_credit_id.id or None
     
     _defaults = {  
-   #     'account_debit': _get_account_debit,  
-   #     'account_credit': _get_account_credit,  
+        'account_debit': _get_account_debit,  
+        'account_credit': _get_account_credit,
+       # 'foreign': lambda *a: False,
         }
+   # _sql_constraints = [('identification_id_uniq','unique(identification_id)', 'The value of CEDULA must be unique, this value already exists')]
 
-    def check_ced(self, ced):
+    def verifica_cedula(self,ced):
         try:
             valores = [ int(ced[x]) * (2 - x % 2) for x in range(9) ]
             suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
@@ -161,7 +164,7 @@ class hr_employee(osv.osv):
         val = True 
         for employee in self.pool.get('hr.employee').browse(cr, uid, ids, None):
             if employee.identification_id:
-                val = self.check_ced(employee.identification_id)
+                val = self.verifica_cedula(employee.identification_id)
         return val
     
     def _check_employee_account(self, cr, uid, ids):

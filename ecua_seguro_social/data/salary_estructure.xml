@@ -79,7 +79,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage</field>
-            <!--  <field name="amount_python_compute">result = payslip.worked_days_line_ids[0].number_of_days* (contract.wage / 30)</field>-->
+            <!--  <field name="amount_python_compute">result = payslip.worked_days_line_ids[0].number_of_days* (contract.wage / 30)</field> -->
         </record>
 
         <record id="hr_iess_personal" model="hr.salary.rule">
