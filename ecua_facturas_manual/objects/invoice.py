@@ -527,11 +527,7 @@ class account_invoice(osv.osv):
         res = super(account_invoice, self).action_date_assign(cr, uid, ids, args)
         for inv in self.browse(cr, uid, ids):
             if inv.type=='out_invoice':
-                if not inv.date_invoice:
-                    date = time.strftime('%Y-%m-%d')
-                else:
-                    date = inv.date_invoice
-                if not auth_obj.check_date_document(cr, uid, date, inv.authorization_sales.start_date, inv.authorization_sales.expiration_date):
+                if not auth_obj.check_date_document(cr, uid, inv.date_invoice or time.strftime('%Y-%m-%d'), inv.authorization_sales.start_date, inv.authorization_sales.expiration_date):
                    raise osv.except_osv(_('Invalid action!'), _('The date entered is not valid for the authorization')) 
         return res
     
