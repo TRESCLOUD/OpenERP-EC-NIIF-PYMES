@@ -43,9 +43,9 @@
 			<field name="base">contract.wage</field>
 		</record>
 
-		<record id="S318" model="hr.salary.rule.percentage.base">
-			<field name="name">Salario Básico Unificado - 318</field>
-			<field name="base">318</field>
+		<record id="S292" model="hr.salary.rule.percentage.base">
+			<field name="name">Salario Básico Unificado - 292</field>
+			<field name="base">292</field>
 		</record>
 
 		<record id="SALBRU" model="hr.salary.rule.percentage.base">
@@ -79,7 +79,6 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage</field>
-            <!--  <field name="amount_python_compute">result = payslip.worked_days_line_ids[0].number_of_days* (contract.wage / 30)</field> -->
         </record>
 
         <record id="hr_iess_personal" model="hr.salary.rule">
@@ -117,7 +116,7 @@
             <field name="category_id" ref="CONT"/>
             <field name="condition_select">none</field>
             <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="S318"></field>
+            <field name="amount_percentage_base" ref="S292"></field>
             <field name="quantity">1</field>
             <field name="amount_percentage">8.333</field>            
 			<field name="pay_to_other">True</field>
@@ -148,6 +147,17 @@
             <field name="quantity">1</field>
             <field name="amount_percentage">8.333</field>
         </record>
+        
+        <record id="hr_rule_ausencia" model="hr.salary.rule">
+            <field name="name">Visitas al IEES</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">VIEES</field>
+            <field name="category_id" ref="EGRE"/>
+            <field name='condition_select'>python</field>
+         	<field name='condition_python'>result = total_ausencia &#62; 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = total_ausencia</field>
+        </record>
 
         <!-- Salary Structure -->
 
@@ -158,8 +168,25 @@
             <field name="company_id" ref="base.main_company"/>
         </record>
 
+		<!-- Causas de Ausencia -->
 
+	    <record model="hr.holidays.status" id="hr_holidays.holiday_status_cl">
+	      <field name="name">Falta Justificada</field>
+	      <field name="code">FJUST</field>
+	      <field name="color_name">black</field>
+	    </record>
+	
+	    <record model="hr.holidays.status" id="hr_holidays.holiday_status_sl">
+	      <field name="name">Falta Injustificada</field>
+	      <field name="code">FINJUST</field>
+	      <field name="color_name">black</field>
+	    </record>
+
+	    <record model="hr.holidays.status" id="holiday_vpag">
+	      <field name="name">Vacaciones Pagadas</field>
+	      <field name="code">VPAG</field>
+	      <field name="color_name">black</field>
+	    </record>
 
     </data>
-
 </openerp>

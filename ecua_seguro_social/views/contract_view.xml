@@ -1,173 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+	<data>
 
-        <menuitem id="next_id_56" name="Contract" parent="hr.menu_hr_management" sequence="5"/>
+		<menuitem id="next_id_56" name="Contract" parent="hr.menu_hr_management"
+			sequence="5" />
 
-        <record id="hr_contract_view_search2" model="ir.ui.view">
-            <field name="name">hr.contract.view.search</field>
-            <field name="model">hr.contract</field>
-            <field name="type">search</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <search string="Search Contract">
-                   <group col='15' colspan='4'>
-                   <filter string="Current" icon="terp-check" name="current"  domain="['|',('date_end','&gt;=', time.strftime('%%Y-%%m-%%d')),('date_end','=',False)]" help="Contracts in progress"/>
-                   <filter string="Overpassed" icon="terp-emblem-important" domain="[('date_end','&lt;', time.strftime('%%Y-%%m-%%d'))]" help="Contracts whose end date already passed"/>
-                   <separator orientation="vertical"/>
-                   <field name="name"/>
-                   <field name="employee_id"/>
-                   <field name="working_hours"/>
-                   <field name="date_start"/>
-                   <field name="date_end"/>
-                   </group>
-                   <newline/>
-                   <group expand="0" string="Group By..." colspan="4" col="20">
-                   <filter string="Employee" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
-                   <separator orientation="vertical"/>
-                   <filter string="Working Schedule" icon="terp-go-week" domain="[]" context="{'group_by':'working_hours'}"/>
-                   <filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
-                    <separator orientation="vertical"/>
-                    <filter string="Contract Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'type_id'}"/>
-                   </group>
-               </search>
-            </field>
-        </record>
+		<record id="hr_contract_view_search2" model="ir.ui.view">
+			<field name="name">hr.contract.view.search</field>
+			<field name="model">hr.contract</field>
+			<field name="type">search</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<search string="Search Contract">
+					<group col='15' colspan='4'>
+						<filter string="Current" icon="terp-check" name="current"
+							domain="['|',('date_end','&gt;=', time.strftime('%%Y-%%m-%%d')),('date_end','=',False)]"
+							help="Contracts in progress" />
+						<filter string="Overpassed" icon="terp-emblem-important"
+							domain="[('date_end','&lt;', time.strftime('%%Y-%%m-%%d'))]"
+							help="Contracts whose end date already passed" />
+						<separator orientation="vertical" />
+						<field name="name" />
+						<field name="employee_id" />
+						<field name="working_hours" />
+						<field name="date_start" />
+						<field name="date_end" />
+					</group>
+					<newline />
+					<group expand="0" string="Group By..." colspan="4" col="20">
+						<filter string="Employee" icon="terp-personal" domain="[]"
+							context="{'group_by':'employee_id'}" />
+						<separator orientation="vertical" />
+						<filter string="Working Schedule" icon="terp-go-week"
+							domain="[]" context="{'group_by':'working_hours'}" />
+						<filter string="Job" icon="terp-gtk-select-all" domain="[]"
+							context="{'group_by':'job_id'}" />
+						<separator orientation="vertical" />
+						<filter string="Contract Type" icon="terp-stock_symbol-selection"
+							domain="[]" context="{'group_by':'type_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
 
-        <record id="hr_contract_view_form2" model="ir.ui.view">
-            <field name="name">hr.contract.view.form</field>
-            <field name="model">hr.contract</field>
-            <field name="type">form</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <form string="Contract">
-                    <group colspan="3" col="6">
-                        <field name="name" />
-                        <field name="employee_id" />
-                        <field name="job_id"/>
-                        <field name="wage"/>
-                        <field name="type_id" widget="selection"/>
-                    </group>
-                    <notebook>
-                    <page string="Information">
-                        <group col="2" colspan="2">
-                            <separator colspan="2" string="Duration"/>
-                            <field name="date_start" />
-                            <field name="date_end" />
-                            <field name="working_hours" required="1"/>
-                            <separator colspan="2" string="Trial Period"/>
-                            <field name="trial_date_start" />
-                            <field name="trial_date_end" />
-                        </group>
-                            <group col="2" colspan="2">
-                    		<separator string="Payslip Info" colspan="2"/>
-                    		<field name="struct_id" required="1"/>
-                            <field name="schedule_pay"/>
-		                   	<separator colspan="4" string="Accounting"/>
-		                    <field name="journal_id" required="1"/>
-		                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
-                            <field name="advantages" nolabel="1" colspan="2" invisible="1"/>
-                        </group>
-                    </page>
-                    <page string="Notes">
-                        <separator colspan="4" string="Notes"/>
-                        <field colspan="4" name="notes" nolabel="1"/>
-                    </page>
-                    </notebook>
-                </form>
-            </field>
-        </record>
+		<record id="hr_contract_view_form2" model="ir.ui.view">
+			<field name="name">hr.contract.view.form</field>
+			<field name="model">hr.contract</field>
+			<field name="type">form</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<form string="Contract">
+					<group colspan="3" col="6">
+						<field name="name" />
+						<field name="employee_id" />
+						<field name="job_id" />
+						<field name="wage" />
+						<field name="type_id" widget="selection" />
+						<field name="method_payment" required="1" />
+					</group>
+					<notebook>
+						<page string="Information">
+							<group col="2" colspan="2">
+								<separator colspan="2" string="Duration" />
+								<field name="date_start" />
+								<field name="date_end" />
+								<field name="working_hours" required="1" />
+								<separator colspan="2" string="Trial Period" />
+								<field name="trial_date_start" />
+								<field name="trial_date_end" />
+							</group>
+							<group col="2" colspan="2">
+								<separator string="Payslip Info" colspan="2" />
+								<field name="struct_id" required="1" />
+								<field name="schedule_pay" />
+								<separator colspan="4" string="Accounting" />
+								<field name="journal_id" required="1" />
+								<field name="analytic_account_id" groups="analytic.group_analytic_accounting" />
+								<field name="advantages" nolabel="1" colspan="2"
+									invisible="1" />
+							</group>
+						</page>
+						<page string="Notes">
+							<separator colspan="4" string="Notes" />
+							<field colspan="4" name="notes" nolabel="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
 
-        <record id="hr_contract_view_tree2" model="ir.ui.view">
-            <field name="name">hr.contract.view.tree</field>
-            <field name="model">hr.contract</field>
-            <field name="type">tree</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <tree string="Contracts">
-                    <field name="employee_id"/>
-                    <field name="name"/>
-                    <field name="type_id"/>
-                    <field name="job_id"/>
-                    <field name="working_hours"/>
-                    <field name="date_start"/>
-                    <field name="date_end"/>
-                    <field name="wage"/>
-                </tree>
-            </field>
-        </record>
-		<!--  
-        <record id="action_hr_contract" model="ir.actions.act_window">
-            <field name="name">Contracts</field>
-            <field name="res_model">hr.contract</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[]</field>
-            <field name="context">{'search_default_current':1}</field>
-            <field name="search_view_id" ref="hr_contract_view_search2"/>
-        </record>
-		
-        <record id="hr_contract_type_view_form" model="ir.ui.view">
-            <field name="name">hr.contract.type.view.form</field>
-            <field name="model">hr.contract.type</field>
-            <field name="type">form</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <form string="Contract Type">
-                    <field colspan="4" name="name"/>
-                </form>
-            </field>
-        </record>
-
-         <record id="hr_contract_type_view_tree" model="ir.ui.view">
-            <field name="name">hr.contract.type.view.tree</field>
-            <field name="model">hr.contract.type</field>
-            <field name="type">tree</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <tree string="Contract Type">
-                    <field colspan="4" name="name"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="hr_contract_type_view_search2" model="ir.ui.view">
-            <field name="name">hr.contract.type.view.search</field>
-            <field name="model">hr.contract.type</field>
-            <field name="type">search</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <search string="Search Contract Type">
-                   <group col='15' colspan='4'>
-                    <field name="name"/>
-                   </group>
-               </search>
-            </field>
-        </record>
-        -->
+		<record id="hr_contract_view_tree2" model="ir.ui.view">
+			<field name="name">hr.contract.view.tree</field>
+			<field name="model">hr.contract</field>
+			<field name="type">tree</field>
+			<field name="priority">1</field>
+			<field name="arch" type="xml">
+				<tree string="Contracts">
+					<field name="employee_id" />
+					<field name="name" />
+					<field name="type_id" />
+					<field name="job_id" />
+					<field name="working_hours" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="wage" />
+				</tree>
+			</field>
+		</record>
 		<!--
-        <record id="hr_contract.action_hr_contract_type" model="ir.actions.act_window">
-            <field name="name">Contract Types</field>
-            <field name="res_model">hr.contract.type</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="hr_contract_type_view_search2"/>
-        </record>
-		
-        <menuitem action="action_hr_contract_type" id="hr_menu_contract_type" parent="next_id_56" sequence="6"/>
-        -->
-        <!--  
-        <menuitem action="action_hr_contract" id="hr_menu_contract" parent="hr.menu_hr_main" name="Contracts2" sequence="4" groups="base.group_hr_manager"/>
+			<record id="action_hr_contract" model="ir.actions.act_window"> <field
+			name="name">Contracts</field> <field
+			name="res_model">hr.contract</field> <field
+			name="view_type">form</field> <field
+			name="view_mode">tree,form</field> <field name="domain">[]</field>
+			<field name="context">{'search_default_current':1}</field> <field
+			name="search_view_id" ref="hr_contract_view_search2"/> </record>
+
+			<record id="hr_contract_type_view_form" model="ir.ui.view"> <field
+			name="name">hr.contract.type.view.form</field> <field
+			name="model">hr.contract.type</field> <field name="type">form</field>
+			<field name="priority">1</field> <field name="arch" type="xml"> <form
+			string="Contract Type"> <field colspan="4" name="name"/> </form>
+			</field> </record> <record id="hr_contract_type_view_tree"
+			model="ir.ui.view"> <field
+			name="name">hr.contract.type.view.tree</field> <field
+			name="model">hr.contract.type</field> <field name="type">tree</field>
+			<field name="priority">1</field> <field name="arch" type="xml"> <tree
+			string="Contract Type"> <field colspan="4" name="name"/> </tree>
+			</field> </record> <record id="hr_contract_type_view_search2"
+			model="ir.ui.view"> <field
+			name="name">hr.contract.type.view.search</field> <field
+			name="model">hr.contract.type</field> <field
+			name="type">search</field> <field name="priority">1</field> <field
+			name="arch" type="xml"> <search string="Search Contract Type"> <group
+			col='15' colspan='4'> <field name="name"/> </group> </search>
+			</field> </record>
 		-->
-        <!-- Contracts Button on Employee Form -->
-		<!--  
-        <act_window
-        context="{'search_default_employee_id': [active_id], 'default_employee_id': active_id}"
-        id="act_hr_employee_2_hr_contract"
-        name="Contracts"
-        res_model="hr.contract"
-        src_model="hr.employee"
-        groups="base.group_hr_manager"/>
+		<!--
+			<record id="hr_contract.action_hr_contract_type"
+			model="ir.actions.act_window"> <field name="name">Contract
+			Types</field> <field name="res_model">hr.contract.type</field> <field
+			name="view_type">form</field> <field
+			name="view_mode">tree,form</field> <field name="search_view_id"
+			ref="hr_contract_type_view_search2"/> </record> <menuitem
+			action="action_hr_contract_type" id="hr_menu_contract_type"
+			parent="next_id_56" sequence="6"/>
 		-->
-    </data>
+		<!--
+			<menuitem action="action_hr_contract" id="hr_menu_contract"
+			parent="hr.menu_hr_main" name="Contracts2" sequence="4"
+			groups="base.group_hr_manager"/>
+		-->
+		<!-- Contracts Button on Employee Form -->
+		<!--
+			<act_window context="{'search_default_employee_id': [active_id],
+			'default_employee_id': active_id}" id="act_hr_employee_2_hr_contract"
+			name="Contracts" res_model="hr.contract" src_model="hr.employee"
+			groups="base.group_hr_manager"/>
+		-->
+	</data>
 </openerp>

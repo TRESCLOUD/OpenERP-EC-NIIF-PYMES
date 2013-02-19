@@ -12,7 +12,7 @@
                     <group colspan="4" width="600" height="300">
                         <separator string="Employees" colspan="4"/>
                         <newline/>
-                        <field name="employee_ids" nolabel="1" colspan="4"/>
+                        <field name="employee_ids" domain="[('contract_id','!=',False)]" nolabel="1" colspan="4"/>
                     </group>
                     <separator string="" colspan="4" />
                     <group colspan="4" col="6">

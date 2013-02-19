@@ -222,7 +222,6 @@ class hr_payslip(osv.osv):
     _description = 'Pay Slip'
 
     def _calculate(self, cr, uid, ids, field_names, arg, context=None):
-        slip_line_obj = self.pool.get('hr.payslip.line2')
         res={}
         for rs in self.browse(cr, uid, ids, context=context):
             inputs_ids = None
@@ -393,6 +392,7 @@ class hr_payslip(osv.osv):
                 'account.voucher': (_get_payslip_from_voucher, ['state'], 50),
             },
             help="Remaining amount due."),
+        'newholidays_ids':fields.many2many('hr.newholidays', 'newholidays_payslip_rel', 'payslip_id', 'newholidyas_id', 'Ausencias'), 
         
     }
     
@@ -430,13 +430,6 @@ class hr_payslip(osv.osv):
             #      |----|
             #      .
             #    |----|
-            '''
-                Control de existencia de Contract por TRESCloud -ANDREA GARCIA TORRES
-            '''
-            if not contract:
-                raise osv.except_osv(_('Warning!'),
-                                             _("There is not contract for employee") )
-                
             case1 = payslip_obj.search(cr, uid, [('id','!=', payslip.id),
                                                  ('employee_id','=', employee.id), 
                                                  ('contract_id','=', contract.id),
@@ -504,17 +497,48 @@ class hr_payslip(osv.osv):
         res['value'].update({'journal_id': journal_id})
         return self.onchange_employee_id(cr, uid, ids, date_from=date_from, date_to=date_to, employee_id=employee_id, contract_id=contract_id, context=context)
 
+    def set_draft(self, cr, uid, ids, context=None):
+        if not context:
+            context={}
+        wf_service = netsvc.LocalService("workflow")
+        line_obj = self.pool.get('hr.payslip.line2')
+        work_days_obj = self.pool.get('hr.payslip.worked_days')
+        for slip in self.browse(cr, uid, ids, context):
+            for line in slip.line_ids:
+                line_obj.unlink(cr, uid, [line.id])
+            for line in slip.worked_days_line_ids:
+                work_days_obj.unlink(cr, uid, [line.id])
+        for id in ids:
+            wf_service.trg_delete(uid, 'hr.payslip', id, cr)
+            wf_service.trg_create(uid, 'hr.payslip', id, cr)
+        self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        return True
+
     def cancel_sheet(self, cr, uid, ids, context=None):
+        if not context:
+            context = None
         move_pool = self.pool.get('account.move')
+        voucher_obj = self.pool.get('account.voucher')
+        extra_obj = self.pool.get('hr.extra.input.output')
         move_ids = []
         move_to_cancel = []
         for slip in self.browse(cr, uid, ids, context=context):
             move_ids.append(slip.move_id.id)
             if slip.move_id.state == 'posted':
                 move_to_cancel.append(slip.move_id.id)
+            for voucher in slip.voucher_ids:
+                if voucher.state == 'posted':
+                    raise osv.except_osv(_('Cancelation Error!'),_("You must cancel payment done for employee '%s' ") % (self.pool.get('hr.employee').name_get(cr, uid, [slip.employee_id.id,])[0][1]))
+                else:
+                    voucher_obj.cancel_voucher(cr, uid, [voucher.id], context)
+                    voucher_obj.unlink(cr, uid, [voucher.id], context)
+            for slip_line in slip.line_ids:
+                if slip_line.extra_i_o_id:
+                    extra_obj.write(cr, uid, [slip_line.extra_i_o_id.id], {'paid':False})
         move_pool.button_cancel(cr, uid, move_to_cancel, context=context)
         move_pool.unlink(cr, uid, move_ids, context=context)
-        return super(hr_payslip, self).cancel_sheet(cr, uid, ids, context=context)
+        self.write(cr, uid, ids, {'state':'cancel'}, context=context)
+        return True
 
     def process_sheet(self, cr, uid, ids, context=None):
         move_pool = self.pool.get('account.move')
@@ -524,6 +548,7 @@ class hr_payslip(osv.osv):
         if not context:
             context = {}
         for slip in self.browse(cr, uid, ids, context=context):
+            timenow = slip.date_to
             self._check_date_employee(cr, uid, ids, context)
             if not slip.employee_id.partner_id:
                 raise osv.except_osv(_('Configuration Error!'),_("You must configure correct Partner for employee '%s' ") % (self.pool.get('hr.employee').name_get(cr, uid, [slip.employee_id.id,])[0][1]))
@@ -572,28 +597,34 @@ class hr_payslip(osv.osv):
                     credit_account_id = line.salary_rule_id.account_credit.id or False
                     if line.salary_rule_id.category_id.type == 'input':
                         if line.salary_rule_id.use_partner_account:
-                            credit_account_id =  slip.employee_id.partner_id.property_account_payable.id or False
+                            debit_account_id =  slip.employee_id.partner_id.property_account_payable.id or False
                     elif line.salary_rule_id.category_id.type == 'output':
-                        partner_id_credit = slip.employee_id.partner_id.id
+                        aux = debit
+                        debit = credit
+                        credit = aux
+                        partner_id_debit = slip.employee_id.partner_id.id
                         if line.salary_rule_id.use_partner_account:
-                            debit_account_id =  slip.employee_id.partner_id.property_account_receivable.id or False
+                            credit_account_id =  slip.employee_id.partner_id.property_account_receivable.id or False
                     analytic_account_id = line.salary_rule_id.analytic_account_id and line.salary_rule_id.analytic_account_id.id or False
                     tax_code_id = line.salary_rule_id.account_tax_id and line.salary_rule_id.account_tax_id.id or False
                     tax_amount = line.salary_rule_id.account_tax_id and amt or 0.0
                 elif line.extra_i_o_id:
-                    if line.salary_rule_id.pay_to_other:
-                        partner_id_debit = line.salary_rule_id.partner_id and line.salary_rule_id.partner_id.id or False
-                        partner_id_credit = line.salary_rule_id.partner_id and line.salary_rule_id.partner_id.id or False
+                    if line.extra_i_o_id.pay_to_other:
+                        partner_id_debit = line.extra_i_o_id.partner_id and line.extra_i_o_id.partner_id.id or False
+                        partner_id_credit = line.extra_i_o_id.partner_id and line.extra_i_o_id.partner_id.id or False
                     extra_ids.append(line.extra_i_o_id.id)
                     debit_account_id = line.extra_i_o_id.account_debit.id or False
                     credit_account_id = line.extra_i_o_id.account_credit.id or False
                     if line.extra_i_o_id.category_id.type == 'input':
                         if line.extra_i_o_id.use_partner_account:
-                            credit_account_id =  slip.employee_id.partner_id.property_account_payable.id or False
+                            debit_account_id =  slip.employee_id.partner_id.property_account_payable.id or False
                     elif line.extra_i_o_id.category_id.type == 'output':
-                        partner_id_credit = slip.employee_id.partner_id.id
+                        aux = debit
+                        debit = credit
+                        credit = aux
+                        partner_id_debit = slip.employee_id.partner_id.id
                         if line.extra_i_o_id.use_partner_account:
-                            debit_account_id =  slip.employee_id.partner_id.property_account_receivable.id or False
+                            credit_account_id =  slip.employee_id.partner_id.property_account_receivable.id or False
                     analytic_account_id = line.extra_i_o_id.analytic_account_id and line.extra_i_o_id.analytic_account_id.id or False
                     tax_code_id = line.extra_i_o_id.account_tax_id and line.extra_i_o_id.account_tax_id.id or False
                     tax_amount = line.extra_i_o_id.account_tax_id and amt or 0.0
@@ -682,9 +713,6 @@ class hr_payslip(osv.osv):
         })
         return super(hr_payslip, self).copy(cr, uid, id, default, context=context)
 
-    def cancel_sheet(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)        
-
     def hr_verify_sheet(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'verify'}, context=context)
 
@@ -756,8 +784,11 @@ class hr_payslip(osv.osv):
             else:
                 #if we don't give the contract, then the rules to apply should be for all current contracts of the employee
                 contract_ids = self.get_contract(cr, uid, payslip.employee_id, payslip.date_from, payslip.date_to, context=context)
+            newholidays_obj = self.pool.get('hr.newholidays')
+            newholidays_ids = newholidays_obj.search(cr, uid, [('employee_id','=',payslip.employee_id.id),('state','=','aproved'),('date_end','<=',payslip.date_to),('date_start','>=',payslip.date_from)])
+            self.write(cr, uid, [payslip.id], {'newholidays_ids': [(6,0,newholidays_ids)]}, context=context)
             lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
-            self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number,}, context=context)
+            self.write(cr, uid, [payslip.id], {'line_ids': lines,'number': number}, context=context)
             #Linea agregada como artificio para campos calculado del payslip
             self.write(cr, uid, [payslip.id,], {}, context)
         return True
@@ -768,12 +799,14 @@ class hr_payslip(osv.osv):
         @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
         """
         def was_on_leave(employee_id, datetime_day, context=None):
-            res = False
+            name = None
+            code = None
             day = datetime_day.strftime("%Y-%m-%d")
             holiday_ids = self.pool.get('hr.holidays').search(cr, uid, [('state','=','validate'),('employee_id','=',employee_id),('type','=','remove'),('date_from','<=',day),('date_to','>=',day)])
             if holiday_ids:
-                res = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].holiday_status_id.name
-            return res
+                holiday = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)
+                (name, code) = holiday[0].holiday_status_id.name, holiday[0].holiday_status_id.code
+            return (name, code)
 
         res = []
         for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
@@ -796,7 +829,7 @@ class hr_payslip(osv.osv):
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
                 if working_hours_on_day:
                     #the employee had to work
-                    leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
+                    (leave_type, code) = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                     if leave_type:
                         #if he was on leave, fill the leaves dict
                         if leave_type in leaves:
@@ -806,7 +839,7 @@ class hr_payslip(osv.osv):
                             leaves[leave_type] = {
                                 'name': leave_type,
                                 'sequence': 5,
-                                'code': leave_type,
+                                'code': code,
                                 'number_of_days': 1.0,
                                 'number_of_hours': working_hours_on_day,
                                 'contract_id': contract.id,
@@ -840,7 +873,7 @@ class hr_payslip(osv.osv):
                         res += [inputs]
         return res
 
-    def get_payslip_lines(self, cr, uid, contract_ids, payslip_id, context):
+    def get_payslip_lines(self, cr, uid, contract_ids, payslip_id, context=None):
         def _sum_salary_rule_category(localdict, category, amount):
             if category.parent_id:
                 localdict = _sum_salary_rule_category(localdict, category.parent_id, amount)
@@ -908,6 +941,7 @@ class hr_payslip(osv.osv):
                 return res and res[0] or 0.0
 
         #we keep a dict with the result because a value can be overwritten by another rule with the same code
+        if not context: context = {}
         result_dict = {}
         rules = {}
         categories_dict = {}
@@ -918,19 +952,37 @@ class hr_payslip(osv.osv):
         obj_extra = self.pool.get('hr.extra.input.output')
         payslip = payslip_obj.browse(cr, uid, payslip_id, context=context)
         worked_days = {}
-        for worked_days_line in payslip.worked_days_line_ids:
-            worked_days[worked_days_line.code] = worked_days_line
+        if payslip.worked_days_line_ids:
+            for worked_days_line in payslip.worked_days_line_ids:
+                worked_days[worked_days_line.code] = worked_days_line
         inputs = {}
-        for input_line in payslip.input_line_ids:
-            inputs[input_line.code] = input_line
+        if payslip.input_line_ids:
+            for input_line in payslip.input_line_ids:
+                inputs[input_line.code] = input_line
 
         categories_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, categories_dict)
         input_obj = InputLine(self.pool, cr, uid, payslip.employee_id.id, inputs)
         worked_days_obj = WorkedDays(self.pool, cr, uid, payslip.employee_id.id, worked_days)
         payslip_obj = Payslips(self.pool, cr, uid, payslip.employee_id.id, payslip)
         rules_obj = BrowsableObject(self.pool, cr, uid, payslip.employee_id.id, rules)
-
-        localdict = {'categories': categories_obj, 'rules': rules_obj, 'payslip': payslip_obj, 'worked_days': worked_days_obj, 'inputs': input_obj}
+        
+        total_ausencias = 0.0
+        for holiday in payslip.newholidays_ids:
+            if holiday.type_id.is_paid:
+                total_ausencias += holiday.number_days
+        localdict = {'categories': categories_obj,
+                     'rules': rules_obj,
+                     'payslip': payslip_obj,
+                     'worked_days': worked_days_obj,
+                     'inputs': input_obj,
+                     'total_ausencia':total_ausencias
+                     }
+        #Agregado uso de contexto para paso valores desde otros modulos, para reglas salariales mas personalizadas
+        if context.get('external_localdict'):
+            localdict.update(
+                             context.get('external_localdict')
+                             )
+        
         #get the ids of the structures on the contracts and their parent id as well
 #        structure_ids = self.pool.get('hr.contract').get_all_structures(cr, uid, contract_ids, context=context)
         structure_ids = []
@@ -1123,20 +1175,6 @@ class hr_payslip(osv.osv):
         })
         return res
 
-#    def onchange_contract_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
-##TODO it seems to be the mess in the onchanges, we should have onchange_employee => onchange_contract => doing all the things
-#        if context is None:
-#            context = {}
-#        res = {'value':{
-#                 'line_ids': [],
-#                 'name': '',
-#                 }
-#              }
-#        context.update({'contract': True})
-#        if not contract_id:
-#            res['value'].update({'struct_id': False})
-#        return self.onchange_employee_id(cr, uid, ids, date_from=date_from, date_to=date_to, employee_id=employee_id, contract_id=contract_id, context=context)
-
 hr_payslip()
 
 class hr_payslip_worked_days(osv.osv):
@@ -1289,6 +1327,8 @@ result = rules.NET > categories.NET * 0.10''',
         'quantity': '1.0',
      }
 
+    _sql_constraints = [('code_unique_salary_rule', 'unique(code)', _('Code of Salary rule must be unique!')),      ]
+
     def _recursive_search_of_rules(self, cr, uid, rule_ids, context=None):
         """
         @param rule_ids: list of browse record
@@ -1328,7 +1368,10 @@ result = rules.NET > categories.NET * 0.10''',
         else:
             try:
                 eval(rule.amount_python_compute, localdict, mode='exec', nocopy=True)
-                return localdict['result'], 'result_qty' in localdict and localdict['result_qty'] or 1.0
+                result_rule=localdict['result']
+                if rule.category_id.type == 'output':
+                    result_rule =result_rule*-1
+                return result_rule, 'result_qty' in localdict and localdict['result_qty'] or 1.0
             except:
                 raise osv.except_osv(_('Error'), _('Wrong python code defined for salary rule %s (%s) ')% (rule.name, rule.code))
 
@@ -1378,13 +1421,12 @@ class extra_payment_deduction(osv.osv):
     _inherit = 'hr.salary.rule'
     
     _columns = {
-                'employee_id':fields.many2one('hr.employee', 'Employee', required=True),
+                'employee_id':fields.many2one('hr.employee', 'Employee', required=True, ondelete="restrict"),
                 'date_to_pay': fields.date('Date', required=True),
                 'paid':fields.boolean('Paid?',),
-                'loan':fields.boolean('Loan?',),
-#                'advance':fields.boolean('Advance?',),
-                'advance_id':fields.many2one('account.hr.advances', 'Advance', required=False), 
-                'voucher_id':fields.many2one('account.voucher', 'Voucher', required=False), 
+                'loan_id':fields.many2one('account.hr.third.loan', 'Loan', required=False, ondelete="restrict"), 
+                'advance_id':fields.many2one('account.hr.advances', 'Advance', required=False, ondelete="restrict"), 
+                'voucher_id':fields.many2one('account.voucher', 'Voucher', required=False, ondelete="restrict"), 
                     }
 
     #TODO should add some checks on the type of result (should be float)
@@ -1415,7 +1457,10 @@ class extra_payment_deduction(osv.osv):
         else:
             try:
                 eval(rule.amount_python_compute, localdict, mode='exec', nocopy=True)
-                return localdict['result'], 'result_qty' in localdict and localdict['result_qty'] or 1.0
+                result_rule=localdict['result']
+                if rule.category_id.type == 'output':
+                    result_rule =result_rule*-1
+                return result_rule, 'result_qty' in localdict and localdict['result_qty'] or 1.0
             except:
                 raise osv.except_osv(_('Error'), _('Wrong python code defined for salary rule %s (%s) ')% (rule.name, rule.code))
 
@@ -1489,38 +1534,5 @@ class hr_payroll_structure(osv.osv):
     }
 
 hr_payroll_structure()
-
-class hr_employee(osv.osv):
-    '''
-    Employee
-    '''
-
-    _inherit = 'hr.employee'
-    _description = 'Employee'
-
-    def _calculate_total_wage(self, cr, uid, ids, name, args, context):
-        if not ids: return {}
-        res = {}
-        current_date = datetime.now().strftime('%Y-%m-%d')
-        for employee in self.browse(cr, uid, ids, context=context):
-            if not employee.contract_ids:
-                res[employee.id] = {'basic': 0.0}
-                continue
-            cr.execute( 'SELECT SUM(wage) '\
-                        'FROM hr_contract '\
-                        'WHERE employee_id = %s '\
-                        'AND date_start <= %s '\
-                        'AND (date_end > %s OR date_end is NULL)',
-                         (employee.id, current_date, current_date))
-            result = dict(cr.dictfetchone())
-            res[employee.id] = {'basic': result['sum']}
-        return res
-
-    _columns = {
-        'slip_ids':fields.one2many('hr.payslip', 'employee_id', 'Payslips', required=False, readonly=True),
-        'total_wage': fields.function(_calculate_total_wage, method=True, type='float', string='Total Basic Salary', digits_compute=dp.get_precision('Payroll'), help="Sum of all current contract's wage of employee."),
-    }
-
-hr_employee()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -274,7 +274,24 @@
 								</form>
 							</field>
 						</page>
-
+						<page string="Ausencias y Faltas">
+							<field name="newholidays_ids" nolabel="1" readonly="1" widget="one2many_list">
+								<tree string="Ausencias">
+			                        <field name="name"/>
+			                        <field name="type_id"/>
+			                        <field name="date_start"/>
+			                        <field name="date_end"/>
+			                        <field name="number_days" sum="Total Dias Faltados"/>
+								</tree>
+								<form string="Ausencias">
+			                        <field name="name"/>
+			                        <field name="type_id"/>
+			                        <field name="date_start"/>
+			                        <field name="date_end"/>
+			                        <field name="number_days"/>
+								</form>
+							</field>
+						</page>
 						<page string="Other Information">
 							<separator colspan="4" string="Other Information" />
 							<group col="5" colspan="2">
@@ -396,11 +413,11 @@
 					<group col="10" colspan="4">
 						<field name="state" />
 						<button string="Cancel" icon="terp-dialog-close" name="cancel_sheet"
-							states="open,done,verify" />
+							type="object" states="open,done,verify" />
 						<button string="Compute Sheet" icon="terp-stock_format-scientific"
 							name="compute_sheet" type="object" states="draft" />
 						<button string="Set to Draft" icon="terp-stock_effects-object-colorize"
-							name="draft" states="cancel" />
+							type="object" name="set_draft" states="cancel" />
 						<button string="Confirm" icon="terp-camera_test" name="hr_verify_sheet"
 								states="draft" />
 						<button name="%(payslip_general_report_id)d" 

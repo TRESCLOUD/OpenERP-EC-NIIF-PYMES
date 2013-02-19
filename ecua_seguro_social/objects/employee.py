@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2011-2012 Christopher Ormaza - Ecuadorenlinea.net 
+#    Copyright (C) 2011-2012 Christopher Ormaza - Ecuadorenlinea.net
+#    Copyright (C) 2013- Carlos Lopez - Ecuadorenlinea.net 
 #    (<http://www.ecuadorenlinea.net>). All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,24 +25,101 @@
 import time
 import netsvc
 from datetime import date, datetime, timedelta
-
-from mx import DateTime
-import datetime
-
+from dateutil import relativedelta
 from osv import fields, osv
 from tools import config
 from tools.translate import _
+import decimal_precision as dp
 
 
 class hr_employee(osv.osv):
-
+    def get_date_last_contract_continuo(self, cr, uid, employee_id, days_free, context=None):
+        """
+        busca todos los contratos del empleado que esten en periodo de tiempo continuo
+        @param employee_id: id del empleado
+        @param days_free: maximo de dias que puede haber entre el fin de un contrato y el inicio otro y que se consideran periodos continuos.
+        @return: La fecha de inicio del primer contrato que este en un periodo de tiempo ininterrumpido,
+        False en caso de no haber contratos para el empleado
+        """
+        if not context: context={}
+        contract_obj=self.pool.get('hr.contract')
+        contract_ids=contract_obj.search(cr,uid,[('employee_id','=',employee_id)],order="date_start")
+        #si no hay contratos
+        if not contract_ids:
+            return False
+        total=len(contract_ids)
+        #si hay un solo contrato retornar la fecha de inicio de ese contrato
+        if total<=1:
+                return contract_obj.read(cr,uid,[contract_ids[0]],['date_start'])[0]['date_start']
+        #buscar en todos los contratos en order inverso del ultimo al primero
+        date_contract1=None
+        date_contract2=None
+        while total > 1:
+            date_contract1=contract_obj.read(cr,uid,[contract_ids[total-1]],['date_start','date_end'])[0]
+            date_contract2=contract_obj.read(cr,uid,[contract_ids[total-2]],['date_start','date_end'])[0]
+            date_start=datetime.strptime(date_contract1['date_start'],"%Y-%m-%d")
+            date_end=datetime.strptime(date_contract2['date_end'],"%Y-%m-%d")
+            #si hay un contrato que no tenga fecha fin
+            if date_end:
+                diff=date_start - date_end
+                if diff.days > days_free :
+                    return date_contract1['date_start']
+            total-=1
+        return date_contract2['date_start']
+            
+                
+    
+    def _calculate_working_time(self,cr,uid,ids,field_name,arg,context=None):
+        """
+        Calcula y devuelve en dias el tiempo que el empleado tiene trabajando en la empresa
+        Se consideran todos los contratos en las fechas especificadas por contexto para el calculo
+        """
+        if not context: context={}
+        res={}
+        contratos_obj=self.pool.get('hr.contract')
+        for employee in self.browse(cr,uid,ids,context):
+            contratos_ids=[]
+            total_time=0
+            #si se especifican fecha se toman los contratos en esas fechas
+            if context.has_key('date_from') and context.has_key('date_end'):
+                contratos_ids=self.get_contract(cr, uid, employee.id, context.get('date_from'), context.get('date_end'), context)
+            else:
+                #tomar todos los contratos del empleado del ultimo periodo continuo
+                date_start=self.get_date_last_contract_continuo(cr, uid, employee.id, 7, context)
+                if date_start:
+                    contratos_ids=contratos_obj.search(cr,uid,[('employee_id','=',employee.id),('date_start','>=',date_start)])
+            for contrato in contratos_obj.browse(cr,uid,contratos_ids,context):
+                total_time+=contrato.duration_contract
+            res[employee.id]=total_time
+        return res
+    
+    def get_contract(self, cr, uid, employee_id, date_from, date_to, context=None):
+        """
+        @param employee: id of employee
+        @param date_from: date field
+        @param date_to: date field
+        @return: returns the ids of all the contracts for the given employee that need to be considered for the given dates
+        """
+        contract_obj = self.pool.get('hr.contract')
+        clause = []
+        #a contract is valid if it ends between the given dates
+        clause_1 = ['&',('date_end', '<=', date_to),('date_end','>=', date_from)]
+        #OR if it starts between the given dates
+        clause_2 = ['&',('date_start', '<=', date_to),('date_start','>=', date_from)]
+        #OR if it starts before the date_from and finish after the date_end (or never finish)
+        clause_3 = [('date_start','<=', date_from),'|',('date_end', '=', False),('date_end','>=', date_to)]
+        clause_final =  [('employee_id', '=', employee_id),'|','|'] + clause_1 + clause_2 + clause_3
+        contract_ids = contract_obj.search(cr, uid, clause_final, context=context)
+        return contract_ids
+    
+    
     def _current_employee_age(self,cr,uid,ids,field_name,arg,context):
         res = {}
-        today = datetime.date.today()
+        today = datetime.today()
         dob = today
         for employee in self.browse(cr, uid, ids):            
             if employee.birthday:
-                dob = DateTime.strptime(employee.birthday,'%Y-%m-%d')            
+                dob = datetime.strptime(employee.birthday,'%Y-%m-%d')
             res[employee.id] = today.year - dob.year
         return res
 
@@ -89,10 +167,29 @@ class hr_employee(osv.osv):
                 remaining[employee_id] = 0.0
         return remaining
 
+    def _calculate_total_wage(self, cr, uid, ids, name, args, context):
+        if not ids: return {}
+        res = {}
+        current_date = datetime.now().strftime('%Y-%m-%d')
+        for employee in self.browse(cr, uid, ids, context=context):
+            if not employee.contract_ids:
+                res[employee.id] = {'basic': 0.0}
+                continue
+            cr.execute( 'SELECT SUM(wage) '\
+                        'FROM hr_contract '\
+                        'WHERE employee_id = %s '\
+                        'AND date_start <= %s '\
+                        'AND (date_end > %s OR date_end is NULL)',
+                         (employee.id, current_date, current_date))
+            result = dict(cr.dictfetchone())
+            res[employee.id] = {'basic': result['sum']}
+        return res
+
+    
     _inherit = 'hr.employee'
 
     _columns = {
-        'identification_id':fields.char('Cedula', size=10,), # pablo vizhnay 14/02/2013 8h53 am
+        'identification_id':fields.char('Identification No', size=10,),
         #Es necesario que se asigne una cuenta de tipo payable a la cuenta del empleado
         #para la generacion correcta de los asientos
         'employee_account':fields.property(
@@ -119,12 +216,15 @@ class hr_employee(osv.osv):
         'vehicle': fields.char('Company Vehicle', size=64),
         'vehicle_distance': fields.integer('Home-Work Distance', help="In kilometers"),
         'contract_ids': fields.one2many('hr.contract', 'employee_id', 'Contracts'),
-        'contract_id':fields.function(_get_latest_contract, string='Contract', type='many2one', relation="hr.contract", help='Latest contract of the employee'),
+        'contract_id':fields.function(_get_latest_contract, string='Contract',method=True, type='many2one', relation="hr.contract", help='Latest contract of the employee'),
         'remaining_leaves': fields.function(_get_remaining_days, method=True, string='Remaining Legal Leaves', fnct_inv=_set_remaining_days, type="float", help='Total number of legal leaves allocated to this employee, change this value to create allocation/leave requests.', store=True),
         'account_debit': fields.many2one('account.account', 'Debit Account', domain=[('type','=','receivable')]),
         'account_credit': fields.many2one('account.account', 'Credit Account', domain=[('type','=','payable')]),
-        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),
-        'foreign':fields.boolean('Foreign?'), 
+        'partner_id': fields.many2one('res.partner', 'Partner', ondelete="restrict"),
+        'slip_ids':fields.one2many('hr.payslip', 'employee_id', 'Payslips', required=False, readonly=True),
+        'total_wage': fields.function(_calculate_total_wage, method=True, type='float', string='Total Basic Salary', digits_compute=dp.get_precision('Payroll'), help="Sum of all current contract's wage of employee."),
+        'working_time': fields.function(_calculate_working_time, method=True, type='float', string='Tiempo de trabajo', ),
+#        'days_vacation': fields.function(_calculate_days_vacation, method=True, type='float', string='Dias de Vacaciones'),   
         }
     
     def _get_account_debit(self, cr, uid, context=None):
@@ -143,12 +243,10 @@ class hr_employee(osv.osv):
     
     _defaults = {  
         'account_debit': _get_account_debit,  
-        'account_credit': _get_account_credit,
-       # 'foreign': lambda *a: False,
+        'account_credit': _get_account_credit,  
         }
-   # _sql_constraints = [('identification_id_uniq','unique(identification_id)', 'The value of CEDULA must be unique, this value already exists')]
 
-    def verifica_cedula(self,ced):
+    def check_ced(self, ced):
         try:
             valores = [ int(ced[x]) * (2 - x % 2) for x in range(9) ]
             suma = sum(map(lambda x: x > 9 and x - 9 or x, valores))
@@ -164,7 +262,7 @@ class hr_employee(osv.osv):
         val = True 
         for employee in self.pool.get('hr.employee').browse(cr, uid, ids, None):
             if employee.identification_id:
-                val = self.verifica_cedula(employee.identification_id)
+                val = self.check_ced(employee.identification_id)
         return val
     
     def _check_employee_account(self, cr, uid, ids):
@@ -229,18 +327,26 @@ class hr_employee(osv.osv):
         values_partner = {
                           'name': name,
                           'ref': values.get('identification_id',False),
-                          'customer':False,
+                          'customer':True,
                           'supplier':True,
                           'employee':True,
+                          'property_account_receivable' : values.get('account_debit',None),
+                          'property_account_payable' : values.get('account_credit',None),
                           }
-        if values.get('account_debit', False):
-            account_debit_id = values['account_debit']
-            values_partner['property_account_receivable']=account_debit_id
-        if values.get('account_credit', False):
-            account_credit_id = values['account_credit']
-            values_partner['property_account_payable']=account_credit_id
         if values.get('user_id', False) != 1:
-            partner_id = partner_obj.create(cr, uid, values_partner, context)
+            partner_ids = partner_obj.search(cr, uid, [('ref','=', values.get('identification_id',False))])
+            if partner_ids:
+                partner_id = partner_ids[0]
+                partner_obj.write(cr, uid, [partner_id], {
+                                                          'customer':True,
+                                                          'supplier':True,
+                                                          'employee':True,
+                                                          'property_account_receivable' : values.get('account_debit',None),
+                                                          'property_account_payable' : values.get('account_credit',None),
+                                                          })
+                
+            else:
+                partner_id = partner_obj.create(cr, uid, values_partner, context)
             values['partner_id'] = partner_id
         return super(hr_employee, self).create(cr, uid, values, context)
     
@@ -263,11 +369,11 @@ class hr_employee(osv.osv):
     
     
     
-    _constraints = [(_check_ced, 'Validation Error: Invalid Identification No', ['identification_id']),
-                    (_check_employee_account, 'Payable Account of Partner must be same employee_account!', ['employee_account']), 
+    _constraints = [(_check_ced, _('Validation Error: Invalid Identification No'), ['identification_id']),
+                    (_check_employee_account, _('Payable Account of Partner must be same employee_account!'), ['account_debit','account_credit']), 
                     ]
     
-    _sql_constraints = [('identification_uniq', 'unique (identification_id)', _('The identification number must be unique !')),      ]
+    _sql_constraints = [('identification_uniq', 'unique (identification_id,company_id)', _('The identification number must be unique !')),]
     
 hr_employee()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

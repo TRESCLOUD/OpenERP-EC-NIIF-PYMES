@@ -97,7 +97,7 @@
 				<form string="Employees Advances">
 					<group col="6" colspan="4">
 						<field name="employee_id" on_change="onchange_employee(employee_id)" />
-						<field name="partner_id" />
+						<field name="partner_id" invisible="1" />
 						<field name="date" />
 						<field name="journal_id" widget="selection" select="1"
 							domain="[('type','in',['cash', 'bank'])]" />
@@ -115,24 +115,22 @@
 							<field name="date_to_pay" attrs="{'invisible':['|', ('payment_policy', '=', 'many_payments'), ('date_policy', '=', 'period')], 'required': [('date_policy', '=', 'date'),]}" colspan="4"/>
 							<field name="amount_to_pay" attrs="{'invisible':[('payment_policy', '=', 'many_payments')], 'required': [('payment_policy', '=', 'one_payment')]}" colspan="4"/>
 							</group>
-							<field name="line_ids" nolabel="1" colspan="4" context="{'type':'out_advance'}" attrs="{'invisible':[('payment_policy', '=', 'one_payment')]}">
+							<field name="line_ids" nolabel="1" colspan="4" default_get="{'type':'out_advance'}" context="{'type':'out_advance'}" attrs="{'invisible':[('payment_policy', '=', 'one_payment')]}">
 								<tree string="Details">
-									<field name="account_id" on_change="onchange_account(parent.employee_id)" invisible="1"/>
 									<field name="name" />
 									<field name="date_policy" required="1"/>
 									<field name="date_to_pay" />
 									<field name="period_to_pay_id"/>
 									<field name="amount" sum="Total" />
-									<field name="type" invisible="1" default_get="{'type':'dr'}" />
+									<field name="type" invisible="1"  />
 								</tree>
 								<form string="Detail">
-									<field name="account_id" on_change="onchange_account(parent.employee_id)" invisible="1"/>
 									<field name="name" />
 									<field name="amount" />
 									<field name="date_policy" required="1"/>
 									<field name="date_to_pay" attrs="{'invisible':[('date_policy', '=', 'period')], 'required': [('date_policy', '=', 'date'),]}"/>
 									<field name="period_to_pay_id" widget="selection" attrs="{'invisible':[('date_policy', '=', 'date')], 'required': [('date_policy', '=', 'period')]}"/>
-									<field name="type" invisible="1" default_get="{'type':'dr'}" />
+									<field name="type" invisible="1" />
 								</form>
 							</field>
 							<group col="2" colspan="3">

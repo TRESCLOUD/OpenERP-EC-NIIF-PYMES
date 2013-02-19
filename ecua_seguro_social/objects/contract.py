@@ -21,7 +21,7 @@
 import time
 from tools.translate import _
 from osv import fields, osv
-
+from datetime import datetime
 class hr_contract_type(osv.osv):
     _name = 'hr.contract.type'
     _description = 'Contract Type'
@@ -31,7 +31,27 @@ class hr_contract_type(osv.osv):
 hr_contract_type()
 
 class hr_contract(osv.osv):
-
+    def _calculate_duration_contract(self,cr,uid,ids,field_name,arg,context=None):
+        """
+        Calcula y devuelve en dias la duracion del contrato, restando la fecha de inicio y la fecha final.
+        En caso de no haber fecha final en el contrato se toma la fecha actual del sistema y de esta manera se actualiza dinamicamente
+        """
+        if not context: context={}
+        res={}
+        #se suma un dia al resultado porque las fechas son excluidas del calculo
+        for contrato in self.browse(cr,uid,ids):
+            if contrato.date_end:
+                date_start=datetime.strptime(contrato.date_start, '%Y-%m-%d')
+                date_end=datetime.strptime(contrato.date_end, '%Y-%m-%d')
+                duracion_contrato=date_end -date_start
+                res[contrato.id]=duracion_contrato.days + 1
+            else:
+                date_start=datetime.strptime(contrato.date_start, '%Y-%m-%d')
+                date_end=datetime.now()
+                duracion_contrato=date_end -date_start
+                res[contrato.id]=duracion_contrato.days + 1
+        return res
+    
     def _calculate_salary(self, cr, uid, ids, field_names, arg, context=None):
         return {}
     
@@ -43,15 +63,15 @@ class hr_contract(osv.osv):
     _columns = {
         'name': fields.char('Contract Reference', size=32, required=True),
         'employee_id': fields.many2one('hr.employee', "Employee", required=True),
-        'department_id': fields.related('employee_id','department_id', type='many2one', relation='hr.department', string="Department", readonly=True),
+        'department_id': fields.related('employee_id', 'department_id', type='many2one', relation='hr.department', string="Department", readonly=True),
         'type_id': fields.many2one('hr.contract.type', "Contract Type", required=True),
         'job_id': fields.many2one('hr.job', 'Job Title'),
         'date_start': fields.date('Start Date', required=True),
         'date_end': fields.date('End Date'),
         'trial_date_start': fields.date('Trial Start Date'),
         'trial_date_end': fields.date('Trial End Date'),
-        'working_hours': fields.many2one('resource.calendar','Working Schedule'),
-        'wage': fields.float('Wage', digits=(16,2), required=True, help="Basic Salary of the employee"),
+        'working_hours': fields.many2one('resource.calendar', 'Working Schedule'),
+        'wage': fields.float('Wage', digits=(16, 2), required=True, help="Basic Salary of the employee"),
         'advantages': fields.text('Advantages'),
         'notes': fields.text('Notes'),
         'permit_no': fields.char('Work Permit No', size=256, required=False, readonly=False),
@@ -59,11 +79,11 @@ class hr_contract(osv.osv):
         'visa_expire': fields.date('Visa Expire Date'),
         #reescritura de campos de antiguo modulo
         'wage_type_id': fields.many2one('hr.contract.wage.type', 'Wage Type', required=False),
-        'basic': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Basic Salary', digits=(14,2)),
-        'gross': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Gross Salary', digits=(14,2)),
-        'net': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Net Salary', digits=(14,2)),
-        'advantages_net': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Deductions', digits=(14,2)),
-        'advantages_gross': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Allowances', digits=(14,2)),
+        'basic': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Basic Salary', digits=(14, 2)),
+        'gross': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Gross Salary', digits=(14, 2)),
+        'net': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Net Salary', digits=(14, 2)),
+        'advantages_net': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Deductions', digits=(14, 2)),
+        'advantages_gross': fields.function(_calculate_salary, method=True, store=True, multi='dc', type='float', string='Allowances', digits=(14, 2)),
         'analytic_account_id':fields.many2one('account.analytic.account', 'Analytic Account'),
         'journal_id': fields.many2one('account.journal', 'Salary Journal'),
         'struct_id': fields.many2one('hr.payroll.structure', 'Salary Structure'),
@@ -75,26 +95,32 @@ class hr_contract(osv.osv):
 #            ('weekly', 'Weekly'),
 #            ('bi-weekly', 'Bi-weekly'),
 #            ('bi-monthly', 'Bi-monthly'),
-            ], 'Scheduled Pay', select=True),    }
+            ],'Scheduled Pay', select=True),
+        'method_payment':fields.selection([
+                ('payment_employee', 'Pago al Empleado'),
+                ('accumulated', 'Acumulado'),
+                ], 'Forma de Pago-Fondos de Reserva', select=True),
+        'duration_contract': fields.function(_calculate_duration_contract, method=True, type='float', string='Duración del contrato en dias'),
+        }
     
     
     def _get_journal(self, cr, uid, context=None):
         if not context:
-            context={}
+            context = {}
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
         company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
         return company.default_salary_journal_id.id or None
 
     def _get_struct(self, cr, uid, context=None):
         if not context:
-            context={}
+            context = {}
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
         company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
         return company.default_struct_id.id or None
 
     def _get_working_hours(self, cr, uid, context=None):
         if not context:
-            context={}
+            context = {}
         user = self.pool.get('res.users').browse(cr, uid, uid, context)
         company = self.pool.get('res.company').browse(cr, uid, user.company_id.id, context)
         return company.default_working_hours_id.id or None

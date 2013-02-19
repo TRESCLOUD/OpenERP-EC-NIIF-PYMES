@@ -8,8 +8,9 @@
             <field name="priority">1</field>
             <field name="arch" type="xml">
                 <form string="Leave Type">
-                    <group colspan="4" col="6">
+                    <group colspan="4" col="8">
                         <field name="name"/>
+                        <field name="code"/>
                         <field name="color_name"/>
                         <field name="categ_id" widget="selection" groups="base.group_extended"/>
                     </group>
@@ -19,6 +20,7 @@
                               <separator string="Validation" colspan="2"/>
                               <field name="double_validation"/>
                               <field name="limit"/>
+                              <field name="type" invisible="1"/>
                           </group>
                           <group name="second" colspan="2" col="2">
                               <separator string="Misc" colspan="2"/>

@@ -17,7 +17,7 @@
 		<record id="diario_sueldos" model="account.journal">
 			<field name="code">SUEL</field>
 			<field name="name">Diario de Sueldos</field>
-			<field name="type">purchase</field>
+			<field name="type">general</field>
             <field name="view_id" ref="account.account_journal_view"/>
             <field name="sequence_id" ref="sueldos_sequence"/>
             <field name="user_id" ref="base.user_root"/>

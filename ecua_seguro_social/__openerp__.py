@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2012-2013 Pablo Vizhnay
-#    (<http://www.geoinformatica.org>). All Rights Reserved
+#    Copyright (C) 2011-2012 Christopher Ormaza - Ecuadorenlinea.net 
+#    (<http://www.ecuadorenlinea.net>). All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 {
         "name" : "Ecuadorian Human Resources",
         "version" : "1.21",
-        "author" : "Pablo Vizhnay - Geoinformatica",
-        "website" : "http://www.geoinformatica.org",
+        "author" : "Christopher Ormaza - Ecuadorenlinea.net",
+        "website" : "http://www.ecuadorenlinea.net",
         "category" : "Base/Partners",
         "description": """Human Resources for Ecuadorian localisation""",
         "depends" : ['base',
@@ -55,10 +55,12 @@
                         'data/education_area.xml',
                         'data/calendar.xml',
                         'data/company_configuration.xml',
+                        'data/sequence.xml',
                         'report/report_hr_advances.xml',
                         'report/report_payslip_details.xml',
                         'report/report_payslip_details_group.xml',
                         'report/nomina_general_report.xml',
+                        'report/report_hr_provision.xml',
                         'wizards/payroll_statement_view.xml',
                         'wizards/hr_payroll_payslips_by_employees.xml',
                         'wizards/hr_payroll_contribution_register_report.xml',
@@ -66,16 +68,20 @@
                         'views/company_view.xml',
                         'views/employee_view.xml',
                         'views/family_burden_view.xml',
+                        'views/newholidays_view.xml',
                         'views/holiday_view.xml',
                         'views/education_level_view.xml',
                         'views/contract_view.xml',
                         'views/extra_input_output_view.xml',
                         'views/payslip_line_view.xml',
                         'views/contract_view.xml',
+                        'views/vacation_view.xml',
                         'views/payroll_view.xml',
                         'views/calendar_view.xml',
                         'views/voucher_view.xml',
                         'views/advances_view.xml',
+                        'views/third_loan_view.xml',
+                        'views/provision_view.xml',
                         'workflows/payroll_workflow.xml',
                         'workflows/advances_workflow.xml',
                         'wizards/multi_advances_wizard_view.xml',

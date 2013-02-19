@@ -1,7 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
+		<!--
+	
+	Vista de cuentas bancarias en empleados
+		           -->
+		<record model="ir.ui.view" id="res_partner_bank_form_view">
+			<field name="name">res.partner.bank.form</field>
+			<field name="model">res.partner.bank</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cuenta Bancaria">
+					<field name="state"/>
+                    <field name="partner_id" select="1" invisible="1"/>
+                    <newline/>
+                    <field name="acc_number" select="1" required="1"/>
+                    <newline/>
+                    <field name="bank"/>
+                    <newline/>
+                    <field name="sequence"/>
+                    <field colspan="4" name="name"/>
+                    <field colspan="4" name="owner_name" invisible="1"/>
+                    <field colspan="4" name="street" invisible="1"/>
+                    <field name="city" invisible="1"/>
+                    <field name="zip" invisible="1"/>
+                    <field completion="1" name="country_id" invisible="1"/>
+                    <field name="state_id" invisible="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="res_partner_bank_tree_view">
+			<field name="name">res.partner.bank.tree</field>
+			<field name="model">res.partner.bank</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cuenta Bancaria">
+					<field name="state"/>
+                    <field name="acc_number" select="1"/>
+                    <field name="bank"/>
+				</tree>
+			</field>
+		</record>
+	<!--
+	Vista de direcciones en empleados
+	           -->
+	     <record model="ir.ui.view" id="employee_address_form_view">
+                <field name="name">res.partner.address.form</field>
+                <field name="model">res.partner.address</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Dirección de Trabajo">
+   	                    <field completion="1" name="country_id" select="1"/>
+	                    <field name="state_id"/>
+	                    <newline/>
+	                    <field name="zip"/>
+	                    <field name="city"/>
+	                    <field name="location" colspan="4" on_change="onchange_location(location)"/>
+	                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+	                    <field name="parroquia_id" domain="[('city_id','=',location)]"/>
+	                    <newline/>
+	                    <field name="street"/>
+	                    <field name="street2"/>
+	                    <newline/>
 
+	                    <field name="phone"/>
+	                    <field name="fax"/>
+	                    <newline/>
+	                    <field name="mobile"/>
+	                    <field name="email" widget="email"/>
+                    </form>
+                </field>
+            </record>
+
+           	<record model="ir.ui.view" id="employee_address_tree_view">
+               <field name="name">res.partner.address.tree</field>
+               <field name="model">res.partner.address</field>
+               <field name="type">tree</field>
+               <field name="arch" type="xml">
+                   <tree string="Dirección de Trabajo">
+	                    <field name="country_id"/>
+	                    <field name="state_id"/>
+	                    <field name="city"/>
+	                    <field name="street"/>
+	                    <field name="phone"/>
+	                    <field name="email"/>
+                   </tree>
+               </field>
+           </record>
 		<!--		<delete id="hr.view_employee_form" model="ir.ui.view"/>-->
 
 		<record id="view_employee_form" model="ir.ui.view">
@@ -14,18 +99,15 @@
 					<group colspan="4" col="8">
 						<group colspan="6" col="4">
 							<separator string="Identification Info." colspan="4" />
-							<field name="identification_id" attrs="{'required':[('foreign','=',False)]}" string="Cedula"/>
-							<field name="passport_id" attrs="{'invisible':[('foreign','=',False)]}" />
+							<field name="identification_id" required="1" colspan="2" />
 							<field name="user_id" on_change="onchange_user(user_id)"
 								colspan="2" />
-							<field name="foreign"/>
-								
 							<separator string="Names" colspan="4" />
 							<field colspan="2" name="name" />
 							<field colspan="2" name="second_name" />
 							<newline />
-							<field colspan="2" name="last_name" string="Primer Apellido" required="1" />
-							<field colspan="2" name="mother_last_name" string="Segundo Apellido" />
+							<field colspan="2" name="last_name" required="1" />
+							<field colspan="2" name="mother_last_name" />
 							<newline />
 						</group>
 						<group colspan="2" col="1">
@@ -69,7 +151,7 @@
 
 								</field>
 								<field name="address_id" colspan="2"
-									on_change="onchange_address_id(address_id)" />
+									on_change="onchange_address_id(address_id)" context="{'form_view_ref':'ecua_seguro_social.employee_address_form_view','tree_view_ref':'ecua_seguro_social.employee_address_tree_view'}"/>
 							</group>
 							<group col="2" colspan="2" groups="base.group_hr_manager">
 								<separator string="Status" colspan="2" />
@@ -77,10 +159,11 @@
 								<field name="age"></field>
 							</group>
 							<group colspan="4"
-								groups="base.group_hr_manager,group_account_manager">
+								groups="base.group_hr_manager,account.group_account_manager">
 								<separator string="Accounting Info" colspan="4" />
+								<field name="partner_id" invisible="1"/>
 								<field name="bank_account_id" colspan="4"
-									context="{'display_partner':False, 'partner_id':partner_id}" />
+									context="{'form_view_ref':'ecua_seguro_social.res_partner_bank_form_view','tree_view_ref':'ecua_seguro_social.res_partner_bank_tree_view'}" />
 								<field name="account_debit" required="1"></field>
 								<field name="account_credit" required="1"></field>
 							</group>
@@ -112,7 +195,7 @@
 								<separator string="Job Info" colspan="2" />
 								<group colspan="2">
 									<field name="manager" select="1" invisible="0" />
-									
+									<field name="passport_id" invisible="0" />
 								</group>
 								<field name="vehicle" select="1" invisible="0" />
 								<field name="vehicle_distance" select="1" invisible="1" />
@@ -196,8 +279,8 @@
 			<field name="arch" type="xml">
 				<xpath expr="/tree/field[@name='name']" position="after">
 					<field name="second_name" />
-					<field name="last_name" string="Primer Apellido" />
-					<field name="mother_last_name" string="Segundo Apellido" />
+					<field name="last_name" />
+					<field name="mother_last_name" />
 				</xpath>
 				<xpath expr="/tree/field[@name='name']" position="before">
 					<field name="identification_id" />
@@ -213,8 +296,8 @@
 			<field name="arch" type="xml">
 				<xpath expr="/search/field[@name='name']" position="after">
 					<field name="second_name" />
-					<field name="last_name" string="Primer Apellido"/>
-					<field name="mother_last_name" string="Segundo Apellido"/>
+					<field name="last_name" />
+					<field name="mother_last_name" />
 				</xpath>
 				<xpath expr="/search/field[@name='name']" position="before">
 					<field name="identification_id" />

@@ -30,7 +30,7 @@ from tools.translate import _
 
 class res_company(osv.osv):
     
-    _inherit = 'res.company' 
+    _inherit  = 'res.company' 
 
     _columns = {
                 'default_working_hours_id':fields.many2one('resource.calendar', 'Default Working Schedule'),
@@ -38,6 +38,8 @@ class res_company(osv.osv):
                 'default_salary_journal_id': fields.many2one('account.journal', 'Default Salary Journal'),
                 'default_account_debit_id': fields.many2one('account.account', 'Default Debit Account Employee', domain=[('type','=','receivable')]),
                 'default_account_credit_id': fields.many2one('account.account', 'Default Credit Account Employee', domain=[('type','=','payable')]),
+                'rule_funds_accumulated_id':fields.many2one('hr.salary.rule', 'Regla Fondos de Reserva Acumulados', required=False),
+                'rule_funds_paid_id':fields.many2one('hr.salary.rule', 'Regla Fondos de Reserva Pagados', required=False), 
                     }
     
 res_company()

@@ -48,10 +48,14 @@ class hr_payslip_employees(osv.osv_memory):
         from_date =  run_data.get('date_start', False)
         to_date = run_data.get('date_end', False)
         credit_note = run_data.get('credit_note', False)
+        company = self.pool.get('res.users').browse(cr, uid, uid).company_id
         if not data['employee_ids']:
             raise osv.except_osv(_("Warning !"), _("You must select employee(s) to generate payslip(s)"))
         for emp in emp_pool.browse(cr, uid, data['employee_ids'], context=context):
             slip_data = slip_pool.onchange_employee_id(cr, uid, [], from_date, to_date, emp.id, contract_id=False, context=context)
+            if not slip_data['value'].get('contract_id', False):
+                name_employee = emp_pool.name_get(cr, uid, [emp.id])[0][1]
+                raise osv.except_osv(_('Advertencia!!!'),_('El emplado %s no posee contrato activo, se recomienda verificar si aun no ha sido ingresado, en caso de despido por favor inactive el empleado') % (name_employee))
             res = {
                 'employee_id': emp.id,
                 'name': slip_data['value'].get('name', False),
@@ -63,7 +67,7 @@ class hr_payslip_employees(osv.osv_memory):
                 'date_from': from_date,
                 'date_to': to_date,
                 'credit_note': credit_note,
-                'journal_id': slip_data['value'].get('journal_id', False),
+                'journal_id': slip_data['value'].get('journal_id', False) or company.default_salary_journal_id and company.default_salary_journal_id.id,
             }
             slip_ids.append(slip_pool.create(cr, uid, res, context=context))
         slip_pool.compute_sheet(cr, uid, slip_ids, context=context)

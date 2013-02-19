@@ -8,17 +8,25 @@
 			<field name="inherit_id" ref="base.view_company_form" />
 			<field name="arch" type="xml">
 				<xpath expr="/form/notebook//page[@string='Configuration']"
-					position="inside">
+					position="after">
+					<page string="Configuracion de Recursos Humanos">
 					<group colspan="4" col="6">
-						<separator string="Human Resources Configuration" colspan="6" />
+						<separator string="Human Resources Configuration"
+							colspan="6" />
 						<field name="default_working_hours_id" />
-						<field name="default_struct_id" />
 						<field name="default_salary_journal_id" />
+						<field name="default_struct_id" />
 					</group>
 					<group colspan="4">
 						<field name="default_account_debit_id" />
 						<field name="default_account_credit_id" />
 					</group>
+					<group colspan="4">
+						<separator string="Reglas para los fondos de reserva de los empleados" colspan="4"/>
+							<field name="rule_funds_accumulated_id" />
+							<field name="rule_funds_paid_id" />
+					</group>
+					</page>
 				</xpath>
 			</field>
 		</record>

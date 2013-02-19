@@ -20,15 +20,21 @@
 #
 ##############################################################################
 
-import company
 import family_burden
 import education_level
-import employee
 import advances
+import third_loan
+import newholidays
 import payroll
+import company
+import provision
+import third_loan_line
+import employee
 import contract
+import vacation
 import calendar
 import voucher
 import partner
-
+import holidays
+import account_move
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

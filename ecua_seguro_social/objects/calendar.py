@@ -41,12 +41,55 @@ class resource_calendar_interval(osv.osv):
                     } 
 resource_calendar_interval()
 
+class resource_calendar_holiday(osv.osv):
+    
+    _name = 'resource.calendar.holiday'
+
+    _columns = {
+                'name':fields.char('Name', size=255, required=False, readonly=False),
+                'month':fields.selection([
+                    ('1','Enero'),
+                    ('2','Febrero'),
+                    ('3','Marzo'),
+                    ('4','Abril'),
+                    ('5','Mayo'),
+                    ('6','Junio'),
+                    ('7','Julio'),
+                    ('8','Agosto'),
+                    ('9','Septiembre'),
+                    ('10','Octubre'),
+                    ('11','Noviembre'),
+                    ('12','Diciembre'),
+                     ],'Month', select=True, readonly=False, required=True),
+                'day': fields.integer('Day', required=True),
+                'type':fields.selection([
+                    ('holiday','Feriado/Dia No Laborable'),
+                    ('force_work','Día Obligatorio de Trabajo'),
+                     ],'Type', select=True, readonly=False, required=True),
+        }
+    
+    _defaults = {  
+        'type': 'holiday',
+        }
+resource_calendar_holiday()
+
 class resource_calendar(osv.osv):
     _inherit = 'resource.calendar'
     _columns = {
                 'calendar_inverval_ids':fields.many2many('resource.calendar.interval', 'resource_calendar_interval_rel', 'calendar_id', 'interval_id', 'Hours Interval'), 
-                #'calendar_inverval_ids':fields.one2many('resource.calendar.interval', 'calendar_id', 'Hours Intervals', ),
+                'holidays_ids':fields.many2many('resource.calendar.holiday', 'resource_calendar_holiday_rel', 'calendar_id', 'holiday_id', 'Feriados/Excepciones'),
+                'start_suple_hours': fields.time('Inicio de Horas Suplementarias'),
+                'end_suple_hours': fields.time('Fin de Horas Suplementarias'),
+                'start_extra_hours': fields.time('Inicio de Horas Extraordinarias'),
+                'end_extra_hours': fields.time('Fin de Horas Extraordinarias'),
                     }
+    
+    _defaults = {  
+        'start_suple_hours': '6:00',  
+        'end_suple_hours': '0:00',  
+        'start_extra_hours': '0:00',  
+        'end_extra_hours': '6:00',  
+        }
     
     def working_hours_on_day(self, cr, uid, resource_calendar_id, day, context=None):
         """
@@ -60,4 +103,6 @@ class resource_calendar(osv.osv):
                 res += working_day.hour_to - working_day.hour_from
         return res
 resource_calendar()
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
