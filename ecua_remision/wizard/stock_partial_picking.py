@@ -19,7 +19,7 @@ from osv import fields,osv
 from tools.translate import _
 import time
 import re
-
+import decimal_precision as dp
 class stock_partial_picking(osv.osv_memory):
     
     def _check_number(self,cr,uid,ids):
@@ -41,7 +41,7 @@ class stock_partial_picking(osv.osv_memory):
     _inherit = 'stock.partial.picking'
     _columns = {
                 'delivery_note':fields.boolean('Make Delivery Note'),
-                'carrier_id': fields.many2one('delivery.carrier', 'Carrier'),
+                'carrier_id': fields.many2one('delivery.carrier', 'Carrier'), 
                 'placa':fields.char('Placa', size=8, required=False, readonly=False),
                 'number': fields.char ('Number', size=17, required=False),
                 'automatic':fields.boolean('Automatic?', required=False),
@@ -90,10 +90,17 @@ class stock_partial_picking(osv.osv_memory):
             return 'internal'
         
     def do_partial(self, cr, uid, ids, context=None):
+        """ Makes partial moves and pickings done.
+        @param self: The object pointer.
+        @param cr: A database cursor
+        @param uid: ID of the user currently logged in
+        @param fields: List of fields for which we want default values
+        @param context: A standard dictionary
+        @return: A dictionary which of fields with values.
+        """
         pick_obj = self.pool.get('stock.picking')
-        move_obj = self.pool.get('stock.move')
-        location_obj = self.pool.get('stock.location')
-        
+        uom_obj = self.pool.get('product.uom')
+
         picking_ids = context.get('active_ids', False)
         partial = self.browse(cr, uid, ids[0], context=context)
         partial_datas = {
@@ -105,16 +112,40 @@ class stock_partial_picking(osv.osv_memory):
             moves_list = picking_type == 'in' and partial.product_moves_in or partial.product_moves_out
 
             for move in moves_list:
+
+                #Adding a check whether any line has been added with new qty
+                if not move.move_id:
+                    raise osv.except_osv(_('Processing Error'),\
+                    _('You cannot add any new move while validating the picking, rather you can split the lines prior to validation!'))
+
+                calc_qty = uom_obj._compute_qty(cr, uid, move.product_uom.id, \
+                                    move.quantity, move.move_id.product_uom.id)
+
+                #Adding a check whether any move line contains exceeding qty to original moveline
+                if calc_qty > move.move_id.product_qty:
+                    precision = '%0.' + str(dp.get_precision('Product UoM')(cr)[1] or 0) + 'f'
+                    raise osv.except_osv(_('Processing Error'),
+                    _('Processing quantity %s %s for %s is larger than the available quantity %s %s !')\
+                    % (precision % calc_qty, move.product_uom.name, move.product_id.name,\
+                       precision % move.move_id.product_qty, move.move_id.product_uom.name))
+
+                #Adding a check whether any move line contains qty less than zero
+                if calc_qty < 0:
+                    precision = '%0.' + str(dp.get_precision('Product UoM')(cr)[1] or 0) + 'f'
+                    raise osv.except_osv(_('Processing Error'), \
+                            _('Can not process quantity %s for Product %s !') \
+                            % (precision % move.quantity, move.product_id.name))
+
                 partial_datas['move%s' % (move.move_id.id)] = {
-                    'product_id': move.id, 
-                    'product_qty': move.quantity, 
-                    'product_uom': move.product_uom.id, 
-                    'prodlot_id': move.prodlot_id.id, 
+                    'product_id': move.product_id.id,
+                    'product_qty': calc_qty,
+                    'product_uom': move.move_id.product_uom.id,
+                    'prodlot_id': move.prodlot_id.id,
                 }
-                if (move.product_id.cost_method == 'average'):
+                if (picking_type == 'in') and (move.product_id.cost_method == 'average'):
                     partial_datas['move%s' % (move.move_id.id)].update({
-                                                    'product_price' : move.cost, 
-                                                    'product_currency': move.currency.id, 
+                                                    'product_price' : move.cost,
+                                                    'product_currency': move.currency.id,
                                                     })
         pick_obj.do_partial(cr, uid, picking_ids, partial_datas, context=context)
         
@@ -126,8 +157,8 @@ class stock_partial_picking(osv.osv_memory):
         vals_aut=self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'delivery_note')
         bool=False
         remision_id=False
-        for picking in self.browse(cr, uid, ids, context=context):
-            if (picking.delivery_note):
+        for partial_picking in self.browse(cr, uid, ids, context=context):
+            if (partial_picking.delivery_note):
                 user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
                 bool = user.company_id.generate_automatic
                 stock_picking=stock_picking_obj.browse(cr, uid, picking_ids, context)
@@ -144,7 +175,7 @@ class stock_partial_picking(osv.osv_memory):
                         else:
                             shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
                             company = self.pool.get('res.company').search(cr, uid,[])[0]
-                            number = picking['number']
+                            number = partial_picking['number']
                             auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'delivery_note', company, picking.shop_id.id, number,picking.printer_id.id ,context)
                             if not auth['authorization']:
                                 raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
@@ -156,8 +187,8 @@ class stock_partial_picking(osv.osv_memory):
                                 carrier= picking['carrier_id']['id']
                                 placa = picking.carrier_id and picking.carrier_id.placa
                             else:
-                                carrier= picking['carrier_id']['id']
-                                placa = picking.carrier_id and picking.carrier_id.placa
+                                carrier= partial_picking['carrier_id']['id']
+                                placa = partial_picking.carrier_id and partial_picking.carrier_id.placa
                             vals_remi= {
                                         'number': number,
                                         'number_out': number,
@@ -175,14 +206,14 @@ class stock_partial_picking(osv.osv_memory):
                                         'sale_order':picking['sale_id']['id'],
                                         'invoice_id':picking.invoice_id.id or None,
                                         'type': self.defined_type_remision(picking['type']),
-                                        'automatic': picking.automatic,
+                                        'automatic': partial_picking.automatic,
                                         }
                             remision_id = remision_obj.create(cr, uid, vals_remi, context)
                             for line in picking.move_lines:
                                 vals_remi_line= {
                                                  'quantity': line['product_qty'],
                                                  'product_id': line['product_id']['id'],
-                                                 'uom_id': line['product_uom']['id'],
+                                                 'product_uom': line['product_uom']['id'],
                                                  'remision_id': remision_id,
                                                  }
                                 remision_line_id = remision_line_obj.create(cr, uid, vals_remi_line, context)
@@ -200,7 +231,7 @@ class stock_partial_picking(osv.osv_memory):
                                         'printer_id':picking['printer_id']['id'],
                                         'invoice_id':picking.invoice_id.id or None,
                                         'type': self.defined_type_remision(picking['type']),
-                                        'automatic': picking.automatic,
+                                        'automatic': partial_picking.automatic,
                                         }
                             remision_id = remision_obj.create(cr, uid, vals_remi, context)
                             for line in picking.move_lines:
@@ -221,7 +252,7 @@ class stock_partial_picking(osv.osv_memory):
                             else:
                                 shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
                                 company = self.pool.get('res.company').search(cr, uid,[])[0]
-                                number = picking['number']
+                                number = partial_picking['number']
                                 auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'delivery_note', company, shop, number, context)
                                 if not auth['authorization']:
                                     raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
@@ -233,8 +264,8 @@ class stock_partial_picking(osv.osv_memory):
                                     carrier= picking['carrier_id']['id']
                                     placa = picking.carrier_id and picking.carrier_id.placa
                                 else:
-                                    carrier= picking['carrier_id']['id']
-                                    placa = picking.carrier_id and picking.carrier_id.placa
+                                    carrier= partial_picking['carrier_id']['id']
+                                    placa = partial_picking.carrier_id and partial_picking.carrier_id.placa
                                 vals_remi= {
                                             'number': number,
                                             'number_out': number,
@@ -252,7 +283,7 @@ class stock_partial_picking(osv.osv_memory):
                                             'invoice_id':picking.invoice_id.id or None,
                                             'sale_order':picking['sale_id']['id'],
                                             'type': self.defined_type_remision(picking['type']),
-                                            'automatic': picking.automatic,
+                                            'automatic': partial_picking.automatic,
                                             }
                                 remision_id = remision_obj.create(cr, uid, vals_remi, context)
                                 for line in picking.move_lines:
@@ -277,7 +308,7 @@ class stock_partial_picking(osv.osv_memory):
                                             'invoice_id':picking.invoice_id.id or None,
                                             'printer_id':picking['printer_id']['id'],
                                             'type': self.defined_type_remision(picking['type']),
-                                            'automatic': picking.automatic,
+                                            'automatic': partial_picking.automatic,
                                             }
                                 remision_id = remision_obj.create(cr, uid, vals_remi, context)
                                 for line in picking.move_lines:
@@ -371,7 +402,17 @@ class stock_partial_picking(osv.osv_memory):
                     values['automatic'] = False
                     values['date'] = None
         return {'value': values, }
-
+    
+    
+    def onchange_carrier_id(self, cr, uid, ids, carrier_id, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        value['placa']= carrier_id and self.pool.get('delivery.carrier').browse(cr, uid, carrier_id).placa or ''
+        return {'value': value, 'domain': domain }
+    
+    
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         result = super(stock_partial_picking, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu)
         trans = False
@@ -409,7 +450,7 @@ class stock_partial_picking(osv.osv_memory):
                         </group>"""
         else:
             _moves_arch_lst += """
-                    <field name="carrier_id" attrs="{'required':[('delivery_note','=',True)]}"/>
+                    <field name="carrier_id" on_change="onchange_carrier_id(carrier_id)" attrs="{'required':[('delivery_note','=',True)]}"/>
                     <field name="placa" attrs="{'required':[('delivery_note','=',True)]}"/>
                 </group>"""
         

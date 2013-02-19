@@ -48,7 +48,9 @@ class delivery_carrier(osv.osv):
     
     def get_price(self, cr, uid, ids, field_name, arg=None, context=None):
         return super(delivery_carrier, self).get_price(cr, uid, ids, field_name, arg, context)
+    
     _inherit = "delivery.carrier"
+    
     _columns = {
         'name': fields.char('Nombre del Conductor', size=64, required=True),
         'partner_id': fields.many2one('res.partner', 'Carrier Partner', required=False),
@@ -58,9 +60,7 @@ class delivery_carrier(osv.osv):
         'active': fields.boolean('Active', help="If the active field is set to False, it will allow you to hide the delivery carrier without removing it."),
         'placa':fields.char('Placa', size=8,), 
         'cedula':fields.char('Cedula', size=10, required=True, readonly=False), 
-        
-        
     }
-    _constraints = [(_check_ced, 'Error de Validación: El numero de Cédula del Transportista no es correcto', ['cedula'])]
+    _constraints = [(_check_ced, _(u'Error de Validación: El numero de Cédula del Transportista no es correcto'), ['cedula'])]
     
 delivery_carrier()

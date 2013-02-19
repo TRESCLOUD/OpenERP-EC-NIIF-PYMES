@@ -16,7 +16,7 @@
                 <field name="invoice_id" on_change="onchange_invoice(invoice_id)"/>
                 </group>
                 <field name="authorizacion_id" required="1"/>
-               	<field name="stock_picking_id" on_change="onchange_picking(stock_picking_id)" required="1"/>
+               	<field name="stock_picking_id" on_change="onchange_picking(stock_picking_id)" />
                 <notebook colspan="4">
                 	<page string="Transfer Information">
 	                	<field name="partner_id" required="1"/>
