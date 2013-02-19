@@ -120,7 +120,7 @@ class retention_wizard(osv.osv_memory):
                         shop_id = self._get_shop(cr, uid, context)
                         auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',shop_id), ('state','=',True)])
                         if not auth_line_id:
-                            raise osv.except_osv(_('Error!'), _(u'No existe autorización activa para generar retenciones')) #pablo vizhnay (corregido problema con unicode explicito) 13/02/2013 15h24
+                            raise osv.except_osv(_('Error!'), _(u'No existe autorización activa para generar retenciones'))
                         auth = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id or None
                         values = {
                                  'invoice_id': ret.invoice_id.id,
