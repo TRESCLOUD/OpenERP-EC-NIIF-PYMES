@@ -39,7 +39,7 @@ class account_payment_line(osv.osv):
     _name = "account.payment.line"
     
     _columns = {
-                'name':fields.char('Reference/Number', size=255, required=True, readonly=False),
+                'name':fields.char('Reference/Number', size=255, required=False, readonly=False),
                 'authorization':fields.char('Credit Card Authorization', size=255, required=False, readonly=False),
                 'beneficiary':fields.char('Beneficiary', size=255, required=False, readonly=False),
                 'voucher_id':fields.many2one('account.voucher', 'Voucher', required=False),
@@ -61,7 +61,7 @@ class account_payment_line(osv.osv):
                     ('postdated', 'Postdated'),
                      ], 'Check Type', select=True, readonly=False),
                 'deposit_id':fields.many2one('account.deposit.slip', 'Deposit Slip', required=False),
-                'is_cash':fields.boolean('is Check?', required=False),
+                'is_cash':fields.boolean('is Cash?', required=False),
                 'is_check':fields.boolean('is Check?', required=False),
                 'is_credit_card':fields.boolean('is Credit Card?', required=False),
                 'bank_id':fields.many2one('res.partner.bank', 'Bank Account', required=False),
@@ -96,6 +96,7 @@ class account_payment_line(osv.osv):
                 value.update({
                              'is_check': False,
                              'is_credit_card': False,
+                             'name': _(u'EFECTIVO'),
                              })
             if mode.type == 'credit_card':
                 value.update({

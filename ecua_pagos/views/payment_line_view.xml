@@ -25,9 +25,10 @@
 				<form string="Payment Line">
 					<group colspan="4" string="Info.">
 						<field name="mode_id" widget="selection" on_change="onchange_mode_id(mode_id)"/>
-						<field name="name"/>
+						<field name="name" attrs="{'invisible':[('is_credit_card','=',True)]}, 'required':[('is_cash','!=',True)]}"/>
 						<field name="amount"/>
 					</group>
+					<field name="is_cash" invisible="1"/>
 					<field name="is_check" invisible="1"/>
 					<field name="is_credit_card" invisible="1"/>
 					<group colspan="4" col="6" string="Check info" attrs="{'invisible': [('is_check','=',False)]}">
