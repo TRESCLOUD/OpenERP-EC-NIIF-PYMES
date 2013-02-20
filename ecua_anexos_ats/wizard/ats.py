@@ -112,7 +112,11 @@ class sri_ats(osv.osv):
             #Liquidacion de Compras Canceladas
             liquidation_canceled_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','in_invoice'),('state','=','cancel'),('liquidation','=',True)])
             liquidation_canceled = self.pool.get('account.invoice').browse(cr, uid, liquidation_canceled_ids, context)
-
+            #P.R: Retenciones Canceladas 
+            #P.R: Provienen de un objeto diferente pero relacionado con account.invoice, esto es account.retention
+            retention_canceled_ids = self.pool.get('account.retention').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('state','=','canceled')])
+            retention_canceled = self.pool.get('account.retention').browse(cr, uid, retention_canceled_ids, context)
+            
             company = self.pool.get('res.users').browse(cr, uid, [uid,], context)[0].company_id.partner_id
             root = Element("iva")
             mes= anexo['period_id']['name']
@@ -354,7 +358,8 @@ class sri_ats(osv.osv):
             
             #TODO: Escenario, se anulan documentos de diferentes autorizaciones en un mes
             #Si existe algun tipo de documento anulado 
-            if invoice_canceled or credit_note_canceled or liquidation_canceled:
+            #Agregado retenciones canceladas
+            if invoice_canceled or credit_note_canceled or liquidation_canceled or retention_canceled:
                 #FACTURAS ANULADAS
                 if invoice_canceled:
                     anulados = SubElement(root,"anulados")
@@ -380,8 +385,10 @@ class sri_ats(osv.osv):
                         SubElement(detalle, "secuencialInicio").text = numero_factura[2]
                         SubElement(detalle, "secuencialFin").text = numero_factura[2]
                         SubElement(detalle, "autorizacion").text = inv.autorization_credit_note_id.number
+
                 #LIQUIDACIONES DE COMPRAS ANULADAS
                 if liquidation_canceled:
+                    #P.R: TODO: NO FALTA "anulados = SubElement(root,"anulados")"???
                     for inv in liquidation_canceled:
                         numero_factura=inv.number.split('-')
                         detalle = SubElement(anulados,"detalleAnulados")
@@ -391,6 +398,23 @@ class sri_ats(osv.osv):
                         SubElement(detalle, "secuencialInicio").text = numero_factura[2]
                         SubElement(detalle, "secuencialFin").text = numero_factura[2]
                         SubElement(detalle, "autorizacion").text = inv.authorization_liquidation.number
+
+                #P.R: RETENCIONES DE COMPRA ANULADAS 
+                if retention_canceled:
+                    anulados = SubElement(root,"anulados")
+                    for inv in retention_canceled:
+                        #informacion_autorizacion = self.pool.get('sri.type.document').search(cr, uid, [('sri_authorization_id','=',inv.authorization_purchase.id),('name','=','withholding'),])
+                        #document = self.pool.get('sri.type.document').browse(cr, uid, informacion_autorizacion, context)
+                        numero_factura=inv.number.split('-')
+                        detalle = SubElement(anulados,"detalleAnulados")
+                        SubElement(detalle, "tipoComprobante").text = "07"
+                        SubElement(detalle, "establecimiento").text = numero_factura[0]
+                        SubElement(detalle, "puntoEmision").text = numero_factura[1]
+                        SubElement(detalle, "secuencialInicio").text = numero_factura[2]
+                        SubElement(detalle, "secuencialFin").text = numero_factura[2]
+#                        SubElement(detalle, "secuencialInicio").text = document[0].first_secuence # esta incorrecto
+#                        SubElement(detalle, "secuencialFin").text = document[0].last_secuence# esta incorrecto
+                        SubElement(detalle, "autorizacion").text = inv.authorization_purchase.number# correcto
 
         #TODO: NOTAS DE DEBITO, EN ESPERA DE MODULO DE NOTAS DE DEBITO
         
@@ -429,3 +453,4 @@ class sri_ats(osv.osv):
                  }
     
 sri_ats()
+
