@@ -18,6 +18,7 @@
             <field name="code">DLIQ</field>
             <field name="type">purchase</field>
             <field name="liquidation">True</field>
+            <field name="update_posted">True</field>
             <field name="view_id" ref="account.account_journal_view"/>
             <field name="sequence_id" ref="liquidacion_sequence"/>
             <field name="user_id" ref="base.user_root"/>
