@@ -21,6 +21,7 @@
             <field name="view_id" ref="account.account_journal_view"/>
             <field name="sequence_id" ref="sueldos_sequence"/>
             <field name="user_id" ref="base.user_root"/>
+            <field name="update_posted">True</field>
 		</record>
 
 	</data>
