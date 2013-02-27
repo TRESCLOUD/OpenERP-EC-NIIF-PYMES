@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="hr_provision_line_tree_view">
+			<field name="name">hr.provision.line.tree</field>
+			<field name="model">hr.provision.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="employee_id" />
+					<field name="total" string="Total a Pagar" />
+					<field name="payslip_line2_ids" string="Lineas de Nómina" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_provision_line_form_view">
+			<field name="name">hr.provision.line.form</field>
+			<field name="model">hr.provision.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="">
+					<field name="employee_id" />
+					<field name="total" string="Total a Pagar" />
+					<separator string="Lineas de Nomina" colspan="4" />
+					<field name="payslip_line2_ids" nolabel="1" colspan="4" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_provision_tree_view">
+			<field name="name">hr.provision.tree</field>
+			<field name="model">hr.provision</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Pago de Provisiones a los Empleados"
+					colors="blue:state in ('draft');black:state in ('open');gray:state in ('done');red:state in ('cancel')">
+					<button name="%(hr_provision_report)d" string="Imprimir Provisiones"
+							type="action" icon="gtk-print" states="done" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="period_id" />
+					<field name="rule_id" />
+					<field name="journal_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_provision_form_view">
+			<field name="name">hr.provision.form</field>
+			<field name="model">hr.provision</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Pago de Provisiones a los Empleados">
+					<separator string="Fecha de pago" colspan="4" />
+					<group colspan="4" col="6">
+						<field name="date_move" />
+						<field name="date_start" />
+						<field name="date_end" />
+					</group>
+					<group colspan="4" col="6">
+						<separator string="Información" colspan="6" />
+						<field name="period_id" widget="selection" />
+						<field name="rule_id" widget="selection" />
+						<field name="journal_id" widget="selection" />
+					</group>
+					<notebook colspan="4">
+						<page string="Provisiones">
+							<field name="line_ids" colspan="4" nolabel="1" />
+							<group colspan="4">
+								<group colspan="2">
+									<label string="" />
+								</group>
+								<group colspan="2">
+									<field name="total" />
+								</group>
+							</group>
+						</page>
+						<page string="Movimientos Contables">
+							<field name="account_move_id" colspan="4" nolabel="1" />
+						</page>
+					</notebook>
+					<group colspan="4" col="8">
+						<field name="state" />
+						<button name="action_cancel" string="Cancelar" states="open,done"
+							type="object" icon="gtk-cancel" />
+						<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+							states="cancel" type="object" icon="gtk-convert" />
+						<button name="action_open" string="Abrir" states="draft"
+							type="object" icon="gtk-open" />
+						<button name="compute" string="Calcular Provisiones"
+							states="draft" type="object" icon="gtk-execute" />
+						<button name="pay_provision" string="Pagar" states="open"
+							type="object" icon="gtk-ok" />
+						<button name="%(hr_provision_report)d" string="Imprimir Provisiones"
+							type="action" icon="gtk-print" states="done" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_provision_search_view">
+			<field name="name">hr.provision.form</field>
+			<field name="model">hr.provision</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Pago de Provisiones a los Empleados">
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="period_id" widget="selection" />
+					<field name="rule_id" widget="selection" />
+					<field name="journal_id" widget="selection" />
+					<newline />
+					<filter icon="gtk-apply" string="Pagadas" name="pagadas"
+						domain="[('state','=','done')]" />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_hr_provision_tree_view">
+			<field name="name">Provisiones a pagar a los Empleados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.provision</field>
+			<field name="context">{'search_default_pagadas': 0}</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="hr_provision_tree_view" />
+		</record>
+		<menuitem id="hr_provision_menu_root" name="Provisiones de Empleados"
+			parent="hr.menu_hr_root" />
+		<menuitem id="hr_provision_menu" name="Pago de Provisiones"
+			parent="hr_provision_menu_root" action="action_hr_provision_tree_view" />
+
+
+	</data>
+</openerp>

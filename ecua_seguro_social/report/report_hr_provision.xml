@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+
+		<record id="hr_provision_report" model="ir.actions.report.xml">
+			<field name="name">Pago de Provisiones</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">hr.provision</field>
+			<field name="report_name">report_hr_provision</field>
+			<field name="report_type">aeroo</field>
+			<field name="in_format">oo-odt</field>
+			<field name='out_format' eval="ref('report_aeroo.report_mimetypes_odt_odt')" />
+			<field name="report_rml">ecua_seguro_social/report/report_hr_provision.odt</field>
+			<field name="parser_state">default</field>
+			<field name="tml_source">file</field>
+		</record>
+		<!--
+		<ir_set>
+			<field eval="'action'" name="key" />
+			<field eval="'client_print_multi'" name="key2" />
+			<field eval="['hr.provision']" name="models" />
+			<field name="name">report_hr_provision</field>
+			<field eval="'ir.actions.report.xml,'+str(hr_provision_report)"
+				name="value" />
+			<field eval="True" name="isobject" />
+			<field eval="True" name="replace" />
+		</ir_set>
+	-->
+	</data>
+</openerp>

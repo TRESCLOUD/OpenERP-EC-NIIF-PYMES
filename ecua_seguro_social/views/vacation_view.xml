@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="hr_vacation_tree_view">
+			<field name="name">hr.vacation.tree</field>
+			<field name="model">hr.vacation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Vacaciones de Empleados" >
+					<field name="employee_id" on_change="onchange_employee_id(employee_id)"/>
+					<field name="department_id" readonly="1" />
+					<field name="year_id" widget="selection"/>
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="duration" />
+					<field name="days_vacation_remaining" invisible="1" />
+					<field name="days_vacation_acumulated" invisible="1" />
+					<field name="days_current_year" invisible="1" />
+					<field name="days_max" invisible="1" />
+					<!--<field name="date_next_vacation" invisible="0" />-->
+					<field name="state" />
+					<button name="action_cancel" string="Cancelar" states="confirm"
+						type="object" icon="gtk-cancel" />
+					<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+						states="cancel" type="object" icon="gtk-convert" />
+					<button name="action_confirm" string="Aprobar" states="draft"
+						type="object" icon="gtk-ok" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_vacation_form_view">
+			<field name="name">hr.vacation.form</field>
+			<field name="model">hr.vacation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Vacaciones de Empleados">
+					<group colspan="4" col="6">
+						<field name="employee_id" colspan="4"  on_change="onchange_employee_id(employee_id)"/>
+						<field name="department_id" readonly="1"/>
+						<field name="year_id" widget="selection" />
+						<field name="date_start" />
+						<field name="date_end" />
+						<field name="duration" />
+						<field name="days_vacation_remaining" invisible="1" />
+						<field name="days_vacation_acumulated" invisible="1" />
+						<field name="days_current_year" invisible="1" />
+					<field name="days_max" invisible="1" />
+					<!--<field name="date_next_vacation" invisible="0" />-->
+					</group>
+					<group colspan="4">
+						<field name="state" />
+						<group colspan="2" col="6">
+							<button name="action_cancel" string="Cancelar" states="confirm"
+								type="object" icon="gtk-cancel" />
+							<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+								states="cancel" type="object" icon="gtk-convert" />
+							<button name="action_confirm" string="Aprobar" states="draft"
+								type="object" icon="gtk-ok" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_vacation_search_view">
+			<field name="name">hr.vacation.form</field>
+			<field name="model">hr.vacation</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Vacaciones de Empleados">
+					<field name="employee_id" />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_hr_vacation_tree_view">
+			<field name="name">Vacaciones de Empleados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.vacation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="hr_vacation_tree_view" />
+		</record>
+
+		<menuitem id="hr_vacation_menu" 
+			parent="hr_newholidays_menu_root" action="action_hr_vacation_tree_view" />
+
+	</data>
+</openerp>
