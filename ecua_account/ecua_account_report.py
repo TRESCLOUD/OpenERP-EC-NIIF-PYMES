@@ -7,6 +7,6 @@ class report_account_receivable(osv.osv):
     def _ecua_init(self, cr):
         tools.drop_view_if_exists(cr, 'report_account_type_sales')
         
-    return super(report.account.receivable, self).__init__(pool, cr)
+        return super(report.account.receivable, self).__init__(pool, cr)
 
 report_account_receivable()
