@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+
+		<record model="ir.ui.view" id="account_hr_third_loan_tree_view">
+			<field name="name">account.hr.third.loan.tree</field>
+			<field name="model">account.hr.third.loan</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Prestamo de Empleados a Terceros">
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="partner_id" />
+					<field name="state" />
+					<field name="create_date" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_hr_third_loan_form_view">
+			<field name="name">account.hr.third.loan.form</field>
+			<field name="model">account.hr.third.loan</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Prestamo de Empleados a Terceros">
+					<group colspan="4" col="6">
+						<field name="name" />
+						<field name="description" />
+						<field name="start_share" />
+					</group>
+					<field name="employee_id" />
+					<field name="partner_id" />
+					<notebook colspan="4">
+						<page string="Líneas de Prestamo">
+							<field name="line_ids" colspan="4" nolabel="1">
+								<tree string="Líneas de Prestamo">
+									<field name="date_policy" />
+									<field name="period_id" attrs="{'readonly':[('date_policy','=','date')]}"
+										widget="selection" />
+									<field name="date_to_pay" attrs="{'readonly':[('date_policy','=','period')]}" />
+									<field name="amount" sum="Total" />
+								</tree>
+								<form string="Línea de Prestamo">
+									<field name="date_policy" />
+									<field name="period_id" attrs="{'readonly':[('date_policy','=','date')]}"
+										widget="selection" />
+									<field name="date_to_pay" attrs="{'readonly':[('date_policy','=','period')]}" />
+									<field name="amount" sum="Total" />
+								</form>
+							</field>
+							<separator string="Notas" colspan="4"/>
+							<field name="note" nolabel="1" colspan="4"></field>
+						</page>
+						<page string="Líneas de Egresos" attrs="{'invisible':[('state','=','draft')]}">
+							<field name="rule_ids" colspan="4" nolabel="1" readonly="1" />
+						</page>
+					</notebook>
+					<group colspan="4" col="8">
+						<field name="state" colspan="4" />
+						<button name="action_aprove" states="draft" string="Aprobar"
+							type="object" icon="gtk-go-forward" />
+						<button name="action_cancel" states="done" string="Cancelar"
+							type="object" icon="gtk-cancel" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_hr_third_loan_search_view">
+			<field name="name">account.hr.third.loan.form</field>
+			<field name="model">account.hr.third.loan</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Prestamo de Empleados a Terceros">
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="partner_id" />
+					<field name="state" />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_account_hr_third_loan_tree_view">
+			<field name="name">Prestamo de Empleados a Terceros</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.hr.third.loan</field>
+			<!-- <field name="domain">[('field_name','condition',criteria)]</field> -->
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="account_hr_third_loan_tree_view" />
+		</record>
+
+		<menuitem id="account_hr_third_loan_menu" parent="menu_hr_payables"
+			action="action_account_hr_third_loan_tree_view" />
+
+
+	</data>
+</openerp>

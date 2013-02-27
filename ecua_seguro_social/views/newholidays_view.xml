@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="hr_newholidays_calendar_line_form_view">
+			<field name="name">hr.newholidays.calendar.lines.form</field>
+			<field name="model">hr.newholidays.calendar.lines</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Dias Feriados">
+					<field name="name" colspan="4"/>
+					<field name="date_start" />
+					<field name="date_end" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="hr_newholidays_calendar_line_tree_view">
+			<field name="name">hr.newholidays.calendar.lines.tree</field>
+			<field name="model">hr.newholidays.calendar.lines</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Dias Feriados" editable="bottom">
+					<field name="name" />
+					<field name="date_start" />
+					<field name="date_end" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_calendar_tree_view">
+			<field name="name">hr.newholidays.calendar.tree</field>
+			<field name="model">hr.newholidays.calendar</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Dias Feriados">
+					<field name="year_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_calendar_form_view">
+			<field name="name">hr.newholidays.calendar.form</field>
+			<field name="model">hr.newholidays.calendar</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Dias Feriados">
+					<group colspan="4">
+						<field name="year_id" colspan="3" widget="selection"
+							required="1" />
+						<button name="action_change_year" string="Cambiar año a las lineas"
+							states="draft" type="object" icon="gtk-execute" />
+					</group>
+					<field name="line_ids" colspan="4" nolabel="1" />
+					<group colspan="4">
+						<field name="state" />
+						<group colspan="2" col="6">
+							<button name="action_cancel" string="Cancelar" states="confirm"
+								type="object" icon="gtk-cancel" />
+							<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+								states="cancel" type="object" icon="gtk-convert" />
+							<button name="action_confirm" string="Confirmar" states="draft"
+								type="object" icon="gtk-ok" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_calendar_search_view">
+			<field name="name">hr.newholidays.calendar.form</field>
+			<field name="model">hr.newholidays.calendar</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Dias Feriados">
+					<field name="year_id" />
+				</search>
+			</field>
+		</record>
+
+
+
+		<record model="ir.ui.view" id="hr_newholidays_type_tree_view">
+			<field name="name">hr.newholidays.type.tree</field>
+			<field name="model">hr.newholidays.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tipo de Ausencia">
+					<field name="name" />
+					<field name="code" />
+					<field name="is_paid" />
+					<field name="percent" attrs="{'invisible':[('is_paid','=',False)],'required':[('is_paid','=',True)]}" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_type_form_view">
+			<field name="name">hr.newholidays.type.form</field>
+			<field name="model">hr.newholidays.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tipo de Ausencia">
+					<field name="name" />
+					<field name="code" />
+					<field name="is_paid" />
+					<field name="percent" attrs="{'invisible':[('is_paid','=',False)],'required':[('is_paid','=',True)]}" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_type_search_view">
+			<field name="name">hr.newholidays.type.form</field>
+			<field name="model">hr.newholidays.type</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Tipo de Ausencia">
+					<field name="name" />
+					<field name="code" />
+					<field name="is_paid" />
+				</search>
+			</field>
+		</record>
+		
+		<!--
+		AUSENCIAS
+		-->
+		
+		<record model="ir.ui.view" id="hr_newholidays_tree_view">
+			<field name="name">hr.newholidays.tree</field>
+			<field name="model">hr.newholidays</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Ausencias" editable="bottom" colors="blue:state in ('draft',);black:state in ('aproved',);red:state in ('cancel',)">
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="type_id" widget="selection" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<field name="number_days" />
+					<field name="state" />
+					<button name="action_cancel" string="Cancelar" states="aproved"
+						type="object" icon="gtk-cancel" />
+					<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+						states="cancel" type="object" icon="gtk-convert" />
+					<button name="action_confirm" string="Aprobar" states="draft"
+						type="object" icon="gtk-ok" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_form_view">
+			<field name="name">hr.newholidays.form</field>
+			<field name="model">hr.newholidays</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Ausencias">
+					<group colspan="4" col="6">
+						<field name="name" colspan="6" />
+						<field name="employee_id" colspan="4"/>
+						<field name="type_id" widget="selection" />
+						<newline />
+						<field name="date_start" />
+						<field name="date_end" />
+						<field name="number_days" />
+					</group>
+					<group colspan="4">
+						<field name="state" />
+						<group colspan="2" col="6">
+							<button name="action_cancel" string="Cancelar" states="aproved"
+								type="object" icon="gtk-cancel" />
+							<button name="action_cancel_to_draft" string="Cambiar a Borrador"
+								states="cancel" type="object" icon="gtk-convert" />
+							<button name="action_confirm" string="Aprobar" states="draft"
+								type="object" icon="gtk-ok" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="hr_newholidays_search_view">
+			<field name="name">hr.newholidays.form</field>
+			<field name="model">hr.newholidays</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Ausencias">
+					<filter icon="terp-document-new" name="waiting_aprove" string="Por Aprobar"
+							domain="[('state','=','draft')]" />
+					<field name="employee_id" />
+					<field name="name" />
+					<field name="date" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<newline />
+					<group expand="0" string="Group By..." colspan="10" col="8">
+						<filter string="Empleados" icon="terp-personal+" domain="[]"
+							context="{'group_by':'employee_id'}" />
+						<filter string="Ausencia" icon="terp-go-home" domain="[]"
+							context="{'group_by':'type_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<!--
+
+		Menu principal de Vacaciones
+		-->
+
+		<menuitem id="hr_newholidays_menu_root" name="Vacaciones y Dias Feriados"
+			parent="hr.menu_hr_root" />
+		<menuitem id="hr_newholidays_menu_config" name="Configuración"
+			parent="hr_newholidays_menu_root" sequence="50"/>
+
+		<record model="ir.actions.act_window" id="action_hr_newholidays_calendar_tree_view">
+			<field name="name">Dias Feriados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.newholidays.calendar</field>
+			<!--
+				<field name="domain">[('field_name','condition',criteria)]</field>
+			-->
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="hr_newholidays_calendar_tree_view" />
+		</record>
+
+
+		<menuitem id="hr_newholidays_calendar_menu" name="Dias Feriados"
+			parent="hr_newholidays_menu_config" action="action_hr_newholidays_calendar_tree_view" />
+
+
+		<record model="ir.actions.act_window" id="action_hr_newholidays_type_tree_view">
+			<field name="name">Tipos de Ausencia</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.newholidays.type</field>
+			<!--
+				<field name="domain">[('field_name','condition',criteria)]</field>
+			-->
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="hr_newholidays_type_tree_view" />
+		</record>
+
+		<menuitem id="hr_newholidays_type_menu" name="Tipos de Ausencia"
+			parent="hr_newholidays_menu_config" action="action_hr_newholidays_type_tree_view" />
+
+		<record model="ir.actions.act_window" id="action_hr_newholidays_tree_view">
+			<field name="name">Registro de Ausencias de los Empleados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.newholidays</field>
+			<field name="context">{"search_default_waiting_aprove":1}</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="hr_newholidays_tree_view" />
+		</record>
+
+		<menuitem id="hr_newholidays_menu" name="Ausencias"
+			parent="hr_newholidays_menu_root" action="action_hr_newholidays_tree_view" />
+
+	</data>
+</openerp>
