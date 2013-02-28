@@ -263,6 +263,12 @@
 		</record>
 
 
+<!-- P.R Modificado Herencia: 
+El modulo account_cancel hereda primero el boton invoice_cancel y el sistema hace caso omiso
+a la modificacion hecha por esta herencia en el boton cancelar (invoice_form_cancel_inherit). 
+Se crea una vista que herede de account_cancel para los 2 botones existentes alli. Tambien se 
+comenta los botones para modificarlos en la nueva vista -->
+
 		<record model="ir.ui.view" id="account_invoice_sales_form_view">
 			<field name="name">account.invoice.form</field>
 			<field name="model">account.invoice</field>
@@ -294,25 +300,25 @@
 					<field name="invoice_number_out" required="1"
 						on_change="onchange_number(invoice_number_out, automatic, company_id, shop_id, printer_id)"></field>
 				</xpath>
-				<xpath
+<!-- 				<xpath
 					expr="/form/notebook/page/group/group//button[@name='invoice_cancel']"
 					position="replace">
 					<button name="invoice_cancel" states="proforma2,sale,open"
 						string="Cancel" icon="gtk-cancel" groups="account.group_account_manager" />
-				</xpath>
+				</xpath>  -->
 
 				<xpath
 					expr="/form/group//button[@name='%(account.action_account_change_currency)d']"
 					position="replace" />
 
-				<xpath
+<!-- 				<xpath
 					expr="/form/notebook/page/group/group//button[@name='%(account.action_account_state_open)d']"
 					position="replace">
 					<button name="%(account.action_account_state_open)d" type='action'
 						string='Re-Open' states='paid' icon="gtk-convert"
 						groups="account.group_account_manager" />
-				</xpath>
-
+				</xpath> -->
+ 
 				<xpath expr="/form/group//field[@name='journal_id']" position="replace">
 					<field name="journal_id" groups="base.group_user" invisible="1"
 						on_change="onchange_journal_id(journal_id)" widget="selection" />
@@ -345,6 +351,33 @@
 				</xpath>
 			</field>
 		</record>
+
+<!-- P.R Creado Herencia: 
+El modulo account_cancel hereda primero el boton invoice_cancel, por eso se construye una vista que
+herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inherit). 
+-->
+		<record model="ir.ui.view" id="invoice_form_cancel_groups_inherit">
+			<field name="name">invoice.form.cancel.groups.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit" />
+			<field name="arch" type="xml">
+ 				<xpath
+					expr="//button[@name='invoice_cancel']"
+					position="replace">
+					<button name="invoice_cancel" states="proforma2,sale,open"
+						string="Cancel" icon="gtk-cancel" groups="account.group_account_manager" />
+				</xpath> 
+ 				<xpath
+					expr="//button[@name='%(account.action_account_state_open)d']"
+					position="replace">
+					<button name="%(account.action_account_state_open)d" type='action'
+						string='Re-Open' states='paid' icon="gtk-convert"
+						groups="account.group_account_manager" />
+				</xpath>
+			</field>
+		</record>
+
 
 <!-- P.R. Domain que no permite seleccionar todos los proveedores, eliminado
 						on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
