@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+	<!-- no actualizar ya que en multicompania o multidb debe poder personalizarse -->
+	<data noupdate="1">
 		<record id="liquidacion_report" model="ir.actions.report.xml">
 			<field name="name">Liquidación de Compras</field>
 			<field name="type">ir.actions.report.xml</field>
