@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+	    <record model="ir.ui.view" id="caja_reporte_form_view">
+	         <field name="name">caja.reporte.form</field>
+	         <field name="model">caja.reporte</field>
+	         <field name="type">form</field>
+	         <field name="arch" type="xml">
+	             <form string="Reporte de Caja">
+	             	<group col="6" colspan="4">
+		                <field name="date" readonly="1"/>
+		                <field name="user_id" readonly="1"/>
+					 	<button name="imprimir" string="Imprimir Reporte de Caja" type="object"/>
+				 	</group>
+				 	<newline/>
+                 	<notebook colspan="4">
+                    	<page string="Ordenes de Venta sin factura">
+ 	                 		<field name="ovsf_ids" nolabel="1"/>
+ 	                  	</page>
+                    	<page string="Facturas sin Cancelar">
+		 		        	<field name="fsc_ids" nolabel="1"/>
+ 	                  	</page>
+                    	<page string="Cobros Efectuados">
+		                	<field name="cobros_efectivo_cheque" nolabel="1"/> 
+ 	                  	</page>
+                    	<page string="Facturas Emitidas">
+ 	                 		<field name="facturas_emitidas" nolabel="1"/>
+ 	                 	</page>
+                    	<page string="Notas de Venta Emitidas">
+	 	                	<field name="notas_venta_emitidas" nolabel="1"/>                         
+ 	                  	</page>
+					</notebook>
+	             </form>
+	         </field>
+	     </record>
+
+			<record model="ir.ui.view" id="caja_ordenes_sin_factura_tree_view">
+			     <field name="name">caja.ordenes.sin.factura.tree</field>
+			     <field name="model">caja.ordenes.sin.factura</field>
+			     <field name="type">tree</field>
+			     <field name="arch" type="xml">
+			         <tree string="Detalle">
+			             <field name="name" select="1"/>
+			             <field name="sale_number" select="1"/>
+			             <field name="total" select="1"/>
+			         </tree>
+			     </field>
+			 </record>
+
+			<record model="ir.ui.view" id="caja_factura_sin_pago_tree_view">
+			     <field name="name">caja.factura.sin.pago.tree</field>
+			     <field name="model">caja.factura.sin.pago</field>
+			     <field name="type">tree</field>
+			     <field name="arch" type="xml">
+			         <tree string="Detalle">
+			             <field name="name" select="1"/>
+			             <field name="invoice_number" select="1"/>
+			             <field name="total" select="1"/>
+			         </tree>
+			     </field>
+			 </record>
+
+			<record model="ir.ui.view" id="caja_diarios_pagos_tree_view">
+			     <field name="name">caja.diarios.pagos.tree</field>
+			     <field name="model">caja.diarios.pagos</field>
+			     <field name="type">tree</field>
+			     <field name="arch" type="xml">
+			         <tree string="Detalle">
+			             <field name="partner" select="1"/>
+			             <field name="name" select="1"/>
+			             <field name="total" select="1"/>
+			         </tree>
+			     </field>
+			 </record>
+
+			<record model="ir.ui.view" id="caja_facturas_emitidas_view">
+			     <field name="name">caja.facturas.emitidas.tree</field>
+			     <field name="model">caja.facturas.emitidas</field>
+			     <field name="type">tree</field>
+			     <field name="arch" type="xml">
+			         <tree string="Detalle">
+			             <field name="name" select="1"/>
+			             <field name="number" select="1"/>
+			             <field name="total" select="1"/>
+			             <field name="estado" select="1"/>
+			         </tree>
+			     </field>
+			 </record>
+
+			<record model="ir.ui.view" id="caja_ordenes_venta_emitidas_view">
+			     <field name="name">caja.ordenes.venta.emitidas.tree</field>
+			     <field name="model">caja.ordenes.venta.emitidas</field>
+			     <field name="type">tree</field>
+			     <field name="arch" type="xml">
+			         <tree string="Detalle">
+			             <field name="name" select="1"/>
+			             <field name="number" select="1"/>
+			             <field name="total" select="1"/>
+			             <field name="estado" select="1"/>
+			         </tree>
+			     </field>
+			 </record>
+
+         <record model="ir.actions.act_window" id="action_caja_reporte_tree_view">
+             <field name="name">caja.reporte</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="res_model">caja.reporte</field>
+		  <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="caja_reporte_form_view"/>
+             <field name="target">new</field>
+         </record>
+
+
+<!-- MENU -->
+
+        <menuitem id="caja_reporte" name="Reporte de Caja" action="action_caja_reporte_tree_view" parent=""/>
+
+	</data>
+</openerp>
