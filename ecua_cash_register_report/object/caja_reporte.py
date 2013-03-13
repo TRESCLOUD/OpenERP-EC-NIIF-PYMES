@@ -27,28 +27,54 @@ from datetime import date
 #import tools
 from osv import fields,osv
 
-def is_today(date_compare, reference):
-    """
-    This function checks if a giving date falls in the actual date (now)
-    """
-    
-    #reference = '2013-01-31'
-    
-    if not date_compare:
-        return False
-   
-    return date_compare == str(reference)
-
-
 class caja_reporte(osv.osv_memory):
     
     _name = 'caja.reporte'
 
+    def is_today(self, date_compare, reference):
+        """
+        This function checks if a giving date falls in the actual date (now)
+        """
+        
+        if not date_compare:
+            return False
+
+        return date_compare == reference[0:10]
+    
+    def onchange_date_user_id(self, cr, uid, ids, date, user_id, context=None):
+        #this function make the calculate of every field needed
+        # and return the changes to the view
+        
+        if not context:
+            context={}
+            
+        #asign the value into variable
+        context['date_new'] = date
+        context['user_id_new'] = user_id
+        
+        value = {}
+        
+        value['ovsf_ids'] = self._Ordenes_venta_sin_facturar(cr, uid, context = context)
+        value['fsc_ids'] = self._facturas_sin_cancelar(cr, uid, context = context)
+        value['cobros_efectivo_cheque'] = self._cobros_efectivo_cheque(cr, uid, context = context)
+        value['facturas_emitidas'] = self._facturas_emitidas(cr, uid, context = context)
+        value['notas_venta_emitidas'] = self._ordenes_venta_emitidas(cr, uid, context = context)
+
+        return {'value': value}
 
     def _Ordenes_venta_sin_facturar(self, cr, uid, context = None):
         # the Idea is search in sale.order all rows from this user (id) and
         # load the field. 
         
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
+            
         #resource to return
         res = []
         
@@ -60,13 +86,13 @@ class caja_reporte(osv.osv_memory):
         #order by name (represent the number of order of sale)
         list_ids = sale_orden_obj.search(cr, uid, [('state','!=','progress'),
                                                    '&',('state','!=','cancel'),
-                                                   ('user_id','=',uid),],
+                                                   ('user_id','=',user_id_to_use),],
                                          order='name')
          
         for orden_sin_factura in sale_orden_obj.browse(cr, uid, list_ids):
         
             #Verify the date
-            if is_today(orden_sin_factura.date_order, date.today()):
+            if self.is_today(orden_sin_factura.date_order, referencia):
                 
                 temp = {
                     'name': orden_sin_factura.partner_id.name,
@@ -82,6 +108,15 @@ class caja_reporte(osv.osv_memory):
         # the Idea is search in account.invoice all rows from this user (id) and
         # load the field. 
         
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
+
         #resource to return
         res = []
         
@@ -93,13 +128,13 @@ class caja_reporte(osv.osv_memory):
         # order by invoice_number_out
         list_ids = account_invoice_obj.search(cr, uid, [('reconciled','=',False),
                                                         '&',('state','!=','cancel'),
-                                                        ('user_id','=',uid),],
+                                                        ('user_id','=',user_id_to_use),],
                                               order='invoice_number_out')
          
         for factura_sin_cancelar in account_invoice_obj.browse(cr, uid, list_ids):
         
             #Verify the date
-            if is_today(factura_sin_cancelar.date_invoice, date.today()):
+            if self.is_today(factura_sin_cancelar.date_invoice, referencia):
                 
                 temp = {
                     'name': factura_sin_cancelar.partner_id.name,
@@ -116,6 +151,15 @@ class caja_reporte(osv.osv_memory):
     def _cobros_efectivo_cheque(self, cr, uid, context = None):
         # the Idea is search in account.vouchert all rows from this user (id) and
         # load the fields grouping by journal and "Efectivo" and/or "Cheques". 
+
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
         
         #resource to return
         res = []
@@ -126,13 +170,13 @@ class caja_reporte(osv.osv_memory):
         object_obj = self.pool.get('account.voucher')
         
         list_ids = object_obj.search(cr, uid, [('state','=','posted'),
-                                               ('create_uid','=',uid),],
+                                               ('create_uid','=',user_id_to_use),],
                                      order='journal_id,partner_id')
                                                         
         for lineas in object_obj.browse(cr, uid, list_ids):
         
             #Verify the date
-            if is_today(lineas.date, date.today()):
+            if self.is_today(lineas.date, referencia):
                 
                 temp = {
                     'partner': lineas.partner_id.name,
@@ -150,6 +194,15 @@ class caja_reporte(osv.osv_memory):
         # the Idea is search in account.invoice all rows from this user (id) and
         # load the field, in this case present a list of emiting invoice showing
         # the actual state 
+
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
         
         #resource to return
         res = []
@@ -160,16 +213,16 @@ class caja_reporte(osv.osv_memory):
         object_obj = self.pool.get('account.invoice')
         
         list_ids = object_obj.search(cr, uid, [('state','!=','draft'),
-                                               ('user_id','=',uid),],
+                                               ('user_id','=',user_id_to_use),],
                                      order='invoice_number_out,name,state')
          
         #Need a internal id for every client id (name can be the same twice)
         i = 0 
         
-        for element in object_obj.browse(cr, uid, list_ids):
+        for element in object_obj.browse(cr, uid, list_ids, referencia):
         
             #Verify the date
-            if is_today(element.date_invoice, date.today()):
+            if self.is_today(element.date_invoice):
                 
                 res_dic[i] = {
                     'name': element.partner_id.name,
@@ -191,6 +244,15 @@ class caja_reporte(osv.osv_memory):
         # the Idea is search in sale.order all rows from this user (id) and
         # load the field, in this case present a list of emiting sale oreder showing
         # the actual state 
+
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
         
         #resource to return
         res = []
@@ -201,7 +263,7 @@ class caja_reporte(osv.osv_memory):
         object_obj = self.pool.get('sale.order')
         
         list_ids = object_obj.search(cr, uid, [('state','!=','draft'),
-                                               ('user_id','=',uid),],
+                                               ('user_id','=',user_id_to_use),],
                                      order='name,state')
          
         #Need a internal id for every client id (name can be the same twice)
@@ -210,7 +272,7 @@ class caja_reporte(osv.osv_memory):
         for element in object_obj.browse(cr, uid, list_ids):
         
             #Verify the date
-            if is_today(element.date_order, date.today()):
+            if self.is_today(element.date_order, referencia):
                 
                 res_dic[i] = {
                     'name': element.partner_id.name,
@@ -228,8 +290,8 @@ class caja_reporte(osv.osv_memory):
 
 
     _columns = {
-        'date': fields.datetime('fecha', required=False),
-        'user_id': fields.many2one('res.users', 'Usuario', required=False),
+        'date': fields.datetime('fecha', required=True),
+        'user_id': fields.many2one('res.users', 'Usuario', required=True),
         'shop_id': fields.many2one('sale.shop', 'Tienda', required=True),
         'ovsf_ids': fields.one2many('caja.ordenes.sin.factura', 'caja_id', 'Ordenes de Venta sin facturar', readonly=True),# required=False, domain=[('tipo','=','ov')]),
         'fsc_ids': fields.one2many('caja.factura.sin.pago', 'caja_id', 'Facturas sin cobrar', readonly=True),# required=False, domain=[('tipo','=','fc')]),
@@ -244,12 +306,10 @@ class caja_reporte(osv.osv_memory):
     
     _defaults = { 
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        #'date': lambda *a: time.strptime('2013-01-23', '%Y-%m-%d'),
         'user_id': lambda s, cr, uid, c: uid,
         'ovsf_ids': _Ordenes_venta_sin_facturar,
         'fsc_ids': _facturas_sin_cancelar,
         'cobros_efectivo_cheque': _cobros_efectivo_cheque,
-        #
         'facturas_emitidas': _facturas_emitidas,
         'notas_venta_emitidas': _ordenes_venta_emitidas,
 #        'tarjetas_ids': _tarjetas_ids,  

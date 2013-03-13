@@ -9,10 +9,17 @@
 	         <field name="arch" type="xml">
 	             <form string="Reporte de Caja">
 	             	<group col="6" colspan="4">
-		                <field name="date" readonly="1"/>
-		                <field name="user_id" readonly="1"/>
-					 	<button name="imprimir" string="Imprimir Reporte de Caja" type="object"/>
+		                <field name="date" readonly="0" 
+		                on_change="onchange_date_user_id(date, user_id)"
+		                groups="account.group_account_user"/>
+		                <field name="user_id" readonly="0" 
+		                on_change="onchange_date_user_id(date, user_id)"
+		                groups="account.group_account_user"/>
 				 	</group>
+				 	<newline/>
+	             	<group col="6" colspan="4">
+						<button name="imprimir" string="Imprimir Reporte de Caja" type="object"/>
+			 		</group>
 				 	<newline/>
                  	<notebook colspan="4">
                     	<page string="Ordenes de Venta sin factura">
@@ -31,7 +38,7 @@
 	 	                	<field name="notas_venta_emitidas" nolabel="1"/>                         
  	                  	</page>
 					</notebook>
-	             </form>
+			 	</form>
 	         </field>
 	     </record>
 
