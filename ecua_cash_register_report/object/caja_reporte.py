@@ -58,8 +58,9 @@ class caja_reporte(osv.osv_memory):
         value['fsc_ids'] = self._facturas_sin_cancelar(cr, uid, context = context)
         value['cobros_efectivo_cheque'] = self._cobros_efectivo_cheque(cr, uid, context = context)
         value['facturas_emitidas'] = self._facturas_emitidas(cr, uid, context = context)
-        value['notas_venta_emitidas'] = self._ordenes_venta_emitidas(cr, uid, context = context)
-
+        value['ordenes_venta_emitidas'] = self._ordenes_venta_emitidas(cr, uid, context = context)
+        value['cobros_efec_cheq_consolidado'] = self._cobros_efectivo_cheque_consolidado(cr, uid, context = context)
+        
         return {'value': value}
 
     def _Ordenes_venta_sin_facturar(self, cr, uid, context = None):
@@ -97,6 +98,7 @@ class caja_reporte(osv.osv_memory):
                 temp = {
                     'name': orden_sin_factura.partner_id.name,
                     'sale_number': orden_sin_factura.name,
+                    'reference': orden_sin_factura.client_order_ref,
                     'total': orden_sin_factura.amount_total,
                 }
         
@@ -125,11 +127,12 @@ class caja_reporte(osv.osv_memory):
         
         account_invoice_obj = self.pool.get('account.invoice')
         
-        # order by invoice_number_out
+        # order by invoice_number
         list_ids = account_invoice_obj.search(cr, uid, [('reconciled','=',False),
-                                                        '&',('state','!=','cancel'),
+                                                        ('state','!=','cancel'),
+                                                        ('type','=','out_invoice'),
                                                         ('user_id','=',user_id_to_use),],
-                                              order='invoice_number_out')
+                                              order='invoice_number')
          
         for factura_sin_cancelar in account_invoice_obj.browse(cr, uid, list_ids):
         
@@ -138,13 +141,13 @@ class caja_reporte(osv.osv_memory):
                 
                 temp = {
                     'name': factura_sin_cancelar.partner_id.name,
-                    'invoice_number': factura_sin_cancelar.invoice_number_out,
-                    #'number': 1,
+                    'invoice_number': factura_sin_cancelar.invoice_number,
+                    'reference': factura_sin_cancelar.name, 
                     'total': factura_sin_cancelar.amount_total,
                 }
-        
+
                 res.append(temp)    
- 
+
         return res
 
         
@@ -181,7 +184,8 @@ class caja_reporte(osv.osv_memory):
                 temp = {
                     'partner': lineas.partner_id.name,
                     'name': lineas.journal_id.name,
-                    #'number': temp['number'] + 1,
+                    'reference': lineas.reference,
+                    'memory': lineas.name,
                     'total': lineas.amount,
                  }
                 
@@ -213,8 +217,9 @@ class caja_reporte(osv.osv_memory):
         object_obj = self.pool.get('account.invoice')
         
         list_ids = object_obj.search(cr, uid, [('state','!=','draft'),
+                                               ('type','=','out_invoice'),
                                                ('user_id','=',user_id_to_use),],
-                                     order='invoice_number_out,name,state')
+                                     order='invoice_number,name,state')
          
         #Need a internal id for every client id (name can be the same twice)
         i = 0 
@@ -226,7 +231,8 @@ class caja_reporte(osv.osv_memory):
                 
                 res_dic[i] = {
                     'name': element.partner_id.name,
-                    'number': element.invoice_number_out,
+                    'number': element.invoice_number,
+                    'reference': element.name, 
                     'total': element.amount_total,
                     'estado': element.state,
                 }
@@ -276,6 +282,7 @@ class caja_reporte(osv.osv_memory):
                 
                 res_dic[i] = {
                     'name': element.partner_id.name,
+                    'reference': element.client_order_ref,
                     'number': element.name,
                     'total': element.amount_total,
                     'estado': element.state,
@@ -289,6 +296,62 @@ class caja_reporte(osv.osv_memory):
         return res
 
 
+    def _cobros_efectivo_cheque_consolidado(self, cr, uid, context = None):
+        # the Idea is search in account.vouchert all rows from this user (id) and
+        # load the fields grouping by journal and "Efectivo" and/or "Cheques".
+        
+        user_id_to_use = uid
+        referencia = time.strftime('%Y-%m-%d %H:%M:%S')
+            
+        if 'user_id_new' in context:
+            user_id_to_use = context['user_id_new']
+
+        if 'date_new' in context:
+            referencia = context['date_new']
+
+        #resource to return
+        res = []
+        
+        #This dict is for easy work whit repeats names
+        res_dic = {}
+        
+        object_obj = self.pool.get('account.voucher')
+        
+        list_ids = object_obj.search(cr, uid, [('state','=','posted'),
+                                               ('create_uid','=',user_id_to_use),],
+                                     order='create_uid')
+                                                        
+        for lineas in object_obj.browse(cr, uid, list_ids):
+        
+            #Verify the date
+            if self.is_today(lineas.date, referencia):
+                
+                #Group by consumer and sum
+                if lineas.journal_id.name in res_dic:
+
+                    temp = res_dic[lineas.journal_id.name]
+                    
+                    res_dic[lineas.journal_id.name] = {
+                        'name': lineas.journal_id.name,
+                        'number': temp['number'] + 1,
+                        'total': temp['total'] + lineas.amount,
+                     }
+                    
+                #first element
+                else:
+                    res_dic[lineas.journal_id.name] = {
+                        'name': lineas.journal_id.name,
+                        'number': 1,
+                        'total': lineas.amount,
+                        #'tipo': 'cec',
+                    }
+        
+        for elem in res_dic:
+            res.append(res_dic[elem])
+ 
+        return res
+
+
     _columns = {
         'date': fields.datetime('fecha', required=True),
         'user_id': fields.many2one('res.users', 'Usuario', required=True),
@@ -298,7 +361,9 @@ class caja_reporte(osv.osv_memory):
         'cobros_efectivo_cheque': fields.one2many('caja.diarios.pagos', 'caja_id', 'Cobros en Efectivo y Cheque', readonly=True),# required=False, domain=[('tipo','=','cec')]),
         #
         'facturas_emitidas': fields.one2many('caja.facturas.emitidas', 'caja_id', 'Facturas Emitidas', readonly=True),# required=False, domain=[('tipo','=','cec')]),
-        'notas_venta_emitidas': fields.one2many('caja.ordenes.venta.emitidas', 'caja_id', 'Notas de Venta Emitidas', readonly=True),# required=False, domain=[('tipo','=','cec')]),
+        'ordenes_venta_emitidas': fields.one2many('caja.ordenes.venta.emitidas', 'caja_id', 'Notas de Venta Emitidas', readonly=True),# required=False, domain=[('tipo','=','cec')]),
+        'cobros_efec_cheq_consolidado': fields.one2many('caja.diarios.pagos.consolidado', 'caja_id', 'Cobros en Efectivo y Cheque Consolidado', readonly=True),# required=False, domain=[('tipo','=','cec')]),
+        
 #        'tarjetas_ids': fields.one2many('caja.ordenes.facturas', 'caja_id', 'Cobros Tarjetas', required=False, domain=[('tipo','=','ct')]),
 #        'bancos_ids': fields.one2many('caja.ordenes.facturas', 'caja_id', 'Cobros Bancos', required=False, domain=[('tipo','=','cb')]),
 #        'retenciones_ids': fields.one2many('caja.ordenes.facturas', 'caja_id', 'Cobros Retenciones', required=False, domain=[('tipo','=','cr')]),
@@ -311,7 +376,8 @@ class caja_reporte(osv.osv_memory):
         'fsc_ids': _facturas_sin_cancelar,
         'cobros_efectivo_cheque': _cobros_efectivo_cheque,
         'facturas_emitidas': _facturas_emitidas,
-        'notas_venta_emitidas': _ordenes_venta_emitidas,
+        'ordenes_venta_emitidas': _ordenes_venta_emitidas,
+        'cobros_efec_cheq_consolidado': _cobros_efectivo_cheque_consolidado,
 #        'tarjetas_ids': _tarjetas_ids,  
 #        'bancos_ids': _bancos_ids,
 #        'retenciones_ids': _retenciones_ids,
@@ -357,7 +423,7 @@ class caja_ordenes_sin_factura(osv.osv_memory):
     _columns = {
         'name': fields.char('Cliente', size=256, required=False, readonly=False),
         'sale_number': fields.char('Orden de Venta', size=256, required=False, readonly=False),
-        #'number': fields.integer('Numero'),
+        'reference': fields.char('Referencia', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
 
@@ -372,7 +438,7 @@ class caja_facturas_sin_pago(osv.osv_memory):
     _columns = {
         'name': fields.char('Cliente', size=256, required=False, readonly=False),
         'invoice_number': fields.char('Facturas', size=256, required=False, readonly=False),
-        #'number': fields.integer('Numero'),
+        'reference': fields.char('Descripcion', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
                 }
@@ -386,7 +452,8 @@ class caja_diarios_pagos(osv.osv_memory):
     _columns = {
         'partner': fields.char('Cliente', size=256, required=False, readonly=False),
         'name': fields.char('Diario', size=256, required=False, readonly=False),
-        #'number': fields.integer('Numero'),
+        'reference': fields.char('Referencia', size=256, required=False, readonly=False),
+        'memory': fields.char('Memoria', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
                 }
@@ -400,6 +467,7 @@ class caja_facturas_emitidas(osv.osv_memory):
     _columns = {
         'name': fields.char('Cliente', size=256, required=False, readonly=False),
         'number': fields.char('Numero de Factura', size=32, required=False, readonly=False),
+        'reference': fields.char('Descripcion', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'estado': fields.char('Estado', size=32, required=False, readonly=False),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
@@ -414,9 +482,24 @@ class caja_ordenes_venta_emitidas(osv.osv_memory):
     _columns = {
         'name': fields.char('Cliente', size=256, required=False, readonly=False),
         'number': fields.char('Numero de Orden de Venta', size=32, required=False, readonly=False),
+        'reference': fields.char('Referencia', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'estado': fields.char('Estado', size=32, required=False, readonly=False),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
                 }
 
 caja_ordenes_venta_emitidas()
+
+class caja_diarios_pagos_consolidado(osv.osv_memory):
+
+    _name = 'caja.diarios.pagos.consolidado'
+   
+    _columns = {
+        'name': fields.char('Cliente', size=256, required=False, readonly=False),
+        'number': fields.integer('Numero'),
+        'total': fields.float('Total', digits=(2,5)),
+        'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
+                }
+
+caja_diarios_pagos_consolidado()
+

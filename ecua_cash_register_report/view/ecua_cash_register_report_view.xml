@@ -29,13 +29,16 @@
 		 		        	<field name="fsc_ids" nolabel="1"/>
  	                  	</page>
                     	<page string="Cobros Efectuados">
-		                	<field name="cobros_efectivo_cheque" nolabel="1"/> 
+		                	<field name="cobros_efectivo_cheque" nolabel="1"/>
+ 	                  	</page>
+                    	<page string="Resumen Cobros Efectuados">
+		                	<field name="cobros_efec_cheq_consolidado" nolabel="1"/>
  	                  	</page>
                     	<page string="Facturas Emitidas">
  	                 		<field name="facturas_emitidas" nolabel="1"/>
  	                 	</page>
-                    	<page string="Notas de Venta Emitidas">
-	 	                	<field name="notas_venta_emitidas" nolabel="1"/>                         
+                    	<page string="Ordenes de Venta Emitidas">
+	 	                	<field name="ordenes_venta_emitidas" nolabel="1"/>                         
  	                  	</page>
 					</notebook>
 			 	</form>
@@ -50,6 +53,7 @@
 			         <tree string="Detalle">
 			             <field name="name" select="1"/>
 			             <field name="sale_number" select="1"/>
+			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
 			         </tree>
 			     </field>
@@ -63,6 +67,7 @@
 			         <tree string="Detalle">
 			             <field name="name" select="1"/>
 			             <field name="invoice_number" select="1"/>
+			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
 			         </tree>
 			     </field>
@@ -76,10 +81,27 @@
 			         <tree string="Detalle">
 			             <field name="partner" select="1"/>
 			             <field name="name" select="1"/>
+			             <field name="reference" select="1"/>
+			             <field name="memory" select="1"/>
 			             <field name="total" select="1"/>
 			         </tree>
 			     </field>
 			 </record>
+
+			<record model="ir.ui.view" id="caja_diarios_pagos_consolidado_tree_view">
+				<field name="name">caja.diarios.pagos.consolidado.tree</field>
+				<field name="model">caja.diarios.pagos.consolidado</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="Detalle">
+						<field name="name" select="1"/>
+						<field name="number" select="1"/>
+						<field name="total" select="1"/>
+					</tree>
+				</field>
+			</record>
+
+
 
 			<record model="ir.ui.view" id="caja_facturas_emitidas_view">
 			     <field name="name">caja.facturas.emitidas.tree</field>
@@ -89,6 +111,7 @@
 			         <tree string="Detalle">
 			             <field name="name" select="1"/>
 			             <field name="number" select="1"/>
+			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
 			             <field name="estado" select="1"/>
 			         </tree>
@@ -103,6 +126,7 @@
 			         <tree string="Detalle">
 			             <field name="name" select="1"/>
 			             <field name="number" select="1"/>
+			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
 			             <field name="estado" select="1"/>
 			         </tree>
