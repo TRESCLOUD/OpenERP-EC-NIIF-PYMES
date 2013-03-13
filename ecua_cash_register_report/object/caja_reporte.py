@@ -219,10 +219,10 @@ class caja_reporte(osv.osv_memory):
         #Need a internal id for every client id (name can be the same twice)
         i = 0 
         
-        for element in object_obj.browse(cr, uid, list_ids, referencia):
+        for element in object_obj.browse(cr, uid, list_ids):
         
             #Verify the date
-            if self.is_today(element.date_invoice):
+            if self.is_today(element.date_invoice, referencia):
                 
                 res_dic[i] = {
                     'name': element.partner_id.name,
