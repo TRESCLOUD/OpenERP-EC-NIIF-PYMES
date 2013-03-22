@@ -1516,6 +1516,9 @@ class hr_payslip_line(osv.osv):
         'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Payroll')),
         'total': fields.function(_calculate_total, method=True, type='float', string='Total', digits_compute=dp.get_precision('Payroll'),store=True ),
     }
+    _sql_constraints = [
+                        ('code_unique_salary_rule', '1=1', _('Code can duplicate')),     
+                         ]
 
 hr_payslip_line()
 
