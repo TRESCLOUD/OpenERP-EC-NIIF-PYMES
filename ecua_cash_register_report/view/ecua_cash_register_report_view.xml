@@ -81,9 +81,9 @@
 			         <tree string="Detalle">
 			             <field name="partner" select="1"/>
 			             <field name="name" select="1"/>
-			             <field name="reference" select="1"/>
-			             <field name="memory" select="1"/>
-			             <field name="total" select="1"/>
+			             <field name="factura" select="1"/>
+			             <field name="importe" select="1"/>
+			             <field name="saldo" select="1"/>
 			         </tree>
 			     </field>
 			 </record>
@@ -129,6 +129,7 @@
 			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
 			             <field name="estado" select="1"/>
+			             <field name="tarifa" select="1"/>
 			         </tree>
 			     </field>
 			 </record>
