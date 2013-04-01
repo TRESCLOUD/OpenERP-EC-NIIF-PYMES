@@ -8,16 +8,17 @@
 			<field name="arch" type="xml">
 				<form string="Retention">
 					<group colspan="6" col="12" width="800" height="250">
+						<field name="authorization_sale_id" 
+						required="1"  
+						domain="[('partner_id', '=', partner_id),('type','=','withholding')]" 
+						context="{'document_type':'withholding', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}"
+						on_change="onchange_aut_sale(authorization_sale_id)">
+						</field>
 						<field name="number" required="1" colspan="2" />
-						<newline />
-						<field name="partner_id" invisible="1" colspan="2" />
-						<field name="creation_date" required="1" colspan="2" />
 						<field name="authorization_sale" invisible="1" colspan="2" />
-					<field name="authorization_sale_id" 
-					required="1"  
-					domain="[('partner_id', '=', partner_id),('type','=','withholding')]" 
-					context="{'document_type':'withholding', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}">
-					</field>
+						<newline />
+						<field name="creation_date" required="1" colspan="2" />
+						<field name="partner_id" invisible="1" colspan="2" />
 						<field name="invoice_id" invisible="1" />
 						<field name="automatic" invisible="1" />
 						<newline />

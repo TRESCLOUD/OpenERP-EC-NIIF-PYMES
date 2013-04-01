@@ -167,29 +167,48 @@ class caja_reporte(osv.osv_memory):
         #resource to return
         res = []
         
-        #This dict is for easy work whit repeats names
-        res_dic = {}
+        voucher_obj = self.pool.get('account.voucher')
+        voucher_line_obj = self.pool.get('account.voucher.line')
+
+        # first search the account_voucher in state posted, type receip and created by user_id
+        voucher_list = voucher_obj.search(cr, uid, [('state','=','posted'),
+                                                    ('type','=','receipt'),
+                                                    ('create_uid','=',user_id_to_use),],)
+                                          #order='journal_id')
         
-        object_obj = self.pool.get('account.voucher')
-        
-        list_ids = object_obj.search(cr, uid, [('state','=','posted'),
-                                               ('create_uid','=',user_id_to_use),],
-                                     order='journal_id,partner_id')
+        voucher_list = tuple(voucher_list)
+
+        # each one contain voucher_lines, search the lines (Could filter using cr or dr type)
+        voucher_line_list = voucher_line_obj.search(cr, uid, [('voucher_id','in',voucher_list),],
+                                                        order='name')
                                                         
-        for lineas in object_obj.browse(cr, uid, list_ids):
+        for lineas in voucher_line_obj.browse(cr, uid, voucher_line_list):
         
             #Verify the date
-            if self.is_today(lineas.date, referencia):
+            if self.is_today(lineas.voucher_id.date, referencia):
                 
                 temp = {
                     'partner': lineas.partner_id.name,
-                    'name': lineas.journal_id.name,
-                    'reference': lineas.reference,
-                    'memory': lineas.name,
-                    'total': lineas.amount,
+                    'name': lineas.voucher_id.journal_id.name,
+                    'factura': lineas.name,
+                    'importe': lineas.amount,
+                    'saldo': lineas.amount_original - lineas.amount,
                  }
                 
                 res.append(temp)    
+
+        #Order by journal_id
+        def __cmpTexto(x, y):
+            if x['name'] < y['name']:
+                return -1
+            elif x['name'] == y['name']:
+                return 0
+            else:
+                return 1
+              
+        cmp = lambda x,y: __cmpTexto(x, y)
+        
+        res.sort(cmp)
  
         return res
 
@@ -285,6 +304,7 @@ class caja_reporte(osv.osv_memory):
                     'reference': element.client_order_ref,
                     'number': element.name,
                     'total': element.amount_total,
+                    'tarifa': element.pricelist_id.name,
                     'estado': element.state,
                 }
                 
@@ -452,9 +472,9 @@ class caja_diarios_pagos(osv.osv_memory):
     _columns = {
         'partner': fields.char('Cliente', size=256, required=False, readonly=False),
         'name': fields.char('Diario', size=256, required=False, readonly=False),
-        'reference': fields.char('Referencia', size=256, required=False, readonly=False),
-        'memory': fields.char('Memoria', size=256, required=False, readonly=False),
-        'total': fields.float('Total', digits=(2,5)),
+        'factura': fields.char('Numero de Factura', size=256, required=False, readonly=False),
+        'importe': fields.float('Importe', digits=(2,5)),
+        'saldo': fields.float('Saldo', digits=(2,5)),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
                 }
 
@@ -485,6 +505,7 @@ class caja_ordenes_venta_emitidas(osv.osv_memory):
         'reference': fields.char('Referencia', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
         'estado': fields.char('Estado', size=32, required=False, readonly=False),
+        'tarifa': fields.char('Tarifa', size=256, required=False, readonly=False),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
                 }
 
