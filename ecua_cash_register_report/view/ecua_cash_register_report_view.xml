@@ -147,7 +147,7 @@
 
 <!-- MENU -->
 
-        <menuitem id="caja_reporte" name="Reporte de Caja" action="action_caja_reporte_tree_view" parent=""/>
+        <menuitem id="caja_reporte" name="Reporte de Caja" action="action_caja_reporte_tree_view" parent="base.next_id_64"/>
 
 	</data>
 </openerp>
