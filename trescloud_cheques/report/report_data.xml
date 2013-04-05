@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!  REPORTE - CHEQUE  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	
+		<record id="report_check" model="ir.actions.report.xml">
+			<field name="name">Impresion de cheque</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">check.check</field>
+			<field name="report_name">check_report</field>
+			<field name="report_type">aeroo</field>
+			<field name="in_format">oo-odt</field>
+			<field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')" />
+			<field name="report_rml">trescloud_cheques/report/cheque_report.odt</field>
+			<field name="parser_state">default</field>
+			<field name="tml_source">file</field>
+		</record>
+	
+	</data>
+</openerp>

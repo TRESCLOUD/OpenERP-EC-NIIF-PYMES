@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="workflow_workflowchecks0" model="workflow">
+			<field eval="1" name="on_create"/>
+			<field name="name">workflow_checks</field>
+			<field name="osv">check.check</field>
+		</record>
+		
+		<record id="workflow_activity_draft0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Draft</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="0" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<field name="action">write({'state':'draft'})</field>		
+			<field eval="1" name="flow_start"/>
+		</record>
+ 		<record id="workflow_activity_printed0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Printed</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="0" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<!--  <field name="action">write({'state':'printed'})</field>-->
+			<field name="action">action_printed()</field>
+			<field eval="0" name="flow_start"/>
+		</record> 
+		<record id="workflow_activity_canceled0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Canceled</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="1" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<field name="action">action_canceled()</field>
+			<field eval="0" name="flow_start"/>
+		</record>						
+		<record id="workflow_activity_charged0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Charged</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="1" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<field name="action">write({'state':'charged'})</field>
+			<field eval="0" name="flow_start"/>
+		</record>
+		<record id="workflow_activity_lost0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Lost</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="1" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<field name="action">write({'state':'lost'})</field>
+			<field eval="0" name="flow_start"/>
+		</record>
+		<record id="workflow_activity_rejected0" model="workflow.activity">
+			<field name="kind">function</field>
+			<field name="name">Rejected</field>
+			<field name="join_mode">XOR</field>
+			<field model="workflow" name="wkf_id" search="[('name', '=', u'workflow_checks')]"/>
+			<field eval="1" name="flow_stop"/>
+			<field name="split_mode">XOR</field>
+			<field name="action">write({'state':'rejected'})</field>
+			<field eval="0" name="flow_start"/>
+		</record>		
+	</data>
+
+	<data>
+		<record id="workflow_transition_2" model="workflow.transition">
+			<field name="signal">check_draft_to_printed</field>
+			<field model="workflow.activity" name="act_from" search="[('name', '=', u'Draft')]"/>
+			<field model="workflow.activity" name="act_to" search="[('name', '=', u'Printed')]"/>
+			<field name="condition">True</field>
+		</record>
+		<record id="workflow_transition_0" model="workflow.transition">
+			<field name="signal">check_printed_to_canceled</field>
+			<field model="workflow.activity" name="act_from" search="[('name', '=', u'Printed')]"/>
+			<field model="workflow.activity" name="act_to" search="[('name', '=', u'Canceled')]"/>
+			<field name="condition">True</field>
+		</record>
+		<record id="workflow_transition_1" model="workflow.transition">
+			<field name="signal">check_printed_to_charged</field>
+			<field model="workflow.activity" name="act_from" search="[('name', '=', u'Printed')]"/>
+			<field model="workflow.activity" name="act_to" search="[('name', '=', u'Charged')]"/>
+			<field name="condition">True</field>
+		</record>
+		<record id="workflow_transition_3" model="workflow.transition">
+			<field name="signal">check_printed_to_lost</field>
+			<field model="workflow.activity" name="act_from" search="[('name', '=', u'Printed')]"/>
+			<field model="workflow.activity" name="act_to" search="[('name', '=', u'Lost')]"/>
+			<field name="condition">True</field>
+		</record>
+		<record id="workflow_transition_6" model="workflow.transition">
+			<field name="signal">check_printed_to_rejected</field>
+			<field model="workflow.activity" name="act_from" search="[('name', '=', u'Printed')]"/>
+			<field model="workflow.activity" name="act_to" search="[('name', '=', u'Rejected')]"/>
+			<field name="condition">True</field>
+		</record>		
+	</data>
+</openerp>

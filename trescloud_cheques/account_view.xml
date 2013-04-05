@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+            <!-- check option in journal -->
+
+		<record id="view_account_journal_form" model="ir.ui.view">
+			<field name="name">account.journal.form</field>
+			<field name="model">account.journal</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.view_account_journal_form" />
+			<field name="arch" type="xml">
+			<!--  	<field name="type" on_change="onchange_type(type, currency)" />-->
+				<field name="entry_posted" position="after">
+					<field name="allow_check_writing" attrs="{'readonly':[('type','!=','bank')]}" />
+					<!--  <field name="use_preprint_check" attrs="{'readonly':[('type','!=','bank')]}" />-->
+				</field>
+				<field name="sequence_id" required="0" position="after">
+					<field name="check_sequence"
+						attrs=
+						"{'invisible':[('allow_check_writing','=',False)]}" />
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

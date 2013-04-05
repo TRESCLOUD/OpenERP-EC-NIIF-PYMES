@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+        <!-- Account Voucher -->
+
+		<record model="ir.ui.view" id="view_vendor_payment_check_form">
+			<field name="name">account.voucher.payment.check.form</field>
+			<field name="model">account.voucher</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_payment_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" domain="[('supplier','=',True)]" required="1" 
+				       on_change="onchange_partner_id(partner_id, journal_id, amount, currency_id, type, date)" 
+				       context="{'invoice_currency':currency_id}" string="Supplier"/>
+				<field name="amount" on_change="onchange_partner_id(partner_id, journal_id, amount, currency_id, type, date)"/>
+				<field name="amount" position="after">
+					<field name="allow_check" invisible="1"/>
+					<!-- <field name="amount_in_word" attrs="{'invisible':[('allow_check','!=',1)]}" nolabel="1" colspan="2"/>-->
+					<!--<field name="chk_seq" attrs="{'invisible':[('allow_check','!=',1)]}" colspan="1"/>-->
+					<!--<field name="chk_status" invisible="1" />-->
+				</field>
+				<field name="journal_id"
+                       domain="[('type','in',['bank', 'cash'])]"
+                       widget="selection" select="1"
+                       on_change="onchange_partner_id(partner_id, journal_id, amount, currency_id, type, date)"
+                       string="Payment Method"/>
+				<field name="date" select="1" on_change="onchange_date(partner_id, journal_id, amount, currency_id, type, date)"/>
+				<field name="name" colspan="4"/>
+				<field name="type" invisible="True"/>
+				<field name="currency_id" invisible="True"/>
+				<field name="state"/>
+				<separator string="Other Information" colspan="2" position="replace"/>
+  				<field name="line_dr_ids" position="before">
+					<field name="check_ids" attrs="{'invisible':[('allow_check','!=',1)]}" default_get="{'journal_id':journal_id,'amount':amount, 'partner_id':partner_id,'date':date}" colspan="4" nolabel="1" height="140">
+                         <tree string="Checks Lines">
+                          	<field name="check_number"/>
+        					<field name="payee_name"/>
+        					<field name="amount"/>
+        					<field name="journal_id"/>
+        					<field name="current_date"/>
+        					<field name="state"/>
+        					<button name="imprimir" string="Print" states="draft" type="object" icon="gtk-print"/>
+                         </tree>
+                         <form string="Manage checks">
+				           <group col="2" colspan="2">
+				               <separator colspan="2"></separator> 
+				               <field name="supplier" on_change="onchange_partner(supplier)" attrs="{'readonly':[('state','!=','draft')]}" readonly="1"/>
+				               <field name="check_number" attrs="{'readonly':[('state','!=','draft')]}"/> 	               
+				               <field name="amount" on_change="onchange_amount(amount)" attrs="{'readonly':[('state','!=','draft')]}" />	
+				               <field name="payee_name" attrs="{'readonly':[('state','!=','draft')]}" />               	               	                                                                            	               
+				           	   <field name="ver_p" invisible="1"/>
+				           </group>
+				           <group col="2" colspan="2">
+				               <separator colspan="2"></separator> 
+				               <field name="journal_id" on_change="onchange_check_number(journal_id)" attrs="{'readonly':[('state','!=','draft')]}" readonly="1"/>
+				               <field name="current_date" attrs="{'readonly':[('state','!=','draft')]}"/>	
+				               <newline/>
+				               <field name="amount_in_words" nolabel="1" colspan="2"/> 	                                                                                         	               
+				           </group>     
+                         </form>
+                    </field>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>
