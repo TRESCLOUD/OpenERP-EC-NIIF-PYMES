@@ -69,6 +69,12 @@ class account_voucher(osv.osv):
             if journal_id:
                allow_check_writing = self.pool.get('account.journal').browse(cr, uid, journal_id, context=context).allow_check_writing
                default['value'].update({'allow_check': allow_check_writing})
+               journal_obj = self.pool.get('account.journal')
+               journal = journal_obj.browse(cr, uid, journal_id).type
+               if journal == 'bank' :            
+                  default['value'].update({'reference': "Cheque"})
+               else:
+                  default['value'].update({'reference': "Efectivo"})
 
         return default    
     
