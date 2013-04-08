@@ -60,7 +60,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_check_tree"/>
-        <field name="help">With checks you can manage the state of the accounting document.</field>
+        <field name="help">With this module you can create and print new checks. You can also track the status of the check (like cancelled, charged, lost or rejected).
+It is related to vendor payments module and must have a journal configured as a check journal.</field>
     </record>
 	
 	<!-- MENU -->
