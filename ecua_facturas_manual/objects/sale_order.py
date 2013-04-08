@@ -185,7 +185,15 @@ class sale_order(osv.osv):
         if automatic:
             automatic_number = doc_obj.get_next_value_secuence(cr, uid, 'invoice', False, order.company_id.id, order.shop_id.id, order.printer_id.id, 'account.invoice', 'invoice_number_out', context)
             invoice_number_out = automatic_number
+            date_invoice = time.strftime('%Y-%m-%d') 
+        else:
+            #Is useful in the case of there are not automatic, that happens when you choice generate_automatic 
+            curr_shop = self.pool.get('sale.shop').browse(cr, uid, [order.shop_id.id], context)[0]
+            printer_obj = self.pool.get('sri.printer.point')
+            automatic_number =curr_shop.number + "-" + printer_obj.browse(cr, uid,order.printer_id.id, context).number + "-000000000"
+            invoice_number_out = automatic_number
             date_invoice = time.strftime('%Y-%m-%d')
+        
         inv = {
             'name': order.client_order_ref or '',
             'origin': order.name,
