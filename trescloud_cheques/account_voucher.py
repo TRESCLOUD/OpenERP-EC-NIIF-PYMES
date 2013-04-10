@@ -95,13 +95,16 @@ class account_voucher(osv.osv):
     def action_move_line_create(self, cr, uid, ids, context=None):
         res=super(account_voucher, self).action_move_line_create( cr, uid, ids, context=context)
         i=0
+
         for obj_voucher in self.browse(cr, uid, ids, context=context):
             if len(obj_voucher.check_ids)>1:
                         raise osv.except_osv(_('Warning'),
                             _("Error while processing 'account.voucher' you can have only one check!"))
-            if obj_voucher.check_ids[0].state!='printed':
-                        raise osv.except_osv(_('Warning'),
-                            _("Error while processing 'account.voucher' you can only validate check in state printed!"))
+            if obj_voucher.check_ids:
+                if obj_voucher.check_ids[0].state!='printed':
+                            raise osv.except_osv(_('Warning'),
+                                _("Error while processing 'account.voucher' you can only validate check in state printed!"))
+                            
         return True 
 
     
