@@ -1,7 +1,5 @@
 from osv import osv, fields
-#from tools.amount_to_text_es_EC import amount_to_text
 from tools.amount_to_text_en import amount_to_text
-#from amount_to_words import amount_to_words_es
 from tools.translate import _
 
 class account_voucher(osv.osv):
@@ -98,14 +96,13 @@ class account_voucher(osv.osv):
 
         for obj_voucher in self.browse(cr, uid, ids, context=context):
             if len(obj_voucher.check_ids)>1:
-                        raise osv.except_osv(_('Warning'),
-                            _("Error while processing 'account.voucher' you can have only one check!"))
+                raise osv.except_osv(_('Warning'),
+                _("Error while processing 'account.voucher' you can have only one check!"))
             if obj_voucher.check_ids:
                 if obj_voucher.check_ids[0].state!='printed':
-                            raise osv.except_osv(_('Warning'),
-                                _("Error while processing 'account.voucher' you can only validate check in state printed!"))
+                   raise osv.except_osv(_('Warning'),
+                   _("Error while processing 'account.voucher' you can only validate check in state printed!"))
                             
-        return True 
-
+        return true 
     
 account_voucher()
