@@ -103,6 +103,6 @@ class account_voucher(osv.osv):
                    raise osv.except_osv(_('Warning'),
                    _("Error while processing 'account.voucher' you can only validate check in state printed!"))
                             
-        return true 
+        return True 
     
 account_voucher()
