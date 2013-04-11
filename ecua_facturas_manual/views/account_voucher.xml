@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model="ir.ui.view" id="view_vendor_receipt_form_groups_inherit">
+			<field name="name">view.vendor.receipt.form.groups.inherit</field>
+			<field name="model">account.voucher</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_receipt_form" />
+			<field name="arch" type="xml">
+ 				<xpath expr="//button[@string='Unreconcile']" position="replace">
+					<button name="cancel_voucher" string="Unreconcile" type="object" 
+					states="posted" icon="terp-stock_effects-object-colorize" 
+					confirm="Are you sure to unreconcile this record ?"
+					groups="account.group_account_manager" />
+				</xpath> 
+ 				<xpath expr="//button[@string='Cancel']" position="replace">
+					<button name="cancel_voucher" string="Cancel" states="draft,proforma" 
+					icon="gtk-cancel" groups="account.group_account_manager" />
+				</xpath>
+			</field>
+		</record>
+
+		
+		<record model="ir.ui.view" id="view_vendor_payment_form_groups_inherit">
+			<field name="name">view.vendor.payment.form.groups.inherit</field>
+			<field name="model">account.voucher</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_payment_form" />
+			<field name="arch" type="xml">
+ 				<xpath expr="//button[@string='Unreconcile']" position="replace">
+					<button name="cancel_voucher" string="Unreconcile" type="object" 
+					states="posted" icon="terp-stock_effects-object-colorize" 
+					confirm="Are you sure to unreconcile this record ?"
+					groups="account.group_account_manager" />
+				</xpath> 
+ 				<xpath expr="//button[@string='Cancel']" position="replace">
+					<button name="cancel_voucher" string="Cancel" states="draft,proforma" 
+					icon="gtk-cancel" groups="account.group_account_manager" />
+				</xpath>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>
+		

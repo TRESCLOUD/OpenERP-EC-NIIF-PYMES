@@ -24,6 +24,7 @@
     "depends" : [
                  'base',
                  'account',
+                 'account_voucher',
                  'sale',
                  'stock',
                  'purchase',
@@ -52,6 +53,7 @@
                    'views/purchase_order_view.xml',
                    'views/sale_order_view.xml',
                    'views/account_invoice_line_view.xml',
+                   'views/account_voucher.xml'
     ],
     "installable": True,
     "active": False,
