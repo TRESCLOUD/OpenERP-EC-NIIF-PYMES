@@ -23,18 +23,40 @@
 	               <newline/>
 	               <field name="amount_in_words" nolabel="1" colspan="2"/> 	                                                                                         	               
 	           </group>     
-               <group col="7" colspan="7">                   
-                   <separator colspan="6"></separator>
+               <group col="8" colspan="8">                   
+                   <separator colspan="7"></separator>
                    <field name="state"/>
-                   <button name="check_draft_to_printed" string="Print" type="workflow" states="draft" icon="gtk-go-forward"/>                                                    		
-               	   <button name="action_canceled" string="Canceled" states="printed" icon="gtk-go-forward" type="object"/>
-				   <button name="action_charged" string="Charged" type="object" states="printed" icon="gtk-go-forward"/>
-	               <button name="action_lost" string="Lost" type="object" states="printed" icon="gtk-go-forward"/>
-	               <button name="action_rejected" string="Rejected" type="object" states="printed" icon="gtk-go-forward"/> 
+                   <button name="check_draft_to_printed" string="Print" type="workflow" states="draft" icon="gtk-print"/>  
+                   <button name="reprint" string="Reprint" type="object" states="printed" icon="gtk-print"/>         	  
+				   <button name="action_charged" string="Charged" type="object" states="printed" icon="terp-dolar"/>	               
+	               <button name="action_rejected" string="Rejected" type="object" states="printed" icon="terp-dolar_ok!"/>
+	               <button name="action_canceled" string="Canceled" states="printed" icon="gtk-cancel" type="object"/> 
+	               <button name="action_lost" string="Lost" type="object" states="printed" icon="terp-gtk-media-pause"/>
                </group>    
 	        </form>
 		</field>
 	</record>
+	
+    <record id="check_check_view_filter" model="ir.ui.view">
+       <field name="name">check.check.select</field>
+       <field name="model">check.check</field>
+       <field name="type">search</field>
+       <field name="arch" type="xml">
+           <search string="Search Check">
+              <group col="10" colspan="4">
+                   <filter name="draft" icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Checks"/>
+                   <filter name="printed" icon="gtk-print" string="Printed" domain="[('state','=','printed')]" help="Printed Checks"/>
+                   <filter name="charged" icon="terp-dolar" string="Charged" domain="[('state','=','charged')]" help="Charged Checks"/>
+                   <filter name="rejected" icon="terp-dolar_ok!" string="Rejected" domain="[('state','=','rejected')]" help="Reject Checks"/>
+                   <filter name="canceled" icon="gtk-cancel" string="Canceled" domain="[('state','=','canceled')]" help="Canceled Checks"/>
+                   <filter name="lost" icon="terp-gtk-media-pause" string="Lost" domain="[('state','=','lost')]" help="Lost Checks"/>
+                   <separator orientation="vertical"/>                            
+                   <field name="supplier"/>
+                   <field name="check_number"/>
+               </group>
+          </search>
+        </field>
+    </record>
 	
 	<record model="ir.ui.view" id="view_check_tree">
 	    <field name="name">view.check.tree</field>
@@ -60,6 +82,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_check_tree"/>
+        <field name="search_view_id" ref="check_check_view_filter"/>
         <field name="help">With this module you can create and print new checks. You can also track the status of the check (like cancelled, charged, lost or rejected).
 It is related to vendor payments module and must have a journal configured as a check journal.</field>
     </record>
