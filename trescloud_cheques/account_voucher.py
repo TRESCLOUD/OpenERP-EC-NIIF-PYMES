@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from osv import osv, fields
 from tools.amount_to_text_en import amount_to_text
 from tools.translate import _
@@ -90,8 +91,11 @@ class account_voucher(osv.osv):
        # 'check_ids':_check_get,
         }
     
-    #Función que impide la eliminación de vouchers que tengan cheques asociados
     def unlink(self, cr, uid, ids, context=None):
+        """
+        Función que impide la eliminación de vouchers que tengan cheques asociados.
+        """
+        
         check_obj = self.pool.get('check.check')
         id_check = check_obj.search(cr,uid,[('check_id','=',ids[0])])
         if id_check:
