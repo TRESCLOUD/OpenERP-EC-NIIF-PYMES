@@ -90,6 +90,7 @@ class account_voucher(osv.osv):
        # 'check_ids':_check_get,
         }
     
+    #Función que impide la eliminación de vouchers que tengan cheques asociados
     def unlink(self, cr, uid, ids, context=None):
         check_obj = self.pool.get('check.check')
         id_check = check_obj.search(cr,uid,[('check_id','=',ids[0])])
