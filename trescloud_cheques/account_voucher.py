@@ -90,6 +90,15 @@ class account_voucher(osv.osv):
        # 'check_ids':_check_get,
         }
     
+    def unlink(self, cr, uid, ids, context=None):
+        check_obj = self.pool.get('check.check')
+        id_check = check_obj.search(cr,uid,[('check_id','=',ids[0])])
+        if id_check:
+            check = check_obj.browse(cr,uid,id_check[0])       
+            if check.check_id:
+               raise osv.except_osv(_('Invalid action !'), _('Cannot delete Voucher(s) because there is a associated check. !'))
+        return super(account_voucher, self).unlink(cr, uid, ids, context=context)    
+    
     def action_move_line_create(self, cr, uid, ids, context=None):
         res=super(account_voucher, self).action_move_line_create( cr, uid, ids, context=context)
         i=0
