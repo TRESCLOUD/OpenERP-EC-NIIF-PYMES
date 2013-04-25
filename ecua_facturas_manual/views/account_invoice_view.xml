@@ -22,7 +22,7 @@
 							context="{'search_default_customer': 1}" />
 						<field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" />
 						<field name="fiscal_position" groups="base.group_extended"
-							widget="selection" />
+							widget="selection" required="1"/>
 						<newline />
 						<field name="date_invoice" />
 						<field name="period_id" domain="[('state', '=', 'draft')]"
@@ -144,7 +144,7 @@
 							context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
 						<field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" />
 						<field name="fiscal_position" groups="base.group_extended"
-							widget="selection" />
+							widget="selection" required="1"/>
 						<newline />
 						<field name="date_invoice" />
 						<field name="period_id" domain="[('state', '=', 'draft')]"

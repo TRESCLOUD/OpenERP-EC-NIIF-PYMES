@@ -6,6 +6,7 @@ from tools.translate import _
 import netsvc
 import pooler
 import time
+import re
 
 class check(osv.osv):
     
@@ -188,6 +189,20 @@ class check(osv.osv):
         'check_number':_get_nxt_no,
         'new_no': _get_new_no,
      }
+    
+    def _check_number_check(self,cr,uid,ids):
+        res = True
+        for check in self.browse(cr, uid, ids):
+            cadena='(\d{6})'
+            ref = check.check_number
+            if check.check_number:
+                if re.match(cadena,ref):
+                    res = True
+                else:
+                    res = False
+            return res
+    
+    _constraints = [(_check_number_check,_('The number of check is incorrect, it must be of six digits XXXXXX, X is a number.'),['check_number',])]    
    
     def action_canceled(self, cr, uid, ids, context=None):
         if context is None:
@@ -269,5 +284,16 @@ class check(osv.osv):
              'res_ids' : ids
              }
          }
+    
+    def reprint(self, cr, uid, ids, context=None):
+
+        return {
+             'type': 'ir.actions.report.xml',
+             'report_name': 'check_report',    # the 'Service Name' from the report
+             'datas' : {
+             'model' : 'check.check',    # Report Model
+             'res_ids' : ids
+             }
+         }    
 
 check()

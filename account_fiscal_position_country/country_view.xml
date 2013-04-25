@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_country_fiscal_position_form">
+			<field name="name">country.fiscal.position.form</field>
+			<field name="model">res.country</field>
+			<field name="inherit_id" ref="base.view_country_form"/>
+			<field name="arch" type="xml">
+				<field name="code" position="after">
+					<field name="property_account_position" widget="selection"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

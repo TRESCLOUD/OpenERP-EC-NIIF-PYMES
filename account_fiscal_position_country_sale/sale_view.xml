@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+	<data>
+
+        <record id="view_order_form_position_country" model="ir.ui.view">
+            <field name="name">view.order.form.position.country</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" on_change="onchange_partner_id_fiscal_position(partner_id)" domain="[('customer','=',True)]" context="{'search_default_customer':1}" required="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+
+</openerp>
