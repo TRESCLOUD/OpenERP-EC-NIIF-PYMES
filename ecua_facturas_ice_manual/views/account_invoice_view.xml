@@ -41,8 +41,8 @@
 			<field name="arch" type="xml">
 				<field name="amount_untaxed" position="replace">
 					<field name="total_sin_descuento" sum="Total sin Descuento"></field>
-					<field name="base_iva" sum="Base IVA 12" invisible="1"></field>
-					<field name="base_iva_0" sum="Base IVA 0" invisible="1"></field>
+					<field name="base_iva" sum="Base IVA 12" invisible="0"></field>
+					<field name="base_iva_0" sum="Base IVA 0" invisible="0"></field>
 					<field name="total_iva" sum="Total IVA"></field>
 					<field name="total_descuento" sum="Total Descuento"></field>
 				</field>
