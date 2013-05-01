@@ -61,6 +61,8 @@
                         'report/report_payslip_details_group.xml',
                         'report/nomina_general_report.xml',
                         'report/report_hr_provision.xml',
+                        'report/report_hr_vacation.xml',
+                        'report/report_hr_employee_need_vacation.xml',
                         'wizards/payroll_statement_view.xml',
                         'wizards/hr_payroll_payslips_by_employees.xml',
                         'wizards/hr_payroll_contribution_register_report.xml',

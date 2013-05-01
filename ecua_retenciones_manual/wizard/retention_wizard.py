@@ -52,7 +52,9 @@ class retention_wizard(osv.osv_memory):
                     raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
             for shop in curr_user.shop_ids:
                 shop_id = shop.id
-                continue            
+                break
+            if curr_user.printer_default_id and curr_user.printer_default_id.shop_id:
+                printer_id = curr_user.printer_default_id.shop_id.id
         return shop_id
     
     def _get_printer(self, cr, uid, context=None):
@@ -64,7 +66,9 @@ class retention_wizard(osv.osv_memory):
                     raise osv.except_osv('Error!', _("Your User doesn't have shops assigned"))
             for shop in curr_user.shop_ids:
                 printer_id = shop.printer_point_ids[0].id
-                continue
+                break
+            if curr_user.printer_default_id:
+                printer_id = curr_user.printer_default_id.id
         return printer_id
 
     _name = 'account.retention.wizard'
@@ -73,6 +77,7 @@ class retention_wizard(osv.osv_memory):
                 'number':fields.char('Number', size=17,),
                 'automatic_number':fields.char('Number', size=17, readonly=True),
                 'creation_date': fields.date('Creation Date'),
+                'authorization':fields.char('Autorización', size=10, required=False, readonly=True),
                 'authorization_purchase':fields.many2one('sri.authorization', 'Authorization', required=False),
                 'authorization_purchase_helper':fields.many2one('sri.authorization', 'Authorization', required=False),
                 'authorization_sale':fields.char('Authorization', size=10, help='This Number is necesary for SRI reports'),
@@ -86,59 +91,124 @@ class retention_wizard(osv.osv_memory):
                                     ('manual', 'Manual'),
                                     ], 'type', required=True, readonly=True),
                 'lines_ids': fields.one2many('account.retention.wizard.line', 'wizard_id', 'Retention line'),
+                'description':fields.char(u'Concepto de Retencion', size=255, required=False, readonly=False), 
                 }
     _constraints = [(_check_number, _('The number is incorrect, it must be like 001-00X-000XXXXXX, X is a number'), ['number'])]
 
+    def onchange_number_purchase(self, cr , uid, ids, number, printer_id, date, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        warning = {}
+        auth_obj = self.pool.get('sri.authorization')
+        doc_obj = self.pool.get('sri.type.document')
+        if not date:
+            date = time.strftime('%Y-%m-%d')
+        if number and printer_id:
+            auth_data = auth_obj.check_if_seq_exist(cr, uid, 'withholding', number, printer_id, date, context)
+            authorization = auth_data and auth_obj.browse(cr, uid, auth_data['authorization'], context) or None
+            if authorization and auth_data['document_type_id']:
+                value['authorization'] = authorization.number
+                value['authorization_purchase'] = authorization.id
+                value['number'] = doc_obj.complete_number(cr, uid, auth_data['document_type_id'], number)
+        return {'value': value, 'domain': domain,'warning': warning }
+    
+    def onchange_number(self, cr, uid, number, partner_id=None, date=None, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        warning = {}
+        auth_supplier_obj = self.pool.get('sri.authorization.supplier')
+        if not date:
+            date = time.strftime('%Y-%m-%d')
+        if number:
+            auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, number, "withhold", partner_id, date)
+            if not auth_data.get('auth_ids', []):
+                warning = {
+                           'title': _(u'Advertencia!!!'),
+                           'message':auth_data.get('message',''),
+                           }
+                return {'value': values, 'domain':domain, 'warning': warning}
+            if auth_data.get('multi_auth', False):
+                values = {
+                         'number' : ""
+                         }
+                warning = {
+                           'title': _(u'Advertencia!!!'),
+                           'message':auth_data.get('message',''),
+                           }
+                return {'value': values, 'domain':domain, 'warning': warning}
+            else:
+                auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
+                if auth_id:
+                    values = {
+                             'number' : auth_data.get('res_number', ''),
+                             'authorization_sale': auth_id,
+                             }            
+        return {'value': value, 'domain': domain,'warning': warning }
 
+    def onchange_authorization_supplier(self, cr, uid, ids, authorization, number, context=None):
+        if not context:
+            context={}
+        value = {}
+        domain = {}
+        if authorization and not number:
+            auth = self.pool.get('sri.authorization.supplier').browse(cr, uid, authorization, context)
+            number = auth and auth.agency + "-" + auth.printer_point+"-"
+            value['number'] = number or ''
+        return {'value': value, 'domain': domain }
+    
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
         values = {}
         res = []
         doc_obj = self.pool.get('sri.type.document')
-        objs = self.pool.get(context['active_model']).browse(cr , uid, context['active_ids'])
-        if 'value' not in context.keys():
-            for obj in objs:
-                if obj.type == 'out_invoice':
-                    values = {
-                             'partner_id': obj.partner_id.id,
-                             'invoice_id': obj.id,
-                             'creation_date': obj.date_invoice,
-                             'type':'manual',
-                            }
-                if obj.type in ('in_invoice'):
-                    for ret in obj.retention_ids:
-                        for line in ret.retention_line_ids:
-                            values_lines = {'fiscalyear_id':line.fiscalyear_id.id,
-                                      'description': line.description,
-                                      'tax_id': line.tax_id.id,
-                                      'tax_base': line.tax_base,
-                                      'retention_percentage': line.retention_percentage
-                                      }
-                            res.append(values_lines)
-                        printer_id = self._get_printer(cr, uid, context)
-                        shop_id = self._get_shop(cr, uid, context)
-                        auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',shop_id), ('state','=',True)])
-                        if not auth_line_id:
-                            raise osv.except_osv(_('Error!'), _(u'No existe autorización activa para generar retenciones'))
-                        auth = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id or None
-                        values = {
-                                 'invoice_id': ret.invoice_id.id,
-                                 'creation_date': ret.creation_date,
-                                 'type':ret.transaction_type,
-                                 'authorization_purchase': auth,
-                                 'lines_ids': res,
-                                 'automatic': self._get_automatic(cr, uid, context),
-                                 'shop_id':self._get_shop(cr, uid, context),
-                                 'printer_id':self._get_printer(cr, uid, context),
-                                }
-                        if ret.number_purchase:
-                            values['number'] = ret.number_purchase
-                        if self._get_automatic(cr, uid, context) and not ret.number_purchase:
-                            values['number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, obj.company_id.id, self._get_shop(cr, uid, context), self._get_printer(cr, uid, context), 'account.retention', 'number_purchase', context)
-                            values['automatic_number'] = values['number'] 
-        else:
-            values = context['value']
+        user = self.pool.get('res.users').browse(cr, uid, uid)
+        for invoice in self.pool.get(context['active_model']).browse(cr , uid, context['active_ids']):
+            date_invoice = invoice.date_invoice or time.strftime('%Y-%m-%d')
+            values = {
+                     'partner_id': invoice.partner_id.id,
+                     'invoice_id': invoice.id,
+                     'creation_date': date_invoice,
+                     'shop_id':self._get_shop(cr, uid, context),
+                     'printer_id':self._get_printer(cr, uid, context),
+                    }
+            if invoice.type == 'out_invoice':
+                values['type'] = 'manual'
+            if invoice.type in ('in_invoice'):
+                for ret in invoice.retention_ids:
+                    for line in ret.retention_line_ids:
+                        values_lines = {'fiscalyear_id':line.fiscalyear_id.id,
+                                  'description': line.description,
+                                  'tax_id': line.tax_id.id,
+                                  'tax_base': line.tax_base,
+                                  'retention_percentage': line.retention_percentage
+                                  }
+                        res.append(values_lines)
+                    printer_id = self._get_printer(cr, uid, context)
+                    shop_id = self._get_shop(cr, uid, context)
+                    auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',shop_id)])
+                    if not auth_line_id:
+                        raise osv.except_osv(_('Error!'), _('No existe autorización para generar retenciones'))
+                    auth = doc_obj.browse(cr, uid, auth_line_id[0], context) or None
+                    auth_number = auth.sri_authorization_id.number
+                    auth_id = auth.sri_authorization_id.id
+                    if ret.number_purchase and ret.authorization_purchase:
+                        auth_id = ret.authorization_purchase.id
+                        auth_number = ret.authorization_purchase.number
+                    number_retention = ret.number_purchase or doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, user.company_id.id ,self._get_shop(cr, uid, context), self._get_printer(cr, uid, context), 'account.retention', 'number_purchase', context) 
+                    values.update({
+                             'number': number_retention,
+                             'creation_date': ret.creation_date or date_invoice,
+                             'type': 'automatic',
+                             'description': ret.description,
+                             'authorization': auth_number,
+                             'authorization_purchase': auth_id,
+                             'lines_ids': res,
+                            })
         return values
     
     def onchange_data(self, cr, uid, ids, automatic, shop_id=None, printer_id=None, context=None):
@@ -163,36 +233,15 @@ class retention_wizard(osv.osv_memory):
                 auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',curr_shop.id), ('state','=',True),])
                 if auth_line_id:
                     values['authorization_purchase'] = doc_obj.browse(cr, uid, auth_line_id[0], context).sri_authorization_id.id
-                    values['authorization_purchase_helper'] = values['authorization_purchase']
                     if automatic:
                         values['automatic_number'] = doc_obj.get_next_value_secuence(cr, uid, 'withholding', False, company_id, curr_shop.id, printer_id, 'account.retention', 'number_purchase', context)
                         values['number'] = values['automatic_number']
                         values['creation_date'] = time.strftime('%Y-%m-%d')
                 else:
                     values['authorization_purchase'] = None
-                    values['authorization_purchase_helper'] = None
                     values['automatic'] = False
                     values['creation_date'] = None
         return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
-  
-
-    def onchange_aut_sale(self, cr, uid, ids, authorization_sale_id , context=None):
-        
-        doc_obj=self.pool.get('sri.authorization.supplier')
-        values = {}
-
-        if context is None:
-            context = {}
-        
-        if authorization_sale_id is None:
-            return True
-
-        authorization = doc_obj.browse(cr, uid, authorization_sale_id, context)
-        
-        values['number'] = authorization.agency + "-" + authorization.printer_point + "-"
-
-        return {'value': values}
- 
     
     def create_retention(self, cr, uid, ids, context=None):
         if not context:
@@ -226,6 +275,7 @@ class retention_wizard(osv.osv_memory):
                  'authorization_sale': number,
                  'authorization_sale_id': auth_id,
                  'invoice_id': retention.invoice_id.id,
+                 'description': retention.description,
                  'period_id': objs.period_id.id
                  }
             retention_id = retention_obj.create(cr, uid, ret_vals, context)
@@ -258,46 +308,12 @@ class retention_wizard(osv.osv_memory):
                 if not obj.automatic:
                     if not obj.number:
                         raise osv.except_osv(_('Error!'), _('number to be entered to approve the retention'))
-                auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'withholding', user.company_id.id, obj.shop_id.id, obj.number, obj.shop_id.id, context)
-                if not auth['authorization']:
-                    raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
+#                 auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'withholding', user.company_id.id, obj.shop_id.id, obj.number, obj.shop_id.id, context)
+#                 if not auth['authorization']:
+#                     raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
                 self.pool.get('account.retention').write(cr, uid, [invoice.retention_ids[0].id, ], {'number_purchase':obj.number}, context)
-                self.pool.get('account.retention').write(cr, uid, [invoice.retention_ids[0].id, ], {'automatic': obj.automatic,'creation_date': obj.creation_date, 'authorization_purchase': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
+                self.pool.get('account.retention').write(cr, uid, [invoice.retention_ids[0].id, ], {'creation_date': obj.creation_date, 'authorization_purchase': obj.authorization_purchase.id, 'shop_id':obj.shop_id.id, 'printer_id':obj.printer_id.id}, context)
         return {'type': 'ir.actions.act_window_close'}
-    
-    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        res = super(retention_wizard, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
-        if not context.get('sales', False):
-            if view_type == 'form':
-                for field in res['fields']:
-                    if user.company_id.generate_automatic:
-                        if field == 'automatic_number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='automatic_number']")
-                            for node in nodes:
-                                node.set('invisible', "0")
-                            res['arch'] = etree.tostring(doc)
-                        if field == 'number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='number']")
-                            for node in nodes:
-                                node.set('invisible', "1")
-                            res['arch'] = etree.tostring(doc)
-                    else:
-                        if field == 'automatic_number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='automatic_number']")
-                            for node in nodes:
-                                node.set('invisible', "1")
-                            res['arch'] = etree.tostring(doc)
-                        if field == 'number':
-                            doc = etree.XML(res['arch'])
-                            nodes = doc.xpath("//field[@name='number']")
-                            for node in nodes:
-                                node.set('invisible', "0")
-                            res['arch'] = etree.tostring(doc)
-        return res
     
     def button_cancel(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}

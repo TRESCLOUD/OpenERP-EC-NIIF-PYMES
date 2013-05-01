@@ -59,6 +59,7 @@
 	                        <field name="last_secuence" readonly="0"/>
 	                        <field name="shop_id" readonly="0"/>
 	                        <field name="printer_id" readonly="0"/>
+	                        <field name="padding" readonly="0"/>
 	                        <field name="state" readonly="1"/>
 	                        <field name="expired" readonly="1"/>
 						</tree>
@@ -70,6 +71,7 @@
 	                        <field name="last_secuence" readonly="0"/>
 	                        <field name="shop_id" readonly="0"/>
 	                        <field name="printer_id" readonly="0"/>
+	                        <field name="padding" readonly="0"/>
 	                        <field name="state" readonly="1"/>
 	                        <field name="expired" readonly="1"/>
 						</form>
@@ -142,6 +144,7 @@
                 <field name="arch" type="xml">
                     <tree string="Authorization Supplier">
                         <field name="number"/>
+                        <field name="padding"/>
                         <field name="type"/>
                         <field name="start_date"/>
                         <field name="expiration_date"/>
@@ -161,7 +164,7 @@
                 <field name="arch" type="xml">
                     <form string="Authotization Supplier">
                         <field name="autoprinter" />
-                        <newline/>
+                        <field name="padding"/>
                         <field name="number" select="1"/>
                         <field name="type"/>
                         <field name="start_date" select="1"/>
@@ -182,7 +185,7 @@
                 <field name="arch" type="xml">
                     <form string="Authotization Supplier">
                         <field name="autoprinter" />
-                        <newline/>
+                        <field name="padding"/>
                         <field name="partner_id" invisible="1"/>
                         <field name="number" select="1"/>
                         <field name="type"/>

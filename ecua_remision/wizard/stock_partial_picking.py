@@ -122,12 +122,13 @@ class stock_partial_picking(osv.osv_memory):
                                     move.quantity, move.move_id.product_uom.id)
 
                 #Adding a check whether any move line contains exceeding qty to original moveline
-                if calc_qty > move.move_id.product_qty:
-                    precision = '%0.' + str(dp.get_precision('Product UoM')(cr)[1] or 0) + 'f'
-                    raise osv.except_osv(_('Processing Error'),
-                    _('Processing quantity %s %s for %s is larger than the available quantity %s %s !')\
-                    % (precision % calc_qty, move.product_uom.name, move.product_id.name,\
-                       precision % move.move_id.product_qty, move.move_id.product_uom.name))
+                if not context.get('skip_validation',False):
+                    if calc_qty > move.move_id.product_qty:
+                        precision = '%0.' + str(dp.get_precision('Product UoM')(cr)[1] or 0) + 'f'
+                        raise osv.except_osv(_('Processing Error'),
+                        _('Processing quantity %s %s for %s is larger than the available quantity %s %s !')\
+                        % (precision % calc_qty, move.product_uom.name, move.product_id.name,\
+                           precision % move.move_id.product_qty, move.move_id.product_uom.name))
 
                 #Adding a check whether any move line contains qty less than zero
                 if calc_qty < 0:

@@ -93,11 +93,19 @@ class authorization_supplier(osv.osv):
                 return False
             else:
                 return True
+
+    def _check_padding(self, cr, uid, ids, context=None):
+        for auth in self.browse(cr, uid, ids):
+            if auth.padding >= 0 and auth.padding <= 9:
+                return True
+            else:
+                return False
         
     _constraints = [(_check_agency_pp, _('Error: Invalid Number Format, It must be like 001'), ['agency', 'printer_point']), 
                     (_check_number, _('Error: Invalid Number Format, It must be like 0123456789'), ['number']),
                     (_check_dates, _('Error: Dates of authorization are not correct'), ['start_date','expiration_date']),
                     (_check_sequence, _('Error: Numbers of sequence are not correct'), ['first_sequence','last_sequence']),
+                    (_check_padding, _('Error: Padding must be a number between 0 - 9'), ['padding']),
                     ] 
     
     _name = "sri.authorization.supplier"
@@ -113,10 +121,14 @@ class authorization_supplier(osv.osv):
                 'expiration_date': fields.date('Expiration Date', required=True),
                 'first_sequence': fields.integer('First Secuence', ),
                 'last_sequence': fields.integer('Last Secuence', ),
+                'padding': fields.integer('Padding'),
                     }
     
     _rec_name = "number"
 
+    _defaults = {
+        'padding': 9,
+        }
     
     def check_number_document(self, cr, uid, number, authorization, date=None, model=False, field=None, type='Factura', context=None, id_model=None, foreing=False):
         if not number:
@@ -215,6 +227,92 @@ class authorization_supplier(osv.osv):
         else:
             raise osv.except_osv(_('Error!'), _("There is another document type %s with number '%s' for the partner %s") % (name, number,partner.name))
 
+    def padding(self, number, padding):
+        suf = ''
+        digit_counter=0
+        original_number = number
+        while number != 0:
+            resi = number % 10
+            number = number / 10
+            digit_counter += 1
+        for i in range(padding - digit_counter):
+            suf += '0'
+        return suf + str(original_number)
+
+    
+    def get_supplier_authorizations(self, cr, uid, number, type, partner_id, date=None, context={}):
+        if not context: context = {}
+        partner_obj = self.pool.get('res.partner')
+        res = {}
+        agency = None
+        printer_point = None
+        seq_number = None
+        types = {
+                  'invoice':_('Invoice'),
+                  'delivery_note':_('Delivery_note'),
+                  'withholding':_('Withholding'),
+                  'liquidation':_('Liquidation'),
+                  'credit_note':_('Credit_note'),
+                  'debit_note': _('Debit_note'),
+                      }
+        if not type or type not in types.keys() or not partner_id:
+            raise osv.except_osv(_(u'Error!!!'),_(u'You must specific correct data in function get_supplier_authorizations'))
+        if not date:
+            date = time.strftime('%Y-%m-%d')
+        if number:
+            partner = partner_obj.browse(cr, uid, partner_id)
+            auth_ids = []
+            message = ''
+            criteria = [
+                        ('start_date','<=', date),
+                        ('expiration_date','>=', date),
+                        ('type','=', type),
+                        ('partner_id','=', partner_id),
+                        ]
+            try:
+                #Se verifica que no se haya ingresado un valor del tipo 00X-00X-000000XXX
+                split_number = number.split('-')
+                agency = split_number[0]
+                printer_point = split_number[1]
+                seq_number = int(split_number[2])
+            except:
+                #Se hace un entero para retirar los ceros que se pudieron haber colocado
+                try:
+                    seq_number = int(number)
+                except:
+                    return res
+            if agency and printer_point:
+                criteria.append(('agency','=',agency))
+                criteria.append(('printer_point','=',printer_point))
+            #Se buscan autorizaciones de autoimpresor con los criterios dados
+            auth_ids = self.search(cr, uid, criteria + [('autoprinter','=', True)])
+            if not auth_ids:
+                #Se busca autorizaciones de preimpresor
+                criteria.append(('first_sequence','<=',seq_number))
+                criteria.append(('last_sequence','>=',seq_number))
+                auth_ids = self.search(cr, uid, criteria)
+                if not auth_ids:
+                    message += _(u"No existe ninguna autorización de tipo %s con numero %s para la empresa %s con fecha %s") % (types.get(type,''), number, partner.name, date)
+                    res.update({
+                                'message': message
+                                })
+            #Si existe mas de 1 coincidencia
+            res.update({
+                        'auth_ids': auth_ids,
+                        })
+            if len(auth_ids) > 1:
+                message += _(u"Existe mas de una coincidencia de autorizaciones activas para la empresa %s de tipo %s para el numero %s con fecha %s, por favor seleccione la autorizacion correcta y luego ingrese el numero") % (partner.name, types.get(type,''), number, date)
+                res.update({
+                            'multi_auth': True,
+                            'message': message,
+                            })
+            if len(auth_ids) == 1:
+                auth = self.browse(cr, uid, auth_ids[0])
+                res_number = auth.agency + '-' + auth.printer_point + '-' + self.padding(seq_number, auth.padding)
+                res.update({
+                            'res_number' : res_number
+                            })
+        return res
 
 authorization_supplier()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

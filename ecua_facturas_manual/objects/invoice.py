@@ -79,6 +79,68 @@ class account_invoice(osv.osv):
         for invoice in self.browse(cr, uid, ids, args):
             result[invoice.id] = invoice.invoice_number
         return result
+
+    def onchange_data_in(self, cr, uid, ids, invoice_number=None, type="in_invoice", partner_id=None, date_invoice=None, context=None):
+        if not context: context={}
+        auth_types = {
+                 'in_invoice': 'invoice',
+                 'in_refund': 'credit_note',
+                 'debit_note': 'debit_note',
+                 }
+        field_number_types = {
+                 'in_invoice': 'invoice_number_in',
+                 'in_refund': 'number_credit_note_in',
+                 'debit_note': 'number_debit_note_in',
+                 }
+        field_auth_types = {
+                 'in_invoice': 'authorization_supplier_purchase_id',
+                 'in_refund': 'authorization_credit_note_purchase_id',
+                 'debit_note': 'authorization_debit_note_purchase_id',
+                 }
+        values = {}
+        domain = {}
+        warning = {}
+        auth_supplier_obj = self.pool.get('sri.authorization.supplier')
+        if not date_invoice:
+            date_invoice = time.strftime('%Y-%m-%d')
+        if not invoice_number and partner_id and type:
+            values = {
+                     field_number_types[type] : ""
+                     }
+            warning = {
+                       'title': _(u'Advertencia!!!'),
+                       'message':_(u'Usted debe seleccionar primero la empresa para proceder con esta acción'),
+                       }
+            return {'value': values, 'domain':domain, 'warning': warning}
+        auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, invoice_number, auth_types[type], partner_id, date_invoice)
+        if not auth_data.get('auth_ids', []):
+            warning = {
+                       'title': _(u'Advertencia!!!'),
+                       'message':auth_data.get('message',''),
+                       }
+            return {'value': values, 'domain':domain, 'warning': warning}
+        domain = {
+                  field_auth_types[type]:[('id','in',auth_data.get('auth_ids', []))]
+                  }
+        if auth_data.get('multi_auth', False):
+            values = {
+                     field_number_types[type] : ""
+                     }
+            warning = {
+                       'title': _(u'Advertencia!!!'),
+                       'message':auth_data.get('message',''),
+                       }
+            return {'value': values, 'domain':domain, 'warning': warning}
+        else:
+            auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
+            if auth_id:
+                values = {
+                         field_number_types[type] : auth_data.get('res_number', ''),
+                         field_auth_types[type]: auth_id,
+                         }
+            
+        return {'value': values, 'domain':domain, 'warning': warning}
+
     
     def onchange_data(self, cr, uid, ids, automatic=False, company_id=None, shop_id=None, type=None, printer_id=None, date=None, context=None):
         printer_obj = self.pool.get('sri.printer.point')
@@ -186,7 +248,7 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).copy(cr, uid, id, default, context)
 
 
-    def onchange_authorization(self, cr, uid, ids, authorization, context=None):
+    def onchange_authorization_supplier(self, cr, uid, ids, authorization, number, context=None):
         if not context:
             context={}
         value = {}

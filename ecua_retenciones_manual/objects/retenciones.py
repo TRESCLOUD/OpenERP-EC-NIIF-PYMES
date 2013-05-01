@@ -396,7 +396,9 @@ class account_retention(osv.osv):
                     period=ret.invoice_id.period_id.id
                 else:
                     user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-                    period = self.pool.get('account.period').search(cr, uid, [('date_start','<=',ret.invoice_id.date_invoice),('date_stop','>=',ret.invoice_id.date_invoice), ('company_id', '=', user.company_id.id)])
+                    period_aux = self.pool.get('account.period').search(cr, uid, [('date_start','<=',ret.invoice_id.date_invoice),('date_stop','>=',ret.invoice_id.date_invoice), ('company_id', '=', user.company_id.id)])
+                    #Search devuelve lista asi sea solo un elemento y al tratar de 
+                    period= period_aux and period_aux[0] or None
                 if not ret.authorization_purchase:
                     raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))
                 if not ret.automatic:
@@ -552,7 +554,7 @@ class account_retention(osv.osv):
     def _get_period(self, cr, uid, ids, context=None):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')), ('company_id', '=', user.company_id.id)])
-        return period_ids[0]
+        return period_ids and period_ids[0]
 
     _name = 'account.retention'
     _columns = {
@@ -594,6 +596,7 @@ class account_retention(osv.osv):
         'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
         'printer_id':fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
         'automatic':fields.boolean('Automatic', required=False),
+        'description':fields.char(u'Concepto de Retencion', size=255, required=False, readonly=False), 
     }
     
     _rec_name='number'

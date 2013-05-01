@@ -33,7 +33,49 @@ import decimal_precision as dp
 
 
 class hr_employee(osv.osv):
-    def get_date_last_contract_continuo(self, cr, uid, employee_id, days_free, context=None):
+    def _get_next_vacation(self,cr,uid,ids,field_name,arg,context={}):
+        res = {}
+        vacation_obj=self.pool.get('hr.vacation')
+        for employee in self.browse(cr, uid, ids):
+            if employee.last_vacation_id:
+                #obtener la fecha de la proxima vacacion en base a la anterior
+                date_next_vaca= vacation_obj.get_date_next_vacation(cr, uid,employee.last_vacation_id.id, employee.id, employee.last_vacation_id.year_id.date_start[0:4], employee.last_vacation_id.date_start, employee.last_vacation_id.date_end, context)
+            else:
+#                calcular la fecha de la proxima vacacion
+                aux_date= datetime.now().strftime("%Y-%m-%d")
+                new_context= context.copy()
+                new_context.update({'extern':True})
+                date_next_vaca= vacation_obj.get_date_next_vacation(cr, uid,None, employee.id, aux_date[0:4], aux_date, aux_date, new_context)
+            res[employee.id] = date_next_vaca
+        return res
+    
+    def _get_last_vacation(self,cr,uid,ids,field_name,arg,context={}):
+        res = {}
+        vacation_obj=self.pool.get('hr.vacation')
+        for employee in self.browse(cr, uid, ids):
+            vacation_ids= vacation_obj.search(cr, uid, [('employee_id','=',employee.id),('state','=','confirm')],order="date_start")  
+            res[employee.id] = vacation_ids and vacation_ids[-1] or None
+        return res
+    
+    def _get_employee(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        result = {}
+        for vacation in self.pool.get('hr.vacation').browse(cr, uid, ids, context=context):
+            result[vacation.employee_id.id] = True
+        return result.keys()
+    
+    def _get_contract(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        result = {}
+        for contract in self.pool.get('hr.contract').browse(cr, uid, ids, context=context):
+            result[contract.employee_id.id] = True
+        return result.keys()
+
+    
+    
+    def get_date_last_contract_continuo(self, cr, uid, employee_id, days_free=7, context=None):
         """
         busca todos los contratos del empleado que esten en periodo de tiempo continuo
         @param employee_id: id del empleado
@@ -58,9 +100,9 @@ class hr_employee(osv.osv):
             date_contract1=contract_obj.read(cr,uid,[contract_ids[total-1]],['date_start','date_end'])[0]
             date_contract2=contract_obj.read(cr,uid,[contract_ids[total-2]],['date_start','date_end'])[0]
             date_start=datetime.strptime(date_contract1['date_start'],"%Y-%m-%d")
-            date_end=datetime.strptime(date_contract2['date_end'],"%Y-%m-%d")
             #si hay un contrato que no tenga fecha fin
-            if date_end:
+            if date_contract2.get('date_end',False):
+                date_end=datetime.strptime(date_contract2['date_end'],"%Y-%m-%d")
                 diff=date_start - date_end
                 if diff.days > days_free :
                     return date_contract1['date_start']
@@ -224,7 +266,11 @@ class hr_employee(osv.osv):
         'slip_ids':fields.one2many('hr.payslip', 'employee_id', 'Payslips', required=False, readonly=True),
         'total_wage': fields.function(_calculate_total_wage, method=True, type='float', string='Total Basic Salary', digits_compute=dp.get_precision('Payroll'), help="Sum of all current contract's wage of employee."),
         'working_time': fields.function(_calculate_working_time, method=True, type='float', string='Tiempo de trabajo', ),
-#        'days_vacation': fields.function(_calculate_days_vacation, method=True, type='float', string='Dias de Vacaciones'),   
+        'date_next_vacation': fields.function(_get_next_vacation, method=True, type='date', string='Fecha de Proxima Vacacion',
+                                              store={'hr.vacation':(_get_employee, None, 10),
+                                                     'hr.contract':(_get_contract, ['date_start'], 10)
+                                                     }), 
+        'last_vacation_id': fields.function(_get_last_vacation, method=True, type='many2one', string='Ultima Vacacion', store=False, relation="hr.vacation"), 
         }
     
     def _get_account_debit(self, cr, uid, context=None):

@@ -406,6 +406,22 @@ class hr_payslip(osv.osv):
                     context=context).company_id.id,
     }
 
+
+    def _check_rule_per_employee(self, cr, uid, ids, context=None): 
+        if not context:
+            context={}
+        #TODO : check condition and return boolean accordingly
+        line_obj = self.pool.get('hr.payslip.line2')
+        for slip in self.browse(cr, uid, ids, context):
+            slip_ids=self.search(cr, uid, [('date_from','>=',slip.date_from),('date_to','<=',slip.date_to)])
+            for line in slip.line_ids:
+                #buscar registro para el mismo empleado, la misma regla salarial, excluyendo el registro actual
+                line_ids= line_obj.search(cr, uid,[('employee_id','=',line.employee_id.id),('code','=',line.code),('slip_id','in',slip_ids),('id','!=',line.id)])
+                if line_ids:
+                    raise osv.except_osv(_(u'Información!'),_("El empleado %s ya tiene registrado %s dentro de las fecha indicadas:(inicio %s fin %s), corrija por favor") % (self.pool.get('hr.employee').name_get(cr, uid, [line.employee_id.id,])[0][1], line.name, slip.date_from, slip.date_to))
+                    return False
+        return True
+    _constraints = [(_check_rule_per_employee, _('Error: El empleado ya tiene registrado nomina en las fechas indicadas'), ['line_ids']), ]
     def lista_sin_repeticiones(self, lista, elemento):
         existe = False
         for el in lista:

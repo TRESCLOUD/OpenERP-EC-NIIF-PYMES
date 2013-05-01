@@ -6,23 +6,27 @@
 			<field name="model">hr.vacation</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Vacaciones de Empleados" >
-					<field name="employee_id" on_change="onchange_employee_id(employee_id)"/>
-					<field name="department_id" readonly="1" />
-					<field name="year_id" widget="selection"/>
+				<tree string="Vacaciones de Empleados" colors="gray:state in ('confirm') ">
+					<field name="employee_id" />
+					<field name="last_vacation_id" />
+					<field name="department_id"  />
+					<field name="year_id" widget="selection" />
 					<field name="date_start" />
 					<field name="date_end" />
 					<field name="duration" />
-					<field name="days_vacation_remaining" invisible="1" />
-					<field name="days_vacation_acumulated" invisible="1" />
-					<field name="days_current_year" invisible="1" />
-					<field name="days_max" invisible="1" />
-					<!--<field name="date_next_vacation" invisible="0" />-->
+					<field name="days_max" invisible="0" />
+					<field name="days_current_year" invisible="0" />
+					<field name="days_vacation_remaining" invisible="0" />
+					<field name="days_vacation_acumulated" invisible="0" />
+					<field name="days_now" invisible="0" />
+					<field name="date_next_vacation" invisible="0" />
 					<field name="state" />
 					<button name="action_cancel" string="Cancelar" states="confirm"
 						type="object" icon="gtk-cancel" />
 					<button name="action_cancel_to_draft" string="Cambiar a Borrador"
 						states="cancel" type="object" icon="gtk-convert" />
+					<button name="action_validate" string="Validar" states="draft"
+						type="object" icon="gtk-execute" />
 					<button name="action_confirm" string="Aprobar" states="draft"
 						type="object" icon="gtk-ok" />
 				</tree>
@@ -36,16 +40,19 @@
 			<field name="arch" type="xml">
 				<form string="Vacaciones de Empleados">
 					<group colspan="4" col="6">
-						<field name="employee_id" colspan="4"  on_change="onchange_employee_id(employee_id)"/>
+						<field name="employee_id" colspan="4"  on_change="onchange_employee_id(employee_id,date_start)" attrs="{'readonly':[('state','!=','draft')]}"/>
 						<field name="department_id" readonly="1"/>
-						<field name="year_id" widget="selection" />
-						<field name="date_start" />
-						<field name="date_end" />
+						<field name="last_vacation_id" readonly="1"/>
+						<field name="year_id" widget="selection" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="date_start" attrs="{'readonly':[('state','!=','draft')]}"/>
+						<field name="date_end" attrs="{'readonly':[('state','!=','draft')]}"/>
 						<field name="duration" />
-						<field name="days_vacation_remaining" invisible="1" />
-						<field name="days_vacation_acumulated" invisible="1" />
-						<field name="days_current_year" invisible="1" />
-					<field name="days_max" invisible="1" />
+						<field name="days_max" invisible="0" />
+						<field name="days_current_year" invisible="0" />
+						<field name="days_vacation_remaining" invisible="0" />
+						<field name="days_vacation_acumulated" invisible="0" />
+						<field name="days_now" invisible="0" />
+						<field name="date_next_vacation" invisible="0" />
 					<!--<field name="date_next_vacation" invisible="0" />-->
 					</group>
 					<group colspan="4">
@@ -55,6 +62,8 @@
 								type="object" icon="gtk-cancel" />
 							<button name="action_cancel_to_draft" string="Cambiar a Borrador"
 								states="cancel" type="object" icon="gtk-convert" />
+							<button name="action_validate" string="Validar" states="draft"
+								type="object" icon="gtk-execute" />
 							<button name="action_confirm" string="Aprobar" states="draft"
 								type="object" icon="gtk-ok" />
 						</group>
@@ -69,22 +78,124 @@
 			<field name="type">search</field>
 			<field name="arch" type="xml">
 				<search string="Vacaciones de Empleados">
+					<filter name="realizado" icon="terp-check" string="Realizados" domain="[('state','!=','confirm')]"></filter>
+					<separator orientation="vertical"/>
 					<field name="employee_id" />
+					<field name="date_start" />
+					<field name="date_end" />
+					<newline/>
+					<group expand="0" string="Agrupar por...">
+						<filter string="Empleado" icon="terp-personal+" context="{'group_by':'employee_id'}"/>
+						<filter string="Departamento" context="{'group_by':'department_id'}"/>
+					</group>
+					
 				</search>
 			</field>
 		</record>
+		
+		
+            
+            <record model="ir.ui.view" id="hr_employee_vacation_tree_view">
+                <field name="name">hr.employee.tree</field>
+                <field name="model">hr.employee</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Empleados que tienen que tomar vacaciones">
+                        <field name="identification_id"/>
+                        <field name="date_next_vacation"/>
+                        <field name="name"/>
+                        <field name="second_name"/>
+                        <field name="last_name"/>
+                        <field name="mother_last_name"/>
+                        <field name="type_employee"/>
+                        <field name="department_id"/>
+                    </tree>
+                </field>
+            </record>
 
-		<record model="ir.actions.act_window" id="action_hr_vacation_tree_view">
+            <record model="ir.ui.view" id="hr_employee_vacation_form_view">
+                <field name="name">hr.employee.form</field>
+                <field name="model">hr.employee</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Empleados que tienen que tomar vacaciones">
+                        <field name="identification_id" readonly="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="second_name" readonly="1"/>
+                        <field name="last_name" readonly="1"/>
+                        <field name="mother_last_name" readonly="1"/>
+                        <field name="type_employee" readonly="1"/>
+                        <field name="department_id" readonly="1"/>
+                        <field name="date_next_vacation" readonly="1"/>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="hr_employee_vacation_search_view">
+                <field name="name">hr.employee.form</field>
+                <field name="model">hr.employee</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Empleados que tienen que tomar vacaciones">
+                        <filter icon="terp-personal+" domain="[('date_next_vacation','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d')),('date_next_vacation','&lt;=',(datetime.date.today()+relativedelta(month=12, day=31)).strftime('%%Y-%%m-%%d'))]" name="next_vacation" string="Vacaciones del año"/>
+                        <separator orientation="vertical"/>
+                        <field name="date_next_vacation" ></field>
+                        <field name="identification_id" ></field>
+                        <field name="name" ></field>
+                        <field name="second_name" ></field>
+                        <field name="last_name" ></field>
+                        <field name="mother_last_name" ></field>
+                        <newline/>
+                        <group expand="0" string="Agrupar por...">
+                        	<filter string="Fecha de Vacaciones" context="{'group_by':'date_next_vacation'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+            
+            <record model="ir.actions.act_window" id="action_hr_employee_vacation_view">
+                <field name="name">Empleados que Tienen que tomar Vacaciones</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">hr.employee</field>
+		   <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[('date_next_vacation','&gt;=',(datetime.date.today()-relativedelta(years=4)).strftime('%Y-%m-%d'))]</field>
+                <field name="help">Muestra los empleados que deben tomar vacaciones, incluyendo aquellos que tienen vacaciones acumuladas desde hace 4 años.</field>
+                <field name="search_view_id" ref="hr_employee_vacation_search_view"/>
+            </record>
+
+		<record id="action_hr_employee_vacation_tree_view" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="hr_employee_vacation_tree_view" />
+			<field name="act_window_id" ref="action_hr_employee_vacation_view" />
+		</record>
+
+		<record id="action_hr_employee_vacation_form_view" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="hr_employee_vacation_form_view" />
+			<field name="act_window_id" ref="action_hr_employee_vacation_view" />
+		</record>
+			
+		
+		<record model="ir.actions.act_window" id="action_hr_vacation_view">
 			<field name="name">Vacaciones de Empleados</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.vacation</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="hr_vacation_tree_view" />
+			<field name="context">{'search_default_realizado':1}</field>
+			<field name="search_view_id" ref="hr_vacation_search_view" />
 		</record>
 
 		<menuitem id="hr_vacation_menu" 
-			parent="hr_newholidays_menu_root" action="action_hr_vacation_tree_view" />
+			parent="hr_newholidays_menu_root" action="action_hr_vacation_view" />
+			
+		<menuitem id="vacation_reporting_menu" name="Informe" parent="hr_newholidays_menu_root" />
+		<menuitem id="hr_employee_vacation_menu"  parent="vacation_reporting_menu" action="action_hr_employee_vacation_view"/>
 
+		
 	</data>
 </openerp>

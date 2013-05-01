@@ -53,6 +53,7 @@ class cancel_retention_wizard(osv.osv_memory):
                 company_id = wiz.company_id.id
                 shop_id = shop_obj.search(cr, uid, [('number', '=', number[0]), ('company_id','=',company_id)])[0]
                 printer_id = printer_obj.search(cr, uid, [('number', '=', number[1]), ('shop_id','=', shop_id)])[0]
+                period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',wiz.date),('date_stop','>=',wiz.date)])
                 if not ids:
                     auth_id = auth_obj.get_auth(cr, uid, 'withholding', company_id, shop_id, line.number, printer_id, context)
                     if auth_id:
@@ -63,7 +64,8 @@ class cancel_retention_wizard(osv.osv_memory):
                                 'printer_id': printer_id,
                                 'authorization_purchase': auth_id['authorization'],
                                 'state': 'canceled',
-                                'date': wiz.date,
+                                'creation_date': wiz.date,
+                                'period_id': period_ids and period_ids[0] or None,
                                 'transaction_type': 'automatic',
                                 }
                         ret_id = ret_obj.create(cr, uid, vals, context)

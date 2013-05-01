@@ -70,6 +70,8 @@ class auth_wizard(osv.osv_memory):
         printer_obj = self.pool.get('sri.printer.point')
         
         for res in self.browse(cr, uid, ids, context=context):
+            if not res.type_document_wizard_ids:
+                raise osv.except_osv(_(u'You must input almost one type of document to continue'))
             if not aut_obj.search(cr, uid, [('number','=',res['number']),]):
                 #create authorization
                 vals_aut={'number':res['number'],
@@ -146,6 +148,7 @@ class auth_wizard(osv.osv_memory):
                                   'printer_id':dt['printer_id']['id'],
                                   'sri_authorization_id':aut_id,
                                   'sequence_id':seq_id,
+                                  'padding': dt.padding,
                                   'automatic':dt['automatic'],
                                   'expired':dt['expired']
                                   }
@@ -223,6 +226,7 @@ class auth_wizard(osv.osv_memory):
                                   'shop_id':dt['shop_id']['id'],
                                   'sri_authorization_id':aut_id,
                                   'sequence_id':seq_id,
+                                  'padding': dt.padding,
                                   'automatic':dt['automatic'],
                                   'expired':dt['expired']
                                   }
@@ -304,6 +308,12 @@ class auth_wizard_line(osv.osv_memory):
                 return False
             else:
                 return True
+    def _check_padding(self, cr, uid, ids, context=None):
+        for auth in self.browse(cr, uid, ids):
+            if auth.padding >= 0 and auth.padding <= 9:
+                return True
+            else:
+                return False
         
     _name = 'auth.wizard.line'
     _columns={
@@ -316,10 +326,17 @@ class auth_wizard_line(osv.osv_memory):
               'state':fields.selection(_get_name,  'state', required=True, readonly=True),
               'automatic':fields.boolean('automatic?', required=False),
               'expired':fields.boolean('expired', required=False),
+              'padding': fields.integer('Padding'),
               }
     
-    _constraints = [(_check_sequence,_('Sequence number must be a positive number'),['first_secuence', 'last_secuence'])]
+    _constraints = [
+                    (_check_sequence,_('Sequence number must be a positive number'),['first_secuence', 'last_secuence']),
+                    (_check_padding, _('Error: Padding must be a number between 0 - 9'), ['padding']),
+                    ]
 
+    _defaults = {  
+        'padding': 9,
+        }
 
     def default_get(self, cr, uid, fields_list, context=None):
         if not context:

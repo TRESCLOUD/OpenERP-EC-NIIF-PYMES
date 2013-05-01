@@ -98,31 +98,32 @@ class account_invoice(osv.osv):
         partner_obj = self.pool.get('res.partner')
         transaction_type_id = None
         filter_type = None
-        partner = partner_obj.browse(cr, uid, partner_id)
-        if partner.type_ref == 'ruc':
-            filter_type = 'ruc'
-        elif partner.type_ref == 'consumidor':
-            filter_type = 'consu_final'
-        elif partner.type_ref == 'cedula':
-            filter_type = 'cedula'
-        elif partner.type_ref == 'pasaporte':
-            filter_type = 'pasaporte'
-        if type == 'out_invoice':
-            transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','VENTA')])
-        elif type == 'in_invoice' and (not context.get('liquidation', False)):
-            transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
-        elif type == 'in_invoice' and context.get('liquidation', True):
-            transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
-        elif type == 'out_refund':
-            transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','VENTA')])
-        elif type == 'in_refund':
-            transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
-
-        if transaction_type_id:
-            transaction_type_id = transaction_type_id[0]
-        else:
-            transaction_type_id = None
-        
+        if partner_id:
+            partner = partner_obj.browse(cr, uid, partner_id)
+            if partner.type_ref == 'ruc':
+                filter_type = 'ruc'
+            elif partner.type_ref == 'consumidor':
+                filter_type = 'consu_final'
+            elif partner.type_ref == 'cedula':
+                filter_type = 'cedula'
+            elif partner.type_ref == 'pasaporte':
+                filter_type = 'pasaporte'
+            if type == 'out_invoice':
+                transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','VENTA')])
+            elif type == 'in_invoice' and (not context.get('liquidation', False)):
+                transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
+            elif type == 'in_invoice' and context.get('liquidation', True):
+                transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
+            elif type == 'out_refund':
+                transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','VENTA')])
+            elif type == 'in_refund':
+                transaction_type_id = tt_obj.search(cr, uid, [('type_identification','=',filter_type),('name','=','COMPRA')])
+    
+            if transaction_type_id:
+                transaction_type_id = transaction_type_id[0]
+            else:
+                transaction_type_id = None
+            
         tc_obj = self.pool.get('sri.voucher.type')
         domain_tax_support = []
         if voucher_type:

@@ -208,8 +208,7 @@
 
 		<menuitem id="hr_newholidays_menu_root" name="Vacaciones y Dias Feriados"
 			parent="hr.menu_hr_root" />
-		<menuitem id="hr_newholidays_menu_config" name="Configuración"
-			parent="hr_newholidays_menu_root" sequence="50"/>
+
 
 		<record model="ir.actions.act_window" id="action_hr_newholidays_calendar_tree_view">
 			<field name="name">Dias Feriados</field>
@@ -225,7 +224,7 @@
 
 
 		<menuitem id="hr_newholidays_calendar_menu" name="Dias Feriados"
-			parent="hr_newholidays_menu_config" action="action_hr_newholidays_calendar_tree_view" />
+			parent="hr.menu_open_view_attendance_reason_config" action="action_hr_newholidays_calendar_tree_view" />
 
 
 		<record model="ir.actions.act_window" id="action_hr_newholidays_type_tree_view">
@@ -241,7 +240,7 @@
 		</record>
 
 		<menuitem id="hr_newholidays_type_menu" name="Tipos de Ausencia"
-			parent="hr_newholidays_menu_config" action="action_hr_newholidays_type_tree_view" />
+			parent="hr.menu_open_view_attendance_reason_config" action="action_hr_newholidays_type_tree_view" />
 
 		<record model="ir.actions.act_window" id="action_hr_newholidays_tree_view">
 			<field name="name">Registro de Ausencias de los Empleados</field>

@@ -39,7 +39,8 @@ class res_company(osv.osv):
                 'default_account_debit_id': fields.many2one('account.account', 'Default Debit Account Employee', domain=[('type','=','receivable')]),
                 'default_account_credit_id': fields.many2one('account.account', 'Default Credit Account Employee', domain=[('type','=','payable')]),
                 'rule_funds_accumulated_id':fields.many2one('hr.salary.rule', 'Regla Fondos de Reserva Acumulados', required=False),
-                'rule_funds_paid_id':fields.many2one('hr.salary.rule', 'Regla Fondos de Reserva Pagados', required=False), 
+                'rule_funds_paid_id':fields.many2one('hr.salary.rule', 'Regla Fondos de Reserva Pagados', required=False),
+                'year_vacation_accumulated_id':fields.many2one('account.fiscalyear', 'Año del que pagar Vacaciones Acumuladas', required=False),  
                     }
     
 res_company()
