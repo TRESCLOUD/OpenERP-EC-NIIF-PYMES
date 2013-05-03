@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="0">
+
+    <record id="report_vacation_employee" model="ir.actions.report.xml">
+        <field name="name">Reporte de Vacaciones de Empleados</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">hr.vacation</field>
+        <field name="report_name">report_hr_vacation</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')" />
+        <field name="report_rml">ecua_seguro_social/report/report_hr_vacation.odt</field>
+        <field name="parser_loc">ecua_seguro_social/report/report_hr_vacation_parser.py</field>
+		<field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['hr.vacation']" name="models"/>
+        <field name="name">Empleados que han tomado vacaciones</field>
+        <field eval="'ir.actions.report.xml,'+str(report_vacation_employee)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+	</data>
+</openerp>
+

@@ -30,7 +30,7 @@ from xml.etree.ElementTree import Element, SubElement, ElementTree, tostring
 import sys
 import base64
 
-class sri_ats(osv.osv):
+class sri_ats(osv.osv_memory):
     mes_lista=[]
     
     def indent(self,elem, level=0):
@@ -49,11 +49,7 @@ class sri_ats(osv.osv):
                 elem.tail = i
 
     def tipo_identificacion_compra(self,type):
-        # Modificado "TEMPORALMENTE" por problemas en la herencia y modificacion
-        # del objeto res.partner, modulo trescloud_diagnossis_patient
-        # TODO: Esta solucion DEBE ser temporal (07-02-2013)
-        # Original: if type=='ruc':
-        if type=='ruc' or not type:
+        if type=='ruc':
             return '01'
         elif type=='cedula':
             return '02'
@@ -90,31 +86,37 @@ class sri_ats(osv.osv):
     
     def generate_xml(self, cr, uid, ids, context=None):
         root = ''
+        tax_obj = self.pool.get('account.tax')
+        num_documento='(\d{3})+\-(\d{3})+\-(\d{1,9})'
         for anexo in self.browse(cr, uid, ids, context=context):
+            error_lines = []
+            period_criteria = [('date_invoice','>=',anexo.period_id.date_start) , ('date_invoice','<=',anexo.period_id.date_stop)]
             #Facturas en compras que pertenecen al periodo
-            invoice_compras_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','in_invoice'),('state','in',('open','paid')),])
+            invoice_compras_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('foreign','=',False),('type','=','in_invoice'),('state','in',('open','paid')),])
             invoice_compras = self.pool.get('account.invoice').browse(cr, uid, invoice_compras_ids, context)
             #Facturas en ventas que pertenecen al periodo
-            invoice_ventas_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','out_invoice'),('state','in',('open','paid')),])
+            invoice_ventas_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('type','=','out_invoice'),('state','in',('open','paid')),])
             invoice_ventas = self.pool.get('account.invoice').browse(cr, uid, invoice_ventas_ids, context)
             #Notas de Credito en ventas que pertenecen al periodo
-            refund_ventas_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','out_refund'),('state','in',('open','paid')),])
+            refund_ventas_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('type','=','out_refund'),('state','in',('open','paid')),])
             refund_ventas = self.pool.get('account.invoice').browse(cr, uid, refund_ventas_ids, context)
             #Notas de Credito en compras que pertenecen al periodo
-            refund_compras_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','in_refund'),('state','in',('open','paid')),])
+            refund_compras_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('foreign','=',False),('type','=','in_refund'),('state','in',('open','paid')),])
             refund_compras = self.pool.get('account.invoice').browse(cr, uid, refund_compras_ids, context)
             #Facturas de Ventas Canceladas
-            invoice_canceled_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','out_invoice'),('state','=','cancel'),])
+            invoice_canceled_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('type','=','out_invoice'),('state','=','cancel'),])
             invoice_canceled = self.pool.get('account.invoice').browse(cr, uid, invoice_canceled_ids, context)
             #Notas de Credito en Ventas Canceladas
-            credit_note_canceled_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','out_refund'),('state','=','cancel'),])
+            credit_note_canceled_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('type','=','out_refund'),('state','=','cancel'),])
             credit_note_canceled = self.pool.get('account.invoice').browse(cr, uid, credit_note_canceled_ids, context)
             #Liquidacion de Compras Canceladas
-            liquidation_canceled_ids = self.pool.get('account.invoice').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('type','=','in_invoice'),('state','=','cancel'),('liquidation','=',True)])
+            liquidation_canceled_ids = self.pool.get('account.invoice').search(cr, uid, period_criteria + [('type','=','in_invoice'),('state','=','cancel'),('liquidation','=',True)])
             liquidation_canceled = self.pool.get('account.invoice').browse(cr, uid, liquidation_canceled_ids, context)
-            #P.R: Retenciones Canceladas 
-            #P.R: Provienen de un objeto diferente pero relacionado con account.invoice, esto es account.retention
-            retention_canceled_ids = self.pool.get('account.retention').search(cr, uid, [('period_id.id','=',anexo['period_id']['id']),('state','=','canceled')])
+            #Canceled Retention 
+            #Came from diferent object but related to account.invoice, that is account.retention
+            #period_criteria need to stablish in diferent way
+            period_criteria_retention = [('creation_date','>=',anexo.period_id.date_start) , ('creation_date','<=',anexo.period_id.date_stop)]
+            retention_canceled_ids = self.pool.get('account.retention').search(cr, uid, period_criteria_retention + [('state','=','canceled')])
             retention_canceled = self.pool.get('account.retention').browse(cr, uid, retention_canceled_ids, context)
             
             company = self.pool.get('res.users').browse(cr, uid, [uid,], context)[0].company_id.partner_id
@@ -128,8 +130,28 @@ class sri_ats(osv.osv):
             
             #Se verifica que existan facturas en compras o Notas de Credito
             if invoice_compras or refund_compras:            
+                #En caso de encontrar un error en la estructura de los documentos, se generara un resumen del error
                 compras = SubElement(root,"compras")
                 for inv in invoice_compras:
+                    vals_error = {
+                                  'invoice_id': inv.id,
+                                  'user_id': inv.user_id.id,
+                                  'partner_id': inv.partner_id.id,
+                                  'date': inv.date_invoice,
+                                  'type': inv.type,
+                                  }
+                    if inv.period_id.id != anexo.period_id.id:
+                        vals_error['description'] = _('Factura con periodo %s y el ats generado es del periodo %s') % (inv.period_id.name, anexo.period_id.name) 
+                        error_lines.append((0,0, vals_error.copy()))
+                        continue
+                    if not inv.tax_support_id:
+                        vals_error['description'] = _('Factura no tiene asignado Sustento Tributario')
+                        error_lines.append((0,0, vals_error.copy()))
+                        continue
+                    if not inv.voucher_type_id:
+                        vals_error['description'] = _('Factura no tiene configurado tipo')
+                        error_lines.append((0,0, vals_error.copy()))
+                        continue
                     numero_factura=inv.number.split('-')
                     fecha_emision=(str(inv.date_invoice))
                     fecha_emision=fecha_emision.split('-')
@@ -142,8 +164,9 @@ class sri_ats(osv.osv):
                         SubElement(detalle, "codSustento").text = inv.tax_support_id.code
                     SubElement(detalle, "tpIdProv").text = self.tipo_identificacion_compra(inv.partner_id.type_ref)
                     SubElement(detalle, "idProv").text = inv.partner_id.ref
+                     
                     #Al escoger el voucher type se agregan tambien las liquidaciones de compras
-                    SubElement(detalle, "tipoComprobante").text = inv.voucher_type_id.code
+                    SubElement(detalle, "tipoComprobante").text = inv.voucher_type_id and inv.voucher_type_id.code or None
                     SubElement(detalle, "fechaRegistro").text = fecha_registro[2]+"/"+fecha_registro[1]+"/"+fecha_registro[0]
                     SubElement(detalle, "establecimiento").text = numero_factura[0]
                     SubElement(detalle, "puntoEmision").text = numero_factura[1]
@@ -206,6 +229,21 @@ class sri_ats(osv.osv):
             
             #Notas de Credito de Proveedores
                 for inv in refund_compras:
+                    vals_error = {
+                                  'invoice_id': inv.id,
+                                  'user_id': inv.user_id.id,
+                                  'partner_id': inv.partner_id.id,
+                                  'date': inv.date_invoice,
+                                  'type': inv.type,
+                                  }
+                    if inv.period_id.id != anexo.period_id.id:
+                        vals_error['description'] = _('Factura con periodo %s y el ats generado es del periodo %s') % (inv.period_id.name, anexo.period_id.name) 
+                        error_lines.append((0,0, vals_error.copy()))
+                        continue
+                    if not inv.tax_support_id:
+                        vals_error['description'] = _('Factura no tiene asignado Sustento Tributario')
+                        error_lines.append((0,0, vals_error.copy()))
+                        continue
                     numero_factura = inv.number.split('-')
                     numero_nota_credito = inv.invoice_rectification_id.split('-')
                     fecha_emision=(str(inv.date_invoice))
@@ -213,7 +251,6 @@ class sri_ats(osv.osv):
                     fecha_registro=(str(inv.create_date))
                     fecha_registro=fecha_registro.split(' ')
                     fecha_registro=fecha_emision
-#                    fecha_registro=fecha_registro[0].split('-')
                     detalle = SubElement(compras,"detalleCompras")
                     if inv.tax_support_id.code or False:
                         SubElement(detalle, "codSustento").text = inv.tax_support_id.code
@@ -303,7 +340,7 @@ class sri_ats(osv.osv):
                     inv_ventas = self.pool.get('account.invoice').browse(cr, uid, inv_vent_ids, context)
                     for inv in inv_ventas:
                         base=base+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("411",)])
-                        base_0=base_0+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("415","416","413","414")]) # Pablo Vizhnay Modificado: 7/02/2013 15h40
+                        base_0=base_0+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("415","416","413","414")])
                         iva=iva+self.valor([n.amount for n in inv.tax_line if n.tax_code_id.code in ("421",)])
                         if inv.retention_ids:
                             for ret in inv.retention_ids:
@@ -358,7 +395,7 @@ class sri_ats(osv.osv):
             
             #TODO: Escenario, se anulan documentos de diferentes autorizaciones en un mes
             #Si existe algun tipo de documento anulado 
-            #Agregado retenciones canceladas
+            #Add canceled retentions
             if invoice_canceled or credit_note_canceled or liquidation_canceled or retention_canceled:
                 #FACTURAS ANULADAS
                 if invoice_canceled:
@@ -388,7 +425,7 @@ class sri_ats(osv.osv):
 
                 #LIQUIDACIONES DE COMPRAS ANULADAS
                 if liquidation_canceled:
-                    #P.R: TODO: NO FALTA "anulados = SubElement(root,"anulados")"???
+                    # TODO: FALTA "anulados = SubElement(root,"anulados")"???
                     for inv in liquidation_canceled:
                         numero_factura=inv.number.split('-')
                         detalle = SubElement(anulados,"detalleAnulados")
@@ -399,7 +436,7 @@ class sri_ats(osv.osv):
                         SubElement(detalle, "secuencialFin").text = numero_factura[2]
                         SubElement(detalle, "autorizacion").text = inv.authorization_liquidation.number
 
-                #P.R: RETENCIONES DE COMPRA ANULADAS 
+                #P.R: Canceled "RETENCIONES DE COMPRA" 
                 if retention_canceled:
                     anulados = SubElement(root,"anulados")
                     for inv in retention_canceled:
@@ -421,7 +458,8 @@ class sri_ats(osv.osv):
         
         #TODO: Exportaciones, en espera de modulo de Exportaciones
         
-        
+            self.write(cr, uid, ids, {'line_ids': error_lines})
+
         self.indent(root)
         return tostring(root,encoding="ISO-8859-1")
     
@@ -447,6 +485,7 @@ class sri_ats(osv.osv):
                 ('choose','Choose'),
                 ('get','Get'),
                 ],  'state', required=True, readonly=True),
+                'line_ids':fields.one2many('sri.ats.line', 'wizard_id', 'Lines', required=False),
                  }
     _defaults = {
                  'state': lambda *a: 'choose'
@@ -454,3 +493,17 @@ class sri_ats(osv.osv):
     
 sri_ats()
 
+class sri_ats_line(osv.osv_memory):
+    
+    _name = "sri.ats.line"
+    
+    _columns = {
+                'wizard_id':fields.many2one('sri.ats', 'Wizard', required=False),
+                'invoice_id':fields.many2one('account.invoice', 'Invoice', required=False),
+                'date': fields.date('Date'),
+                'partner_id':fields.many2one('res.partner', 'Partner', required=False),
+                'user_id':fields.many2one('res.users', 'User', required=False), 
+                'description': fields.text('Error Description'),
+                'type':fields.char('Type', size=255, required=False, readonly=False),
+                }
+sri_ats_line()

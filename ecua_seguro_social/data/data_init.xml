@@ -82,6 +82,10 @@
             <field name="name">Payroll</field>
             <field name="digits">4</field>
         </record>
+        <record forcecreate="True" id="decimal_vacation" model="decimal.precision">
+			<field name="name">Vacation precision</field>
+			<field name="digits">0</field>
+		</record>
         <!--
         tipos de cuentas bancarias
         -->

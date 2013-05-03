@@ -388,15 +388,15 @@ herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inher
 			<field name="name">account.invoice.form</field>
 			<field name="model">account.invoice</field>
 			<field name="type">form</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
 			<field name="arch" type="xml">
-				<xpath expr="/form/group//field[@name='journal_id']" position="after">
+				<xpath expr="/form/group//field[@name='period_id']" position="before">
 					<field name="authorization_purchase" invisible="1"></field>
 					<field name="foreign" invisible="1" />
 					<field name="authorization_supplier_purchase_id"
 						attrs="{'required':[('foreign','=',False)], 'invisible':[('foreign','=',True)]}"
-						on_change="onchange_authorization(authorization_supplier_purchase_id)"
-						domain="[('partner_id', '=', partner_id),('type','=','invoice')]" 
+						on_change="onchange_authorization_supplier(authorization_supplier_purchase_id, invoice_number_in)"
+						domain="[('partner_id', '=', partner_id),('type','=','invoice')]"
 						context="{'document_type':'invoice', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}">
 					</field>
 				</xpath>
@@ -406,7 +406,7 @@ herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inher
 						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
 				</xpath>
 				<xpath expr="/form/group/field[@name='number']" position="replace">
-					<field name="invoice_number_in" required="1"></field>
+					<field name="invoice_number_in" required="1" on_change="onchange_data_in(invoice_number_in, type, partner_id, date_invoice)"></field>
 				</xpath>
 				<xpath
 					expr="/form/notebook/page/group/group//button[@name='invoice_cancel']"

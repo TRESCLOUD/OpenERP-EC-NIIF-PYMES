@@ -44,9 +44,25 @@ class sri_type_document(osv.osv):
                                                  'sri.type.document': (lambda self, cr, uid, ids, c={}: ids, ['counter', 'expired'], 8)}),
                 'shop_id':fields.many2one('sale.shop', 'Agency', required=True),
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', required=True),
+                'padding': fields.integer('Padding'),
                 'expired':fields.boolean('Expired?',),
                 'automatic':fields.boolean('automatic?', required=False),
                 }
+    
+    
+    _defaults = {  
+        'padding': 9,
+        }
+    
+    
+    def _check_padding(self, cr, uid, ids, context=None):
+        for auth in self.browse(cr, uid, ids):
+            if auth.padding >= 0 and auth.padding <= 9:
+                return True
+            else:
+                return False
+
+    _constraints = [(_check_padding, _('Error: Padding must be a number between 0 - 9'), ['padding']),] 
 
     def validate_unique_value_document(self, cr, uid, number=None, company_id=None, model=None, field=None, name='Factura', context=None):
         doc_obj = self.pool.get('sri.type.document')
@@ -155,6 +171,39 @@ class sri_type_document(osv.osv):
                 values_doc={'counter':line.range + 1}
                 td_obj.write(cr, uid, [line.id,], values_doc, context)
         return super(sri_type_document, self).create(cr, uid, values, context)
+
+    def padding(self, number, padding):
+        suf = ''
+        digit_counter=0
+        original_number = number
+        while number != 0:
+            resi = number % 10
+            number = number / 10
+            digit_counter += 1
+        for i in range(padding - digit_counter):
+            suf += '0'
+        return suf + str(original_number)
+
+
+    def complete_number(self, cr, uid, tdocument_id, number, context=None):
+        if not tdocument_id or not number:
+            return ''
+        document = self.pool.get('sri.type.document').browse(cr, uid, tdocument_id)
+        seq_number = ''
+        try:
+            #Se verifica que no se haya ingresado un valor del tipo 00X-00X-000000XXX
+            split_number = number.split('-')
+            seq_number = int(split_number[2])
+        except:
+            #Se hace un entero para retirar los ceros que se pudieron haber colocado
+            try:
+                seq_number = int(number)
+            except:
+                return number
+        if document.shop_id and document.printer_id:
+            number = document.shop_id.number + '-' + document.printer_id.number + '-' + self.padding(seq_number, document.padding)
+        return number
+        
 
 sri_type_document()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

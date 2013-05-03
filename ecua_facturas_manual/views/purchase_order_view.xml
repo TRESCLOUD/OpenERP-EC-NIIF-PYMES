@@ -9,7 +9,7 @@
 			<field name="arch" type="xml">
 				<field name="amount_untaxed" position="replace">
 					<field name="amount_untaxed" invisible="1" />
-					<group colspan="2" col="4">
+					<group colspan="2" col="8">
 						<field name="base_iva_0" invisible="0" />
 						<field name="base_iva_12" invisible="0" />
 					</group>
@@ -17,6 +17,11 @@
 				<field name="amount_tax" position="replace">
 					<field name="amount_tax" invisible="1" />
 					<field name="iva" invisible="0" />
+					<field name="withhold" invisible="0" />
+					<field name="withhold_iva" invisible="0" />
+				</field>
+				<field name="amount_total" position="after">
+					<field name="amount_total_wr"></field>
 				</field>
 			</field>
 		</record>
@@ -32,6 +37,11 @@
 					<field name="base_iva_0" invisible="0" sum="Base IVA 0"/>
 					<field name="base_iva_12" invisible="0" sum="Base IVA 12"/>
 					<field name="iva" invisible="0" sum="Total IVA"/>
+					<field name="withhold" sum="Total Retencion" />
+					<field name="withhold_iva" sum="Total Retencion IVA" />
+				</field>
+				<field name="amount_total" position="after">
+					<field name="amount_total_wr"></field>				
 				</field>
 			</field>
 		</record>

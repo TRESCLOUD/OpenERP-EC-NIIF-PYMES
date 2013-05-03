@@ -45,6 +45,7 @@ class account_invoice(osv.osv):
                 'total_ice': 0.0,
                 'total_descuento': 0.0,
                 'total_descuento_per': 0.0,
+                'total_con_impuestos': 0.0,
             }
             contador = 0;
             desc_per = 0.0
@@ -71,6 +72,7 @@ class account_invoice(osv.osv):
             if contador != 0:
                 res[invoice.id]['total_descuento_per'] = desc_per / contador
             res[invoice.id]['amount_total'] = res[invoice.id]['amount_tax'] + res[invoice.id]['amount_untaxed']
+            res[invoice.id]['total_con_impuestos'] = res[invoice.id]['base_iva_0'] + res[invoice.id]['base_iva'] + res[invoice.id]['total_iva']
         return res
 
     def _get_invoice_tax(self, cr, uid, ids, context=None):
@@ -136,6 +138,13 @@ class account_invoice(osv.osv):
                     },
                     multi='all1'),
                 'total_sin_descuento': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Sub Total',
+                    store={
+                        'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
+                        'account.invoice.tax': (_get_invoice_tax, None, 20),
+                        'account.invoice.line': (_get_invoice_line, ['price_unit','invoice_line_tax_id','quantity','discount','invoice_id'], 20),
+                    },
+                    multi='all1'),  
+                'total_con_impuestos': fields.function(_amount_all_3, method=True, digits_compute=dp.get_precision('Account'), string='Total con Impuestos',
                     store={
                         'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line'], 20),
                         'account.invoice.tax': (_get_invoice_tax, None, 20),
@@ -208,7 +217,7 @@ class account_invoice_tax(osv.osv):
                     taxes.append(tax)
             #computo de ice
             if ice:
-                for tax in tax_obj.compute_all(cr, uid, taxes, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id)['taxes']:
+                for tax in tax_obj.compute_all(cr, uid, taxes, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id)['taxes']:#, {'skip_round':True})['taxes']:
                     tax_browse = tax_obj.browse(cr, uid, tax['id'], context)
                     val={}
                     val['invoice_id'] = inv.id
@@ -252,7 +261,7 @@ class account_invoice_tax(osv.osv):
                 ice_value = 1
                 if line.product_id.ice_type_id:
                     ice_value = 1+line.product_id.ice_type_id.rate
-                for tax in tax_obj.compute_all(cr, uid, tax_iva, (line.price_unit * (ice_value) * (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id)['taxes']:
+                for tax in tax_obj.compute_all(cr, uid, tax_iva, (line.price_unit * (ice_value) * (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id)['taxes']:#,{'skip_round':True})['taxes']:
                     tax_browse = tax_obj.browse(cr, uid, tax['id'], context)
                     val={}
                     val['invoice_id'] = inv.id
@@ -293,7 +302,7 @@ class account_invoice_tax(osv.osv):
                         tax_grouped[key]['tax_amount'] += val['tax_amount']
 
             else:
-                for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id)['taxes']:
+                for tax in tax_obj.compute_all(cr, uid, line.invoice_line_tax_id, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id,)['taxes']:#context={'skip_round':True})['taxes']:
                     tax_browse = tax_obj.browse(cr, uid, tax['id'], context)
                     val={}
                     val['invoice_id'] = inv.id

@@ -26,6 +26,10 @@
 							<field name="rule_funds_accumulated_id" />
 							<field name="rule_funds_paid_id" />
 					</group>
+					<group colspan="4">
+						<separator string="Vacaciones de Empleados" colspan="4"/>
+							<field name="year_vacation_accumulated_id" widget="selection" />
+					</group>
 					</page>
 				</xpath>
 			</field>

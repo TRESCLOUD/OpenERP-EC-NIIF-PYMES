@@ -95,10 +95,11 @@ class account_invoice(osv.osv):
                     
                     #creamos las lineas de retenciones
                     contador_impuestos = 0
+                    date_invoice = inv.date_invoice or time.strftime('%Y-%m-%d')
                     for tax_line in inv.tax_line:
                         fiscalyear_id = None
                         if not inv['period_id']:
-                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',time.strftime('%Y-%m-%d')),('date_stop','>=',time.strftime('%Y-%m-%d')),])
+                            period_ids = self.pool.get('account.period').search(cr, uid, [('date_start','<=',date_invoice),('date_stop','>=',date_invoice),])
                             if period_ids:
                                 fiscalyear_id= self.pool.get('account.period').browse(cr, uid, [period_ids[0]], context)[0]['fiscalyear_id']['id']
                         else:
@@ -187,15 +188,16 @@ class account_invoice(osv.osv):
         wf_service = netsvc.LocalService("workflow")
         invoices = self.pool.get('account.invoice').browse(cr, uid, ids, context)
         for inv in invoices:
+            if inv.retention_line_ids:
+                for ret_line in inv.retention_line_ids:
+                    ret_line_obj.unlink(cr, uid, [ret_line.id])
             if inv.retention_ids:
                 retencion = inv.retention_ids[0]
                 if retencion.state == 'approved':
                     wf_service.trg_validate(uid, 'account.retention', retencion.id, 'canceled_signal', cr)
                 self.pool.get('account.retention').unlink(cr, uid, [retencion.id, ], context={'invoice':True})
                    #TODO: Se debe verificar que la retencion que tiene la factura este aprobada
-            if inv.retention_line_ids:
-                for ret_line in inv.retention_line_ids:
-                    ret_line_obj.unlink(cr, uid, [ret_line.id])
+            
         return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 account_invoice()
 

@@ -100,7 +100,7 @@
 			<field name="arch" type="xml">
 				<tree string="Retentions"
 					colors="blue:state in ('draft');black:state in ('approved');gray:state in ('canceled')">
-					<field name="number" />
+					<field name="number_purchase" />
 					<field name="invoice_id" string="Reference of document" />
 					<field name="partner_id" string="Cliente" />
 					<field name="period_id" />

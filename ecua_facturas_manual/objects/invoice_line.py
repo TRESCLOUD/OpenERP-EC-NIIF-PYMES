@@ -43,6 +43,10 @@ class account_invoice_line(osv.osv):
         return res
     
     _columns = {
-                'price_unit_final': fields.function(_price_unit_final, method=True, type='float', digits_compute= dp.get_precision('Account'), string='Price Unit Final', store=True), 
+                'price_unit_final': fields.function(_price_unit_final, method=True, type='float', digits_compute= dp.get_precision('Invoice Line Price'), string='Price Unit Final', store=True), 
                     }
+   
+    def onchange_account_id(self, cr, uid, ids, fposition_id, account_id):
+        return {}
+
 account_invoice_line()

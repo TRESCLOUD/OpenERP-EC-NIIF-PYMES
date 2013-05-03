@@ -18,6 +18,7 @@
 from osv import osv, fields, orm
 import time
 from tools.translate import _
+import re
 
 
 class sri_type_document(osv.osv):
@@ -149,6 +150,70 @@ class sri_authorization(osv.osv):
         except:
             return False
     
+    
+    def check_if_seq_exist(self, cr, uid, type='invoice', secuence=None, printer_id=None, date_document=None, context=None):
+        if not context: context = {}
+        name_type = {
+                    'invoice':_('Invoice'),
+                    'delivery_note':_('Delivery note'),
+                    'withholding':_('Withholding'),
+                    'credit_note':_('Credit Note'),
+                    'liquidation':_('Liquidation of Purchases'),
+                    'debit_note':_('Debit Note')
+                     }
+        if not date_document: date_document = time.strftime('%Y-%m-%d')
+        res = {
+               'authorization' : None,
+               'document_type_id': None,
+               }
+        number = None
+        printer = None
+        #Se verifica que el número tenga el formato correcto
+        seq_number = ''
+        agency_number = None
+        printer_number = None
+        has_form = False
+        cadena = '(\d{3})+\-(\d{3})+\-(\d{9})'
+        if re.match(cadena, secuence):
+            has_form = True
+        try:
+            if has_form:
+                number = secuence.split('-')
+                agency_number = number[0]
+                printer_number = number[1]
+                seq_number = number[2]
+            else:
+                seq_number = secuence
+        except:
+            return res
+        line_auth_obj = self.pool.get('sri.type.document')
+        printer_obj = self.pool.get('sri.printer.point')
+        if printer_id:
+            printer = printer_obj.browse(cr, uid, printer_id, context)
+        if not printer:
+            return res
+        #Se verifica que exista alguna línea de autorización que cumpla con este criterio
+        line_auth_ids = line_auth_obj.search(cr, uid, [('name','=',type), ('printer_id','=',printer.id)])
+        for document in line_auth_obj.browse(cr, uid, line_auth_ids, context):
+            if not document.sri_authorization_id.auto_printer:
+                #Se verifica que el número este dentro de las secuencias de la autorización
+                if (int(seq_number)>= document.first_secuence and int(seq_number)<= document.last_secuence):
+                    res['authorization'] = document.sri_authorization_id.id
+                    res['document_type_id'] = document.id
+                    if not self.check_date_document(cr, uid, date_document, document.sri_authorization_id.start_date, document.sri_authorization_id.expiration_date, context):
+                        raise osv.except_osv(_('Error!!!'),('There\'s not authorization for this document %s with number %s in this date %s') % (name_type.get(type, _('Invoice')), secuence, date_document))
+                    break
+        #Se verifica que el número de la agencia sea el mismo que la primera secuencia
+        if agency_number and not printer.shop_id.number == agency_number:
+            res['authorization'] = None
+            res['document_type_id'] = None
+        #Se verifica que el número del punto de emisión sea el mismo que el de la secuencia
+        if printer_number and not printer.number == printer_number:
+            res['authorization'] = None
+            res['document_type_id'] = None
+        if not res['authorization'] or not res['document_type_id']:
+            raise osv.except_osv(_('Error!!!'),('There\'s not authorization for this document %s with number %s') % (name_type.get(type, _('Invoice')), secuence))       
+        return res
 
     def get_auth_only(self, cr, uid, type, company_id=None, shop_id=None, printer_id=None, date_document=None, context=None):
         manual = False

@@ -39,9 +39,9 @@ class account_move(osv.osv):
         data_move = self.pool.get('account.move').browse(cursor, user, ids, context=context)
         for move in data_move:
             if move.state=='draft':
-                name = '*' + str(move.id) + "/" + move.ref 
+                name = '* %s/%s' % (move.id, move.ref or '') 
             else:
-                name = move.name + "/" + move.ref 
+                name = '%s/%s' % (move.name, move.ref or '') 
             res.append((move.id, name))
         return res
 account_move()

@@ -106,6 +106,8 @@
 			<field name="view_id" ref="hr_multi_advance_wizard_form_start_view" />
 			<field name="target">new</field>
 		</record>
+				<menuitem id="menu_hr_payables" name="Payslips Vouchers"
+			parent="account.menu_finance" sequence="3" />
 		
 		<menuitem icon="STOCK_EXECUTE" name="Advances Wizard" parent="menu_hr_payables"
 			action="hr_advances_wizard_action" id="menu_advances_wizard" groups="account.group_account_manager,base.group_hr_manager"/>

@@ -42,6 +42,7 @@
 			                <group colspan="4">
 			                <field name="first_secuence" attrs="{'invisible':[('expired','=',True)],'required':[('expired','!=',True)]}" on_change="onchange_number(first_secuence, parent.auto_printer)"/>
 			                <field name="last_secuence" attrs="{'invisible':[('automatic','=',True)],'required':[('expired','!=',True)]}"/>
+			                <field name="padding"/>
 			                </group>
 			                <field name="automatic" invisible="1"/>
 			                <field name="expired" invisible="1"/>
@@ -51,6 +52,9 @@
 			                <field name="name"/>
 							<field name="shop_id"/>
 							<field name="printer_id"/>
+							<field name="first_secuence"/>
+							<field name="last_secuence"/>
+							<field name="padding"/>
 	            		</tree>
 					</field>
 					<group colspan="4" col="6">

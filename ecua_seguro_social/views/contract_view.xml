@@ -5,11 +5,11 @@
 		<menuitem id="next_id_56" name="Contract" parent="hr.menu_hr_management"
 			sequence="5" />
 
-		<record id="hr_contract_view_search2" model="ir.ui.view">
+		<record id="hr_contract.hr_contract_view_search" model="ir.ui.view">
 			<field name="name">hr.contract.view.search</field>
 			<field name="model">hr.contract</field>
 			<field name="type">search</field>
-			<field name="priority">1</field>
+			<field name="priority" eval="1"/>
 			<field name="arch" type="xml">
 				<search string="Search Contract">
 					<group col='15' colspan='4'>
@@ -22,6 +22,7 @@
 						<separator orientation="vertical" />
 						<field name="name" />
 						<field name="employee_id" />
+						<field name="struct_id" />
 						<field name="working_hours" />
 						<field name="date_start" />
 						<field name="date_end" />
@@ -38,6 +39,8 @@
 						<separator orientation="vertical" />
 						<filter string="Contract Type" icon="terp-stock_symbol-selection"
 							domain="[]" context="{'group_by':'type_id'}" />
+						<filter string="Estructura Salarial" icon="terp-gtk-select-all"
+							domain="[]" context="{'group_by':'struct_id'}" />
 					</group>
 				</search>
 			</field>
@@ -99,6 +102,7 @@
 					<field name="employee_id" />
 					<field name="name" />
 					<field name="type_id" />
+					<field name="struct_id" />
 					<field name="job_id" />
 					<field name="working_hours" />
 					<field name="date_start" />
