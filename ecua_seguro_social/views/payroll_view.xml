@@ -273,6 +273,15 @@
 									</group>
 								</form>
 							</field>
+ 							<!-- Adds input_line_ids sections to Worked Days e Inputs CY 07-05-2013 -->					
+							<field colspan="4" name="input_line_ids" nolabel="1">
+								 <tree string="Other Inputs" editable="bottom">
+                       				<field name="name" />
+                       				<field name="code" />
+                       				<field name="amount" />
+                       				<field name="contract_id" />
+	                             </tree>
+	                        </field>
 						</page>
 						<page string="Ausencias y Faltas">
 							<field name="newholidays_ids" nolabel="1" readonly="1" widget="one2many_list">
