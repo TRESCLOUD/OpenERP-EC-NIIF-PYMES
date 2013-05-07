@@ -33,6 +33,7 @@
      
    Desarrollador:
    
+   Andrea García,
    Carlos Yumbillo
    
    """,
