@@ -49,7 +49,9 @@ class sri_ats(osv.osv_memory):
                 elem.tail = i
 
     def tipo_identificacion_compra(self,type):
-        if type=='ruc':
+        # #P.R.: Esto soluciona problemas con objetos personalizados como res.partner
+        # Original: if type=='ruc':
+        if type=='ruc' or not type:
             return '01'
         elif type=='cedula':
             return '02'
@@ -372,7 +374,8 @@ class sri_ats(osv.osv_memory):
                     for inv in inv_notas_credito:
                         base_nc=base+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("411")])
                         base_nc_0=base+self.valor([n.base for n in inv.tax_line if n.base_code_id.code in ("415","416","413","414")])
-                        iva_nc=iva+self.valor([n.amount for n in inv.tax_line if n.tax_code_id.code in ("421")])
+                        #P.R.: no todos los impuestos tienen un tax_code_id asociado
+                        iva_nc=iva+self.valor([n.amount for n in inv.tax_line if (n.tax_code_id and n.tax_code_id.code in ("421"))])
                         if inv.retention_ids:
                             for ret in inv.retention_ids:
                                 iva_ret_nc=iva_ret+ret.total_iva
@@ -401,6 +404,12 @@ class sri_ats(osv.osv_memory):
                 if invoice_canceled:
                     anulados = SubElement(root,"anulados")
                     for inv in invoice_canceled:
+
+                        #P.R.: Si no existe un numero de factura en las canceladas 
+                        #entonces no son validas para el ATS
+                        if not inv.number:
+                            continue
+
                         numero_factura=inv.number.split('-')
                         detalle = SubElement(anulados,"detalleAnulados")
                         SubElement(detalle, "tipoComprobante").text = "18"
