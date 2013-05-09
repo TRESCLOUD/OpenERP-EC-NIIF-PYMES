@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="res_partner_institutoecuatorianodeseguridadsocial0" model="res.partner">			
+			<field name="name">INSTITUTO ECUATORIANO DE SEGURIDAD SOCIAL</field>
+			<field name="lang">en_US</field>
+			<field eval="1" name="customer"/>
+			<field eval="1" name="supplier"/>
+			<field eval="0" name="agent"/>
+			<field eval="0" name="foreing"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="vat_subjected"/>
+			<field eval="0" name="employee"/>			
+			<field name="company_id" ref="base.main_company"/>				
+			<field eval="[(6,0,[])]" name="category_id"/>
+		</record>
+	</data>
+</openerp>
