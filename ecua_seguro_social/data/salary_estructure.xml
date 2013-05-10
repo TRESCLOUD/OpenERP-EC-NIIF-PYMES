@@ -39,28 +39,28 @@
 
 
 		<record id="SALBAS" model="hr.salary.rule.percentage.base">
-			<field name="name">Salario Básico</field>
 			<field name="base">contract.wage</field>
+			<field name="name">Salario (Contrato Base)</field>
 		</record>
 
 		<record id="S292" model="hr.salary.rule.percentage.base">
-			<field name="name">Salario Básico Unificado - 292</field>
-			<field name="base">292</field>
+			<field name="base">318</field>
+			<field name="name">Salario Básico Unificado - 318</field>
 		</record>
 
 		<record id="SALBRU" model="hr.salary.rule.percentage.base">
-			<field name="name">Total Ingresos</field>
 			<field name="base">categories.INGR</field>
+			<field name="name">Subtotal Ingresos</field>
 		</record>
 		
 		<record id="Ingresos" model="hr.salary.rule.percentage.base">
-			<field name="name">Ingresos + Otros Ingresos</field>
 			<field name="base">categories.INGR + categories.OINGR</field>
+			<field name="name">Total Ingresos (Subtotal Ingresos + Otros Ingresos)</field>
 		</record>
 
 		<record id="SALNET" model="hr.salary.rule.percentage.base">
-			<field name="name">Salario Neto</field>
 			<field name="base">categories.INGR + categories.OINGR - categories.EGRE</field>
+			<field name="name">Salario Neto (Total Ingresos - Total Egresos)</field>
 		</record>
 
 		<!-- Registro de IESS -->
@@ -68,106 +68,24 @@
 		<record id="iess_partner" model="res.partner">
 			<field name="name">INSTITUTO ECUATORIANO DE SEGURIDAD SOCIAL</field>
 		</record>
-		
-		<!-- Reglas Salariales -->
-
-        <record id="hr_rule_basic" model="hr.salary.rule">
-            <field name="name">Salario Básico</field>
-            <field name="sequence" eval="1"/>
-            <field name="code">BASIC</field>
-            <field name="category_id" ref="INGR"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = contract.wage</field>
-        </record>
-
-        <record id="hr_iess_personal" model="hr.salary.rule">
-            <field name="name">IESS Personal</field>
-            <field name="sequence" eval="17"/>
-            <field name="code">IESSPERSONAL</field>
-            <field name="category_id" ref="EGRE"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="SALBRU"></field>
-            <field name="quantity">1</field>
-            <field name="amount_percentage">9.35</field>            
-			<field name="pay_to_other">True</field>
-			<field name="partner_id" ref="iess_partner"></field>
-        </record>
-
-        <record id="hr_iess_patronal" model="hr.salary.rule">
-            <field name="name">IESS Patronal</field>
-            <field name="sequence" eval="18"/>
-            <field name="code">IESSPATRONAL</field>
-            <field name="category_id" ref="CONT"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="SALBRU"></field>
-            <field name="quantity">1</field>
-            <field name="amount_percentage">12.15</field>            
-			<field name="pay_to_other">True</field>
-			<field name="partner_id" ref="iess_partner"></field>
-        </record>
-
-        <record id="hr_decimo_cuarto" model="hr.salary.rule">
-            <field name="name">Décimo Cuarto</field>
-            <field name="sequence" eval="19"/>
-            <field name="code">DCUARTO</field>
-            <field name="category_id" ref="CONT"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="S292"></field>
-            <field name="quantity">1</field>
-            <field name="amount_percentage">8.333</field>            
-			<field name="pay_to_other">True</field>
-        </record>
-
-
-        <record id="hr_decimo_tercero" model="hr.salary.rule">
-            <field name="name">Décimo Tercero</field>
-            <field name="sequence" eval="20"/>
-            <field name="code">DTERCERO</field>
-            <field name="category_id" ref="CONT"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="SALBRU"></field>
-            <field name="quantity">1</field>
-            <field name="amount_percentage">8.333</field>            
-			<field name="pay_to_other">True</field>
-        </record>
-
-        <record id="hr_fondos_reserva" model="hr.salary.rule">
-            <field name="name">Fondos de Reserva Pagados</field>
-            <field name="sequence" eval="21"/>
-            <field name="code">FRESERVAP</field>
-            <field name="category_id" ref="OINGR"/>
-            <field name="condition_select">none</field>
-            <field name="amount_select">percentage</field>
-            <field name="amount_percentage_base" ref="SALBRU"></field>
-            <field name="quantity">1</field>
-            <field name="amount_percentage">8.333</field>
-        </record>
-        
-        <record id="hr_rule_ausencia" model="hr.salary.rule">
-            <field name="name">Visitas al IEES</field>
-            <field name="sequence" eval="1"/>
-            <field name="code">VIEES</field>
-            <field name="category_id" ref="EGRE"/>
-            <field name='condition_select'>python</field>
-         	<field name='condition_python'>result = total_ausencia &#62; 0</field>
-            <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = total_ausencia</field>
-        </record>
 
         <!-- Salary Structure -->
-
-         <record id="structure_base" model="hr.payroll.structure">
-            <field name="code">BASE</field>
-            <field name="name">SALARIO UNIFICADO IESS</field>
-            <field eval="[(6, 0, [ref('hr_rule_basic'),ref('hr_iess_personal'),ref('hr_iess_patronal'),ref('hr_decimo_cuarto'),ref('hr_decimo_tercero'),ref('hr_fondos_reserva'), ])]" name="rule_ids"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-
+	
+		<record id="hr_payroll_structure_ecregularsierrasinretencionfondoreserva0" model="hr.payroll.structure">
+			<field name="code">EC REGULAR - SIERRA - SIN RETENCION FONDO RESERVA</field>
+			<field name="name">EC REGULAR - SIERRA - SIN RETENCION FONDO RESERVA</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[ref('False'),ref('False'),ref('ecua_seguro_social.hr_decimo_cuarto'),ref('ecua_seguro_social.hr_rule_basic'),ref('False'),ref('ecua_seguro_social.hr_decimo_tercero'),ref('False'),ref('ecua_seguro_social.hr_iess_personal'),ref('False'),ref('False'),ref('ecua_seguro_social.hr_iess_patronal'),ref('ecua_seguro_social.hr_fondos_reserva')])]" name="rule_ids"/>
+		</record>	
+		
+		<record id="hr_payroll_structure_ecregularsierraconretencionfondoreserva0" model="hr.payroll.structure">
+			<field name="code">EC REGULAR - SIERRA - CON RETENCION FONDO RESERVA</field>
+			<field name="name">EC REGULAR - SIERRA - CON RETENCION FONDO RESERVA</field>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[ref('False'),ref('False'),ref('False'),ref('ecua_seguro_social.hr_decimo_cuarto'),ref('ecua_seguro_social.hr_rule_basic'),ref('False'),ref('ecua_seguro_social.hr_decimo_tercero'),ref('False'),ref('ecua_seguro_social.hr_iess_personal'),ref('False'),ref('False'),ref('ecua_seguro_social.hr_iess_patronal'),ref('False')])]" name="rule_ids"/>
+		</record>
+		
+		
 		<!-- Causas de Ausencia -->
 
 	    <record model="hr.holidays.status" id="hr_holidays.holiday_status_cl">
@@ -189,4 +107,600 @@
 	    </record>
 
     </data>
+    
+    <!-- Reglas Salariales -->
+   	<data noupdate="1">
+		<record id="hr_salary_rule_salariobase" model="hr.salary.rule">
+			<field name="code">BASIC</field>
+			<field eval="1" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES POR BENEFICIOS DE LEY A EMPLEADOS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">none</field>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Salario Base</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute">result = contract.wage * worked_days.DIAS_TRABAJADOS.number_of_days / worked_days.DIAS_DEL_MES.number_of_days</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_iesspersonal" model="hr.salary.rule">
+			<field name="code">IESSPERSONAL 9.35</field>
+			<field eval="2" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field name="partner_id" ref="ecua_seguro_social.iess_partner"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES CON EL IESS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="-9.35" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
+			<field name="amount_select">percentage</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">IESS Personal 9.35</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'APORTES A LA SEGURIDAD SOCIAL (incluido fondo de reserva)')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="1" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.EGRE"/>
+			<field name="quantity">1</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_iesspatronal" model="hr.salary.rule">
+			<field name="code">IESSPATRONAL 12.15</field>
+			<field eval="3" name="sequence"/>
+			<field eval="0" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field name="partner_id" ref="ecua_seguro_social.iess_partner"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES CON EL IESS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="12.15" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
+			<field name="amount_select">percentage</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">IESS Patronal 12.15</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'APORTES A LA SEGURIDAD SOCIAL (incluido fondo de reserva)')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="1" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.CONT"/>
+			<field name="quantity">1</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_provisiondcimocuarto" model="hr.salary.rule">
+			<field name="code">PROV DCUARTO</field>
+			<field eval="4" name="sequence"/>
+			<field eval="0" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="8.33" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.S292"/>
+			<field name="amount_select">percentage</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Provision Décimo Cuarto</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'BENEFICIOS SOCIALES E INDEMNIZACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.CONT"/>
+			<field name="quantity">1</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_provisiondcimotercero" model="hr.salary.rule">
+			<field name="code">PROV DTERCERO</field>
+			<field eval="5" name="sequence"/>
+			<field eval="0" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION DECIMO TERCERO')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="8.33" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
+			<field name="amount_select">percentage</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Provision Décimo Tercero</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'BENEFICIOS SOCIALES E INDEMNIZACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.CONT"/>
+			<field name="quantity">1</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_fondosdereservapagados" model="hr.salary.rule">
+			<field name="code">FRESERVAP</field>
+			<field eval="6" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION FONDOS DE RESERVA')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="8.33" name="amount_percentage"/>
+			<field name="condition_select">python</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
+			<field name="amount_select">percentage</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Fondos de Reserva Pagados</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+# result = rules.NET &gt; categories.NET * 0.10
+result = contract.number_of_year &gt; 1.00</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'APORTES A LA SEGURIDAD SOCIAL (incluido fondo de reserva)')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.OINGR"/>
+			<field name="quantity">1</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_horasextrasregulares" model="hr.salary.rule">
+			<field name="code">HORA_EXTRA_REGULAR</field>
+			<field eval="8" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'NOMINA POR PAGAR')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0.625" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBAS"/>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Horas Extras Regulares</field>
+			<field name="condition_python">result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours * 0.00625 * contract.wage</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">worked_days.HORA_EXTRA_REGULAR.number_of_hours</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_horasextrasextraordinarias" model="hr.salary.rule">
+			<field name="code">HORA_EXTRA_EXTRAORDINARIA</field>
+			<field eval="9" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'NOMINA POR PAGAR')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0.8333" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBAS"/>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Horas Extras Extraordinarias</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours  * 0.008333333 * contract.wage</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">0.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_pagodecimotercero" model="hr.salary.rule">
+			<field name="code">PAG DTERCERO</field>
+			<field eval="10" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES POR BENEFICIOS DE LEY A EMPLEADOS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">python</field>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Pago Decimo Tercero</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = False
+# result = rules.NET &gt; categories.NET * 0.10
+# result = if payslip.date_to.month = 12</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = 0
+# for employee.payslip_ids as oldpayslip
+#   if oldpayslip.date_to &lt; payslip.date - 1.year
+#      result += oldpayslip.rules.decimotercero</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'PROVISION DECIMO TERCERO')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.OINGR"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_comisiones" model="hr.salary.rule">
+			<field name="code">COMISION</field>
+			<field eval="11" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES CON EL IESS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">python</field>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Comisiones</field>
+			<field name="condition_python">result = inputs.COMISION.amount != 0</field>
+			<field name="amount_python_compute">result = inputs.COMISION and inputs.COMISION.amount</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="hr_salary_rule_bonificacionesporcumplimiento" model="hr.salary.rule">
+			<field name="code">BONO</field>
+			<field eval="12" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES CON EL IESS')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">python</field>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Bonificaciones por Cumplimiento</field>
+			<field name="condition_python">result = inputs.BONO.amount != 0</field>
+			<field name="amount_python_compute">result = inputs.BONO and inputs.BONO.amount</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">0.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_pagodecimocuartosierra" model="hr.salary.rule">
+			<field name="code">PAG DCUARTO</field>
+			<field eval="13" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">python</field>
+			<field name="amount_select">fix</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Pago Decimo Cuarto Sierra</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+#result = rules.NET &gt; categories.NET * 0.10
+result = False</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.OINGR"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_provisionvacaciones" model="hr.salary.rule">
+			<field name="code">PROV VACA</field>
+			<field eval="14" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION VACACIONES')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="4.1667" name="amount_percentage"/>
+			<field name="condition_select">none</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Provision Vacaciones</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+result = rules.NET &gt; categories.NET * 0.10</field>
+			<field name="amount_python_compute">result = categories.INGR * 15 / 30 / 12
+if contract.number_of_year &gt; 5.00:
+    result = categories.INGR * (15 + contract.number_of_year - 5) / 30 / 12</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'BENEFICIOS SOCIALES E INDEMNIZACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.CONT"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_fondosdereservaretenidos" model="hr.salary.rule">
+			<field name="code">PROV FOND RESERV</field>
+			<field eval="5" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field name="partner_id" ref="ecua_seguro_social.iess_partner"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION FONDOS DE RESERVA')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="condition_select">python</field>
+			<field name="amount_select">fix</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Fondos de Reserva Retenidos</field>
+			<field name="condition_python">result = contract.number_of_year &gt; 1.00
+</field>
+			<field name="amount_python_compute"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days.
+# inputs: object containing the computed inputs.
+
+# Note: returned value have to be set in the variable 'result'
+
+result = contract.wage * 0.10</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'APORTES A LA SEGURIDAD SOCIAL (incluido fondo de reserva)')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="1" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.CONT"/>
+			<field name="quantity">1.0</field>
+		</record>
+	</data>
+    
 </openerp>
