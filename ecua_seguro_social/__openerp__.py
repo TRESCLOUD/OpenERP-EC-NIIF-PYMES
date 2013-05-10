@@ -23,7 +23,7 @@
 {
         "name" : "Ecuadorian Human Resources",
         "version" : "1.21",
-        "author" : "Christopher Ormaza - Ecuadorenlinea.net",
+        "author" : "Christopher Ormaza - Ecuadorenlinea.net / TRESCLOUD Cia.Ltda",
         "website" : "http://www.ecuadorenlinea.net",
         "category" : "Base/Partners",
         "description": """Human Resources for Ecuadorian localisation""",
