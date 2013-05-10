@@ -38,9 +38,8 @@
    """,
    "category": "Human Resources",
    "version" : "1.0",
-   'depends': ['base','ecua_account','hr_contract'],
+   'depends': ['base','ecua_account','hr_contract','ecua_seguro_social'],
    'init_xml': [],
-   'update_xml': ['data/salary_rules.xml',
-                  'ecua_salary_rules.xml'],
+   'update_xml': ['ecua_salary_rules.xml',],
    'installable': True,
 }
