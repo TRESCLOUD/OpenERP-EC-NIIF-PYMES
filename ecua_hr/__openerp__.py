@@ -29,8 +29,9 @@
    'complexity': "easy",
    "description": """
       
-   Este sistema permite agregar automaticamente lineas con valor cero a Dias trabajados (HORA_EXTRA_REGULAR Y HORA_EXTRA_EXTRAORDINARIA) y 
-   Otros Ingresos (BONIFICACIÓN Y COMISIÓN).
+   Este sistema permite agregar automaticamente lineas con valor cero a Dias trabajados (HORA_EXTRA_REGULAR, HORA_EXTRA_EXTRAORDINARIA, DIAS_DEL_MES Y DIAS_TRABAJADOS) y 
+   Otros Ingresos (BONIFICACIÓN, COMISIÓN, TRANSPORTE Y ALIMENTACIÓN).
+   Se agrega el campo number_of_year tipo función en el objeto hr.contract
        
    Desarrollador:
    
@@ -39,8 +40,8 @@
    """,
    "category": "Human Resources",
    "version" : "1.0",
-   'depends': ['base','ecua_seguro_social'],
+   'depends': ['base','hr_contract','ecua_account','ecua_seguro_social'],
    'init_xml': [],
-   'update_xml': [],
+   'update_xml': ['ecua_hr.xml',],
    'installable': True,
 }
