@@ -281,8 +281,12 @@ class account_retention(osv.osv):
                 if not ret.invoice_id.state == 'open':
                     raise osv.except_osv('Error!', "The invoice is not open, you cannot add a retention")
                 #Se verifica que el residuo de la factura no sea superior a lo que se va a retener
+                #P.R.: Se requiere verificar el caso que se haya pagado la factura y que el saldo
+                #      de la factura sea igual a lo retenido, de ser asi debe permitirse
                 if ret.invoice_id.residual < ret.total:
-                    raise osv.except_osv('Error!', "The residual value of invoice is lower than total value of withholding")
+                    # Convierto a string para comparar texto y no numeros flotantes
+                    if not (str(ret.invoice_id.residual) == str(ret.total)):
+                        raise osv.except_osv('Error!', "The residual value of invoice is lower than total value of withholding")
                 #Obtengo el periodo de la factura
                 period=ret.invoice_id.period_id.id
                 #creacion de vauchers de pago con retencion
