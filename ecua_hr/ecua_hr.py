@@ -145,10 +145,8 @@ class hr_contract(osv.osv):
                 difference_in_years = diffyears + (difference.days + difference.seconds / 86400.0) / days_in_year
                 total_years = relativedelta(today, date_start).years
                 total_months = relativedelta(today, date_start).months
-                months_equiv_in_year = ((float(total_months)*1)/12)
                 year_month = float(total_months) / 100 + total_years
-                year = float(months_equiv_in_year) + total_years
-                res[contract.id] = year
+                res[contract.id] = total_years
             else:
                 res[contract.id] = 0.0
         return res
