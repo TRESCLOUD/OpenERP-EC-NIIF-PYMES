@@ -133,6 +133,9 @@ class account_invoice(osv.osv):
         if not number:
             return {'value': {}}
         else:
+            # Ahora se indica que la verificacion se realiza en base al numero digitado, ya que puede utilizarce
+            # autorizaciones de locales y puntos de impresion diferentes al de las facturas
+            context = {'use_secuence': True}
             auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'credit_note', company_id, shop_id, number, printer_id, context)
         if not auth['authorization']:
             raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))

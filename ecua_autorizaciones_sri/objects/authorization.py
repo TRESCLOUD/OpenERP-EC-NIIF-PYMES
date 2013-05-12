@@ -253,29 +253,57 @@ class sri_authorization(osv.osv):
 
 
     def get_auth(self, cr, uid, type, company_id=None, shop_id=None, secuence=None, printer_id=None, context=None):
+
+        # El SRI permite usar Notas de Credito que sean de diferente punto de venta que la factura
+        # por ese motivo se modifica el codigo para buscar una autorizacion en base al numero ingresado
+        # Esta funcion es utilizada por otras instancias de la parte del SRI
+        
         try:
+
             number = secuence.split('-')
             line_auth_obj = self.pool.get('sri.type.document')
-            if shop_id==None:
-                    shop_id = self.pool.get('sale.shop').search(cr, uid,[])[0]
-            if company_id==None:
-                    company_id = self.pool.get('res.company').search(cr, uid,[])[0]
-            if printer_id==None:
+
+            if context and 'use_secuence' in context and context['use_secuence']:
+                # en base a la secuencia verifico si hay autorizacion
+                # el company_id si debe ser usado
+                shop_id = self.pool.get('sale.shop').search(cr, uid,[('company_id','=',company_id),
+                                                                     ('number','=',number[0])])[0]
                 printer_id = self.pool.get('sri.printer.point').search(cr, uid, [('shop_id','=',shop_id)])[0]
-            if not self.pool.get('sale.shop').browse(cr, uid, shop_id,context).number == number[0]:
-                return {'authorization': None}
+                
+            else:
             
-            if not self.pool.get('sri.printer.point').browse(cr, uid, printer_id,context).number == number[1]:
-                return {'authorization': None}
+                if shop_id==None:
+                        shop_id = self.pool.get('sale.shop').search(cr, uid,[])[0]
+                
+                if company_id==None:
+                        company_id = self.pool.get('res.company').search(cr, uid,[])[0]
+                
+                if printer_id==None:
+                    printer_id = self.pool.get('sri.printer.point').search(cr, uid, [('shop_id','=',shop_id)])[0]
+                
+                if not self.pool.get('sale.shop').browse(cr, uid, shop_id,context).number == number[0]:
+                    return {'authorization': None}
+                
+                if not self.pool.get('sri.printer.point').browse(cr, uid, printer_id,context).number == number[1]:
+                    return {'authorization': None}
+            
+            
             line_auth_ids = line_auth_obj.search(cr, uid, [('name','=',type),('shop_id','=',shop_id), ('printer_id','=',printer_id)])
             auth_id = None
+            
             for line_id in line_auth_ids:
+            
                 document = self.pool.get('sri.type.document').browse(cr, uid, [line_id,], context)[0]
+                
                 if not document.sri_authorization_id.auto_printer:
+                
                     if (int(number[2])>= document.first_secuence and int(number[2])<= document.last_secuence) and (document.sri_authorization_id.company_id.id == company_id):
                         auth_id = document.sri_authorization_id.id
+            
             return{'authorization': auth_id}
+            
         except:
+            
             return {'authorization': None}
     
     
