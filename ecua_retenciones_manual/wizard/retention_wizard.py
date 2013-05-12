@@ -242,6 +242,25 @@ class retention_wizard(osv.osv_memory):
                     values['automatic'] = False
                     values['creation_date'] = None
         return {'value': values, 'domain':{'shop_id':[('id', 'in', shop_ids)]}}
+  
+
+    def onchange_aut_sale(self, cr, uid, ids, authorization_sale_id , context=None):
+        
+        doc_obj=self.pool.get('sri.authorization.supplier')
+        values = {}
+
+        if context is None:
+            context = {}
+        
+        if authorization_sale_id is None:
+            return True
+
+        authorization = doc_obj.browse(cr, uid, authorization_sale_id, context)
+        
+        values['number'] = authorization.agency + "-" + authorization.printer_point + "-"
+
+        return {'value': values}
+ 
     
     def create_retention(self, cr, uid, ids, context=None):
         if not context:
