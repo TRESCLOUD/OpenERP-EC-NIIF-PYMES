@@ -107,7 +107,7 @@
                         <field name="second_name"/>
                         <field name="last_name"/>
                         <field name="mother_last_name"/>
-                        <field name="type_employee"/>
+                        <!-- field name="type_employee"/-->
                         <field name="department_id"/>
                     </tree>
                 </field>
@@ -124,7 +124,7 @@
                         <field name="second_name" readonly="1"/>
                         <field name="last_name" readonly="1"/>
                         <field name="mother_last_name" readonly="1"/>
-                        <field name="type_employee" readonly="1"/>
+                        <!-- field name="type_employee" readonly="1"/-->
                         <field name="department_id" readonly="1"/>
                         <field name="date_next_vacation" readonly="1"/>
                     </form>
