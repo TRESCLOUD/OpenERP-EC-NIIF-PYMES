@@ -23,8 +23,8 @@
 ########################################################################
 {
    "name" : "Módulo de facturación a proveedores/clientes para Ecuador",
-   "author" : "TRESCloud Cia. Ltda.",
-   "maintainer": 'TRESCloud Cia. Ltda.',
+   "author" : "TRESCLOUD Cia. Ltda.",
+   "maintainer": 'TRESCLOUD Cia. Ltda.',
    "website": 'http://www.trescloud.com',
    'complexity': "easy",
    "description": """Sistema de gestión y control de compras y ventas 
