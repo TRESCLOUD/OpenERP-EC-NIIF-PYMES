@@ -207,9 +207,9 @@ result = rules.NET &gt; categories.NET * 0.10</field>
 			<field eval="1" name="company_contribution"/>
 			<field name="partner_id" ref="ecua_seguro_social.iess_partner"/>
 			<field eval="0" name="account_debit_partner"/>
-			<field model="account.account" name="account_credit" search="[('name', '=', u'NOMINA POR PAGAR')]"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES CON EL IESS')]"/>
 			<field name="company_id" ref="base.main_company"/>
-			<field eval="-9.35" name="amount_percentage"/>
+			<field eval="9.35" name="amount_percentage"/>
 			<field name="condition_select">none</field>
 			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBRU"/>
 			<field model="hr.contribution.register" name="register_id" search="[('name', '=', u'IESS')]"/>
@@ -242,8 +242,8 @@ result = rules.NET &gt; categories.NET * 0.10</field>
 
 # Note: returned value have to be set in the variable 'result'
 
-result = contract.wage * 0.10</field>
-			<field model="account.account" name="account_debit" search="[('name', '=', u'APORTES A LA SEGURIDAD SOCIAL (incluido fondo de reserva)')]"/>
+result = contract.wage * 0.10</field>                                                    
+			<field model="account.account" name="account_debit" search="[('name', '=', u'DIVIDENDOS POR PAGAR')]"/>			
 			<field eval="0" name="use_partner_account"/>
 			<field eval="1" name="pay_to_other"/>
 			<field name="category_id" ref="ecua_seguro_social.EGRE"/>
