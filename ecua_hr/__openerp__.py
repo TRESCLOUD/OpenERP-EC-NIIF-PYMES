@@ -23,8 +23,8 @@
 ########################################################################
 {
    "name" : "Módulo para personalizar la vista de planilla de pagos de empleados",
-   "author" : "TRESCloud Cia. Ltda.",
-   "maintainer": 'TRESCloud Cia. Ltda.',
+   "author" : "TRESCLOUD Cia. Ltda.",
+   "maintainer": 'TRESCLOUD Cia. Ltda.',
    "website": 'http://www.trescloud.com',
    'complexity': "easy",
    "description": """
@@ -40,7 +40,7 @@
    """,
    "category": "Human Resources",
    "version" : "1.0",
-   'depends': ['base','hr_contract','ecua_account','ecua_seguro_social'],
+   'depends': ['base','hr_contract','hr_payroll','ecua_account','ecua_seguro_social','account'],
    'init_xml': [],
    'update_xml': ['ecua_hr.xml',],
    'installable': True,
