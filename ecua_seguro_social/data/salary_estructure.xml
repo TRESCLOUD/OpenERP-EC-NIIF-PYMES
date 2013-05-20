@@ -522,59 +522,6 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 		</record>
 	</data>
 	<data noupdate="1">
-		<record id="hr_salary_rule_pagodecimotercero" model="hr.salary.rule">
-			<field name="code">PAG DTERCERO</field>
-			<field eval="10" name="sequence"/>
-			<field eval="1" name="appears_on_payslip"/>
-			<field name="condition_range">contract.wage</field>
-			<field eval="0" name="company_contribution"/>
-			<field eval="0" name="account_debit_partner"/>
-			<field model="account.account" name="account_credit" search="[('name', '=', u'OTRAS OBLIGACIONES CORRIENTES POR BENEFICIOS DE LEY A EMPLEADOS')]"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field name="condition_select">python</field>
-			<field name="amount_select">code</field>
-			<field eval="1" name="active"/>
-			<field eval="0" name="account_credit_partner"/>
-			<field name="name">Pago Decimo Tercero</field>
-			<field name="condition_python"># Available variables:
-#----------------------
-# payslip: object containing the payslips
-# employee: hr.employee object
-# contract: hr.contract object
-# rules: object containing the rules code (previously computed)
-# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: object containing the computed worked days
-# inputs: object containing the computed inputs
-
-# Note: returned value have to be set in the variable 'result'
-
-result = False
-# result = rules.NET &gt; categories.NET * 0.10
-# result = if payslip.date_to.month = 12</field>
-			<field name="amount_python_compute"># Available variables:
-#----------------------
-# payslip: object containing the payslips
-# employee: hr.employee object
-# contract: hr.contract object
-# rules: object containing the rules code (previously computed)
-# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: object containing the computed worked days.
-# inputs: object containing the computed inputs.
-
-# Note: returned value have to be set in the variable 'result'
-
-result = 0
-# for employee.payslip_ids as oldpayslip
-#   if oldpayslip.date_to &lt; payslip.date - 1.year
-#      result += oldpayslip.rules.decimotercero</field>
-			<field model="account.account" name="account_debit" search="[('name', '=', u'PROVISION DECIMO TERCERO')]"/>
-			<field eval="0" name="use_partner_account"/>
-			<field eval="0" name="pay_to_other"/>
-			<field name="category_id" ref="ecua_seguro_social.OINGR"/>
-			<field name="quantity">1.0</field>
-		</record>
-	</data>
-	<data noupdate="1">
 		<record id="hr_salary_rule_comisiones" model="hr.salary.rule">
 			<field name="code">COMISION</field>
 			<field eval="40" name="sequence"/>
@@ -622,55 +569,7 @@ result = 0
 			<field name="quantity">0.0</field>
 		</record>
 	</data>
-	<data noupdate="1">
-		<record id="hr_salary_rule_pagodecimocuartosierra" model="hr.salary.rule">
-			<field name="code">PAG DCUARTO</field>
-			<field eval="200" name="sequence"/>
-			<field eval="1" name="appears_on_payslip"/>
-			<field name="condition_range">contract.wage</field>
-			<field eval="0" name="company_contribution"/>
-			<field eval="0" name="account_debit_partner"/>
-			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field name="condition_select">python</field>
-			<field name="amount_select">fix</field>
-			<field eval="1" name="active"/>
-			<field eval="0" name="account_credit_partner"/>
-			<field name="name">Pago Decimo Cuarto Sierra</field>
-			<field name="condition_python"># Available variables:
-#----------------------
-# payslip: object containing the payslips
-# employee: hr.employee object
-# contract: hr.contract object
-# rules: object containing the rules code (previously computed)
-# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: object containing the computed worked days
-# inputs: object containing the computed inputs
-
-# Note: returned value have to be set in the variable 'result'
-
-#result = rules.NET &gt; categories.NET * 0.10
-result = False</field>
-			<field name="amount_python_compute"># Available variables:
-#----------------------
-# payslip: object containing the payslips
-# employee: hr.employee object
-# contract: hr.contract object
-# rules: object containing the rules code (previously computed)
-# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: object containing the computed worked days.
-# inputs: object containing the computed inputs.
-
-# Note: returned value have to be set in the variable 'result'
-
-result = contract.wage * 0.10</field>
-			<field model="account.account" name="account_debit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
-			<field eval="0" name="use_partner_account"/>
-			<field eval="0" name="pay_to_other"/>
-			<field name="category_id" ref="ecua_seguro_social.OINGR"/>
-			<field name="quantity">1.0</field>
-		</record>
-	</data>
+	
 	<data noupdate="1">
 		<record id="hr_salary_rule_provisionvacaciones" model="hr.salary.rule">
 			<field name="code">PROV VACA</field>
