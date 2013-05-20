@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
+	<data> 
 
 		<record id="hr_contract_view_form2_inherit_trescloud" model="ir.ui.view">
 			<field name="name">hr.contract.view.form</field>
@@ -9,11 +9,121 @@
 			<field name="priority">1</field>
 			<field name="inherit_id" ref="ecua_seguro_social.hr_contract_view_form2"/>
 			<field name="arch" type="xml">
+			
 				<xpath expr="/form/group//field[@name='method_payment']" position="after">
-					<field name="number_of_year" />
+					<field name="number_of_year" invisible="True"/>
 				</xpath>
+	
+				<!-- Se oculta de la pantalla Contratos los campos tipo de contrato y metodo de pago -->
+				<xpath expr="/form/group//field[@name='type_id']" position="attributes">
+					<attribute name="invisible">True</attribute>
+				</xpath>
+				<xpath expr="/form/group//field[@name='method_payment']" position="attributes">
+					<attribute name="invisible">True</attribute>
+				</xpath>
+				
+				<!-- Se asigna campos al grupo de vista extendida -->
+				<xpath expr="/form/notebook/page/group//separator[@string='Trial Period']" position="attributes">
+					<attribute name="groups">base.group_extended</attribute>
+				</xpath>
+				<xpath expr="/form/notebook/page/group//field[@name='trial_date_start']" position="attributes">
+					<attribute name="groups">base.group_extended</attribute>
+				</xpath>
+				<xpath expr="/form/notebook/page/group//field[@name='trial_date_end']" position="attributes">
+					<attribute name="groups">base.group_extended</attribute>
+				</xpath>
+								
+			</field>
+		</record>
+		
+		<record id="view_hr_payslip_form_inherit_trescloud" model="ir.ui.view">
+			<field name="name">hr.payslip.form</field>
+			<field name="model">hr.payslip</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="ecua_seguro_social.view_hr_payslip_form"/>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page[@string='Worked Days &amp; Inputs']" position="replace"/>
+				
+				<xpath expr="/form/notebook/page[@string='Salary Computation']" position="before">
+					<page string="Worked Days &amp; Inputs">
+						<field name="worked_days_line_ids" colspan="4" nolabel="1">
+							<tree string="Worked Days" editable="bottom">
+								<field name="name" />
+								<field name="code" />
+								<field name="number_of_days" sum="Total Working Days" />
+								<field name="number_of_hours" />
+								<field name="contract_id" groups="base.group_extended" />
+								<field name="sequence" invisible="True" />
+							</tree>
+							<form string="Worked Day">
+								<group>
+									<field name="name" select="1" />
+									<field name="code" select="1" />
+									<field name="payslip_id" />
+									<field name="sequence" groups="base.group_extended" />
+									<field name="number_of_days" />
+									<field name="number_of_hours" />
+									<field name="contract_id" groups="base.group_extended" />
+								</group>
+							</form>
+						</field>
+							<!-- Adds input_line_ids sections to Worked Days e Inputs CY 07-05-2013 -->					
+						<field colspan="4" name="input_line_ids" nolabel="1">
+							 <tree string="Otros Ingresos" editable="bottom">
+                      				<field name="name" />
+                      				<field name="code" />
+                      				<field name="amount" />
+                      				<field name="contract_id" />
+                             </tree>
+                        </field>
+					</page>
+				</xpath>
+				
+				<xpath expr="/form/group/group//button[@string='Generate Voucher']" position="replace"/>	
+				
 			</field>
 		</record>
 		
 	</data>
+	
+	<data noupdate="1">
+	
+		<!-- Restringir acceso al menú principal Nómina -->
+		
+		<menuitem id="hr_payroll.menu_hr_root_payroll" name="Payroll" sequence="9" 
+		parent="hr.menu_hr_root" groups="base.group_hr_manager,base.group_hr_user"/>		    
+         
+		<menuitem id="ecua_seguro_social.hr_provision_menu" name="Pago de Provisiones" parent="hr_payroll.menu_hr_root_payroll" 
+		action="ecua_seguro_social.action_hr_provision_tree_view" groups="base.group_hr_manager,base.group_hr_user"/>
+		
+		<!-- Restringir acceso al menú principal Vacaciones y dias feriados -->
+		
+		<menuitem id="ecua_seguro_social.hr_newholidays_menu_root" name="Vacaciones y Dias Feriados"
+		parent="hr.menu_hr_root" groups="base.group_hr_manager,base.group_hr_user"/>
+			
+		<menuitem id="ecua_seguro_social.hr_newholidays_menu" name="Ausencias" parent="ecua_seguro_social.hr_newholidays_menu_root"
+		action="ecua_seguro_social.action_hr_newholidays_tree_view" groups="base.group_hr_manager,base.group_hr_user"/>
+		 
+ 	    <menuitem id="ecua_seguro_social.hr_vacation_menu" parent="ecua_seguro_social.hr_newholidays_menu_root" 
+ 	    action="ecua_seguro_social.action_hr_vacation_view" groups="base.group_hr_manager,base.group_hr_user"/>
+		
+		
+		<!-- Mover menus de Contabilidad a Recursos humanos/Nómina -->	
+
+		<menuitem id="ecua_seguro_social.menu_advances_wizard" name="Advances Wizard" parent="hr_payroll.menu_hr_root_payroll" sequence="80" 
+			action="ecua_seguro_social.hr_advances_wizard_action" groups="base.group_hr_manager,base.group_hr_user"/>
+			
+		<menuitem  id="ecua_seguro_social.menu_action_supplier_advance" parent="hr_payroll.menu_hr_root_payroll" sequence="90"
+		    action="ecua_seguro_social.action_supplier_advance" groups="base.group_hr_manager,base.group_hr_user"/>
+
+		<!-- Delete Menus -->
+ 
+		<delete id="ecua_seguro_social.account_hr_third_loan_menu" model="ir.ui.menu"/>
+		<delete id="ecua_seguro_social.menu_action_payslip_payment" model="ir.ui.menu"/>
+		<delete id="ecua_seguro_social.hr_employee_vacation_menu" model="ir.ui.menu"/>
+		<delete id="ecua_seguro_social.hr_newholidays_type_menu" model="ir.ui.menu" />
+		
+	</data>
+	
 </openerp>
