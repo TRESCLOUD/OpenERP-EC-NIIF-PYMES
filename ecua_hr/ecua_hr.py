@@ -40,13 +40,13 @@ class hr_payslip(osv.osv):
 
             input1 = {
                  'name': 'Bono',
-                 'code': 'BONIFICACIÓN',
+                 'code': 'BONO',
                  'amount': 0.0,
                  'contract_id': contract.id,
             }
             input2 = {
-                 'name': 'Comisión',
-                 'code': 'COMISIÓN',
+                 'name': 'Comision',
+                 'code': 'COMISION',
                  'amount': 0.0,
                  'contract_id': contract.id,
             }
@@ -57,8 +57,8 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,
             }
             input4 = {
-                 'name': 'Alimentación',
-                 'code': 'ALIMENTACIÓN',
+                 'name': 'Alimentacion',
+                 'code': 'ALIMENTACION',
                  'amount': 0.0,
                  'contract_id': contract.id,
             }
@@ -145,14 +145,21 @@ class hr_contract(osv.osv):
                 difference_in_years = diffyears + (difference.days + difference.seconds / 86400.0) / days_in_year
                 total_years = relativedelta(today, date_start).years
                 total_months = relativedelta(today, date_start).months
+                months_in_years = total_months*0.083333333
                 year_month = float(total_months) / 100 + total_years
-                res[contract.id] = total_years
+                number_of_year = total_years + months_in_years  
+                res[contract.id] = number_of_year
             else:
                 res[contract.id] = 0.0
         return res
     
     _columns = {
        'number_of_year': fields.function(_compute_year, string='No. of years of service', type='float', store=False, method=True, help='Total years of work experience'),
+       'type_id': fields.many2one('hr.contract.type', "Contract Type", required=False),
+        }
+    
+    _defaults = {
+       'method_payment': 'payment_employee',         
         }
 
-hr_contract()    
+hr_contract()
