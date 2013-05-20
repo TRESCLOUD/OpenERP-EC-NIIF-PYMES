@@ -132,7 +132,7 @@
 							<group colspan="4"
 								groups="base.group_hr_manager,account.group_account_manager">
 								<separator string="Accounting Info" colspan="4" />
-								<field name="partner_id" invisible="1"/>
+								<field name="partner_id" />
 								<field name="bank_account_id" colspan="4"
 									context="{'form_view_ref':'ecua_seguro_social.res_partner_bank_form_view','tree_view_ref':'ecua_seguro_social.res_partner_bank_tree_view'}" />
 								<field name="account_debit" required="1"></field>
