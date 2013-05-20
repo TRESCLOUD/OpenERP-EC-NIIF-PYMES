@@ -1343,7 +1343,7 @@ result = rules.NET > categories.NET * 0.10''',
         'quantity': '1.0',
      }
 
-    _sql_constraints = [('code_unique_salary_rule', 'unique(code)', _('Code of Salary rule must be unique!')),      ]
+    #_sql_constraints = [('code_unique_salary_rule', 'unique(code)', _('Code of Salary rule must be unique!')),      ]
 
     def _recursive_search_of_rules(self, cr, uid, rule_ids, context=None):
         """
@@ -1532,9 +1532,9 @@ class hr_payslip_line(osv.osv):
         'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Payroll')),
         'total': fields.function(_calculate_total, method=True, type='float', string='Total', digits_compute=dp.get_precision('Payroll'),store=True ),
     }
-    _sql_constraints = [
-                        ('code_unique_salary_rule', '1=1', _('Code can duplicate')),     
-                         ]
+#    _sql_constraints = [
+#                        ('code_unique_salary_rule', '1=1', _('Code can duplicate')),     
+#                         ]
 
 hr_payslip_line()
 
