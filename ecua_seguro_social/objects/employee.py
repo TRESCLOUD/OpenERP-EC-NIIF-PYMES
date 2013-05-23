@@ -376,6 +376,7 @@ class hr_employee(osv.osv):
                           'customer':True,
                           'supplier':True,
                           'employee':True,
+                          'lang': 'en_US',
                           'property_account_receivable' : values.get('account_debit',None),
                           'property_account_payable' : values.get('account_credit',None),
                           }

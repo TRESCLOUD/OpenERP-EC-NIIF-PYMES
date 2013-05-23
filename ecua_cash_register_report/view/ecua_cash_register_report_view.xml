@@ -69,6 +69,7 @@
 			             <field name="invoice_number" select="1"/>
 			             <field name="reference" select="1"/>
 			             <field name="total" select="1"/>
+			             <field name="price_list" select="1"/>
 			         </tree>
 			     </field>
 			 </record>
@@ -84,6 +85,8 @@
 			             <field name="factura" select="1"/>
 			             <field name="importe" select="1"/>
 			             <field name="saldo" select="1"/>
+			             <field name="reference" select="1"/>
+			             <field name="memoria" select="1"/>
 			         </tree>
 			     </field>
 			 </record>
