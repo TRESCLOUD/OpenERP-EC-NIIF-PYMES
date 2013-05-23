@@ -126,6 +126,7 @@ class caja_reporte(osv.osv_memory):
         res_dic = {}
         
         account_invoice_obj = self.pool.get('account.invoice')
+        sale_order_obj = self.pool.get('sale.order')
         
         # order by invoice_number
         list_ids = account_invoice_obj.search(cr, uid, [('reconciled','=',False),
@@ -139,11 +140,23 @@ class caja_reporte(osv.osv_memory):
             #Verify the date
             if self.is_today(factura_sin_cancelar.date_invoice, referencia):
                 
+                # Add the price list of first sale order related to the invoice
+                # in case exist (sale.order.invoice.rel)
+                cr.execute('select order_id from sale_order_invoice_rel where invoice_id = ' + str(factura_sin_cancelar.id) + ';')
+                sale_orders = cr.fetchall()
+                #sale_orders = self.pool.get('sale.order.invoice.rel').search(cr, uid, [('invoice_id','=',factura_sin_cancelar.id)])
+
+                price_list = ''
+                
+                if len(sale_orders) > 0:
+                    price_list = sale_order_obj.browse(cr, uid, sale_orders[0][0]).pricelist_id.name
+                
                 temp = {
                     'name': factura_sin_cancelar.partner_id.name,
                     'invoice_number': factura_sin_cancelar.invoice_number,
                     'reference': factura_sin_cancelar.name, 
                     'total': factura_sin_cancelar.amount_total,
+                    'price_list': price_list,
                 }
 
                 res.append(temp)    
@@ -193,6 +206,8 @@ class caja_reporte(osv.osv_memory):
                     'factura': lineas.name,
                     'importe': lineas.amount,
                     'saldo': lineas.amount_original - lineas.amount,
+                    'reference': lineas.voucher_id.reference,
+                    'memoria': lineas.voucher_id.name,
                  }
                 
                 res.append(temp)    
@@ -460,7 +475,8 @@ class caja_facturas_sin_pago(osv.osv_memory):
         'invoice_number': fields.char('Facturas', size=256, required=False, readonly=False),
         'reference': fields.char('Descripcion', size=256, required=False, readonly=False),
         'total': fields.float('Total', digits=(2,5)),
-        'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
+        'caja_id': fields.many2one('caja.reporte', 'Reporte Caja', required=False),
+        'price_list': fields.char('Lista de Precios', size=256, required=False, readonly=False),
                 }
 
 caja_facturas_sin_pago()
@@ -476,6 +492,8 @@ class caja_diarios_pagos(osv.osv_memory):
         'importe': fields.float('Importe', digits=(2,5)),
         'saldo': fields.float('Saldo', digits=(2,5)),
         'caja_id':fields.many2one('caja.reporte', 'Reporte Caja', required=False),
+        'reference': fields.char('Referencia', size=256, required=False, readonly=False),
+        'memoria': fields.char('Memoria', size=256, required=False, readonly=False),
                 }
 
 caja_diarios_pagos()
