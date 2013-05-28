@@ -13,13 +13,13 @@
         </record>
 
         <record id="INGR" model="hr.salary.rule.category">
-            <field name="name">Ingresos</field>
+            <field name="name">Ingresos (Genera beneficios sociales)</field>
             <field name="code">INGR</field>
             <field name="type">input</field>
         </record>
         
         <record id="OINGR" model="hr.salary.rule.category">
-            <field name="name">Otros Ingresos</field>
+            <field name="name">Otros Ingresos (No genera beneficios sociales)</field>
             <field name="code">OINGR</field>
             <field name="type">input</field>
         </record>
@@ -65,7 +65,7 @@
     </data>
     
 	<!-- Registro de PARTNERS -->
-	<data noupdate="0">	
+	<data noupdate="1">	
 		<record id="iess_partner" model="res.partner">			
 			<field name="name">INSTITUTO ECUATORIANO DE SEGURIDAD SOCIAL</field>
 			<field name="lang">en_US</field>
