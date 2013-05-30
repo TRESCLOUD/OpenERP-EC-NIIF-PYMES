@@ -9,7 +9,7 @@
 			<field name="report_name">payslip_general</field>
 			<field name="report_type">aeroo</field>
 			<field name="in_format">oo-odt</field>
-      		<field name='out_format' eval="ref('report_aeroo.report_mimetypes_odt_odt')"/>
+      		<field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')"/>
 			<field name="report_rml">ecua_seguro_social/report/report_payslip_details.odt</field>
 			<field name="parser_state">default</field>
 			<field name="tml_source">file</field>
