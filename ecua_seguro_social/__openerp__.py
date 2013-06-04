@@ -45,13 +45,14 @@
                      ],
         "init_xml" : [
                         #'data/data_init.xml',
+                        'data/salary_estructure.xml',
          ],
         "demo_xml" : [
                       #'data/data_init.xml',
                       ],
         "update_xml" : [
                         'data/data_init.xml',
-                        'data/salary_estructure.xml',
+                        #'data/salary_estructure.xml',
                         'data/education_area.xml',
                         'data/calendar.xml',
                         'data/company_configuration.xml',
