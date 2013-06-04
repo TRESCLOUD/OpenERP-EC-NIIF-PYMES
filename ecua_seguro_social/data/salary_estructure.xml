@@ -201,7 +201,7 @@ result = rules.NET &gt; categories.NET * 0.10</field>
 	<data noupdate="1">
 		<record id="hr_salary_rule_iesspersonal" model="hr.salary.rule">
 			<field name="code">IESSPERSONAL 9.35</field>
-			<field eval="110" name="sequence"/>
+			<field eval="100" name="sequence"/>
 			<field eval="1" name="appears_on_payslip"/>
 			<field name="condition_range">contract.wage</field>
 			<field eval="1" name="company_contribution"/>
