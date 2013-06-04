@@ -87,8 +87,7 @@ class account_invoice(osv.osv):
         'voucher_type_id': _get_voucher_type,  
         }
 
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id, voucher_type,\
-            date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False, context=None):
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False, voucher_type=False, context=None):
         if not context:
             context = {}
         partner_obj = self.pool.get('res.partner')

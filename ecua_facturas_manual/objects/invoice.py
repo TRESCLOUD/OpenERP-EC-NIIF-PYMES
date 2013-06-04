@@ -112,32 +112,38 @@ class account_invoice(osv.osv):
                        'message':_(u'Usted debe seleccionar primero la empresa para proceder con esta acción'),
                        }
             return {'value': values, 'domain':domain, 'warning': warning}
-        auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, invoice_number, auth_types[type], partner_id, date_invoice)
-        if not auth_data.get('auth_ids', []):
-            warning = {
-                       'title': _(u'Advertencia!!!'),
-                       'message':auth_data.get('message',''),
-                       }
-            return {'value': values, 'domain':domain, 'warning': warning}
-        domain = {
-                  field_auth_types[type]:[('id','in',auth_data.get('auth_ids', []))]
-                  }
-        if auth_data.get('multi_auth', False):
-            values = {
-                     field_number_types[type] : ""
-                     }
-            warning = {
-                       'title': _(u'Advertencia!!!'),
-                       'message':auth_data.get('message',''),
-                       }
-            return {'value': values, 'domain':domain, 'warning': warning}
-        else:
-            auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
-            if auth_id:
+        
+        #Llamar la funcion solo si se tiene datos suficientes
+        auth_data = {}
+        
+        if partner_id: 
+            auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, invoice_number, auth_types[type], partner_id, date_invoice)
+            
+            if not auth_data.get('auth_ids', []):
+                warning = {
+                           'title': _(u'Advertencia!!!'),
+                           'message':auth_data.get('message',''),
+                           }
+                return {'value': values, 'domain':domain, 'warning': warning}
+            domain = {
+                      field_auth_types[type]:[('id','in',auth_data.get('auth_ids', []))]
+                      }
+            if auth_data.get('multi_auth', False):
                 values = {
-                         field_number_types[type] : auth_data.get('res_number', ''),
-                         field_auth_types[type]: auth_id,
+                         field_number_types[type] : ""
                          }
+                warning = {
+                           'title': _(u'Advertencia!!!'),
+                           'message':auth_data.get('message',''),
+                           }
+                return {'value': values, 'domain':domain, 'warning': warning}
+            else:
+                auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
+                if auth_id:
+                    values = {
+                             field_number_types[type] : auth_data.get('res_number', ''),
+                             field_auth_types[type]: auth_id,
+                             }
             
         return {'value': values, 'domain':domain, 'warning': warning}
 
