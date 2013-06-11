@@ -43,6 +43,34 @@
 			<field name="inherit_id" ref="ecua_seguro_social.view_hr_payslip_form"/>
 			<field name="priority">2</field>
 			<field name="arch" type="xml">
+				
+				<xpath expr="//field[@name='employee_id']" position="replace"/>
+				<xpath expr="//field[@name='number']" position="replace"/>
+				<xpath expr="//field[@name='date_from']" position="replace"/>
+				<xpath expr="//field[@name='contract_id']" position="replace"/>
+				<xpath expr="//field[@name='struct_id']" position="replace"/>
+				<xpath expr="//field[@name='date_to']" position="replace"/>
+				
+				<xpath expr="//field[@name='name']" position="before">
+					<field name="struct_id" groups="base.group_extended" attrs="{'required':[('contract_id','&lt;&gt;',False)]}" />				
+				</xpath>
+				<xpath expr="//field[@name='struct_id']" position="before">
+					<field name="contract_id" groups="base.group_extended"
+							domain="[('employee_id','=',employee_id)]" on_change="onchange_contract_id(date_from, date_to, employee_id, contract_id)" />
+				</xpath>
+				<xpath expr="//field[@name='contract_id']" position="before">
+					<field name="number" />
+				</xpath>
+				<xpath expr="//field[@name='number']" position="before">
+					<field name="employee_id" on_change="onchange_employee_id(date_from, date_to, employee_id, contract_id)" />
+				</xpath>
+				<xpath expr="//field[@name='employee_id']" position="before">
+					<field name="date_to" />
+				</xpath>
+				<xpath expr="//field[@name='date_to']" position="before">
+					<field name="date_from" />
+				</xpath>
+				
 				<xpath expr="/form/notebook/page[@string='Worked Days &amp; Inputs']" position="replace"/>
 				
 				<xpath expr="/form/notebook/page[@string='Salary Computation']" position="before">
@@ -70,7 +98,7 @@
 						</field>
 							<!-- Adds input_line_ids sections to Worked Days e Inputs CY 07-05-2013 -->					
 						<field colspan="4" name="input_line_ids" nolabel="1">
-							 <tree string="Otros Ingresos" editable="bottom">
+							 <tree string="Otros Ingresos y Egresos" editable="bottom">
                       				<field name="name" />
                       				<field name="code" />
                       				<field name="amount" />
