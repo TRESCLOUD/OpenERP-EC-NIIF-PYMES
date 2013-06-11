@@ -60,6 +60,7 @@ class account_invoice(osv.osv):
     
      def _doc_type(self, cr, uid, context=None):
 
+        doc_type_id = 0
         if context and 'type' in context:
             invoice_type = context['type']
         else:
@@ -71,8 +72,9 @@ class account_invoice(osv.osv):
                       group by id
                       order by priority''' %(invoice_type))
         res = cr.dictfetchone()
-
-        doc_type_id = res['id']
+        
+        if res:
+            doc_type_id = res['id']
     
         return doc_type_id      
     
