@@ -613,10 +613,9 @@
 			<field name="arch" type="xml">
 				<tree string="Salary Rules">
 					<field name="name" />
+					<field name="sequence" groups="base.group_extended"	invisible="0" />
 					<field name="code" />
-					<field name="category_id" />
-					<field name="sequence" groups="base.group_extended"
-						invisible="1" />
+					<field name="category_id" />					
 					<field name="register_id" />
 				</tree>
 			</field>
