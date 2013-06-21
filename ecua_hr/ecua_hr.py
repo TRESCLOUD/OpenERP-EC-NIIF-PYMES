@@ -115,7 +115,7 @@ class hr_payslip(osv.osv):
             attendances4 = {
                  'name': 'Dias Calendario Laborados',
                  'code': 'DIAS_TRABAJADOS',
-                 'number_of_days': days,
+                 'number_of_days': 30.0,
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,
             }  
