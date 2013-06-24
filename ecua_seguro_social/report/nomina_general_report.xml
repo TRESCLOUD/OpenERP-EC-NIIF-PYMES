@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data noupdate="0">
+	<data noupdate="1">
 	 
 		<record id="nomina_general_report_id" model="ir.actions.report.xml">
 			<field name="name">Nómina General</field>
@@ -15,16 +15,6 @@
 			<field name="parser_state">loc</field>
 			<field name="tml_source">file</field>
 		</record>
-
-<!--		<ir_set>-->
-<!--			<field eval="'action'" name="key" />-->
-<!--			<field eval="'client_print_multi'" name="key2" />-->
-<!--			<field eval="['hr.payslip.run']" name="models" />-->
-<!--			<field name="name">nomina_general</field>-->
-<!--			<field eval="'ir.actions.report.xml,'+str(nomina_general_report_id)" name="value" />-->
-<!--			<field eval="True" name="isobject" />-->
-<!--			<field eval="True" name="replace" />-->
-<!--		</ir_set>-->
 
 	</data>
 </openerp>
