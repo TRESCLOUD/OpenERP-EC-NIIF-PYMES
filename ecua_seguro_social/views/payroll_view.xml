@@ -800,9 +800,10 @@
 						<button name="close_payslip_run" type="object" icon="terp-camera_test"
 							string="Close" states="draft" />
 						<button name="%(nomina_general_report_id)d" 
-							string="Print Payslip Run" type="action" icon="gtk-print" states="close"/>
+							string="Print Payslip Run" type="action" icon="gtk-print" states="close"
+							context="{'active_id'=active_id}"/>
 						<button name="%(payslip_group_report_id)d" 
-							string="Print All Payslips" type="action" icon="gtk-print" states="close"/>
+							string="Print All Payslips" type="action" icon="gtk-print" states="close" invisible="True" />
 						<button string="Set to Draft" icon="terp-stock_effects-object-colorize"
 							name="draft_payslip_run" type="object" states="close" />
 					</group>
@@ -813,7 +814,7 @@
 		<record id="action_hr_payslip_run_tree" model="ir.actions.act_window">
 			<field name="name">Payslips Run</field>
 			<field name="res_model">hr.payslip.run</field>
-			<field name="view_type">form</field>
+			<field name="view_type">form</field>			
 			<field name="view_id" ref="hr_payslip_run_tree" />
 			<field name="search_view_id" ref="hr_payslip_run_filter" />
 		</record>
