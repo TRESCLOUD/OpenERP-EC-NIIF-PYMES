@@ -24,7 +24,7 @@ from report import report_sxw
 from lxml import etree
 
 class Parser(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
+    def __init__(self, cr, uid, name, context=None):
         super(Parser, self).__init__(cr, uid, name, context)
         nomina_obj = self.pool.get('hr.payslip.run')
         ids = context['active_id']
