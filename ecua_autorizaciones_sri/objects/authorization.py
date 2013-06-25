@@ -121,7 +121,7 @@ class sri_authorization(osv.osv):
     _name = 'sri.authorization'
     _columns = {
                 'auto_printer':fields.boolean('Auto Printer?',), 
-                'number':fields.char('Authorization Number', size=10, required=True, readonly=False),
+                'number':fields.char('Authorization Number', size=37, required=True, readonly=False),
                 'creation_date': fields.date('Creation Date'),
                 'start_date': fields.date('Start Date'),
                 'expiration_date': fields.date('Expiration Date'),
