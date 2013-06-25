@@ -26,5 +26,15 @@
 			<field eval="'verify_expiration_date'" name="function" />
 			<field eval="'(False,)'" name="args" />
 		</record>
+		
+		<!-- Create Authorization -->
+		<record id="default_authorization" model="sri.authorization">
+			<field name="number">9999999999</field>
+			<field name="start_date">20/06/2013</field>
+			<field name="expiration_date">20/06/3000</field>
+			<field name="company_id">1</field>
+			<field name="active">True</field>
+		</record>
+
 	</data>
 </openerp>
