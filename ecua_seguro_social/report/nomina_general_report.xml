@@ -9,7 +9,7 @@
 			<field name="report_name">nomina_general</field>
 			<field name="report_type">aeroo</field>
 			<field name="in_format">oo-ods</field>
-      		<field name='out_format' eval="ref('report_aeroo.report_mimetypes_ods_ods')"/>
+      		<field name='out_format' eval="ref('report_aeroo.report_mimetypes_xls_odt')"/>
 			<field name="parser_loc">ecua_seguro_social/report/nomina_general_parser.py</field>
 			<field name="report_rml">ecua_seguro_social/report/nomina_general.ods</field>
 			<field name="parser_state">loc</field>
