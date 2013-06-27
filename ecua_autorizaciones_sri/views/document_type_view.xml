@@ -30,7 +30,8 @@
                     	<field name="shop_id"/>
                         <field name="printer_id"/>
                         <separator string="" colspan="4"/>
-                        <field name="name" select="1" colspan="4"/>
+                        <field name="name" select="1" colspan="4" invisible=1/>
+                        <field name="name2" select="1" colspan="4"/>
                         <separator string="" colspan="4"/>
                         <field name="first_secuence"/>
                         <field name="last_secuence"/>
