@@ -76,3 +76,5 @@
 "access_hr_vacation_manager","hr.vacation.manager","model_hr_vacation","base.group_hr_manager",1,1,1,1
 "access_hr_newholidays_user","hr.newholidays.user","model_hr_newholidays","base.group_hr_user",1,1,1,0
 "access_hr_newholidays_manager","hr.newholidays.manager","model_hr_newholidays","base.group_hr_manager",1,1,1,1
+"access_hr_provision_user","hr.provision.user","model_hr_provision","base.group_hr_user",1,1,1,0
+"access_hr_provision_manager","hr.provision.manager","model_hr_provision","base.group_hr_manager",1,1,1,1
