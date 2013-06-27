@@ -24,12 +24,14 @@
     "depends" : ['base',
                  'account',
                  'sale',
-                 'ecua_verifica_ruc_cedula',
+                # 'ecua_verifica_ruc_cedula',
                  'account_accountant',
                  'stock',
                  #'point_of_sale',
                  'account_voucher', 
-                 'account_accountant'],
+                 #'account_accountant',
+                 'ecua_invoice_type',
+                 ],
     "description": """
     SRI is the regulator of the tax laws in Ecuador, 
     the agency issued permits for the printing of 
