@@ -24,7 +24,7 @@
     "depends" : ['base',
                  'account',
                  'sale',
-                # 'ecua_verifica_ruc_cedula',
+                 'ecua_verifica_ruc_cedula',
                  'account_accountant',
                  'stock',
                  #'point_of_sale',
