@@ -43,6 +43,7 @@
    'depends': ['base','account','ecua_facturas_manual','ecua_facturas_ice_manual'],
    'init_xml': [],
    'update_xml': [
+       'security/ir.model.access.csv',
        'report/report.xml',
        'data/document_type.xml',
        'ecua_invoice_type_view.xml',       
