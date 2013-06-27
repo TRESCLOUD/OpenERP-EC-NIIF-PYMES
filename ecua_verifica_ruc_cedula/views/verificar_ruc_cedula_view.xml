@@ -101,8 +101,11 @@
 <!-- 						attrs="{'readonly':[('foreing','=',True)]}"  --> 
 					</field>
 					<field string="type" name="type_ref" invisible="1">
-					</field>
+					</field>					
 				</xpath>
+				<xpath expr='//field[@name="lang"]' position='after'>
+                  	<field string="COD SRI" name="code" invisible="False"/>
+                </xpath>
 			</field>
 		</record>
 
