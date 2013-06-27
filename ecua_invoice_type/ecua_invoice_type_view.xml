@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		
+	<!-- VIEW -->
+	<record id="view_document_type_form" model="ir.ui.view">
+	    <field name="name">view.check.form</field>
+	    <field name="model">account.invoice.document.type</field>
+	    <field name="type">form</field>
+	    <field name="arch" type="xml">
+	        <form string="Manage accounting documents">
+	           <group col="2" colspan="2">
+	               <separator colspan="2"></separator> 
+	  			   <field name="code"/>
+				   <field name="name"/>
+				   <field name="priority"/>
+				   <field name="type"/>	           
+			   </group>
+	           <group col="2" colspan="2">
+	               <separator colspan="2"></separator> 
+	               <field name="use"/>
+				   <field name="number_format_validation"/>
+				   <field name="sri_authorization_validation"/>
+				   <field name="report_id"/>
+	           </group>     
+	        </form>
+		</field>
+	</record>
+	
+    <record id="account_invoice_document_type_view_filter" model="ir.ui.view">
+       <field name="name">account.invoice.document.type.select</field>
+       <field name="model">account.invoice.document.type</field>
+       <field name="type">search</field>
+       <field name="arch" type="xml">
+           <search string="Search accounting documents">
+              <group col="2" colspan="4">
+                   <filter string="Customers" name="type" icon="terp-personal" domain="[('type','=','out_invoice')]" help="Customer Documents"/>
+                   <filter string="Suppliers" name="type" icon="terp-personal" domain="[('type','=','in_invoice')]" help="Supplier Documents"/>
+                   <filter name="Active" icon="terp-camera_test" string="Active" domain="[('use','=',True)]" help="Active accounting documents"/>
+                   <filter name="Inactive" icon="gtk-cancel" string="Inactive" domain="[('use','=',False)]" help="Inactive accounting documents"/>
+                   <separator orientation="vertical"/>                            
+                   <field name="code"/>
+                   <field name="name"/>
+              </group>
+          </search>
+        </field>
+    </record>
+	
+	<record id="view_document_type_tree" model="ir.ui.view" >
+	    <field name="name">view.document.type.tree</field>
+	    <field name="model">account.invoice.document.type</field>
+	    <field name="type">tree</field>
+	    <field name="arch" type="xml">
+	        <tree string="Accounting documents">
+				<field name="code"/>
+				<field name="name"/>					 
+				<field name="use"/>    
+				<field name="number_format_validation"/>
+				<field name="sri_authorization_validation"/> 
+				<field name="priority"/>
+				<field name="type"/>    
+				<field name="report_id"/>    
+	        </tree>
+		</field>
+	</record>
+	
+	<record id="account_invoice_purchase_form_view_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.form.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="/form/group//button[@string='Change']" position="after">
+				<label string=""/>
+				<label string="" attrs="{'invisible':[('state','=','draft')]}"/>
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'in_invoice')]" attrs="{'readonly':[('state','!=','draft')]}"/>				
+			</xpath>		
+			
+	        <xpath expr="/form/notebook/page/group/group//button[@name='%(account.action_account_state_open)d']" position="after">
+				<button name="print_document_type" string='Print Invoice' type="object" icon="gtk-print" states="paid" 
+				   groups="account.group_account_manager" invisible="True"/>
+			</xpath> 
+		</field>
+	</record>
+	
+	<record id="account_invoice_sales_form_view_inherit_1" model="ir.ui.view" >
+		<field name="name">account.invoice.form.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="ecua_facturas_manual.account_invoice_sales_form_view" />
+		<field name="arch" type="xml">
+			<xpath expr="/form/group//field[@name='period_id']" position="after">
+				<newline/>
+				<label string=""/>
+				<label string=""/>
+				<label string=""/>
+				<label string=""/>
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_invoice')]" attrs="{'readonly':[('state','!=','draft')]}"/>			
+			</xpath>	
+						
+			<xpath expr="/form/notebook/page/group/group//button[@name='%(ecua_facturas_manual.action_account_invoice_print_options)d']" position="replace">
+				<button name="print_document_type" string="Print Invoice" type="object" icon="gtk-print" states="open,paid" />
+			</xpath>			
+		</field>
+	</record>
+	
+	<record id="invoice_tree_inherit_trescloud" model="ir.ui.view">
+        <field name="name">account.invoice.tree.inherit.trescloud</field>
+        <field name="model">account.invoice</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="account.invoice_tree" />
+        <field name="arch" type="xml">
+        	<xpath expr="/tree//field[@name='number']" position="after">
+				<field name="document_invoice_type_id"/>
+			</xpath>
+        </field>
+    </record>
+    
+    <record id="view_account_invoice_filter_inherit_trescloud" model="ir.ui.view">
+        <field name="name">account.invoice.select.out.inherit.trescloud</field>
+        <field name="model">account.invoice</field>
+        <field name="type">search</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="/search/group//field[@name='journal_id']" position="before">
+				<field name="document_invoice_type_id" />
+			</xpath>
+        </field>
+    </record>
+    
+	<!-- Este código funciona directamente sobre el base sin ser aún actualizado por otros módulos-->
+	<!-- <record id="account_invoice_sales_form_view_inherit_2" model="ir.ui.view" >
+		<field name="name">account.invoice.form.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account.invoice_form" />
+		<field name="arch" type="xml">
+			<xpath expr="/form/group//field[@name='period_id']" position="after">
+				<newline/>
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_invoice')]" widget="selection" attrs="{'readonly':[('state','!=','draft')]}"/>			
+			</xpath>	
+									
+			<xpath expr="/form/notebook/page/group/group//button[@name='%(account.account_invoices)d']" position="replace">
+				<button name="print_document_type" string="Print Invoice" type="object" icon="gtk-print" states="open,paid" />
+			</xpath>			
+		</field>
+	</record>	-->
+
+	<!-- ACTION -->
+	<record id="action_view_document_type" model="ir.actions.act_window">
+        <field name="name">Accounting documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.invoice.document.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_document_type_tree"/>
+        <field name="search_view_id" ref="account_invoice_document_type_view_filter"/>
+        <field name="help">With this module you can create new accounting documents.</field>
+    </record>
+	
+	<!-- MENU -->
+	<menuitem id="submenu_document_type" name="Documents type" action="action_view_document_type" parent="account.menu_configuration_misc"/>
+	
+    </data>
+</openerp>
