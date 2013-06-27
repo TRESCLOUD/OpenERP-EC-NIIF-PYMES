@@ -45,7 +45,7 @@
    'update_xml': [
        'report/report.xml',
        'data/document_type.xml',
-       'ecua_invoice_type.xml',       
+       'ecua_invoice_type_view.xml',       
    ],
    'installable': True,
 }

@@ -6,5 +6,6 @@ Se presenta 2 situaciones de dependencia:
 1._ Si en el base, el módulo de account (Formulario:invoice_form, botón:account_invoices )
     no fue modificado por otros módulos entonces no hay ningún problema.
     En este caso, descomentar las lineas (103 a 118) de ecua_invoice_type.xml y comentar (81 a 100)
+    Descomentar la linea 14 y comentar la 15 del archivo document_type.xml
 2._ Caso contrario pasa a depender del módulo ecua_facturas_manual.
     

@@ -1,35 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="1">  
+    <data noupdate="1">
     
-		<record id="01" model="account.invoice.document.type">
+    	<record id="01" model="account.invoice.document.type">
 		<field name="code">01</field>
 		<field name="name">Factura</field>
 		<field name="use">True</field>
-		<field name="validate">True</field>
-		<field name="priority">10</field>
-		<field name="type">in_invoice</field>
-		</record>		
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
+		<field name="priority">15</field>
+		<field name="type">out_invoice</field>
+		<!-- Descomentar cuando se vaya a instalar en un módulo base limpio  -->
+		<!-- <field name="report_id" ref="ecua_invoice_type.invoice_out_report"/>  -->
+		<field name="report_id" ref="ecua_facturas_ice_manual.invoice_ice_report"/>
+		</record>
 		
 		<record id="02" model="account.invoice.document.type">
 		<field name="code">02</field>
 		<field name="name">Nota o boleta de venta</field>
 		<field name="use">True</field>
-		<field name="validate">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
+		<field name="priority">25</field>
+		<field name="type">out_invoice</field>
+		</record>
+		
+		<record id="03" model="account.invoice.document.type">
+		<field name="code">07</field>
+		<field name="name">Comprobante de Retención</field>
+		<field name="sri_authorization_validation">True</field>
+		<field name="priority">65</field>
+		<field name="type">out_invoice</field>
+		</record>
+		
+		<record id="04" model="account.invoice.document.type">
+		<field name="code">18</field>
+		<field name="name">Documentos autorizados utilizados en ventas excepto N/C N/D</field>
+		<field name="use">True</field>		
+		<field name="priority">135</field>
+		<field name="type">out_invoice</field>
+		</record>
+		
+		<record id="05" model="account.invoice.document.type">
+		<field name="code">41</field>
+		<field name="name">Comprobante de venta emitido por reembolso</field>
+		<field name="use">True</field>		
+		<field name="priority">205</field>
+		<field name="type">out_invoice</field>
+		</record>
+		  
+    
+		<record id="06" model="account.invoice.document.type">
+		<field name="code">01</field>
+		<field name="name">Factura</field>
+		<field name="use">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
+		<field name="priority">10</field>
+		<field name="type">in_invoice</field>
+		</record>		
+		
+		<record id="07" model="account.invoice.document.type">
+		<field name="code">02</field>
+		<field name="name">Nota o boleta de venta</field>
+		<field name="use">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
 		<field name="priority">20</field>
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="03" model="account.invoice.document.type">
+		<record id="08" model="account.invoice.document.type">
 		<field name="code">03</field>
 		<field name="name">Liquidación de compra de Bienes o Prestación de servicios</field>
 		<field name="use">True</field>
-		<field name="validate">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
 		<field name="priority">30</field>
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="04" model="account.invoice.document.type">
+		<record id="09" model="account.invoice.document.type">
 		<field name="code">04</field>
 		<field name="name">Nota de crédito</field>
 		<field name="use">True</field>
@@ -37,23 +88,23 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="05" model="account.invoice.document.type">
-			<field name="code">05</field>
-			<field name="name">Nota de débito</field>
-			<field name="use">True</field>		
-			<field name="priority">50</field>
-			<field name="type">in_invoice</field>
+		<record id="10" model="account.invoice.document.type">
+		<field name="code">05</field>
+		<field name="name">Nota de débito</field>
+		<field name="use">True</field>		
+		<field name="priority">50</field>
+		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="07" model="account.invoice.document.type">
+		<record id="11" model="account.invoice.document.type">
 		<field name="code">07</field>
 		<field name="name">Comprobante de Retención</field>
-		<field name="use">True</field>		
+		<field name="sri_authorization_validation">True</field>
 		<field name="priority">60</field>
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="08" model="account.invoice.document.type">
+		<record id="12" model="account.invoice.document.type">
 		<field name="code">08</field>
 		<field name="name">Boletos o entradas a espectáculos públicos</field>
 		<field name="use">True</field>		
@@ -61,7 +112,7 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="09" model="account.invoice.document.type">
+		<record id="13" model="account.invoice.document.type">
 		<field name="code">09</field>
 		<field name="name">Tiquetes o vales emitidos por máquinas registradoras</field>
 		<field name="use">True</field>		
@@ -69,7 +120,7 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="11" model="account.invoice.document.type">
+		<record id="14" model="account.invoice.document.type">
 		<field name="code">11</field>
 		<field name="name">Pasajes expedidos por empresas de aviación</field>
 		<field name="use">True</field>		
@@ -77,7 +128,7 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="12" model="account.invoice.document.type">
+		<record id="15" model="account.invoice.document.type">
 		<field name="code">12</field>
 		<field name="name">Documentos emitidos por instituciones financieras</field>
 		<field name="use">True</field>		
@@ -85,7 +136,7 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="15" model="account.invoice.document.type">
+		<record id="16" model="account.invoice.document.type">
 		<field name="code">15</field>
 		<field name="name">Comprobante de venta emitido en el Exterior</field>
 		<field name="use">True</field>		
@@ -93,7 +144,7 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="16" model="account.invoice.document.type">
+		<record id="17" model="account.invoice.document.type">
 		<field name="code">16</field>
 		<field name="name">Formulario Único de Exportación (FUE) o Declaración Aduanera Única (DAU) o Declaración Andina de Valor (DAV)</field>
 		<field name="use">True</field>		
@@ -243,53 +294,6 @@
 		<field name="use">True</field>
 		<field name="priority">300</field>
 		<field name="type">in_invoice</field>
-		</record>	
-		
-		
-		
-		<record id="53" model="account.invoice.document.type">
-		<field name="code">01</field>
-		<field name="name">Factura</field>
-		<field name="use">True</field>
-		<field name="validate">True</field>
-		<field name="priority">15</field>
-		<field name="type">out_invoice</field>
-		<!-- Descomentar cuando se vaya a instalar en un módulo base limpio  -->
-		<!-- <field name="report_id" ref="ecua_invoice_type.invoice_out_report"/>  -->
-		<field name="report_id" ref="ecua_facturas_ice_manual.invoice_ice_report"/>
-		</record>
-		
-		<record id="54" model="account.invoice.document.type">
-		<field name="code">02</field>
-		<field name="name">Nota o boleta de venta</field>
-		<field name="use">True</field>
-		<field name="validate">True</field>
-		<field name="priority">25</field>
-		<field name="type">out_invoice</field>
-		</record>
-		
-		<record id="55" model="account.invoice.document.type">
-		<field name="code">07</field>
-		<field name="name">Comprobante de Retención</field>
-		<field name="use">True</field>		
-		<field name="priority">65</field>
-		<field name="type">out_invoice</field>
-		</record>
-		
-		<record id="56" model="account.invoice.document.type">
-		<field name="code">18</field>
-		<field name="name">Documentos autorizados utilizados en ventas excepto N/C N/D</field>
-		<field name="use">True</field>		
-		<field name="priority">135</field>
-		<field name="type">out_invoice</field>
-		</record>
-		
-		<record id="57" model="account.invoice.document.type">
-		<field name="code">41</field>
-		<field name="name">Comprobante de venta emitido por reembolso</field>
-		<field name="use">True</field>		
-		<field name="priority">205</field>
-		<field name="type">out_invoice</field>
 		</record>
 		
     </data>
