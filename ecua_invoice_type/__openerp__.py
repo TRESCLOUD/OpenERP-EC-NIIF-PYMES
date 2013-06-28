@@ -49,6 +49,7 @@
                ],
    'init_xml': [],
    'update_xml': [
+       'security/ir.model.access.csv',
        'report/report.xml',
        'data/document_type.xml',
        'ecua_invoice_type_view.xml',       
