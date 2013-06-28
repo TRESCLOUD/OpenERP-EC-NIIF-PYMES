@@ -33,14 +33,20 @@
    Nota:
    Si no se va a utilizar el módulo de contabilidad ecuatoriana "ecua_facturas_manual", borrarla de depends, descomentar las lineas (101 a la 116) y comentar (83 a la 100) del archivo ecua_invoice_type.xml 
      
-   Desarrollador:
+   Desarrolladores:
    
-   Carlos Yumbillo
+   Carlos Yumbillo,
+   Andrea Garcia
    
    """,
    "category": "Contabilidad",
    "version" : "1.0",
-   'depends': ['base','account','ecua_facturas_manual','ecua_facturas_ice_manual'],
+   'depends': [
+               'base',
+               'account',
+#               'ecua_facturas_manual',
+#               'ecua_facturas_ice_manual',
+               ],
    'init_xml': [],
    'update_xml': [
        'report/report.xml',
