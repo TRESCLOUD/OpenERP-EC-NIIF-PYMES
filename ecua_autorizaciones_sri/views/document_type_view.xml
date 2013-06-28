@@ -9,7 +9,8 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Document Type">
-                        <field name="name"/>
+                    	<field name="name"/>
+                        <field name="name2"/>
                         <field name="first_secuence"/>
                         <field name="last_secuence"/>
                         <field name="shop_id"/>
@@ -30,8 +31,8 @@
                     	<field name="shop_id"/>
                         <field name="printer_id"/>
                         <separator string="" colspan="4"/>
-                        <field name="name" select="1" colspan="4" invisible=1/>
-                        <field name="name2" select="1" colspan="4"/>
+                        <field name="name" select="1" colspan="4" invisible="True"/>
+                    	<field name="name2" domain="[('sri_authorization_validation','=','True')]"/>
                         <separator string="" colspan="4"/>
                         <field name="first_secuence"/>
                         <field name="last_secuence"/>
