@@ -97,7 +97,9 @@
 				<label string=""/>
 				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_invoice')]" attrs="{'readonly':[('state','!=','draft')]}"/>			
 			</xpath>	
-						
+			<xpath expr="/form/group//field[@name='partner_id']" position="attributes">
+				<attribute name="on_change">onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
+			</xpath>				
 			<xpath expr="/form/notebook/page/group/group//button[@name='%(ecua_facturas_manual.action_account_invoice_print_options)d']" position="replace">
 				<button name="print_document_type" string="Print Invoice" type="object" icon="gtk-print" states="open,paid" />
 			</xpath>			
