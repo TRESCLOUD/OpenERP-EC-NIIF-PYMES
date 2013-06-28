@@ -50,6 +50,7 @@ class sri_type_document(osv.osv):
             result[document.id] = document.last_secuence - document.first_secuence
         return result
     
+  
     _name = 'sri.type.document'
     _columns = {'name':fields.selection(_get_name, 'Name', size=32), 
                 'name2':fields.many2one('account.invoice.document.type', 'Name', required=True),
@@ -62,6 +63,7 @@ class sri_type_document(osv.osv):
     _defaults = {
                  'counter': lambda *a: 0
                  }
+    
     
     def add_document(self,cr, uid, ids, context=None):
         seq_obj = self.pool.get('ir.sequence')
