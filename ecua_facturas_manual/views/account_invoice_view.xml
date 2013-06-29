@@ -298,7 +298,7 @@ comenta los botones para modificarlos en la nueva vista -->
 				<xpath expr="/form/group/field[@name='number']" position="replace">
 					<field name="automatic_number" />
 					<field name="invoice_number_out" required="1"
-						on_change="onchange_number(invoice_number_out, automatic, company_id, shop_id, printer_id)"></field>
+						on_change="onchange_number(authorization,invoice_number_out, automatic, company_id, shop_id, printer_id)"></field>
 				</xpath>
 <!-- 				<xpath
 					expr="/form/notebook/page/group/group//button[@name='invoice_cancel']"
