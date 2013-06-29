@@ -599,19 +599,22 @@ class account_invoice(osv.osv):
                    raise osv.except_osv(_('Invalid action!'), _('The date entered is not valid for the authorization')) 
         return res
     
-    def onchange_number(self, cr, uid, ids, number, automatic, company, shop=None, printer_id=None, context=None):
+    def onchange_number(self, cr, uid, ids,authorization, number, automatic, company, shop=None, printer_id=None,context=None):
         result = {}
         if context is None:
             context = {}
-        if shop==None:
-            shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
-        if not number:
-            return {'value': {'invoice_number_out': ''}}
-        if not automatic:
-            auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
-            if not auth['authorization']:
-                raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
-            result['authorization_sales'] = auth['authorization']
+        if not authorization=='9999999999':
+            
+            if shop==None:
+                shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
+            if not number:
+                return {'value': {'invoice_number_out': ''}}
+        
+            if not automatic:
+                auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
+                if not auth['authorization']:
+                    raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
+                result['authorization_sales'] = auth['authorization']
         res_final = {'value':result}
         return res_final
     
