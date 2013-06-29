@@ -113,7 +113,7 @@ class authorization_supplier(osv.osv):
     _columns = {
                 'autoprinter':fields.boolean('Autoprinter?', required=False), 
                 'partner_id':fields.many2one('res.partner', 'Partner',),
-                'number':fields.char('Number', size=10, required=True),
+                'number':fields.char('Number', size=37, required=True),
                 'type': fields.selection(_get_name, 'Type', required=True, selected=True),
                 'agency':fields.char('Agency', size=3, required=True),
                 'printer_point':fields.char('Printer Point', size=3, required=True),
