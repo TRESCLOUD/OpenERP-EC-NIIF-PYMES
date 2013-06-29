@@ -37,7 +37,7 @@ class auth_wizard(osv.osv_memory):
     _name = 'auth.wizard'
     _columns = {
                 'auto_printer':fields.boolean('Auto Printer?',), 
-                'number':fields.char('Authorization Number', size=10, required=True, readonly=False),
+                'number':fields.char('Authorization Number', size=37, required=True, readonly=False),
                 'start_date': fields.date('Start Date'),
                 'expiration_date': fields.date('Expiration Date'),
                 'company_id': fields.many2one('res.company', 'Company', required=True),
