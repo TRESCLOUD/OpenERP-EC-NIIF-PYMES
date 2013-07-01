@@ -4,7 +4,7 @@
     
     	<record id="01" model="account.invoice.document.type">
 		<field name="code">01</field>
-		<field name="name">Factura</field>
+		<field name="name">Factura de venta</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
 		<field name="sri_authorization_validation">True</field>
@@ -52,7 +52,7 @@
     
 		<record id="06" model="account.invoice.document.type">
 		<field name="code">01</field>
-		<field name="name">Factura</field>
+		<field name="name">Factura de compra</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
 		<field name="sri_authorization_validation">True</field>
@@ -62,7 +62,7 @@
 		
 		<record id="07" model="account.invoice.document.type">
 		<field name="code">02</field>
-		<field name="name">Nota o boleta de venta</field>
+		<field name="name">Nota o boleta de compra</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
 		<field name="sri_authorization_validation">True</field>
