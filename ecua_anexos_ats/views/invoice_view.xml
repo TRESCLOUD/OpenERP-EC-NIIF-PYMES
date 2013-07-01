@@ -12,7 +12,7 @@
 			<field name="arch" type="xml">
 				<field name="move_id" position="after">
 					<field name="transaction_usage_id" domain="[('name','in',('EXPORTACION','VENTA'))]"/>
-					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]" invisible="True"/>
 				</field>
 			</field>
 		</record>
@@ -41,7 +41,7 @@
 			<field name="arch" type="xml">
 				<field name="move_id" position="after">
 					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
-					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]" invisible="True"/>
 					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
 				</field>
 			</field>
@@ -72,7 +72,7 @@
 			<field name="arch" type="xml">
 				<field name="move_id" position="after">
 					<field name="transaction_usage_id" domain="[('name','in',('EXPORTACION','VENTA'))]"/>
-					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]" invisible="True"/>
 				</field>
 			</field>
 		</record>
@@ -103,7 +103,7 @@
 			<field name="arch" type="xml">
 				<field name="move_id" position="after">
 					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
-					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]" invisible="True"/>
 					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
 				</field>
 			</field>
@@ -135,7 +135,7 @@
 			<field name="arch" type="xml">
 				<field name="move_id" position="after">
 					<field name="transaction_usage_id" domain="[('name','=','COMPRA')]"/>
-					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]"/>
+					<field name="voucher_type_id" domain="[('usage_ids', 'in', [transaction_usage_id])]" invisible="True"/>
 					<field name="tax_support_id" domain="[('voucher_type_ids', 'in', [voucher_type_id])]"/>
 				</field>
 			</field>
