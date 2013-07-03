@@ -531,7 +531,9 @@ class account_invoice(osv.osv):
                     self.write(cr, uid, [invoice.id], {'invoice_number': number_out,'invoice_number_out': number_out,'automatic_number': number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
             elif invoice.type=='in_invoice':
                 if invoice.invoice_number_in:
-                    auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
+                    if invoice.document_invoice_type_id.number_format_validation == True:
+                        auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
+                    
                     if not invoice.foreign:
                         self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in,'authorization_purchase': invoice.authorization_supplier_purchase_id.number}, context)
                     else:
@@ -599,22 +601,19 @@ class account_invoice(osv.osv):
                    raise osv.except_osv(_('Invalid action!'), _('The date entered is not valid for the authorization')) 
         return res
     
-    def onchange_number(self, cr, uid, ids,authorization, number, automatic, company, shop=None, printer_id=None,context=None):
+    def onchange_number(self, cr, uid, ids, number, automatic, company, shop=None, printer_id=None, context=None):
         result = {}
         if context is None:
             context = {}
-        if not authorization=='9999999999':
-            
-            if shop==None:
-                shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
-            if not number:
-                return {'value': {'invoice_number_out': ''}}
-        
-            if not automatic:
-                auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
-                if not auth['authorization']:
-                    raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
-                result['authorization_sales'] = auth['authorization']
+        if shop==None:
+            shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
+        if not number:
+            return {'value': {'invoice_number_out': ''}}
+        if not automatic:
+            auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
+            if not auth['authorization']:
+                raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
+            result['authorization_sales'] = auth['authorization']
         res_final = {'value':result}
         return res_final
     
@@ -623,18 +622,21 @@ class account_invoice(osv.osv):
         for invoice in self.browse(cr, uid, ids):
             cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
             ref = invoice.invoice_number_out
-            if invoice.invoice_number_out:
-                if re.match(cadena, ref):
-                    res = True
-                else:
-                    res = False
-            cadena='(\d{3})+\-(\d{3})+\-(\d{1,9})'
-            ref = invoice.invoice_number_in
-            if invoice.invoice_number_in and not invoice.foreign:
-                if re.match(cadena, ref):
-                    res = True
-                else:
-                    res = False
+            validate_document_type = invoice.document_invoice_type_id.number_format_validation
+            
+            if validate_document_type == True:
+                if invoice.invoice_number_out:
+                    if re.match(cadena, ref):
+                        res = True
+                    else:
+                        res = False
+                cadena='(\d{3})+\-(\d{3})+\-(\d{1,9})'
+                ref = invoice.invoice_number_in
+                if invoice.invoice_number_in and not invoice.foreign:
+                    if re.match(cadena, ref):
+                        res = True
+                    else:
+                        res = False
             return res
     
     def unlink(self, cr, uid, ids, context=None):
