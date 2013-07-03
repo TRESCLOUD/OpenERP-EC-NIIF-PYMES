@@ -85,10 +85,10 @@ class resource_calendar(osv.osv):
                     }
     
     _defaults = {  
-        'start_suple_hours': '6:00',  
-        'end_suple_hours': '0:00',  
-        'start_extra_hours': '0:00',  
-        'end_extra_hours': '6:00',  
+        'start_suple_hours': '06:00:00',  
+        'end_suple_hours': '00:00:00',  
+        'start_extra_hours': '00:00:00',  
+        'end_extra_hours': '06:00:00',  
         }
     
     def working_hours_on_day(self, cr, uid, resource_calendar_id, day, context=None):
