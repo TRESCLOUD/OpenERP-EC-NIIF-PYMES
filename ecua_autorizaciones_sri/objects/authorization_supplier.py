@@ -114,7 +114,7 @@ class authorization_supplier(osv.osv):
                 'autoprinter':fields.boolean('Autoprinter?', required=False), 
                 'partner_id':fields.many2one('res.partner', 'Partner',),
                 'number':fields.char('Number', size=37, required=True),
-                'type': fields.selection(_get_name, 'Type', required=True, selected=True),
+                'type': fields.selection(_get_name, 'Type', required=False, selected=True),
                 'agency':fields.char('Agency', size=3, required=True),
                 'printer_point':fields.char('Printer Point', size=3, required=True),
                 'start_date': fields.date('Start Date', required=True),
@@ -142,17 +142,18 @@ class authorization_supplier(osv.osv):
         seq = None
         ids_supplier = []
         if not foreing:
-            if not date:
-                date = time.strftime('%Y-%m-%d')
-            if date > authorization.expiration_date or date < authorization.start_date:
-                raise osv.except_osv(_('Authorization Error!'), _('%s is not between range of this authorization %s and %s') % (date, authorization.start_date, authorization.expiration_date))
-            if numero[0] != authorization.agency:
-                raise osv.except_osv(_('Authorization Error!'), _('Agency number %s not correct for this authorization, it must be %s') % (numero[0], authorization.agency))
-            if numero[1] != authorization.printer_point:
-                raise osv.except_osv(_('Authorization Error!'), _('Printer Point Number %s not correct for this authorization, it must be %s') % (numero[1], authorization.printer_point))
-            if not authorization.autoprinter:
-                if int(numero[2]) < authorization.first_sequence or int(numero[2]) > authorization.last_sequence:
-                    raise osv.except_osv(_('Authorization Error!'), _('Sequence Number %s is not between rage of authorization %s and %s') % (int(numero[2]), authorization.first_sequence, authorization.last_sequence))             
+            if not authorization.number=='9999999999':
+                if not date:
+                    date = time.strftime('%Y-%m-%d')
+                if date > authorization.expiration_date or date < authorization.start_date:
+                    raise osv.except_osv(_('Authorization Error!'), _('%s is not between range of this authorization %s and %s') % (date, authorization.start_date, authorization.expiration_date))
+                if numero[0] != authorization.agency:
+                    raise osv.except_osv(_('Authorization Error!'), _('Agency number %s not correct for this authorization, it must be %s') % (numero[0], authorization.agency))
+                if numero[1] != authorization.printer_point:
+                    raise osv.except_osv(_('Authorization Error!'), _('Printer Point Number %s not correct for this authorization, it must be %s') % (numero[1], authorization.printer_point))
+                if not authorization.autoprinter:
+                    if int(numero[2]) < authorization.first_sequence or int(numero[2]) > authorization.last_sequence:
+                        raise osv.except_osv(_('Authorization Error!'), _('Sequence Number %s is not between rage of authorization %s and %s') % (int(numero[2]), authorization.first_sequence, authorization.last_sequence))             
         if number:
             try:
                 seq = numero and int(numero[2]) or None
