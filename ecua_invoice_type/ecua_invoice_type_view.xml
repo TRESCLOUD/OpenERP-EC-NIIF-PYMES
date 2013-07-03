@@ -73,14 +73,26 @@
 			<xpath expr="/form/group//button[@string='Change']" position="after">
 				<label string=""/>
 				<label string="" attrs="{'invisible':[('state','=','draft')]}"/>
-				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'in_invoice')]" attrs="{'readonly':[('state','!=','draft')]}"/>				
-			</xpath>		
-			
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'in_invoice')]" attrs="{'readonly':[('state','!=','draft')]}" on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"/>				
+			</xpath>	
 	        <xpath expr="/form/notebook/page/group/group//button[@name='%(account.action_account_state_open)d']" position="after">
 				<button name="print_document_type" string='Print Invoice' type="object" icon="gtk-print" states="paid" 
 				   groups="account.group_account_manager" invisible="True"/>
 			</xpath> 
 		</field>
+	</record>
+	<record model="ir.ui.view" id="account_invoice_purchase_form_view4">
+			<field name="name">account.invoice.form3</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="ecua_facturas_manual.account_invoice_purchase_form_view" />
+			<field name="arch" type="xml">
+			<xpath expr="/form/group/field[@name='partner_id']" position="replace">
+					<field string="Supplier" name="partner_id"
+						on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
+			</xpath>
+			</field>
 	</record>
 	
 	<record id="account_invoice_sales_form_view_inherit_1" model="ir.ui.view" >
@@ -95,16 +107,27 @@
 				<label string=""/>
 				<label string=""/>
 				<label string=""/>
-				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_invoice')]" attrs="{'readonly':[('state','!=','draft')]}"/>			
-			</xpath>	
-			<xpath expr="/form/group//field[@name='partner_id']" position="attributes">
-				<attribute name="on_change">onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_invoice')]" attrs="{'readonly':[('state','!=','draft')]}" on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"/>			
 			</xpath>				
 			<xpath expr="/form/notebook/page/group/group//button[@name='%(ecua_facturas_manual.action_account_invoice_print_options)d']" position="replace">
 				<button name="print_document_type" string="Print Invoice" type="object" icon="gtk-print" states="open,paid" />
 			</xpath>			
 		</field>
 	</record>
+	<record model="ir.ui.view" id="account_invoice_customer_form_view_inherit">
+			<field name="name">account.invoice.form</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="ecua_anexos_ats.account_invoice_customer_form_view2" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Customer" name="partner_id"
+						on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+						groups="base.group_user" context="{'search_default_customer': 1}" />
+				</field>
+			</field>
+		</record>
+	
 	
 	<record id="invoice_tree_inherit_trescloud" model="ir.ui.view">
         <field name="name">account.invoice.tree.inherit.trescloud</field>
