@@ -1503,6 +1503,13 @@ class extra_payment_deduction(osv.osv):
             except:
                 raise osv.except_osv(_('Error'), _('Wrong python condition defined for salary rule %s (%s)')% (rule.name, rule.code))
 
+    def copy(self, cr, uid, id, default=None, context=None): 
+        if not context:
+            context={}
+        if not default: default={}
+        default.update({'paid': False})                
+        return super(hr_salary_rule, self).copy(cr, uid, id, default, context)
+
 extra_payment_deduction()
 
 class hr_payslip_line(osv.osv):
