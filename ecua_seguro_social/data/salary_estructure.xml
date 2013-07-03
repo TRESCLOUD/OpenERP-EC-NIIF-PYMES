@@ -521,6 +521,73 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 			<field name="quantity">0.0</field>
 		</record>
 	</data>
+	
+	<data noupdate="1">
+		<record id="hr_salary_rule_horasextrasregularesparcial" model="hr.salary.rule">
+			<field name="code">HORA_EXTRA_REGULAR_PARCIAL</field>
+			<field eval="25" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'NOMINA POR PAGAR')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0.625" name="amount_percentage"/>
+			<field name="condition_select">python</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBAS"/>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Horas Extras Regulares Parcial</field>
+			<field name="condition_python">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours != 0</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours * 1.5 * contract.wage / worked_days.WORK100.number_of_hours</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">worked_days.HORA_EXTRA_REGULAR.number_of_hours</field>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="hr_salary_rule_horasextrasextraordinariasparcial" model="hr.salary.rule">
+			<field name="code">HORA_EXTRA_EXTRAORDINARIA_PARCIAL</field>
+			<field eval="35" name="sequence"/>
+			<field eval="1" name="appears_on_payslip"/>
+			<field name="condition_range">contract.wage</field>
+			<field eval="0" name="company_contribution"/>
+			<field eval="0" name="account_debit_partner"/>
+			<field model="account.account" name="account_credit" search="[('name', '=', u'NOMINA POR PAGAR')]"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0.8333" name="amount_percentage"/>
+			<field name="condition_select">python</field>
+			<field name="amount_percentage_base" ref="ecua_seguro_social.SALBAS"/>
+			<field name="amount_select">code</field>
+			<field eval="1" name="active"/>
+			<field eval="0" name="account_credit_partner"/>
+			<field name="name">Horas Extras Extraordinarias Parcial</field>
+			<field name="condition_python"># Available variables:
+#----------------------
+# payslip: object containing the payslips
+# employee: hr.employee object
+# contract: hr.contract object
+# rules: object containing the rules code (previously computed)
+# categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+# worked_days: object containing the computed worked days
+# inputs: object containing the computed inputs
+
+# Note: returned value have to be set in the variable 'result'
+
+#result = rules.NET &gt; categories.NET * 0.10
+result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours != 0</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours * 2.0 * contract.wage / worked_days.WORK100.number_of_hours</field>
+			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
+			<field eval="0" name="use_partner_account"/>
+			<field eval="0" name="pay_to_other"/>
+			<field name="category_id" ref="ecua_seguro_social.INGR"/>
+			<field name="quantity">0.0</field>
+		</record>
+	</data>
+	
 	<data noupdate="1">
 		<record id="hr_salary_rule_comisiones" model="hr.salary.rule">
 			<field name="code">COMISION</field>
