@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+    <record model="ir.ui.view" id="sri_type_document_tree_view2">
+	                <field name="name">sri.type.document.tree2</field>
+	                <field name="model">sri.type.document</field>
+	                <field name="type">tree</field>
+	                <field name="arch" type="xml">
+	                    <tree string="Document Type">
+	                    	<field name="name" position="before">
+	                        	<field name="name2"/>
+	                        </field>
+	   					</tree>
+	   				</field>
+	   </record>
+	  
+                        
+	    	<record model="ir.ui.view" id="sri_type_document_form_view2">
+	                <field name="name">sri.type.document.form2</field>
+	                <field name="model">sri.type.document</field>
+	                <field name="inherit_id" ref="ecua_autorizaciones_sri.sri_type_document_form_view"/>
+	                <field name="type">form</field>
+	                <field name="arch" type="xml">
+	                    <field name="name" position="before">    
+	                  		<field name="name2" domain="[('sri_authorization_validation','=','True')]"/>
+	                    </field>
+	                </field>
+	    	</record>
+</data>
+</openerp>
+   

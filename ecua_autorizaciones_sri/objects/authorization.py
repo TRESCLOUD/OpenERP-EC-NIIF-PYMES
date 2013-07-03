@@ -52,8 +52,8 @@ class sri_type_document(osv.osv):
     
   
     _name = 'sri.type.document'
-    _columns = {'name':fields.selection(_get_name, 'Name', size=32), 
-                'name2':fields.many2one('account.invoice.document.type', 'Name', required=True),
+    _columns = {
+                'name':fields.selection(_get_name, 'Name', size=32), 
                 'first_secuence': fields.integer('Inicial Secuence'),
                 'last_secuence': fields.integer('Last Secuence'),
                 'counter': fields.integer('counter'),

@@ -60,17 +60,22 @@ class account_invoice(osv.osv):
         'document_invoice_type_id': fields.many2one('account.invoice.document.type', 'Document type', required=True)
     }
     
-    def onchange_partner2_id(self, cr, uid, ids, document_invoice_type_id,type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+    def onchange_partner2_id(self, cr, uid, ids, document_invoice_type_id, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
         partner_obj = self.pool.get('res.partner')
         res = super(account_invoice, self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
         if document_invoice_type_id:
             obj_document=self.pool.get('account.invoice.document.type')
             document_invoice=obj_document.browse(cr,uid,document_invoice_type_id)
             if document_invoice.sri_authorization_validation==False:
-                obj_auth=self.pool.get('sri.authorization')
-                auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
-                res['value']['authorization'] = obj_auth.browse(cr,uid,auth_id[0]).number
-                res['value']['authorization_sales']=obj_auth.browse(cr,uid,auth_id[0]).id
+                if type=='out_invoice':
+                    obj_auth=self.pool.get('sri.authorization')
+                    auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
+                    res['value']['authorization'] = obj_auth.browse(cr,uid,auth_id[0]).number
+                    res['value']['authorization_sales']=obj_auth.browse(cr,uid,auth_id[0]).id
+                else:
+                    obj_auth=self.pool.get('sri.authorization.supplier')
+                    auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
+                    res['value']['authorization_supplier_purchase_id']=obj_auth.browse(cr,uid,auth_id[0]).id
         return res
     
     def _doc_type(self, cr, uid, context=None):
@@ -128,3 +133,10 @@ class account_invoice(osv.osv):
     }  
     
 account_invoice()
+
+class sri_type_document(osv.osv):  
+    _inherit = 'sri.type.document'
+    _columns = {
+                'name2':fields.many2one('account.invoice.document.type', 'Name', required=True),
+                }
+sri_type_document()

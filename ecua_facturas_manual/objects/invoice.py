@@ -117,33 +117,37 @@ class account_invoice(osv.osv):
         auth_data = {}
         
         if partner_id: 
-            auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, invoice_number, auth_types[type], partner_id, date_invoice)
-            
-            if not auth_data.get('auth_ids', []):
-                warning = {
-                           'title': _(u'Advertencia!!!'),
-                           'message':auth_data.get('message',''),
-                           }
-                return {'value': values, 'domain':domain, 'warning': warning}
-            domain = {
-                      field_auth_types[type]:[('id','in',auth_data.get('auth_ids', []))]
-                      }
-            if auth_data.get('multi_auth', False):
-                values = {
-                         field_number_types[type] : ""
-                         }
-                warning = {
-                           'title': _(u'Advertencia!!!'),
-                           'message':auth_data.get('message',''),
-                           }
-                return {'value': values, 'domain':domain, 'warning': warning}
-            else:
-                auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
-                if auth_id:
-                    values = {
-                             field_number_types[type] : auth_data.get('res_number', ''),
-                             field_auth_types[type]: auth_id,
-                             }
+            if ids:
+                obj_invoice=self.browse(cr,uid,ids[0])
+                if obj_invoice.authorization_supplier_purchase_id:
+                    if not obj_invoice.authorization_supplier_purchase_id.number=='9999999999':
+                        auth_data = auth_supplier_obj.get_supplier_authorizations(cr, uid, invoice_number, auth_types[type], partner_id, date_invoice)
+                
+                        if not auth_data.get('auth_ids', []):
+                            warning = {
+                                       'title': _(u'Advertencia!!!'),
+                                       'message':auth_data.get('message',''),
+                                       }
+                            return {'value': values, 'domain':domain, 'warning': warning}
+                        domain = {
+                                  field_auth_types[type]:[('id','in',auth_data.get('auth_ids', []))]
+                                  }
+                        if auth_data.get('multi_auth', False):
+                            values = {
+                                     field_number_types[type] : ""
+                                     }
+                            warning = {
+                                       'title': _(u'Advertencia!!!'),
+                                       'message':auth_data.get('message',''),
+                                       }
+                            return {'value': values, 'domain':domain, 'warning': warning}
+                        else:
+                            auth_id = auth_data.get('auth_ids', []) and auth_data.get('auth_ids', [])[0] or None
+                            if auth_id:
+                                values = {
+                                         field_number_types[type] : auth_data.get('res_number', ''),
+                                         field_auth_types[type]: auth_id,
+                                         }
             
         return {'value': values, 'domain':domain, 'warning': warning}
 
@@ -501,29 +505,22 @@ class account_invoice(osv.osv):
         document_obj = self.pool.get('sri.type.document')
         for invoice in self.browse(cr, uid, ids, context):
             context['automatic'] = invoice.automatic
-            if not invoice.partner_id.foreing and not invoice.partner_id.ref:
-                raise osv.except_osv(_('Error!'), _("Partner %s doesn't have CEDULA/RUC, you must input for validate.") % invoice.partner_id.name)
-            if invoice.type=='out_invoice':
-                if not invoice.authorization_sales:
-                    raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))
-                if not invoice.automatic:
-                    if not invoice.invoice_number_out:
-                        raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))
-                    shop = invoice.shop_id.id
-                    auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', invoice.company_id.id, shop, invoice.invoice_number_out, invoice.printer_id.id, context)
-                    if not auth['authorization']:
-                        raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
-                    doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])
-                    document_obj.add_document(cr, uid, doc_id, context)
-                    self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
-                else:
-                    if not invoice.invoice_number_out:
-                        b = True
-                        vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'invoice', invoice.company_id.id, invoice.shop_id.id, invoice.printer_id.id)
-                        while b :
-                            number_out = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])
-                            if not self.pool.get('account.invoice').search(cr, uid, [('type','=','out_invoice'),('invoice_number','=',number_out), ('automatic','=',True),('id','not in',tuple(ids))],):
-                                b=False
+            if not invoice.authorization_sales.number=='9999999999':
+                if not invoice.partner_id.foreing and not invoice.partner_id.ref:
+                    raise osv.except_osv(_('Error!'), _("Partner %s doesn't have CEDULA/RUC, you must input for validate.") % invoice.partner_id.name)
+                if invoice.type=='out_invoice':
+                    if not invoice.authorization_sales:
+                        raise osv.except_osv(_('Invalid action!'), _('Not exist authorization for the document, please check'))
+                    if not invoice.automatic:
+                        if not invoice.invoice_number_out:
+                            raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))
+                        shop = invoice.shop_id.id
+                        auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', invoice.company_id.id, shop, invoice.invoice_number_out, invoice.printer_id.id, context)
+                        if not auth['authorization']:
+                            raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
+                        doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])
+                        document_obj.add_document(cr, uid, doc_id, context)
+                        self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
                     else:
                         number_out = invoice.invoice_number_out
                     doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
@@ -620,6 +617,14 @@ class account_invoice(osv.osv):
     def _check_number_invoice(self,cr,uid,ids):
         res = True
         for invoice in self.browse(cr, uid, ids):
+
+            if invoice.type=='out_invoice':
+                authorization=invoice.authorization
+            else:
+                authorization=invoice.authorization_supplier_purchase_id.number
+            if not authorization =='9999999999':
+                cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
+                ref = invoice.invoice_number_out
             cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
             ref = invoice.invoice_number_out
             validate_document_type = invoice.document_invoice_type_id.number_format_validation

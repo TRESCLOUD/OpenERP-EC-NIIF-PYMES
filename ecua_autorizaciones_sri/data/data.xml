@@ -27,11 +27,23 @@
 			<field eval="'(False,)'" name="args" />
 		</record>
 		
-		<!-- Create Authorization -->
+		<!-- Create Authorization Customer -->
 		<record id="default_authorization" model="sri.authorization">
 			<field name="number">9999999999</field>
 			<field name="start_date">20/06/2013</field>
 			<field name="expiration_date">20/06/3000</field>
+			<field name="company_id">1</field>
+			<field name="active">True</field>
+		</record>
+		<!-- Create Authorization Supplier -->
+		<record id="default_authorization" model="sri.authorization.supplier">
+			<field name="number">9999999999</field>
+			<field name="start_date">20/06/2013</field>
+			<field name="expiration_date">20/06/3000</field>
+			<field name="first_sequence">0001</field>
+			<field name="last_sequence">10000000</field>
+			<field name="agency">000</field>
+			<field name="printer_point">000</field>
 			<field name="company_id">1</field>
 			<field name="active">True</field>
 		</record>
