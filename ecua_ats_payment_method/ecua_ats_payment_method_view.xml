@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		
+	<!-- VIEW -->
+	
+	<record id="view_account_journal_form_inherit_trescloud" model="ir.ui.view">
+        <field name="name">account.journal.payment.method</field>
+        <field name="model">account.journal</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">        	
+        	 <xpath expr="/form/notebook/page/group//field[@name='centralisation']" position="after">
+				<field name="payment_method_id" attrs="{'invisible':[('type','not in',('cash', 'bank'))],'required':[('type','in',('cash', 'bank'))]}"/>
+			</xpath>               
+		</field>
+    </record>
+
+    </data>
+</openerp>
