@@ -31,7 +31,7 @@
       
    Este sistema permite agregar automaticamente lineas con valor cero a Dias trabajados (HORA_EXTRA_REGULAR, HORA_EXTRA_EXTRAORDINARIA, DIAS_DEL_MES Y DIAS_TRABAJADOS) y 
    Otros Ingresos (BONIFICACIÓN, COMISIÓN, TRANSPORTE Y ALIMENTACIÓN).
-   Se agrega el campo number_of_year tipo función en el objeto hr.contract
+   Se agrega el campo number_of_year tipo función en el objeto hr.contract.
        
    Desarrollador:
    
