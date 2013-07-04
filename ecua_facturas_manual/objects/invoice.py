@@ -522,10 +522,18 @@ class account_invoice(osv.osv):
                         document_obj.add_document(cr, uid, doc_id, context)
                         self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
                     else:
-                        number_out = invoice.invoice_number_out
-                    doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
-                    document_obj.add_document(cr, uid, doc_id, context)
-                    self.write(cr, uid, [invoice.id], {'invoice_number': number_out,'invoice_number_out': number_out,'automatic_number': number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
+                        if not invoice.invoice_number_out:
+                            b = True
+                            vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'invoice', invoice.company_id.id, invoice.shop_id.id, invoice.printer_id.id)
+                            while b :
+                                number_out = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])
+                                if not self.pool.get('account.invoice').search(cr, uid, [('type','=','out_invoice'),('invoice_number','=',number_out), ('automatic','=',True),('id','not in',tuple(ids))],):
+                                    b=False
+                        else:
+                            number_out = invoice.invoice_number_out
+                        doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
+                        document_obj.add_document(cr, uid, doc_id, context)
+                        self.write(cr, uid, [invoice.id], {'invoice_number': number_out,'invoice_number_out': number_out,'automatic_number': number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
             elif invoice.type=='in_invoice':
                 if invoice.invoice_number_in:
                     if invoice.document_invoice_type_id.number_format_validation == True:
