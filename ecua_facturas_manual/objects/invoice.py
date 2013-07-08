@@ -633,24 +633,22 @@ class account_invoice(osv.osv):
             if not authorization =='9999999999':
                 cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
                 ref = invoice.invoice_number_out
-            cadena='(\d{3})+\-(\d{3})+\-(\d{9})'
-            ref = invoice.invoice_number_out
-            validate_document_type = invoice.document_invoice_type_id.number_format_validation
-            
-            if validate_document_type == True:
-                if invoice.invoice_number_out:
-                    if re.match(cadena, ref):
-                        res = True
-                    else:
-                        res = False
-                cadena='(\d{3})+\-(\d{3})+\-(\d{1,9})'
-                ref = invoice.invoice_number_in
-                if invoice.invoice_number_in and not invoice.foreign:
-                    if re.match(cadena, ref):
-                        res = True
-                    else:
-                        res = False
-            return res
+                validate_document_type = invoice.document_invoice_type_id.number_format_validation
+                
+                if validate_document_type == True:
+                    if invoice.invoice_number_out:
+                        if re.match(cadena, ref):
+                            res = True
+                        else:
+                            res = False
+                    cadena='(\d{3})+\-(\d{3})+\-(\d{1,9})'
+                    ref = invoice.invoice_number_in
+                    if invoice.invoice_number_in and not invoice.foreign:
+                        if re.match(cadena, ref):
+                            res = True
+                        else:
+                            res = False
+        return res
     
     def unlink(self, cr, uid, ids, context=None):
         invoices = self.read(cr, uid, ids, ['state'], context=context)
