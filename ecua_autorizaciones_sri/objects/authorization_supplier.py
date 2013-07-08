@@ -69,13 +69,13 @@ class authorization_supplier(osv.osv):
     
     def _check_number(self, cr, uid, ids):
         cadena='(\d{10})'
-        for auth in self.browse(cr, uid, ids):
-            ref = auth['number']
-            if ref:
-                if re.match(cadena, ref):
-                    return True
-                else:
-                    return False
+#        for auth in self.browse(cr, uid, ids):
+#            ref = auth['number']
+#            if ref:
+#                if re.match(cadena, ref):
+#                    return True
+#                else:
+#                    return False
         return True
     
     def _check_dates(self, cr, uid, ids):
@@ -101,7 +101,8 @@ class authorization_supplier(osv.osv):
             else:
                 return False
         
-    _constraints = [(_check_agency_pp, _('Error: Invalid Number Format, It must be like 001'), ['agency', 'printer_point']), 
+    _constraints = [
+                    (_check_agency_pp, _('Error: Invalid Number Format, It must be like 001'), ['agency', 'printer_point']), 
                     (_check_number, _('Error: Invalid Number Format, It must be like 0123456789'), ['number']),
                     (_check_dates, _('Error: Dates of authorization are not correct'), ['start_date','expiration_date']),
                     (_check_sequence, _('Error: Numbers of sequence are not correct'), ['first_sequence','last_sequence']),
