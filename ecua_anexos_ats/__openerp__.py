@@ -36,6 +36,7 @@
                      'ecua_retenciones_manual',
                      'ecua_notas_credito_manual',
                      'ecua_liquidacion_compras',
+                     'ecua_ats_payment_method',
                      ],
         "init_xml" : [ 
                         'data/tipo_comprobantes.xml',
@@ -56,6 +57,7 @@
                         'views/invoice_view.xml',
                         'views/company_view.xml',
                         'wizard/ats_view.xml',
+                        'report/report_data.xml',
                         #'test/test.yml',
                          ],
         "installable": True
