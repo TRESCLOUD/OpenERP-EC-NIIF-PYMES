@@ -534,15 +534,15 @@ class account_invoice(osv.osv):
                         doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
                         document_obj.add_document(cr, uid, doc_id, context)
                         self.write(cr, uid, [invoice.id], {'invoice_number': number_out,'invoice_number_out': number_out,'automatic_number': number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
-            elif invoice.type=='in_invoice':
-                if invoice.invoice_number_in:
-                    if invoice.document_invoice_type_id.number_format_validation == True:
-                        auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
-                    
-                    if not invoice.foreign:
-                        self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in,'authorization_purchase': invoice.authorization_supplier_purchase_id.number}, context)
-                    else:
-                        self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in}, context)
+                elif invoice.type=='in_invoice':
+                    if invoice.invoice_number_in:
+                        if invoice.document_invoice_type_id.number_format_validation == True:
+                            auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
+                        
+                        if not invoice.foreign:
+                            self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in,'authorization_purchase': invoice.authorization_supplier_purchase_id.number}, context)
+                        else:
+                            self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in}, context)
         result = super(account_invoice, self).action_number(cr, uid, ids, context)
         self.write(cr, uid, ids, {'internal_number': False,}, context)
         return result
@@ -606,7 +606,7 @@ class account_invoice(osv.osv):
                    raise osv.except_osv(_('Invalid action!'), _('The date entered is not valid for the authorization')) 
         return res
     
-    def onchange_number(self, cr, uid, ids, number, automatic, company, shop=None, printer_id=None, context=None):
+    def onchange_number(self, cr, uid, ids, authorization,number, automatic, company, shop=None, printer_id=None, context=None):
         result = {}
         if context is None:
             context = {}
@@ -614,11 +614,12 @@ class account_invoice(osv.osv):
             shop = self.pool.get('sale.shop').search(cr, uid,[])[0]
         if not number:
             return {'value': {'invoice_number_out': ''}}
-        if not automatic:
-            auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
-            if not auth['authorization']:
-                raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
-            result['authorization_sales'] = auth['authorization']
+        if not authorization=='9999999999':
+            if not automatic:
+                auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', company, shop, number, printer_id, context)
+                if not auth['authorization']:
+                    raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check!'))
+                result['authorization_sales'] = auth['authorization']
         res_final = {'value':result}
         return res_final
     
@@ -648,7 +649,7 @@ class account_invoice(osv.osv):
                             res = True
                         else:
                             res = False
-        return res
+            return res
     
     def unlink(self, cr, uid, ids, context=None):
         invoices = self.read(cr, uid, ids, ['state'], context=context)
