@@ -57,7 +57,7 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
      
     _columns = {
-        'document_invoice_type_id': fields.many2one('account.invoice.document.type', 'Document type', required=True)
+        'document_invoice_type_id': fields.many2one('account.invoice.document.type', 'Document type', required=True, help='Indicates the type of accounting document authorized to issue when making a purchase or sale.',)
     }
     
     def onchange_partner2_id(self, cr, uid, ids, document_invoice_type_id, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
