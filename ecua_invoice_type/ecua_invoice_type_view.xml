@@ -21,6 +21,7 @@
 	               <field name="use"/>
 				   <field name="number_format_validation"/>
 				   <field name="sri_authorization_validation"/>
+				   <field name="sri_authorization_validation_owner"/>
 				   <field name="report_id"/>
 	           </group>     
 	        </form>
@@ -56,7 +57,8 @@
 				<field name="name"/>					 
 				<field name="use"/>    
 				<field name="number_format_validation"/>
-				<field name="sri_authorization_validation"/> 
+				<field name="sri_authorization_validation"/>
+				<field name="sri_authorization_validation_owner"/> 
 				<field name="priority"/>
 				<field name="type"/>    
 				<field name="report_id"/>    
