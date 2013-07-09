@@ -66,7 +66,7 @@
 		<field name="name">Liquidación de compra de Bienes o Prestación de servicios</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
-		<field name="sri_authorization_validation">True</field>
+		<field name="sri_authorization_validation_owner">True</field>
 		<field name="priority">30</field>
 		<field name="type">in_invoice</field>
 		</record>
