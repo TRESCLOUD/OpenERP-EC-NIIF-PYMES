@@ -394,11 +394,13 @@ herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inher
 					<field name="authorization_purchase" invisible="1"></field>
 					<field name="foreign" invisible="1" />
 					<field name="authorization_supplier_purchase_id"
-						attrs="{'required':[('foreign','=',False)], 'invisible':[('foreign','=',True)]}"
+						attrs="{'required':[('aut_flag','=',False)], 'invisible':['|',('foreign','=',True),('aut_flag','=',True)]}"
 						on_change="onchange_authorization_supplier(authorization_supplier_purchase_id, invoice_number_in)"
 						domain="[('partner_id', '=', partner_id),('type','=','invoice')]"
 						context="{'document_type':'invoice', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}">
 					</field>
+					<field name="aut_flag" invisible="True"/>
+					<field name="authorization_sales" attrs="{'required':[('aut_flag','=',True)],'invisible':[('aut_flag','=',False)]}"/>
 				</xpath>
 				<xpath expr="/form/group//field[@name='partner_id']" position="replace">
 					<field string="Supplier" name="partner_id"

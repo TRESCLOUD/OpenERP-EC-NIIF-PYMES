@@ -448,6 +448,7 @@ class account_invoice(osv.osv):
                 'prints_number': fields.integer('Prints Number', help = "You can't reprint a invoice twice or more times"),
                 'automatic':fields.boolean('Automatic?',),
                 'flag':fields.boolean('Flag',),
+                'aut_flag':fields.boolean('Aut Flag'),
                 'shop_id':fields.many2one('sale.shop', 'Shop', readonly=True, states={'draft':[('readonly',False)]}),
                 'printer_id':fields.many2one('sri.printer.point', 'Printer Point', readonly=True, states={'draft':[('readonly',False)]}),
                 'total_retencion': fields.function(_amount_all_2, method=True, digits_compute=dp.get_precision('Account'), string='Total Retenido',
@@ -495,6 +496,7 @@ class account_invoice(osv.osv):
                  'prints_number': lambda *a: 0,
                  'automatic': _get_automatic,
                  'flag': lambda *a: False,
+                 'aut_flag':False,
                  }
 
     def action_number(self, cr, uid, ids, context=None):
@@ -506,6 +508,16 @@ class account_invoice(osv.osv):
         for invoice in self.browse(cr, uid, ids, context):
             context['automatic'] = invoice.automatic
             if not invoice.authorization_sales.number=='9999999999':
+                var=invoice.document_invoice_type_id.code
+                tipo=''
+                if var=='01':
+                    tipo='invoice'
+                elif var=='04':
+                    tipo='credit_note'
+                elif var == '03':
+                    tipo='liquidation'
+                elif var=='07':
+                    tipo='withholding'
                 if not invoice.partner_id.foreing and not invoice.partner_id.ref:
                     raise osv.except_osv(_('Error!'), _("Partner %s doesn't have CEDULA/RUC, you must input for validate.") % invoice.partner_id.name)
                 if invoice.type=='out_invoice':
@@ -515,34 +527,45 @@ class account_invoice(osv.osv):
                         if not invoice.invoice_number_out:
                             raise osv.except_osv(_('Invalid action!'), _('Not exist number for the document, please check'))
                         shop = invoice.shop_id.id
-                        auth = self.pool.get('sri.authorization').get_auth(cr, uid, 'invoice', invoice.company_id.id, shop, invoice.invoice_number_out, invoice.printer_id.id, context)
+                        auth = self.pool.get('sri.authorization').get_auth(cr, uid, tipo, invoice.company_id.id, shop, invoice.invoice_number_out, invoice.printer_id.id, context)
                         if not auth['authorization']:
                             raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
-                        doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])
+                        doc_id = document_obj.search(cr, uid, [('name','=',tipo),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])
                         document_obj.add_document(cr, uid, doc_id, context)
                         self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
                     else:
                         if not invoice.invoice_number_out:
                             b = True
-                            vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, 'invoice', invoice.company_id.id, invoice.shop_id.id, invoice.printer_id.id)
+                            vals_aut = self.pool.get('sri.authorization').get_auth_secuence(cr, uid, tipo, invoice.company_id.id, invoice.shop_id.id, invoice.printer_id.id)
                             while b :
                                 number_out = self.pool.get('ir.sequence').get_id(cr, uid, vals_aut['sequence'])
                                 if not self.pool.get('account.invoice').search(cr, uid, [('type','=','out_invoice'),('invoice_number','=',number_out), ('automatic','=',True),('id','not in',tuple(ids))],):
                                     b=False
                         else:
                             number_out = invoice.invoice_number_out
-                        doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
+                        doc_id = document_obj.search(cr, uid, [('name','=',tipo),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])                            
                         document_obj.add_document(cr, uid, doc_id, context)
                         self.write(cr, uid, [invoice.id], {'invoice_number': number_out,'invoice_number_out': number_out,'automatic_number': number_out, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
                 elif invoice.type=='in_invoice':
                     if invoice.invoice_number_in:
-                        if invoice.document_invoice_type_id.number_format_validation == True:
-                            auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
-                        
-                        if not invoice.foreign:
-                            self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in,'authorization_purchase': invoice.authorization_supplier_purchase_id.number}, context)
+                        if not invoice.authorization_sales:
+                            if invoice.document_invoice_type_id.number_format_validation == True:
+                                auth_s_obj.check_number_document(cr, uid, invoice.invoice_number_in, invoice.authorization_supplier_purchase_id, invoice.date_invoice, 'account.invoice', 'invoice_number_in', _('Invoice'), context, invoice.id, invoice.foreign)
+                            
+                            if not invoice.foreign:
+                                self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in,'authorization_purchase': invoice.authorization_supplier_purchase_id.number}, context)
+                            else:
+                                self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in}, context)
                         else:
-                            self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in}, context)
+                            """FUNCION QUE SE AUMENTO PARA TIPOS DE LIQUIDACION DE COMPRA"""
+                            shop = invoice.shop_id.id
+                            
+                            auth = self.pool.get('sri.authorization').get_auth(cr, uid, tipo, invoice.company_id.id, shop, invoice.invoice_number_in, invoice.printer_id.id, context)
+                            if not auth['authorization']:
+                                raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
+                            doc_id = document_obj.search(cr, uid, [('name','=','invoice'),('printer_id','=',invoice.printer_id.id),('shop_id','=',invoice.shop_id.id),('sri_authorization_id','=',invoice.authorization_sales.id)])
+                            document_obj.add_document(cr, uid, doc_id, context)
+                            self.write(cr, uid, [invoice.id], {'invoice_number': invoice.invoice_number_in, 'flag': True, 'authorization':invoice.authorization_sales.number}, context)
         result = super(account_invoice, self).action_number(cr, uid, ids, context)
         self.write(cr, uid, ids, {'internal_number': False,}, context)
         return result
