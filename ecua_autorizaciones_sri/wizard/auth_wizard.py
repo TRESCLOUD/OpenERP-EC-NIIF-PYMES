@@ -142,6 +142,7 @@ class auth_wizard(osv.osv_memory):
                     #create object for reports
                     vals_doc_type={
                                   'name':dt['name'],
+                                  'name2':dt['name2']['id'],
                                   'first_secuence': dt['first_secuence'],
                                   'last_secuence': dt['last_secuence'],
                                   'shop_id':dt['shop_id']['id'],
@@ -220,6 +221,7 @@ class auth_wizard(osv.osv_memory):
                     #create object for reports
                     vals_doc_type={
                                   'name':dt['name'],
+                                  'name':dt['name2']['id'],
                                   'first_secuence': dt['first_secuence'],
                                   'last_secuence': dt['last_secuence'],
                                   'printer_id':dt['printer_id']['id'],

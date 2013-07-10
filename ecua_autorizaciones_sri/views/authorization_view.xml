@@ -67,6 +67,8 @@
 							<label string="La edición de estos valores debe hacerse con extrema precausión, puede romper la integridad de sistema, por favor proceda con precaución" colspan="4"/>
 							<newline/>
 	                        <field name="name" readonly="0"/>
+	                        <!-- CASO PARTICULAR REVISAR EN INSTALACION -->
+	                        <field name="name2"/>
 	                        <field name="first_secuence" readonly="0"/>
 	                        <field name="last_secuence" readonly="0"/>
 	                        <field name="shop_id" readonly="0"/>
