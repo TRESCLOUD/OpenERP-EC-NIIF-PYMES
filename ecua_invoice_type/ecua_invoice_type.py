@@ -64,19 +64,27 @@ class account_invoice(osv.osv):
     def onchange_partner2_id(self, cr, uid, ids, document_invoice_type_id, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
         partner_obj = self.pool.get('res.partner')
         res = super(account_invoice, self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+        obj_auth=self.pool.get('sri.authorization')
         if document_invoice_type_id:
             obj_document=self.pool.get('account.invoice.document.type')
             document_invoice=obj_document.browse(cr,uid,document_invoice_type_id)
-            if document_invoice.sri_authorization_validation==False:
-                if type=='out_invoice':
-                    obj_auth=self.pool.get('sri.authorization')
-                    auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
-                    res['value']['authorization'] = obj_auth.browse(cr,uid,auth_id[0]).number
-                    res['value']['authorization_sales']=obj_auth.browse(cr,uid,auth_id[0]).id
-                else:
-                    obj_auth=self.pool.get('sri.authorization.supplier')
-                    auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
-                    res['value']['authorization_supplier_purchase_id']=obj_auth.browse(cr,uid,auth_id[0]).id
+            if document_invoice.sri_authorization_validation_owner==True:
+                res['value']['aut_flag']=True
+                line_auth_obj = self.pool.get('sri.type.document')
+                lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
+                auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
+                res['value']['authorization_sales']=auth_ids
+            else:    
+                if document_invoice.sri_authorization_validation==False:
+                    if type=='out_invoice':
+                        obj_auth=self.pool.get('sri.authorization')
+                        auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
+                        res['value']['authorization'] = obj_auth.browse(cr,uid,auth_id[0]).number
+                        res['value']['authorization_sales']=obj_auth.browse(cr,uid,auth_id[0]).id
+                    else:
+                        obj_auth=self.pool.get('sri.authorization.supplier')
+                        auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
+                        res['value']['authorization_supplier_purchase_id']=obj_auth.browse(cr,uid,auth_id[0]).id
         return res
     
     def _doc_type(self, cr, uid, context=None):
