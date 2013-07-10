@@ -74,6 +74,7 @@ class account_invoice(osv.osv):
                 lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
                 auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
                 res['value']['authorization_sales']=auth_ids
+                value['invoice_number_in'] = number or ''
             else:    
                 if document_invoice.sri_authorization_validation==False:
                     if type=='out_invoice':

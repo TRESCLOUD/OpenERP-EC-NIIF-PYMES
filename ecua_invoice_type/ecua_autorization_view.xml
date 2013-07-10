@@ -26,6 +26,26 @@
 	                    </field>
 	                </field>
 	    	</record>
+	    	
+	    <record model="ir.ui.view" id="sri_authorization_company_editable_form_view_inherit">
+			<field name="name">sri.authorization.form.inherit</field>
+			<field name="model">sri.authorization</field>
+			<field name="inherit_id" ref="ecua_autorizaciones_sri.sri_authorization_company_editable_form_view"/>
+			<field name="type">form</field>
+			<field name="priority">17</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/field[@name='type_document_ids']/tree/field[@name='name']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+				<xpath expr="/form/field[@name='type_document_ids']/tree/field[@name='first_secuence']" position="before">
+					<field name="name2" readonly="0"/>
+				</xpath>
+				<xpath expr="/form/field[@name='type_document_ids']/form/field[@name='name']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath>
+
+			</field>
+			</record>
 </data>
 </openerp>
    
