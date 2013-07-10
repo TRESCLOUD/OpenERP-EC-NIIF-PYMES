@@ -259,20 +259,20 @@ class auth_wizard_line(osv.osv_memory):
                     output.append(('debit_note',_('Debit Note')))
         return output
     
-    def onchange_name(self, cr, uid, ids, name, shop, printer, automatic, context=None):
+    def onchange_name(self, cr, uid, ids, name2, shop, printer, automatic, context=None):
         result = {}
         primera=0
         ultima=0
         range_default=99
         result['automatic'] = automatic
-        if (not name) or (not shop) or (not printer):
+        if (not name2) or (not shop) or (not printer):
             return {'value':result}
         dt_obj = self.pool.get('sri.type.document')
         if automatic:
-            dt_ant_aut_act_ids = dt_obj.search(cr, uid, [('name','=', name ),('state','=',True), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
+            dt_ant_aut_act_ids = dt_obj.search(cr, uid, [('name2','=', name2 ),('state','=',True), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
             if not dt_ant_aut_act_ids:
                 
-                dt_ant_aut_ids = dt_obj.search(cr, uid, [('name','=', name ), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
+                dt_ant_aut_ids = dt_obj.search(cr, uid, [('nam2','=', name2 ), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
                 if dt_ant_aut_ids:
                     primera=dt_obj.browse(cr, uid, dt_ant_aut_ids, context)[-1].last_secuence + 1
                 else:
@@ -282,7 +282,7 @@ class auth_wizard_line(osv.osv_memory):
                 result['expired']=True
         else:
             #Obtengo la ultima secuencia del documento anterior para asignar la siguiente por defecto
-            dt_ant_ids = dt_obj.search(cr, uid, [('name','=', name ),('state','=',True), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',False)])
+            dt_ant_ids = dt_obj.search(cr, uid, [('name2','=', name2 ),('state','=',True), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',False)])
             if not dt_ant_ids:
                 primera=1
             else:
@@ -290,7 +290,7 @@ class auth_wizard_line(osv.osv_memory):
                     primera=dt['last_secuence']+1
             ultima=primera + range_default
             result['last_secuence'] = ultima
-        result['state'] = name
+#        result['state'] = name
         result['first_secuence'] = primera
         value = {'value':result}
         return value
@@ -318,6 +318,7 @@ class auth_wizard_line(osv.osv_memory):
     _name = 'auth.wizard.line'
     _columns={
               'name':fields.selection(_get_name, 'Name'),
+              'name2':fields.many2one('account.invoice.document.type', 'Name', required=True),
               'first_secuence': fields.integer('Inicial Secuence'),
               'last_secuence': fields.integer('Last Secuence'),
               'shop_id':fields.many2one('sale.shop', 'Agency', required=True),
