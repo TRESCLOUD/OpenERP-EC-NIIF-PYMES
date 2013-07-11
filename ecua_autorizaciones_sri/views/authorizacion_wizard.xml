@@ -38,8 +38,8 @@
 								</tree>
 							</field>
 			                <separator string="Type" colspan="4"/>
-			                <field name="name" select="1" string= "Document" required="True"  colspan="4"/>
-			                <field name="name2" required="True" on_change="onchange_name(name2, shop_id, printer_id, parent.auto_printer)"/>
+			                <field name="name" select="1" string= "Document" required="True"  colspan="4" on_change="onchange_name(name2, shop_id, printer_id, parent.auto_printer)"/>
+			                <field name="name2" required="True" on_change="onchange_name(name2, shop_id, printer_id, parent.auto_printer)"/> 
 			                <group colspan="4">
 			                <field name="first_secuence" attrs="{'invisible':[('expired','=',True)],'required':[('expired','!=',True)]}" on_change="onchange_number(first_secuence, parent.auto_printer)"/>
 			                <field name="last_secuence" attrs="{'invisible':[('automatic','=',True)],'required':[('expired','!=',True)]}"/>
