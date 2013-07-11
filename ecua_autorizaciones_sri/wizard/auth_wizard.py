@@ -274,7 +274,7 @@ class auth_wizard_line(osv.osv_memory):
             dt_ant_aut_act_ids = dt_obj.search(cr, uid, [('name2','=', name2 ),('state','=',True), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
             if not dt_ant_aut_act_ids:
                 
-                dt_ant_aut_ids = dt_obj.search(cr, uid, [('nam2','=', name2 ), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
+                dt_ant_aut_ids = dt_obj.search(cr, uid, [('name2','=', name2 ), ('shop_id','=',shop),('printer_id','=',printer), ('automatic','=',True)])
                 if dt_ant_aut_ids:
                     primera=dt_obj.browse(cr, uid, dt_ant_aut_ids, context)[-1].last_secuence + 1
                 else:
