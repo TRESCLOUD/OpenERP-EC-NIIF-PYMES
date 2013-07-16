@@ -437,7 +437,7 @@ class account_invoice(osv.osv):
     _columns = {
                 'automatic_number': fields.char('Number', size=17, readonly=True,),
                 'create_date': fields.date('Creation date', readonly=True),
-                'authorization_sales':fields.many2one('sri.authorization', 'Authorization', required=False,readonly=False,states={'draft':[('readonly',False)]}),
+                'authorization_sales':fields.many2one('sri.authorization', 'Authorization', required=False),
                 'authorization':fields.char('Authorization', size=10, readonly=True),
                 'authorization_supplier_purchase_id':fields.many2one('sri.authorization.supplier', 'Authorization', readonly=True, states={'draft':[('readonly',False)]}), 
                 'authorization_purchase':fields.char('Authorization', size = 10, required=False, readonly=True, states={'draft':[('readonly',False)]}, help='This Number is necesary for SRI reports'),
