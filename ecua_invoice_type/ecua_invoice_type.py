@@ -22,7 +22,7 @@
 ########################################################################
 
 from osv import osv, fields
-from openerp.tools.translate import _
+from tools.translate import _
 
 class document_invoice_type(osv.osv):
     """ Type document """
