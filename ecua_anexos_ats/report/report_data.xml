@@ -17,7 +17,7 @@
 			<field name="charset">utf_8</field>
 			<field name="content_fname">txt</field>
 			<field name="report_rml">ecua_anexos_ats/report/aeroo_txt_sample.txt</field>
-			<field name="parser_state">default</field>
+			<field name="parser_loc">ecua_anexos_ats/report/ecua_anexos_ats_parser.py</field>
 			<field name="tml_source">file</field>
 		</record>
 
