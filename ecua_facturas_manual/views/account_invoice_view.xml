@@ -400,7 +400,7 @@ herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inher
 						context="{'document_type':'invoice', 'form_view_ref':'ecua_autorizaciones_sri.sri_authorization_supplier_documents_form_view'}">
 					</field>
 					<field name="aut_flag" invisible="True"/>
-					<field name="authorization_sales" attrs="{'required':[('aut_flag','=',True)],'invisible':[('aut_flag','=',False)]}"/>
+					<field name="authorization_sales" attrs="{'required':[('aut_flag','=',True)],'invisible':[('aut_flag','=',False)],'readonly':[('state','not in','draft')]}"/>
 				</xpath>
 				<xpath expr="/form/group//field[@name='partner_id']" position="replace">
 					<field string="Supplier" name="partner_id"
