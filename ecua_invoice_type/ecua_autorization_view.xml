@@ -22,7 +22,7 @@
 	                <field name="type">form</field>
 	                <field name="arch" type="xml">
 	                    <field name="name" position="before">    
-	                  		<field name="name2" domain="[('sri_authorization_validation','=','True')]"/>
+	                  		<field name="name2" domain="['|',('sri_authorization_validation','=','True'),('sri_authorization_validation_owner','=','True')]"/>
 	                    </field>
 	                </field>
 	    	</record>

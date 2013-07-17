@@ -22,6 +22,7 @@
 ########################################################################
 
 from osv import osv, fields
+from tools.translate import _
 
 class document_invoice_type(osv.osv):
     """ Type document """
@@ -74,8 +75,11 @@ class account_invoice(osv.osv):
                 lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
                 auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
                 res['value']['authorization_sales']=auth_ids
-                document=line_auth_obj.browse(cr,uid,lines[0])
-                res['value']['invoice_number_in'] = document.shop_id.number + "-"+document.printer_id.number+"-"
+                if not lines:
+                    res['warning'] = {'title': _('Warning'), 'message': _('There is not a authorization for this type of document')}
+                else:
+                    document=line_auth_obj.browse(cr,uid,lines[0])
+                    res['value']['invoice_number_in'] = document.shop_id.number + "-"+document.printer_id.number+"-"
                 
             else:    
                 if document_invoice.sri_authorization_validation==False:
