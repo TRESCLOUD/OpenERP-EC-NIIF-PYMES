@@ -34,8 +34,8 @@ class document_invoice_type(osv.osv):
          'name':fields.char('Name', size=255, required=True,),
          'use':fields.boolean('Activo', help='Indicates whether the document is to be active.',),
          'number_format_validation':fields.boolean('Number format', help='Indicates if the number of this document will go through a validation process format.',),
-         'sri_authorization_validation':fields.boolean('SRI authorization', help='Indicates if the number of this document will be linked to an authorization number.',),          
-         'sri_authorization_validation_owner':fields.boolean('SRI authorization owner', help='Indicates if the number of this document will be linked to an authorization number assigned by the company.',),
+         'sri_authorization_validation':fields.boolean('SRI authorization', help='Indicates whether this type of document is or is not required to request an authorization for invoice number for each partner.',),          
+         'sri_authorization_validation_owner':fields.boolean('SRI authorization owner', help='Indicates if this document will be linked to an authorization number assigned by the company.',),
          'priority':fields.integer('Priority', required=True, help='Indicates the priority of the document.',),
          'type': fields.selection([
             ('out_invoice','Customer Document'),
