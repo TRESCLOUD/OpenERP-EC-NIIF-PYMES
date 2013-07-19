@@ -510,7 +510,7 @@ class account_invoice(osv.osv):
             if not invoice.authorization_sales.number=='9999999999':
                 var=invoice.document_invoice_type_id.code
                 tipo=''
-                if var=='01':
+                if var=='01' or var=='18':
                     tipo='invoice'
                 elif var=='04':
                     tipo='credit_note'
