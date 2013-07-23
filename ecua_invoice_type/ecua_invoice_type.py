@@ -43,7 +43,8 @@ class document_invoice_type(osv.osv):
             ('in_invoice','Supplier Document'),
             ('out_refund','Customer Refund'),
             ('in_refund','Supplier Refund'),
-            ],'Type', select=True, change_default=True, required=True, help='Indicates whether the document is of supplier or customer.',),         
+            ],'Type', select=True, change_default=True, required=True, help='Indicates whether the document is of supplier or customer.',),
+         'parent_id':fields.many2one('account.invoice.document.type','Parent document type', help='It links this type of document to another document which need their properties.', ),         
      } 
     
     _defaults = {
