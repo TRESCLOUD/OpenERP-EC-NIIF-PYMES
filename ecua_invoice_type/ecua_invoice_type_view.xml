@@ -14,7 +14,8 @@
 	  			   <field name="code"/>
 				   <field name="name"/>
 				   <field name="priority"/>
-				   <field name="type"/>	           
+				   <field name="type"/>
+				   <field name="parent_id"/>	           
 			   </group>
 	           <group col="2" colspan="2">
 	               <separator colspan="2"></separator> 
@@ -22,7 +23,7 @@
 				   <field name="number_format_validation"/>
 				   <field name="sri_authorization_validation"/>
 				   <field name="sri_authorization_validation_owner"/>
-				   <field name="report_id"/>
+				   <field name="report_id"/>				   
 	           </group>     
 	        </form>
 		</field>
@@ -55,7 +56,8 @@
 	        <tree string="Accounting documents">
 				<field name="code"/>
 				<field name="name"/>					 
-				<field name="use"/>    
+				<field name="use"/>
+				<field name="parent_id"/>    
 				<field name="number_format_validation"/>
 				<field name="sri_authorization_validation"/>
 				<field name="sri_authorization_validation_owner"/> 
