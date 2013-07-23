@@ -43,6 +43,14 @@ class check(osv.osv):
         """
         if context is None:
             context = {}
+        # P.R: In some cases the active_id is other than the actual one, but i have information of journal_id
+        if 'journal_id' in context:
+            journal_id = self.pool.get('account.journal').browse(cr, uid, context['journal_id'], context=context)
+            if not journal_id.check_sequence:
+                raise osv.except_osv(_('Warning!'), _('Please add "Check Sequence" for journal %s.'%str(journal_id.name)))
+            res = self.get_id(cr, uid, journal_id.check_sequence.id, test='id', context=context)
+            return res and res[0]
+        
         if 'active_id' in context:
             voucher_id = self.pool.get('account.voucher').browse(cr, uid, context['active_id'], context=context)
             if not voucher_id.journal_id.check_sequence:
