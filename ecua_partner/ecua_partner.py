@@ -37,3 +37,13 @@ class partner_address(osv.osv):
          }
     
 partner_address()
+
+class res_country(osv.osv):
+    _inherit='res.country'
+    _name = 'res.country'
+    
+    _columns = {'ec_tax_code': fields.char('Country tax code', size=3, help='The SRI country code in three chars.', ),
+                'ec_double_taxation': fields.boolean('Double taxation', help='Indicates that the country has a double taxation agreement.',),
+     }
+    
+res_country()

@@ -38,8 +38,9 @@
    """,
    "category": "Partners",
    "version" : "1.0",
-   'depends': ['base','account'],
+   'depends': ['base','account',],
    'init_xml': [],
-   'update_xml': [],
+   'update_xml': ['country_view.xml',
+                  ],
    'installable': True,
 }
