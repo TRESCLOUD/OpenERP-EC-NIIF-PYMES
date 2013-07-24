@@ -1,7 +1,0 @@
-<iva>
- <TipoIDInformante>${user.company_id.partner_id.code}</TipoIDInformante>
- <IdInformante>${user.company_id.partner_id.ref}</IdInformante>
- <razonSocial>${user.company_id.name}</razonSocial>
- <Anio>${o.fiscalyear_id.name}</Anio>	
- <Mes>${o.period_id.name[:2]}</Mes> 
-</iva>

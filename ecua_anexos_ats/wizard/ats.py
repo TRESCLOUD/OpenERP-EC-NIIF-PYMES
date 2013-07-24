@@ -481,17 +481,6 @@ class sri_ats(osv.osv_memory):
         out=base64.encodestring(root)
         return self.write(cr, uid, ids, {'data':out, 'name':this.name, 'state': 'get'}, context=context)
 
-    def act_generar_ats(self, cr, uid, ids, context=None):
-
-        return {
-             'type': 'ir.actions.report.xml',
-             'report_name': 'trescloud_ats_2013_report',    # the 'Service Name' from the report
-             'datas' : {
-             'model' : 'sri.ats',    # Report Model
-             'res_ids' : ids
-             }
-         }   
-        
     _name = 'sri.ats'
     
     _columns = {
