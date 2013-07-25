@@ -412,8 +412,8 @@ herede y modifique esta herencia en el boton cancelar (invoice_form_cancel_inher
 					
 				</xpath>
 				<xpath expr="/form/group//button[@string='Change']" position="after">
-					<field name="shop_id" attrs="{'required':[('aut_flag','=',True)]}"/>
-					<field name="printer_id" attrs="{'required':[('aut_flag','=',True)]}"/>
+					<field name="shop_id" attrs="{'required':[('aut_flag','=',True)],'invisible':[('aut_flag','=',False)]}"/>
+					<field name="printer_id" attrs="{'required':[('aut_flag','=',True)],'invisible':[('aut_flag','=',False)]}"/>
 				</xpath>
 				<xpath
 					expr="/form/notebook/page/group/group//button[@name='invoice_cancel']"
