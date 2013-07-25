@@ -559,7 +559,6 @@ class account_invoice(osv.osv):
                         else:
                             """FUNCION QUE SE AUMENTO PARA TIPOS DE LIQUIDACION DE COMPRA"""
                             shop = invoice.shop_id.id
-                            
                             auth = self.pool.get('sri.authorization').get_auth(cr, uid, tipo, invoice.company_id.id, shop, invoice.invoice_number_in, invoice.printer_id.id, context)
                             if not auth['authorization']:
                                 raise osv.except_osv(_('Invalid action!'), _('Do not exist authorization for this number of secuence, please check'))
