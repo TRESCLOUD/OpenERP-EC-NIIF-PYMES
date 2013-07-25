@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data noupdate="1">
+    
+		<!-- VIEW -->
+	    <record id="view_country_tree_inherit_trescloud" model="ir.ui.view">
+	        <field name="name">res.country.tree.inherit.trescloud</field>
+	        <field name="model">res.country</field>
+	        <field name="type">tree</field>
+	        <field name="inherit_id" ref="base.view_country_tree"/>
+	        <field name="arch" type="xml">
+	        	<xpath expr="/tree/field[@name='code']" position="after">
+	        		<field name="ec_tax_code"/>
+	                <field name="ec_double_taxation"/>
+	        	</xpath>
+	        </field>
+	    </record>
+	
+	    <record id="view_country_form_inherit_trescloud" model="ir.ui.view">
+	        <field name="name">res.country.form.inherit.trescloud</field>
+	        <field name="model">res.country</field>
+	        <field name="type">form</field>
+	        <field name="inherit_id" ref="base.view_country_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="/form/field[@name='code']" position="after">
+	            	<newline/>
+	                <field name="ec_tax_code"/>
+	                <field name="ec_double_taxation"/>
+	            </xpath>
+	        </field>
+	    </record>
+    
+	</data>
+</openerp>

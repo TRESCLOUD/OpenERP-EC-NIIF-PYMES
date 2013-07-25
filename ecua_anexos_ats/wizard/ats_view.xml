@@ -58,10 +58,9 @@
 	                        </group>
                         </group>
                         <group colspan="8" col="8" states="choose">
-                            <label colspan="5" width="220"/>
+                            <label colspan="6" width="220"/>
                             <button icon="gtk-cancel" name="act_cancelar" special="cancel" string="_Close" type="object"/>
                             <button icon="gtk-ok" name ="act_export" string="_Export" type="object"/>
-                            <button icon="gtk-ok" name ="act_generar_ats" string="_ATS 2013" type="object"/>
                             <separator string="" colspan="8"/>
                         </group>
                         <group colspan="8" col="8" states="get">

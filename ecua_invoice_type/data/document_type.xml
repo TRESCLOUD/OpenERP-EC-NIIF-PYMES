@@ -187,14 +187,6 @@
 		<field name="type">in_invoice</field>
 		</record>
 		
-		<record id="41" model="account.invoice.document.type">
-		<field name="code">41</field>
-		<field name="name">Comprobante de venta emitido por reembolso</field>
-		<field name="use">True</field>		
-		<field name="priority">200</field>
-		<field name="type">in_invoice</field>
-		</record>
-		
 		<record id="42" model="account.invoice.document.type">
 		<field name="code">42</field>
 		<field name="name">Documento agente de retención Presuntiva</field>

@@ -41,6 +41,7 @@
    'depends': ['base','account',],
    'init_xml': [],
    'update_xml': [
+       'security/ir.model.access.csv',
        'data/payment_method.xml',
        'ecua_ats_payment_method_view.xml',       
    ],
