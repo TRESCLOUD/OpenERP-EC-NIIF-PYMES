@@ -15,7 +15,7 @@
 				   <field name="name"/>
 				   <field name="priority"/>
 				   <field name="type"/>
-				   <field name="parent_id"/>	           
+				   <field name="parent_id" domain="{'type','=',parent.type}"/>	           
 			   </group>
 	           <group col="2" colspan="2">
 	               <separator colspan="2"></separator> 
