@@ -15,14 +15,15 @@
 		<record id="03" model="account.invoice.document.type">
 		<field name="code">07</field>
 		<field name="name">Comprobante de Retención de venta</field>
-		<field name="sri_authorization_validation_owner">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
 		<field name="priority">65</field>
 		<field name="type">out_invoice</field>
 		</record>
 	
 		<record id="04" model="account.invoice.document.type">
 		<field name="code">18</field>
-		<field name="name">Documentos autorizados utilizados en ventas excepto N/C N/D</field>
+		<field name="name">Factura de Venta (Documentos autorizados utilizados en ventas excepto N/C N/D)</field>
 		<field name="use">True</field>	
 		<field name="number_format_validation">True</field>
 		<field name="sri_authorization_validation_owner">True</field>	
@@ -74,22 +75,29 @@
 		
 		<record id="09" model="account.invoice.document.type">
 		<field name="code">04</field>
-		<field name="name">Nota de crédito</field>
+		<field name="name">Nota de crédito en Compras</field>
+		<field name="use">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation_owner">True</field>
 		<field name="priority">40</field>
-		<field name="type">in_invoice</field>
+		<field name="type">in_refund</field>
 		</record>
 		
 		<record id="10" model="account.invoice.document.type">
-		<field name="code">05</field>
-		<field name="name">Nota de débito</field>
-		<field name="priority">50</field>
-		<field name="type">in_invoice</field>
-		</record>
+		<field name="code">04</field>
+		<field name="name">Nota de crédito en Ventas</field>
+		<field name="use">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation">True</field>
+		<field name="priority">45</field>
+		<field name="type">out_refund</field>
+		</record>		
 		
 		<record id="11" model="account.invoice.document.type">
 		<field name="code">07</field>
 		<field name="name">Comprobante de Retención de compra</field>
-		<field name="sri_authorization_validation">True</field>
+		<field name="number_format_validation">True</field>
+		<field name="sri_authorization_validation_owner">True</field>
 		<field name="priority">60</field>
 		<field name="type">in_invoice</field>
 		</record>
@@ -261,6 +269,20 @@
 		<field name="name">N/D A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta</field>
 		<field name="priority">300</field>
 		<field name="type">in_invoice</field>
+		</record>
+		
+		<record id="53" model="account.invoice.document.type">
+		<field name="code">05</field>
+		<field name="name">Nota de débito en Compras</field>
+		<field name="priority">50</field>
+		<field name="type">in_refund</field>
+		</record>
+		
+		<record id="54" model="account.invoice.document.type">
+		<field name="code">05</field>
+		<field name="name">Nota de débito en Ventas</field>
+		<field name="priority">55</field>
+		<field name="type">out_refund</field>
 		</record>
 				
     </data>
