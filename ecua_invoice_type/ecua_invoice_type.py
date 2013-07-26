@@ -44,7 +44,7 @@ class document_invoice_type(osv.osv):
             ('out_refund','Customer Refund'),
             ('in_refund','Supplier Refund'),
             ],'Type', select=True, change_default=True, required=True, help='Indicates whether the document is of supplier or customer.',),
-         'parent_id':fields.many2one('account.invoice.document.type','Parent', help='This associate the authorization whit the parent', ),         
+         'parent_id':fields.many2one('account.invoice.document.type','Parent', help='This associate the authorization whit the parent'),         
      } 
     
     _defaults = {
@@ -73,17 +73,19 @@ class account_invoice(osv.osv):
             sri_authorization_validation_owner=document_invoice.sri_authorization_validation_owner
             sri_authorization_validation=document_invoice.sri_authorization_validation
             if document_invoice.parent_id:
-                sri_authorization_validation_owner=parent_id.sri_authorization_validation_owner
-                sri_authorization_validation=parent_id.sri_authorization_validation
-                document_invoice_type_id=parent_id.id
+                sri_authorization_validation_owner=document_invoice.parent_id.sri_authorization_validation_owner
+                sri_authorization_validation=document_invoice.parent_id.sri_authorization_validation
+                document_invoice_type_id=document_invoice.parent_id.id
             if sri_authorization_validation_owner==True:
                 res['value']['aut_flag']=True
                 line_auth_obj = self.pool.get('sri.type.document')
                 lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
                 auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
-                res['value']['authorization_sales']=auth_ids[0]
+                if len(auth_ids)>1:
+                    auth_ids=auth_ids[0]
+                res['value']['authorization_sales']=auth_ids
                 obj_auth=self.pool.get('sri.authorization')
-                authorization=obj_auth.browse(cr,uid,auth_ids[0])
+                authorization=obj_auth.browse(cr,uid,auth_ids)
                 res['value']['authorization']=authorization.number
                 if not lines:
                     res['warning'] = {'title': _('Warning'), 'message': _('There is not a authorization for this type of document')}
