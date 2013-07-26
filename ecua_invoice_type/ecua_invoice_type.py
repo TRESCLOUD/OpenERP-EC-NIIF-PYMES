@@ -44,7 +44,7 @@ class document_invoice_type(osv.osv):
             ('out_refund','Customer Refund'),
             ('in_refund','Supplier Refund'),
             ],'Type', select=True, change_default=True, required=True, help='Indicates whether the document is of supplier or customer.',),
-         'parent_id':fields.many2one('account.invoice.document.type','Parent document type', help='It links this type of document to another document which need their properties.', ),         
+         'parent_id':fields.many2one('account.invoice.document.type','Parent', help='This associate the authorization whit the parent', ),         
      } 
     
     _defaults = {
@@ -70,12 +70,21 @@ class account_invoice(osv.osv):
         if document_invoice_type_id:
             obj_document=self.pool.get('account.invoice.document.type')
             document_invoice=obj_document.browse(cr,uid,document_invoice_type_id)
-            if document_invoice.sri_authorization_validation_owner==True:
+            sri_authorization_validation_owner=document_invoice.sri_authorization_validation_owner
+            sri_authorization_validation=document_invoice.sri_authorization_validation
+            if document_invoice.parent_id:
+                sri_authorization_validation_owner=parent_id.sri_authorization_validation_owner
+                sri_authorization_validation=parent_id.sri_authorization_validation
+                document_invoice_type_id=parent_id.id
+            if sri_authorization_validation_owner==True:
                 res['value']['aut_flag']=True
                 line_auth_obj = self.pool.get('sri.type.document')
                 lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
                 auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
-                res['value']['authorization_sales']=auth_ids
+                res['value']['authorization_sales']=auth_ids[0]
+                obj_auth=self.pool.get('sri.authorization')
+                authorization=obj_auth.browse(cr,uid,auth_ids[0])
+                res['value']['authorization']=authorization.number
                 if not lines:
                     res['warning'] = {'title': _('Warning'), 'message': _('There is not a authorization for this type of document')}
                 else:
@@ -83,7 +92,7 @@ class account_invoice(osv.osv):
                     res['value']['invoice_number_in'] = document.shop_id.number + "-"+document.printer_id.number+"-"
                 
             else:    
-                if document_invoice.sri_authorization_validation==False:
+                if sri_authorization_validation==False:
                     if type=='out_invoice':
                         obj_auth=self.pool.get('sri.authorization')
                         auth_id=obj_auth.search(cr,uid,[('number','=','9999999999')])
