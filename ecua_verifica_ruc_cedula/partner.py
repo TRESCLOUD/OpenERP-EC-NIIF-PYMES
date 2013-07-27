@@ -182,8 +182,9 @@ class res_partner(osv.osv):
                 elif self.verifica_id_cons_final(ref):
                     res[partner.id]= 'consumidor'
             elif (len(ref)==10):
-                if self.verifica_cedula(ref):
+                if ref!='9999999999' and self.verifica_cedula(ref):
                     res[partner.id]= 'cedula'
+ 
         return res
     
     def _assign_code(self, cr, uid, ids, field, arg, context=None):
@@ -200,9 +201,11 @@ class res_partner(osv.osv):
                         if self.verifica_ruc_pnat(ref) or self.verifica_ruc_spri(ref) or self.verifica_ruc_spub(ref):
                             res[partner.id]= 'R'
                         elif self.verifica_id_cons_final(ref):
-                            res[partner.id]= 'F'
-                    elif (len(ref)==10):
+                            res[partner.id]= 'F'                   
+                    if ref!='9999999999' and len(ref)==10:
                         res[partner.id]= 'C'
+                    if ref=='9999999999':
+                        res[partner.id]= 'F'
                 else:
                     res[partner.id]= 'P'
             else:
