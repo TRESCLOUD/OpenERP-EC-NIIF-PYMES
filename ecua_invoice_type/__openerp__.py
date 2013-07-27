@@ -44,8 +44,6 @@
    'depends': [
                'base',
                'account',
-#               'ecua_facturas_manual',
-#               'ecua_facturas_ice_manual',
                'ecua_autorizaciones_sri'
                ],
    'init_xml': [],
@@ -55,6 +53,7 @@
        'data/document_type.xml',
        'ecua_invoice_type_view.xml', 
        'ecua_autorization_view.xml',      
+       'ecua_reembolso_view.xml', 
    ],
    'installable': True,
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="account_invoice_purchase_form_reembolso_view_inherit" model="ir.ui.view">
+			<field name="name">account.invoice.purchase.form.reembolso.view.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='move_id']" position="after">
+					<button name="create_sale_order_from_invoice" string="Create Sale Order" type="object" states="open,paid" />
+				</xpath>	
+			</field>
+		</record>
+		
+    </data>
+</openerp>
