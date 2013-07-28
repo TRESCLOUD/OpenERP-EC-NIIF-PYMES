@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data noupdate="1">
+	<data noupdate="0">
 	 
-		<record id="nomina_general_report_id" model="ir.actions.report.xml">
+		<record id="nomina_general_report_id" model="ir.actions.report.xml">			
 			<field name="name">Nómina General</field>
 			<field name="type">ir.actions.report.xml</field>
 			<field name="model">hr.payslip.run</field>
 			<field name="report_name">nomina_general</field>
 			<field name="report_type">aeroo</field>
 			<field name="in_format">oo-ods</field>
-      		<field name='out_format' eval="ref('report_aeroo.report_mimetypes_xls_odt')"/>
+			<field name="out_format" ref="report_aeroo_ooo.report_mimetypes_xls_odt"/>			
 			<field name="parser_loc">ecua_seguro_social/report/nomina_general_parser.py</field>
 			<field name="report_rml">ecua_seguro_social/report/nomina_general.ods</field>
+			<field name="report_file">ecua_seguro_social/report/nomina_general.ods</field>		
 			<field name="parser_state">loc</field>
-			<field name="tml_source">file</field>
+			<field name="tml_source">file</field>	
+			<field name="styles_mode">default</field>
+			<field eval="1" name="header"/>			
+			<field name="charset">utf_8</field>
+			<field eval="1" name="copies"/>						
+			<field name="preload_mode">static</field>
+			<field eval="1" name="active"/>		
 		</record>
 
 	</data>
