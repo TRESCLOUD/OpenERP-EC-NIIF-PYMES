@@ -40,7 +40,7 @@
    """,
    "category": "Human Resources",
    "version" : "1.0",
-   'depends': ['base','hr_contract','hr_payroll','ecua_account','ecua_seguro_social','account'],
+   'depends': ['base','hr_contract','hr_payroll','ecua_account','ecua_seguro_social','account','resource'],
    'init_xml': [],
    'update_xml': ['ecua_hr.xml',],
    'installable': True,
