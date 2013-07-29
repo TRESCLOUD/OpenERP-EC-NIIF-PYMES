@@ -65,6 +65,7 @@ class account_invoice(osv.osv):
     
     def onchange_partner2_id(self, cr, uid, ids, document_invoice_type_id, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
         partner_obj = self.pool.get('res.partner')
+        auth_id=[]
         res = super(account_invoice, self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
         obj_auth=self.pool.get('sri.authorization')
         if document_invoice_type_id:
@@ -82,12 +83,12 @@ class account_invoice(osv.osv):
                 lines=line_auth_obj.search(cr, uid, [('name2','=',document_invoice_type_id)])
                 auth_ids=obj_auth.search(cr,uid,[('type_document_ids','=',lines)])
                 if len(auth_ids)>1:
-                    auth_ids=auth_ids[0]
+                    auth_id.append(auth_ids[0])
                 res['value']['authorization_sales']=auth_ids
                 obj_auth=self.pool.get('sri.authorization')
                 authorization=obj_auth.browse(cr,uid,auth_ids)
-                if authorization:
-                    res['value']['authorization']=authorization.number
+                if authorization[0]:
+                    res['value']['authorization']=authorization[0].number   
                 if not lines:
                     res['warning'] = {'title': _('Warning'), 'message': _('There is not a authorization for this type of document')}
                 else:
