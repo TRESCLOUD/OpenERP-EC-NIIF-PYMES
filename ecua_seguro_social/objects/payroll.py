@@ -518,12 +518,12 @@ class hr_payslip(osv.osv):
             context={}
         wf_service = netsvc.LocalService("workflow")
         line_obj = self.pool.get('hr.payslip.line2')
-        work_days_obj = self.pool.get('hr.payslip.worked_days')
+        #work_days_obj = self.pool.get('hr.payslip.worked_days')
         for slip in self.browse(cr, uid, ids, context):
             for line in slip.line_ids:
                 line_obj.unlink(cr, uid, [line.id])
-            for line in slip.worked_days_line_ids:
-                work_days_obj.unlink(cr, uid, [line.id])
+            #for line in slip.worked_days_line_ids:
+                #work_days_obj.unlink(cr, uid, [line.id])
         for id in ids:
             wf_service.trg_delete(uid, 'hr.payslip', id, cr)
             wf_service.trg_create(uid, 'hr.payslip', id, cr)
