@@ -7,7 +7,7 @@
 		<field name="name">Nota o boleta de venta</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
-		<field name="sri_authorization_validation">True</field>
+		<field name="sri_authorization_validation_owner">True</field>
 		<field name="priority">25</field>
 		<field name="type">out_invoice</field>
 		</record>
