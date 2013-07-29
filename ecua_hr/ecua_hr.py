@@ -25,6 +25,7 @@ from osv import osv, fields
 from datetime import datetime
 import calendar
 from dateutil.relativedelta import relativedelta
+from tools.translate import _
 
 class hr_payslip(osv.osv):
     '''
@@ -121,7 +122,19 @@ class hr_payslip(osv.osv):
             }  
             res += [attendances1,attendances2,attendances3,attendances4]
 
-        return res  
+        return res
+    
+    def unlink(self, cr, uid, ids, context=None):
+        if not context:
+            context = {}
+        unlink_ids = []
+        for payslips_line in self.browse(cr, uid, ids, context):
+            if payslips_line.state != 'draft':
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete delivery payslip(s) that are already Done !'))
+            else:
+                cr.execute('''delete from hr_payslip_input where payslip_id=%s''' %(payslips_line.id))
+                
+        return super(hr_payslip, self).unlink(cr, uid, ids)
             
 hr_payslip()
 
