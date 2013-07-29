@@ -71,25 +71,6 @@ class hr_payslip(osv.osv):
         res = super(hr_payslip, self).get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
         contract_obj = self.pool.get('hr.contract')
         
-        if date_from:
-            DATETIME_FORMAT = "%Y-%m-%d"
-            date_from = datetime.strptime(date_from, DATETIME_FORMAT)
-            year = date_from.year
-            mes = date_from.month
-            
-            if mes==1 or mes==3 or mes==5 or mes==7 or mes==8 or mes==10 or mes==12:
-               days = 31.0
-            elif mes==4 or mes==6 or mes==9 or mes==11:
-                 days = 30.0
-                    
-            if mes==2:
-                if calendar.isleap(year):
-                    days = 29.0
-                else: 
-                    days = 28.0
-        else:
-            days = 30.0
-        
         for contract in contract_obj.browse(cr, uid, contract_ids, context=context):
 
             attendances1 = {
@@ -130,7 +111,7 @@ class hr_payslip(osv.osv):
         unlink_ids = []
         for payslips_line in self.browse(cr, uid, ids, context):
             if payslips_line.state != 'draft':
-                raise osv.except_osv(_('Invalid action !'), _('Cannot delete delivery payslip(s) that are already Done/Rejected. Change its to draft state !'))
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete delivery payslip(s) that are already Done. Change its to draft state !'))
             else:
                 cr.execute('''delete from hr_payslip_input where payslip_id=%s''' %(payslips_line.id))
                 
@@ -176,3 +157,31 @@ class hr_contract(osv.osv):
         }
 
 hr_contract()
+
+class resource_calendar(osv.osv):
+    _inherit = 'resource.calendar'
+    _name = 'resource.calendar' 
+      
+    def _compute_hours(self, cr, uid, ids, field, arg, context=None):
+        ''' Función que calcula el número de horas trabajadas a la semana.'''
+        
+        res = {}
+        hours_per_day = 0 
+        hours_per_week = 0
+
+        calendar_obj = self.pool.get('resource.calendar')
+        calendar = calendar_obj.browse(cr, uid, ids, context=context)[0]
+
+        for hours in calendar.attendance_ids:
+            hours_per_day = hours.hour_to - hours.hour_from 
+            hours_per_week = hours_per_week + hours_per_day      
+            
+        res[calendar.id] = hours_per_week
+        
+        return res
+    
+    _columns = {
+       'hours_work_per_week': fields.function(_compute_hours, string='Hours per week', type='float', store=False, method=True, help='Number of hours of work per week.'),
+        }
+
+resource_calendar()
