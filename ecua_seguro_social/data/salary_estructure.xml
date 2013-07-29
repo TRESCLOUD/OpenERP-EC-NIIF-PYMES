@@ -305,7 +305,7 @@ result = contract.wage * 0.10</field>
 	<data noupdate="1">
 		<record id="hr_salary_rule_provisiondcimocuarto" model="hr.salary.rule">
 			<field name="code">PROV DCUARTO</field>
-			<field eval="120" name="sequence"/>
+			<field eval="100" name="sequence"/>
 			<field eval="1" name="appears_on_payslip"/>
 			<field name="condition_range">contract.wage</field>
 			<field eval="0" name="company_contribution"/>
@@ -314,10 +314,9 @@ result = contract.wage * 0.10</field>
 			<field model="account.account" name="account_credit" search="[('name', '=', u'PROVISION DECIMO CUARTO')]"/>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="8.3333" name="amount_percentage"/>
-			<field model="account.analytic.account" name="analytic_account_id" search="[('name', '=', u'EMPLEADO ARAUZ')]"/>
 			<field name="condition_select">none</field>
 			<field name="amount_percentage_base" ref="ecua_seguro_social.S292"/>
-			<field name="amount_select">percentage</field>
+			<field name="amount_select">code</field>
 			<field eval="1" name="active"/>
 			<field eval="0" name="account_credit_partner"/>
 			<field name="name">Provision Décimo Cuarto</field>
@@ -346,7 +345,7 @@ result = rules.NET &gt; categories.NET * 0.10</field>
 
 # Note: returned value have to be set in the variable 'result'
 
-result = contract.wage * 0.10</field>
+result = (318/12)* contract.working_hours.hours_work_per_week/40</field>
 			<field model="account.account" name="account_debit" search="[('name', '=', u'BENEFICIOS SOCIALES E INDEMNIZACIONES')]"/>
 			<field eval="0" name="use_partner_account"/>
 			<field eval="1" name="pay_to_other"/>
@@ -405,7 +404,7 @@ result = contract.wage * 0.10</field>
 			<field name="quantity">1</field>
 		</record>
 	</data>
-	<data noupdate="0">
+	<data noupdate="1">
 		<record id="hr_salary_rule_fondosdereservapagados" model="hr.salary.rule">
 			<field name="code">FRESERVAP</field>
 			<field eval="140" name="sequence"/>
@@ -678,7 +677,7 @@ if contract.number_of_year &gt; 5.00:
 			<field name="quantity">1.0</field>
 		</record>
 	</data>
-	<data noupdate="0">
+	<data noupdate="1">
 		<record id="hr_salary_rule_fondosdereservaretenidos" model="hr.salary.rule">
 			<field name="code">PROV FOND RESERV</field>
 			<field eval="150" name="sequence"/>
