@@ -130,7 +130,7 @@ class hr_payslip(osv.osv):
         unlink_ids = []
         for payslips_line in self.browse(cr, uid, ids, context):
             if payslips_line.state != 'draft':
-                raise osv.except_osv(_('Invalid action !'), _('Cannot delete delivery payslip(s) that are already Done !'))
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete delivery payslip(s) that are already Done/Rejected. Change its to draft state !'))
             else:
                 cr.execute('''delete from hr_payslip_input where payslip_id=%s''' %(payslips_line.id))
                 
