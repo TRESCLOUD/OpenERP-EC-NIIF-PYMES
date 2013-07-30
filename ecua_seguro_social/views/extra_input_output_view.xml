@@ -149,6 +149,7 @@
                     <group col="8" colspan="4">
                         <field name="employee_id"/>
                         <field name="name"/>
+                        <field name="date_to_pay"/>
                         <field name="code" select="1"/>
                         <field name="category_id"/>
                     </group>
@@ -156,6 +157,7 @@
                     <group col="8" colspan="4" expand="0" string="Group By...">
                         <filter string="Employee" icon="terp-partner" name="head" context="{'group_by':'employee_id'}"/>
                         <filter string="Category" icon="terp-folder-yellow" name="head" context="{'group_by':'category_id'}"/>
+                        <filter string="Date" icon="terp-go-month" name="head" context="{'group_by':'date_to_pay'}"/>
                     </group>
                 </search>
             </field>
