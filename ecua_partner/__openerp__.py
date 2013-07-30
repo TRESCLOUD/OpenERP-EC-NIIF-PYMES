@@ -40,7 +40,6 @@
    "version" : "1.0",
    'depends': ['base','account',],
    'init_xml': [],
-   'update_xml': ['country_view.xml',
-                  ],
+   'update_xml': [],
    'installable': True,
 }
