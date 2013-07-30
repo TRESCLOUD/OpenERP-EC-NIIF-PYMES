@@ -140,8 +140,11 @@
 		<field name="type">form</field>		
 		<field name="inherit_id" ref="ecua_notas_credito_manual.invoice_customer_credit_note_form" />
 		<field name="arch" type="xml">
+		    <xpath expr="/form/group/field[@name='partner_id']" position="attributes">
+				<attribute name="on_change">onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
+			</xpath>
 		    <xpath expr="/form/group/field[@name='authorization']" position="after">
-				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_refund')]" attrs="{'readonly':[('state','!=','draft')]}" />			
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_refund')]" attrs="{'readonly':[('state','!=','draft')]}" on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"/>			
 			</xpath>		
 		</field>
 	</record>
