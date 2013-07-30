@@ -172,6 +172,32 @@
         </field>
     </record>
     
+    <!-- Notas de crédito en Ventas -->
+    <record id="credit_note_out_tree_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.out.tree.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="inherit_id" ref="ecua_notas_credito_manual.credit_note_out_tree" />
+		<field name="arch" type="xml">
+		    <xpath expr="/tree//field[@name='number_credit_note_out']" position="after">
+				<field name="document_invoice_type_id"/>
+			</xpath>
+		</field>
+    </record>
+    
+    <!-- Notas de crédito en Compras -->
+    <record id="credit_note_in_tree_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.in.tree.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="inherit_id" ref="ecua_notas_credito_manual.credit_note_in_tree" />
+		<field name="arch" type="xml">
+		    <xpath expr="/tree//field[@name='number_credit_note_in']" position="after">
+				<field name="document_invoice_type_id"/>
+			</xpath>			
+		</field>
+	</record>
+    
     <record id="view_account_invoice_filter_inherit_trescloud" model="ir.ui.view">
         <field name="name">account.invoice.select.out.inherit.trescloud</field>
         <field name="model">account.invoice</field>
