@@ -45,7 +45,7 @@
 
 		<record id="S292" model="hr.salary.rule.percentage.base">
 			<field name="base">318</field>
-			<field name="name">Salario Básico Unificado - 318</field>
+			<field name="name">Salario Básico Unificado (318)</field>
 		</record>
 
 		<record id="SALBRU" model="hr.salary.rule.percentage.base">
@@ -345,7 +345,8 @@ result = rules.NET &gt; categories.NET * 0.10</field>
 
 # Note: returned value have to be set in the variable 'result'
 
-result = (318/12)* contract.working_hours.hours_work_per_week/40</field>
+result = (318.0/12)*(contract.working_hours.hours_work_per_week/40.0)*(worked_days.DIAS_TRABAJADOS.number_of_days / worked_days.DIAS_DEL_MES.number_of_days)
+</field>
 			<field model="account.account" name="account_debit" search="[('name', '=', u'BENEFICIOS SOCIALES E INDEMNIZACIONES')]"/>
 			<field eval="0" name="use_partner_account"/>
 			<field eval="1" name="pay_to_other"/>
@@ -434,7 +435,8 @@ result = contract.wage * 0.10</field>
 # Note: returned value have to be set in the variable 'result'
 
 # result = rules.NET &gt; categories.NET * 0.10
-result = contract.number_of_year &gt;= 1.083333333</field>
+# result = contract.number_of_year &gt;= 1.083333333
+result = contract.number_of_year &gt; 1</field>
 			<field name="amount_python_compute"># Available variables:
 #----------------------
 # payslip: object containing the payslips
@@ -696,8 +698,7 @@ if contract.number_of_year &gt; 5.00:
 			<field eval="1" name="active"/>
 			<field eval="0" name="account_credit_partner"/>
 			<field name="name">Fondos de Reserva Retenidos</field>
-			<field name="condition_python">result = contract.number_of_year &gt;= 1.083333333
-</field>
+			<field name="condition_python">result = contract.number_of_year &gt; 1</field>
 			<field name="amount_python_compute"># Available variables:
 #----------------------
 # payslip: object containing the payslips
