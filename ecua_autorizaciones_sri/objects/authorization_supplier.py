@@ -89,7 +89,9 @@ class authorization_supplier(osv.osv):
         for auth in self.browse(cr, uid, ids):
             if auth.autoprinter:
                 return True
-            if auth.first_sequence >= auth.last_sequence:
+            #P.R.: Para que me permita ingresar el mismo secuencial en facturas electronicas
+            #Modificacion Temporal (>=)
+            if auth.first_sequence > auth.last_sequence:
                 return False
             else:
                 return True
