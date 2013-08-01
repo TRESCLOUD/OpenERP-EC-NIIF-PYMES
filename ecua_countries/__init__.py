@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors:TRESCLOUD Cia.Ltda                                                                           
-# Copyright (C) 2013                                  
+# @authors: Carlos Yumbillo                                                                         
+# Copyright (C) 2013  TRESCLOUD CIA. LTDA.                                  
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
 #it under the terms of the GNU General Public License as published by   
@@ -18,28 +18,7 @@
 #GNU General Public License for more details.                           
 #                                                                       
 #You should have received a copy of the GNU General Public License      
-#along with this program.  If not, see http://www.gnu.org/licenses.
-#ice
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.  
 ########################################################################
-{
-   "name" : "Módulo de mejoras a partners para Ecuador",
-   "author" : "TRESCloud Cia. Ltda.",
-   "maintainer": 'TRESCloud Cia. Ltda.',
-   "website": 'http://www.trescloud.com',
-   'complexity': "easy",
-   "description": """Sistema de mejoras a la vista de creación de PARTNERS
-   
-   Este sistema permite agregar mejoras a la vista de creación de partners, poniendo por defecto valores de Ecuador en el campo de localización, el nombre del vendedor y la fecha de creación.
-     
-   Desarrollador:
-   
-   Carlos Yumbillo
-   
-   """,
-   "category": "Partners",
-   "version" : "1.0",
-   'depends': ['base','account',],
-   'init_xml': [],
-   'update_xml': [],
-   'installable': True,
-}
+
+import ecua_countries

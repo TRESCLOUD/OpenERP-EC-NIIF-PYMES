@@ -87,7 +87,7 @@ class account_invoice(osv.osv):
                 res['value']['authorization_sales']=auth_ids
                 obj_auth=self.pool.get('sri.authorization')
                 authorization=obj_auth.browse(cr,uid,auth_ids)
-                if authorization[0]:
+                if authorization:
                     res['value']['authorization']=authorization[0].number   
                 if not lines:
                     res['warning'] = {'title': _('Warning'), 'message': _('There is not a authorization for this type of document')}

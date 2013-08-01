@@ -85,18 +85,32 @@
 			</xpath> 
 		</field>
 	</record>
+	
 	<record model="ir.ui.view" id="account_invoice_purchase_form_view4">
-			<field name="name">account.invoice.form3</field>
-			<field name="model">account.invoice</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="ecua_facturas_manual.account_invoice_purchase_form_view" />
-			<field name="arch" type="xml">
+		<field name="name">account.invoice.form3</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="ecua_facturas_manual.account_invoice_purchase_form_view" />
+		<field name="arch" type="xml">
 			<xpath expr="/form/group/field[@name='partner_id']" position="replace">
 					<field string="Supplier" name="partner_id"
 						on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
 						context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" />
 			</xpath>
-			</field>
+		</field>
+	</record>
+	
+	<!-- Notas de crédito en compras -->	
+	<record id="invoice_supplier_credit_note_form_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.supplier.credit.note.form</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="ecua_notas_credito_manual.invoice_supplier_credit_note_form" />
+		<field name="arch" type="xml">
+			<xpath expr="/form/group/field[@name='period_id']" position="after">
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'in_refund')]" attrs="{'readonly':[('state','!=','draft')]}" />
+		    </xpath>
+		</field>
 	</record>
 	
 	<record id="account_invoice_sales_form_view_inherit_1" model="ir.ui.view" >
@@ -118,20 +132,36 @@
 			</xpath>			
 		</field>
 	</record>
-	<record model="ir.ui.view" id="account_invoice_customer_form_view_inherit">
-			<field name="name">account.invoice.form</field>
-			<field name="model">account.invoice</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="ecua_anexos_ats.account_invoice_customer_form_view2" />
-			<field name="arch" type="xml">
-				<field name="partner_id" position="replace">
-					<field string="Customer" name="partner_id"
-						on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
-						groups="base.group_user" context="{'search_default_customer': 1}" />
-				</field>
-			</field>
-		</record>
 	
+	<!-- Notas de crédito en ventas -->	
+	<record id="invoice_customer_credit_note_form_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.customer.credit.note.form.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>		
+		<field name="inherit_id" ref="ecua_notas_credito_manual.invoice_customer_credit_note_form" />
+		<field name="arch" type="xml">
+		    <xpath expr="/form/group/field[@name='partner_id']" position="attributes">
+				<attribute name="on_change">onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)</attribute>
+			</xpath>
+		    <xpath expr="/form/group/field[@name='authorization']" position="after">
+				<field name="document_invoice_type_id" domain="[('use', '=', True),('type', '=', 'out_refund')]" attrs="{'readonly':[('state','!=','draft')]}" on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"/>			
+			</xpath>		
+		</field>
+	</record>
+			
+	<record model="ir.ui.view" id="account_invoice_customer_form_view_inherit">
+		<field name="name">account.invoice.form</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="ecua_anexos_ats.account_invoice_customer_form_view2" />
+		<field name="arch" type="xml">
+			<field name="partner_id" position="replace">
+				<field string="Customer" name="partner_id"
+					on_change="onchange_partner2_id(document_invoice_type_id,type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+					groups="base.group_user" context="{'search_default_customer': 1}" />
+			</field>
+		</field>
+	</record>	
 	
 	<record id="invoice_tree_inherit_trescloud" model="ir.ui.view">
         <field name="name">account.invoice.tree.inherit.trescloud</field>
@@ -144,6 +174,32 @@
 			</xpath>
         </field>
     </record>
+    
+    <!-- Notas de crédito en Ventas -->
+    <record id="credit_note_out_tree_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.out.tree.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="inherit_id" ref="ecua_notas_credito_manual.credit_note_out_tree" />
+		<field name="arch" type="xml">
+		    <xpath expr="/tree//field[@name='number_credit_note_out']" position="after">
+				<field name="document_invoice_type_id"/>
+			</xpath>
+		</field>
+    </record>
+    
+    <!-- Notas de crédito en Compras -->
+    <record id="credit_note_in_tree_inherit" model="ir.ui.view">
+		<field name="name">account.invoice.in.tree.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">tree</field>
+		<field name="inherit_id" ref="ecua_notas_credito_manual.credit_note_in_tree" />
+		<field name="arch" type="xml">
+		    <xpath expr="/tree//field[@name='number_credit_note_in']" position="after">
+				<field name="document_invoice_type_id"/>
+			</xpath>			
+		</field>
+	</record>
     
     <record id="view_account_invoice_filter_inherit_trescloud" model="ir.ui.view">
         <field name="name">account.invoice.select.out.inherit.trescloud</field>
