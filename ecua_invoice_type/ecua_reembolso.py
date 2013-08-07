@@ -64,7 +64,8 @@ class account_invoice(osv.osv):
             fecha = time.strftime('YYYY-MM-DD')
 
         sale_id = obj_sale_order.create(cr, uid, {
-            'origin': invoice.invoice_number_in,
+            'name': "RUC:" + partner.ref + " #:" + invoice.invoice_number_in,
+            #'origin': invoice.invoice_number_in,
             'client_order_ref': invoice.partner_id.name,
             'date_order': fecha,
             #'shop_id': 1, # predeterminamos la primera tienda
@@ -80,9 +81,11 @@ class account_invoice(osv.osv):
 
         for line in invoice_lines:
             
+            descripcion = "REEMBOLSO 100% DE GASTO RUC: " + partner.ref + "; FACTURA No. " + invoice.invoice_number_in + "; NETO: " + str(invoice.total_con_impuestos - invoice.total_iva) + ", IVA 0%:" + str(invoice.amount_total - invoice.total_con_impuestos) + ", IVA 12%:" + str(invoice.total_iva)            
+
             sale_line = obj_sale_order_line.create(cr, uid, {
                     'order_id':sale_id,
-                    'name': line.name,
+                    'name': descripcion, #line.name,
                     'origin': line.invoice_id.name,
                     'price_unit': line.price_unit,
                     'product_uom_qty': line.quantity,
