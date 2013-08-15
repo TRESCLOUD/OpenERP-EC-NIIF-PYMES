@@ -12,6 +12,7 @@
 			
 				<xpath expr="/form/group//field[@name='method_payment']" position="after">
 					<field name="number_of_year" invisible="True"/>
+					<field name="day_pay"/>
 				</xpath>
 	
 				<!-- Se oculta de la pantalla Contratos los campos tipo de contrato y metodo de pago -->
@@ -57,6 +58,7 @@
 				<xpath expr="//field[@name='struct_id']" position="before">
 					<field name="contract_id" groups="base.group_extended"
 							domain="[('employee_id','=',employee_id)]" on_change="onchange_contract_id(date_from, date_to, employee_id, contract_id)" />
+					<field name="number_of_year" invisible="True"/>
 				</xpath>
 				<xpath expr="//field[@name='contract_id']" position="before">
 					<field name="number" />
