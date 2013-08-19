@@ -160,11 +160,13 @@ class check(osv.osv):
         checks = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
         for t in checks:
-            if t['state'] in ('draft'):
+            if t['state'] in ('draft','canceled'):
                 unlink_ids.append(t['id'])
             else:
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete check(s) that are already printed!'))
+            
         osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+        
         return True
     
     _columns = {
