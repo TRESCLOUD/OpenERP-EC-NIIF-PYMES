@@ -36,6 +36,7 @@
    Desarrollador:
    
    Carlos Yumbillo
+   Andrea García
    
    """,
    "category": "Human Resources",
