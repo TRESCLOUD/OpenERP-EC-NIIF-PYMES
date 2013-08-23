@@ -45,7 +45,7 @@
                          <form string="Manage checks">
 				           <group col="2" colspan="2">
 				               <separator colspan="2"></separator> 
-				               <field name="supplier" on_change="onchange_partner(supplier)" attrs="{'readonly':[('state','!=','draft')]}" readonly="1"/>
+				               <field name="supplier" on_change="onchange_partner(supplier)" readonly="1"/>
 				               <field name="check_number" attrs="{'readonly':[('state','!=','draft')]}"/> 	               
 				               <field name="amount" on_change="onchange_amount(amount)" attrs="{'readonly':[('state','!=','draft')]}" />	
 				               <field name="payee_name" attrs="{'readonly':[('state','!=','draft')]}" />               	               	                                                                            	               
@@ -53,10 +53,11 @@
 				           </group>
 				           <group col="2" colspan="2">
 				               <separator colspan="2"></separator> 
-				               <field name="journal_id" on_change="onchange_check_number(journal_id)" attrs="{'readonly':[('state','!=','draft')]}" readonly="1"/>
+				               <field name="journal_id" on_change="onchange_check_number(journal_id)" readonly="1"/>
 				               <field name="current_date" attrs="{'readonly':[('state','!=','draft')]}"/>	
 				               <newline/>
-				               <field name="amount_in_words" nolabel="1" colspan="2"/> 	                                                                                         	               
+				               <field name="amount_in_words" nolabel="1" colspan="2" readonly="1" required="1"/>
+				               <field name="state" invisible="1"/>	                                                                                         	               
 				           </group>     
                          </form>
                     </field>
