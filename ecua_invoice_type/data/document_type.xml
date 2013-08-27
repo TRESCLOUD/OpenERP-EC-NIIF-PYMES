@@ -65,7 +65,7 @@
 		
 		<record id="08" model="account.invoice.document.type">
 		<field name="code">03</field>
-		<field name="name">Liquidación de compra de Bienes o Prestación de servicios</field>
+		<field name="name">Liquidación de compra</field>
 		<field name="use">True</field>
 		<field name="number_format_validation">True</field>
 		<field name="sri_authorization_validation_owner">True</field>
