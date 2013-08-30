@@ -161,7 +161,7 @@
                 <field name="view_type">form</field>
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[('date_next_vacation','&gt;=',(datetime.date.today()-relativedelta(years=4)).strftime('%Y-%m-%d'))]</field>
-                <field name="help">Muestra los empleados que deben tomar vacaciones, incluyendo aquellos que tienen vacaciones acumuladas desde hace 4 años.</field>
+                <field name="help">Show the employee that must take vacations, included they have 4 years of acumalated vacations.</field>
                 <field name="search_view_id" ref="hr_employee_vacation_search_view"/>
             </record>
 

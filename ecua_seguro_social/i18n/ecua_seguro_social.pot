@@ -26,6 +26,11 @@ msgid "Tiempo de trabajo"
 msgstr ""
 
 #. module: ecua_seguro_social
+#: field:hr.employee,partner_id:0
+msgid "unknown"
+msgstr ""
+
+#. module: ecua_seguro_social
 #: field:hr.education.level,title:0
 msgid "Title"
 msgstr ""
@@ -53,7 +58,7 @@ msgstr ""
 
 #. module: ecua_seguro_social
 #: model:ir.actions.act_window,help:ecua_seguro_social.action_hr_employee_vacation_view
-msgid "Muestra los empleados que deben tomar vacaciones, incluyendo aquellos que tienen vacaciones acumuladas desde hace 4 años."
+msgid "Show the employee that must take vacations, included they have 4 years of acumalated vacations."
 msgstr ""
 
 #. module: ecua_seguro_social
@@ -2316,7 +2321,7 @@ msgstr ""
 #. module: ecua_seguro_social
 #: code:addons/ecua_seguro_social/objects/payroll.py:570
 #, python-format
-msgid "You must configure correct Partner for employee '%s' "
+msgid "You must select a Partner for the employee '%s' in Employee View"
 msgstr ""
 
 #. module: ecua_seguro_social
