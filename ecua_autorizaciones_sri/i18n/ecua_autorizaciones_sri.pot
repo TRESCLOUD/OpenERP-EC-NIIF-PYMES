@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2013-08-30 18:37+0000\n"
-"PO-Revision-Date: 2013-08-30 18:37+0000\n"
+"POT-Creation-Date: 2013-08-30 18:36+0000\n"
+"PO-Revision-Date: 2013-08-30 18:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,83 +19,83 @@ msgstr ""
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:81
 #, python-format
 msgid "There is another document type %s with number '%s' for the company %s"
-msgstr "Existe otro documento de tipo %s con número '%s' para la compañia %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,shop_id:0
 #: field:sri.authorization.supplier,agency:0
 #: field:sri.type.document,shop_id:0
 msgid "Agency"
-msgstr "Agencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:159
 #, python-format
 msgid "Sequence Number %s is not between rage of authorization %s and %s"
-msgstr "El número de secuencia %s no se encuentra dentro del rango de autorización %s hasta %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Document"
-msgstr "Documento"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:110
 #: constraint:sri.authorization.supplier:0
 #, python-format
 msgid "Error: Numbers of sequence are not correct"
-msgstr "Error: Números de secuencia no son correctos"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/sale_order.py:76
 #, python-format
 msgid "Your User doesn't have shops assigned to make sales order"
-msgstr "Su usuario no tiene configurada ninguna tienda para poder realizar ordenes de ventas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: sql_constraint:sale.order:0
 msgid "Order Reference must be unique !"
-msgstr "¡La referencia del pedido debe ser única!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard,company_id:0
 #: field:sri.authorization,company_id:0
 msgid "Company"
-msgstr "Compañía"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.users:0
 msgid "Agencies"
-msgstr "Agencias"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_ir_sequence
 msgid "ir.sequence"
-msgstr "ir.secuencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard,auto_printer:0
 #: field:sri.authorization,auto_printer:0
 msgid "Auto Printer?"
-msgstr "Autoimpresor?"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:138
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:140
 #, python-format
 msgid "Programming Error !"
-msgstr "Error de Programación !"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.printer.point,shop_id:0
 msgid "Shop"
-msgstr "Agencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard,number:0
 #: field:sri.authorization,number:0
 msgid "Authorization Number"
-msgstr "Número de autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:44
@@ -104,7 +104,7 @@ msgstr "Número de autorización"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:261
 #, python-format
 msgid "Debit Note"
-msgstr "Nota de Débito"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:177
@@ -114,148 +114,148 @@ msgstr "Nota de Débito"
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:81
 #, python-format
 msgid "Error!"
-msgstr "Error!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.authorization.supplier,first_sequence:0
 msgid "First Secuence"
-msgstr "Primera Secuencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 msgid "Users Asigned"
-msgstr "Usuarios Asignados"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:res.company,shop_ids:0
 #: field:res.users,shop_ids:0
 msgid "Shops"
-msgstr "Tiendas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:177
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:232
 #, python-format
 msgid "There is another document type %s with number '%s' for the partner %s"
-msgstr "Existe otro documento de tipo %s con número '%s' para la empresa/persona %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:43
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:259
 #, python-format
 msgid "Credit_note"
-msgstr "Notas de Crédito"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.ui.menu,name:ecua_autorizaciones_sri.sri_authorization_menu
 #: field:res.company,authotization_ids:0
 msgid "SRI Authorizations"
-msgstr "Autorizaciones del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:41
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:258
 #, python-format
 msgid "Liquidation"
-msgstr "Liquidation"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:107
 #: constraint:sri.authorization.supplier:0
 #, python-format
 msgid "Error: Invalid Number Format, It must be like 001"
-msgstr "Error: Formato de Número Inválido, Este debe ser 001"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.company:0
 msgid "Generated of documents of SRI"
-msgstr "Documentos Generados del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:154
 #, python-format
 msgid "Agency number %s not correct for this authorization, it must be %s"
-msgstr "El número de agencia %s no es correcta para esta autorización, este debe ser %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:131
 #, python-format
 msgid "There is another line with the same type of ducument in authorization"
-msgstr "Existe otra línea con el mismo tipo de documento en la autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,last_secuence:0
 #: field:sri.authorization.supplier,last_sequence:0
 #: field:sri.type.document,last_secuence:0
 msgid "Last Secuence"
-msgstr "Última secuencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_res_partner
 #: field:sri.authorization.supplier,partner_id:0
 msgid "Partner"
-msgstr "Empresa"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.company:0
 msgid "SRI Authorization"
-msgstr "Autorización del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sale_order
 msgid "Sales Order"
-msgstr "Pedido de venta"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:108
 #: constraint:sri.authorization.supplier:0
 #, python-format
 msgid "Error: Invalid Number Format, It must be like 0123456789"
-msgstr "Error: Formato de número inválido, este debe ser 0123456789"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 msgid "If you wish create a new authorization please use the creation wizard locate in Account/Configuration/SRI Configuration/Create SRI Authorization"
-msgstr "Si desea crear una nueva autorización use el asistente en Contabilidad/Configuración/Configuración SRI/Creación de Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr "¡Error! No se pueden crear compañías recursivas."
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.type.document:0
 msgid "Document Types"
-msgstr "Tipos de Documentos"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Printers"
-msgstr "Puntos de impresión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 msgid "Defaults Journals"
-msgstr "Diarios por Defecto"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 #: field:sri.authorization.supplier,type:0
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:140
 #, python-format
 msgid "You must set authorization to verify authorization"
-msgstr "You must set authorization to verify authorization"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/shop.py:58
 #: constraint:sale.shop:0
 #, python-format
 msgid "This field is only for numbers"
-msgstr "Este campo es solo para números"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:111
@@ -266,45 +266,45 @@ msgstr "Este campo es solo para números"
 #: constraint:sri.type.document:0
 #, python-format
 msgid "Error: Padding must be a number between 0 - 9"
-msgstr "Error: Padding must be a number between 0 - 9"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.authorization,creation_date:0
 msgid "Creation Date"
-msgstr "Fecha de Creación"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,automatic:0
 #: field:sri.type.document,automatic:0
 msgid "automatic?"
-msgstr "Automático?"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sri_authorization_supplier
 msgid "sri.authorization.supplier"
-msgstr "Autorización de Proveedor"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,state:0
 msgid "state"
-msgstr "Estado"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_auth_wizard
 msgid "auth.wizard"
-msgstr "Asistente de Autorizaciones"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.authorization.supplier,autoprinter:0
 msgid "Autoprinter?"
-msgstr "Auto Impresor?"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard,expiration_date:0
 #: field:sri.authorization,expiration_date:0
 #: field:sri.authorization.supplier,expiration_date:0
 msgid "Expiration Date"
-msgstr "Fecha de expiración"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,printer_id:0
@@ -312,20 +312,20 @@ msgstr "Fecha de expiración"
 #: field:sri.authorization.supplier,printer_point:0
 #: field:sri.type.document,printer_id:0
 msgid "Printer Point"
-msgstr "Punto de Impresión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:134
 #, python-format
 msgid "Your last sequence must be bigger first sequence"
-msgstr "La última secuencia debe ser mayor que la secuencia inicial"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:118
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:197
 #, python-format
 msgid "You must asign a Liquidation of Purchases Journal for de shop %s"
-msgstr "Usted debe asignar un diario de Liquidación de Compras para la tienda %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:42
@@ -334,17 +334,17 @@ msgstr "Usted debe asignar un diario de Liquidación de Compras para la tienda %
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:259
 #, python-format
 msgid "Credit Note"
-msgstr "Nota de Crédito"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Location"
-msgstr "Ubicación"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Documents Description"
-msgstr "Descripción de Documentos"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:110
@@ -359,80 +359,80 @@ msgstr "Descripción de Documentos"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:207
 #, python-format
 msgid "Error!!"
-msgstr "Error!!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 #: field:sri.authorization,type_document_ids:0
 msgid "Documents Types"
-msgstr "Tipos de Documentos"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sri_printer_point
 msgid "sri.printer.point"
-msgstr "Punto de Emisión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: help:sale.shop,number:0
 #: help:sri.printer.point,number:0
 msgid "This number is assigned by the SRI"
-msgstr "Este número es asignado por el SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 msgid "Print Point"
-msgstr "Punto de Emisión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.type.document,range:0
 msgid "range"
-msgstr "Rango"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:124
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:203
 #, python-format
 msgid "You must asign a Credit Note Sales Journal for shop %s"
-msgstr "Usted debe asignar un diario de Nota de Crédito para la tienda %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,auth_wizard_id:0
 msgid "Installer"
-msgstr "Instalar"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:151
 #, python-format
 msgid "Purchase Liquidation"
-msgstr "Purchase Liquidation"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "if you create a new authorization, you should check that there are not documents in draft state."
-msgstr "Si Usted crea una nueva autorización, Usted debe verificar que no hayan documentos en estado borrador."
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.module.module,shortdesc:ecua_autorizaciones_sri.module_meta_information
 msgid "Ecuadorian SRI Authorization"
-msgstr "Autorizaciones del SRI para Ecuador"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "every number not used from secuence will create a document in state canceled."
-msgstr "Todos los números no usados de la secuencia creará un documento en estado cancelado."
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.actions.act_window,name:ecua_autorizaciones_sri.action_sri_authorization_tree_view
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sri_authorization
 msgid "sri.authorization"
-msgstr "Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 #: field:sale.shop,number:0
 #: field:sri.printer.point,number:0
 msgid "SRI Number"
-msgstr "Número del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:36
@@ -440,7 +440,7 @@ msgstr "Número del SRI"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:253
 #, python-format
 msgid "Delivery note"
-msgstr "Guía de Remisión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.module.module,description:ecua_autorizaciones_sri.module_meta_information
@@ -450,42 +450,38 @@ msgid "\n"
 "    bills for each company and each agency stated,\n"
 "    this is a generic authorization for all documents in Ecuador\n"
 "    "
-msgstr "\n"
-"    SRI es la institución reguladora de las leyes de impuestos en Ecuador, \n"
-"    agencia que emite permisos para la impresión de \n"
-"    documentos para cada compañía y cada agencia,\n"
-"    Esta es una autorización genérica para todos los documentos en Ecuador."
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: constraint:res.users:0
 msgid "The chosen company is not in the allowed companies for this user"
-msgstr "La compañía seleccionada no está en las compañías permitidas para este usuario"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sri_type_document
 msgid "sri.type.document"
-msgstr "Línea de Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:res.users,printer_default_id:0
 msgid "Printer Point Default"
-msgstr "Punto de Emisión por Defecto"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:156
 #, python-format
 msgid "Printer Point Number %s not correct for this authorization, it must be %s"
-msgstr "El punto de emisión número %s no es correcto para la autorización seleccionada, este debe ser %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.type.document,sri_authorization_id:0
 msgid "Authorization"
-msgstr "Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: sql_constraint:res.partner:0
 msgid "The value of CEDULA/RUC must be unique, this value already exists"
-msgstr "El valor de CEDULA/RUC debe ser único, este valor ya existe es sus registros"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:38
@@ -496,105 +492,105 @@ msgstr "El valor de CEDULA/RUC debe ser único, este valor ya existe es sus regi
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:255
 #, python-format
 msgid "Withholding"
-msgstr "Retenciones"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,padding:0
 #: field:sri.authorization.supplier,padding:0
 #: field:sri.type.document,padding:0
 msgid "Padding"
-msgstr "Padding"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:37
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:256
 #, python-format
 msgid "Delivery_note"
-msgstr "Guía de Remisión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_sale_shop
 msgid "Sales Shop"
-msgstr "Tienda ventas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.authorization,state:0
 #: field:sri.type.document,state:0
 msgid "Active"
-msgstr "Activo"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "this wizard permits input a documents' authorization of SRI"
-msgstr "Este asistente permite ingresar una autorización de documentos del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/picking.py:62
 #, python-format
 msgid "Error, no partner !"
-msgstr "Error, No existe Empresa !"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:122
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:201
 #, python-format
 msgid "You must asign a Credit Note Purchases Journal for shop %s"
-msgstr "Usted debe asignar un diario de notas de crédito de compras para la tienda %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sale.shop,purchases_journal_id:0
 msgid "Purchases Journal"
-msgstr "Diario de Compras"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 #: field:auth.wizard,type_document_wizard_ids:0
 #: view:auth.wizard.line:0
 msgid "Document Description"
-msgstr "Descripción del documento"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:152
 #, python-format
 msgid "%s is not between range of this authorization %s and %s"
-msgstr "%s no se encuentra dentro del rango de esta autorización %s hasta %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.ui.menu,name:ecua_autorizaciones_sri.sri_menu
 msgid "SRI"
-msgstr "SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 msgid "SRI Autorization"
-msgstr "Autorización del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sale.shop,sales_journal_id:0
 msgid "Sales Journal"
-msgstr "Diario de Ventas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.actions.act_window,name:ecua_autorizaciones_sri.action_sri_authorization_editable_tree_view
 #: model:ir.ui.menu,name:ecua_autorizaciones_sri.sri_authorization_editable_menu
 msgid "Autorizaciones SRI - Edición"
-msgstr "Autorizaciones SRI - Edición"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 msgid "Documentos Autorizados"
-msgstr "Documentos Autorizados"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.actions.act_window,name:ecua_autorizaciones_sri.action_auth_wizard
 #: model:ir.ui.menu,name:ecua_autorizaciones_sri.menu_auth_wizard
 msgid "Creation Authorization"
-msgstr "Creación de Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:152
@@ -603,34 +599,34 @@ msgstr "Creación de Autorización"
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:159
 #, python-format
 msgid "Authorization Error!"
-msgstr "Authorization Error!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:159
 #, python-format
 msgid "There is another line with the same type of document %s for printer point %s in agency %s"
-msgstr "There is another line with the same type of document %s for printer point %s in agency %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: sql_constraint:res.users:0
 msgid "You can not have two users with the same login !"
-msgstr "¡No puede tener dos usuarios con el mismo identificador de usuario!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.authorization.supplier,number:0
 msgid "Number"
-msgstr "Número"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Approved"
-msgstr "Aprobado"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:149
 #, python-format
 msgid "Delivery Note"
-msgstr "Delivery Note"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:34
@@ -643,93 +639,93 @@ msgstr "Delivery Note"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:251
 #, python-format
 msgid "Invoice"
-msgstr "Facturas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_res_users
 msgid "res.users"
-msgstr "Usuarios"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 msgid "Create Authorization"
-msgstr "Creación de Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/picking.py:63
 #, python-format
 msgid "Please put a partner on the picking list if you want to generate invoice."
-msgstr "Por favor seleccione una empresa en la lista de albaranes, si desea generar la factura."
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.type.document,counter:0
 msgid "counter"
-msgstr "Contador"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.partner:0
 #: field:res.partner,authorization_ids:0
 msgid "Authorizations"
-msgstr "Autorizaciones"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:207
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:218
 #, python-format
 msgid "Error!!!"
-msgstr "Error!!!"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.company:0
 msgid "Generate Automatic"
-msgstr "Generación Automática"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization.supplier:0
 msgid "Authotization Supplier"
-msgstr "Autorización de Proveedor"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 msgid "The edition of this values must be done very carefully, can break the system integrity, please proced with caution."
-msgstr "La edición de estos valores debe hacerse con extrema precausión, puede romper la integridad de sistema, por favor proceda con precaución"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 #: field:sale.shop,printer_point_ids:0
 #: view:sri.printer.point:0
 msgid "Printer Points"
-msgstr "Puntos de Impresión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.model,name:ecua_autorizaciones_sri.model_auth_wizard_line
 msgid "auth.wizard.line"
-msgstr "Linea de Autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,first_secuence:0
 #: field:sri.type.document,first_secuence:0
 msgid "Inicial Secuence"
-msgstr "Secuencia Inicial"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:45
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:260
 #, python-format
 msgid "Debit_note"
-msgstr "Nota de Débito"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sale.shop,user_ids:0
 msgid "Users"
-msgstr "Usuarios"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:138
 #: sql_constraint:sri.authorization:0
 #, python-format
 msgid "The number of authorization must be unique"
-msgstr "The number of authorization must be unique"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:110
@@ -737,12 +733,12 @@ msgstr "The number of authorization must be unique"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:207
 #, python-format
 msgid "You must asign a Sales Journal for de shop %s"
-msgstr "Usted debe asignar un Diario de Ventas para la tienda %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sale.shop,address_id:0
 msgid "Address"
-msgstr "Dirección"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:103
@@ -751,7 +747,7 @@ msgstr "Dirección"
 #: constraint:sri.type.document:0
 #, python-format
 msgid "Sequence number must be a positive number"
-msgstr "El número de secuencia debe ser un número positivo"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization.py:40
@@ -759,19 +755,19 @@ msgstr "El número de secuencia debe ser un número positivo"
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:257
 #, python-format
 msgid "Liquidation of Purchases"
-msgstr "Liquidación de Compras"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization:0
 msgid "SRI Autorizations"
-msgstr "Autorización del SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:220
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:75
 #, python-format
 msgid "There's not valid arguments to validate number of document"
-msgstr "Los argumentos no son válidos para verificar el número de este documento"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,name:0
@@ -779,84 +775,84 @@ msgstr "Los argumentos no son válidos para verificar el número de este documen
 #: field:sri.printer.point,name:0
 #: field:sri.type.document,name:0
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.type.document,expired:0
 msgid "Expired?"
-msgstr "Expirado?"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sale.shop:0
 msgid "Print Points"
-msgstr "Puntos de Emisión"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: model:ir.ui.menu,name:ecua_autorizaciones_sri.sri_configuration
 #: view:sale.shop:0
 msgid "SRI Configuration"
-msgstr "Configuración SRI"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:138
 #, python-format
 msgid "You must set number to verify authorization"
-msgstr "Usted debe asignar el número de autorización"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/authorization_supplier.py:109
 #: constraint:sri.authorization.supplier:0
 #, python-format
 msgid "Error: Dates of authorization are not correct"
-msgstr "Error: Las fechas de autorización no son correctas"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard.line,expired:0
 msgid "expired"
-msgstr "Expirado"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:auth.wizard,start_date:0
 #: field:sri.authorization,start_date:0
 #: field:sri.authorization.supplier,start_date:0
 msgid "Start Date"
-msgstr "Fecha de Inicio"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/objects/document.py:165
 #, python-format
 msgid "Your last sequence must be bigger than first sequence"
-msgstr "Su última secuencia debe ser mayor que la primera"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:sri.type.document,sequence_id:0
 msgid "Sequence"
-msgstr "Secuencia"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: code:addons/ecua_autorizaciones_sri/wizard/auth_wizard.py:128
 #, python-format
 msgid "You must asign a Sales Journal for shop %s"
-msgstr "Usted debe asignar un diario de ventas para la tienda %s"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:sri.authorization.supplier:0
 msgid "Authorization Supplier"
-msgstr "Autorizaciones de Proveedor"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: field:res.company,generate_automatic:0
 msgid "Generate Automatic Document"
-msgstr "Generación Automática de Documentos"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:res.partner:0
 msgid "General"
-msgstr "General"
+msgstr ""
 
 #. module: ecua_autorizaciones_sri
 #: view:auth.wizard:0
 #: view:sri.type.document:0
 msgid "Document Type"
-msgstr "Tipo de Documentos"
+msgstr ""
 
