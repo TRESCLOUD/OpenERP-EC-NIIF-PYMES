@@ -36,15 +36,21 @@
                 "ecua_retenciones_manual",
                 "ecua_facturas_ice_manual",
                 ],
-    "author": "Christopher Ormaza",
-    "website": "http://openerpecuador.org",
+    "author": "TRESCLOUD Cia Ltda",
+    "website": "www.trescloud.com",
     "category": "Account",
     "description": """
-    This module provide :
+    This module install some common caracteristics for ecuadorian account
+    
+    Authors:
+    Christopher Ormaza
+    Patricio Rangles
+    Carlos Yumbillo
     
     """,
     "init_xml": [],
     'update_xml': [
+                   "report/report_data.xml",
                    "data/data.xml",
                    ],
     'demo_xml': [],
