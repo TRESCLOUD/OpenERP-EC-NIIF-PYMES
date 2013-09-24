@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors: Christopher Ormaza                                                                           
+# @authors: Christopher Ormaza, Patricio Rangles                                                                           
 # Copyright (C) 2012  Ecuadorenlinea.net                                 
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
