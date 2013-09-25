@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors: Christopher Ormaza                                                                           
-# Copyright (C) 2012  Ecuadorenlinea.net                                 
+# @authors: Patricio Rangles                                                                           
+# Copyright (C) 2013 www.trescloud.com                                 
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
 #it under the terms of the GNU General Public License as published by   
@@ -26,3 +26,4 @@ import move
 import move_line
 import invoice
 import voucher
+import voucher_line

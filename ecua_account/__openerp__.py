@@ -51,6 +51,7 @@
     "init_xml": [],
     'update_xml': [
                    "report/report_data.xml",
+                   "views/account_move_line.xml",
                    "data/data.xml",
                    ],
     'demo_xml': [],
