@@ -42,6 +42,7 @@
    'depends': ['base','account','account_payment'],
    'init_xml': [],
    'update_xml': [
+       'security/check_wkf_security.xml',
        'security/ir.model.access.csv',        
        'trescloud_cheques_view.xml',
        'workflow/check_wkf.xml',

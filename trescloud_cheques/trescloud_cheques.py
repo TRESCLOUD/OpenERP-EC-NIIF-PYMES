@@ -167,7 +167,8 @@ class check(osv.osv):
             
         osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
         
-        return True
+        return True 
+
     
     _columns = {
         'supplier':fields.many2one('res.partner', 'Partner', change_default=1, required=True ),
@@ -188,6 +189,9 @@ class check(osv.osv):
             ],"State", readonly=True,),
         'new_no': fields.integer('Update Check Number', help= 'Enter new check number here if you wish to update'),
         'ver_p':fields.boolean('Verificacion'),
+        'detail_check_ids': fields.one2many('check.detail.workflow','check_id'),
+        'audit':fields.boolean('Audited'),
+        
     }
     _sql_constraints = [
         ('check_number_uniq', 'unique (check_number)','The check number must be unique !'),
@@ -198,6 +202,7 @@ class check(osv.osv):
         'state': 'draft',
         'check_number':_get_nxt_no,
         'new_no': _get_new_no,
+        'audit': False,
      }
     
     def _check_number_check(self,cr,uid,ids):
@@ -212,14 +217,46 @@ class check(osv.osv):
                     res = False
             return res
     
-    _constraints = [(_check_number_check,_('The number of check is incorrect, it must be of six digits XXXXXX, X is a number.'),['check_number',])]    
+    _constraints = [(_check_number_check,_('The number of check is incorrect, it must be of six digits XXXXXX, X is a number.'),['check_number',])]
+    
+    def create_workflow_detail(self, cr, uid, ids, new_state):
+        
+        current_check = self.browse(cr, uid, ids, context=None)               
+        obj_details = self.pool.get('check.detail.workflow')
+        
+        for check in current_check:
+            
+            if check.state == 'draft' and new_state == 'draft':
+                prev_state = 'created' 
+            else:
+                prev_state = check.state
+                             
+            obj_details.create(cr, uid, {'creation_date': datetime.now(),
+                                         'state_prev': prev_state,
+                                         'state_next': new_state,
+                                         'user_id_from': uid,
+                                         'check_id': check.id
+                                         })                        
+        return True
+    
+    def create(self, cr, uid, values, context=None):
+        
+        check_obj = self.pool.get('check.check')
+        res = super(check,self).create(cr, uid, values, context)
+        
+        ids = check_obj.search(cr, uid, [('id','=',res),])
+        self.create_workflow_detail(cr, uid, ids,'draft')
+        
+        return res    
    
     def action_canceled(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         if not len(ids):
             return False
-        self.write(cr, uid, ids, {'state': 'canceled'})
+        self.create_workflow_detail(cr, uid, ids,'canceled')
+        self.write(cr, uid, ids, {'state': 'canceled'})        
+        
         wf_service = netsvc.LocalService("workflow")
         for i in ids:     
             wf_service.trg_write(uid,'check.check', i, cr)
@@ -230,7 +267,9 @@ class check(osv.osv):
             context = {}
         if not len(ids):
             return False
+        self.create_workflow_detail(cr, uid, ids,'charged')
         self.write(cr, uid, ids, {'state': 'charged'})
+        
         wf_service = netsvc.LocalService("workflow")
         for i in ids:     
             wf_service.trg_write(uid,'check.check', i, cr)
@@ -241,7 +280,9 @@ class check(osv.osv):
             context = {}
         if not len(ids):
             return False
+        self.create_workflow_detail(cr, uid, ids,'lost')        
         self.write(cr, uid, ids, {'state': 'lost'})
+        
         wf_service = netsvc.LocalService("workflow")
         for i in ids:     
             wf_service.trg_write(uid,'check.check', i, cr)
@@ -252,7 +293,9 @@ class check(osv.osv):
             context = {}
         if not len(ids):
             return False
+        self.create_workflow_detail(cr, uid, ids,'rejected')
         self.write(cr, uid, ids, {'state': 'rejected'})
+         
         wf_service = netsvc.LocalService("workflow")
         for i in ids:     
             wf_service.trg_write(uid,'check.check', i, cr)
@@ -261,6 +304,7 @@ class check(osv.osv):
     def action_printed(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
+        self.create_workflow_detail(cr, uid, ids,'printed')
         self.write(cr, uid, ids, {'state': 'printed', 'date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 #        self.write(cr, uid, ids, {})
 #        self.write(cr, uid, ids, { 'state' : 'printed' })
@@ -297,6 +341,8 @@ class check(osv.osv):
     
     def reprint(self, cr, uid, ids, context=None):
 
+        self.create_workflow_detail(cr, uid, ids,'printed')
+        
         return {
              'type': 'ir.actions.report.xml',
              'report_name': 'check_report',    # the 'Service Name' from the report
@@ -304,6 +350,27 @@ class check(osv.osv):
              'model' : 'check.check',    # Report Model
              'res_ids' : ids
              }
-         }    
+         }
+        
+    def audit_check(self, cr, uid, ids, context=None):
+        
+        self.create_workflow_detail(cr, uid, ids,'audited')
+        self.write(cr, uid, ids, {'audit': True})
+
+        return True       
 
 check()
+
+class check_detail_workflow(osv.osv):
+    
+    _name = 'check.detail.workflow'
+    
+    _columns = {
+        'creation_date': fields.datetime('Date',),
+        'state_prev':fields.char('Previous State',size=30,required=False),
+        'state_next':fields.char('Current State',size=30,required=False),
+        'user_id_from':fields.many2one('res.users', 'User'),
+        'check_id':fields.many2one('check.check', 'Check'),
+    }
+    
+check_detail_workflow()

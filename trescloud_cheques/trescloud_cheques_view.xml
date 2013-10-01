@@ -21,10 +21,11 @@
 	               <field name="journal_id" on_change="onchange_check_number(journal_id)" attrs="{'readonly':[('state','!=','draft')]}"/>
 	               <field name="current_date" attrs="{'readonly':[('state','!=','draft')]}" />	
 	               <newline/>
-	               <field name="amount_in_words" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/> 	                                                                                         	               
+	               <field name="amount_in_words" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
+	               <field name="check_id" string="Payment" attrs="{'invisible':[('state','=','draft')]}" groups="trescloud_cheques.check_wkf_rule_audit_user"/> 	                                                                                         	               
 	           </group>     
-               <group col="8" colspan="8">                   
-                   <separator colspan="7"></separator>
+               <group col="9" colspan="9">                   
+                   <separator colspan="8"></separator>
                    <field name="state"/>
                    <button name="check_draft_to_printed" string="Print" type="workflow" states="draft" icon="gtk-print"/>  
                    <button name="reprint" string="Reprint" type="object" states="printed" icon="gtk-print"/>         	  
@@ -32,7 +33,34 @@
 	               <button name="action_rejected" string="Rejected" type="object" states="printed" icon="terp-dolar_ok!"/>
 	               <button name="action_canceled" string="Canceled" states="printed" icon="gtk-cancel" type="object"/> 
 	               <button name="action_lost" string="Lost" type="object" states="printed" icon="terp-gtk-media-pause"/>
-               </group>    
+	               <button name="audit_check" string="Audit Check" type="object" attrs="{'invisible':['|',('audit','!=', False),('state','=','draft')]}" icon="terp-camera_test" 
+	               groups="trescloud_cheques.check_wkf_rule_audit_user" />
+	               <newline/>
+	               <field name="audit" attrs="{'invisible':[('audit','=',False)]}" readonly="1" groups="trescloud_cheques.check_wkf_rule_audit_user" />
+               </group>
+
+               <group col="9" colspan="9" groups="trescloud_cheques.check_wkf_rule_audit_user">
+	               <notebook colspan="4">
+	                   <page string="Workflow Details">
+	                       <field name="detail_check_ids" colspan="4" nolabel="1" readonly="1" >
+	                           <tree string="History" editable="top">
+	                               <field name="creation_date" />
+	                               <field name="state_prev" />
+	                               <field name="state_next" />
+	                               <field name="user_id_from" />                                                             
+	                           </tree>
+			                   <form string="Workflow Details Line">
+							       <group>
+								       <field name="creation_date" />
+			                           <field name="state_prev" />
+			                           <field name="state_next" />
+			                           <field name="user_id_from" /> 
+								   </group>
+						       </form>
+	                       </field>
+	                   </page>
+	               </notebook>
+               </group> 
 	        </form>
 		</field>
 	</record>
