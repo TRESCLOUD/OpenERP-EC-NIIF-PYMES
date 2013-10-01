@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2013-04-25 20:27+0000\n"
-"PO-Revision-Date: 2013-04-25 20:27+0000\n"
+"POT-Creation-Date: 2013-10-01 22:28+0000\n"
+"PO-Revision-Date: 2013-10-01 22:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,24 +16,35 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/account_voucher.py:114
-#, python-format
-msgid "Error while processing 'account.voucher' you can have only one check!"
-msgstr "Error mientras procesa 'account.voucher', puede tener solo un cheque! "
-
-#. module: trescloud_cheques
-#: code:addons/trescloud_cheques/trescloud_cheques.py:158
+#: code:addons/trescloud_cheques/trescloud_cheques.py:166
 #, python-format
 msgid "Cannot delete check(s) that are already printed!"
 msgstr "No se pueden eliminar cheques que ya están impresos!"
 
 #. module: trescloud_cheques
-#: help:check.check,check_number:0
-msgid "check number"
-msgstr "Número de cheque"
+#: code:addons/trescloud_cheques/account_voucher.py:118
+#, python-format
+msgid "Error while processing 'account.voucher'. You can only validate the payment with check in state printed or charged. !"
+msgstr "Error mientras procesa 'account.voucher'. Solo se puede validar un pago con cheques en estado impreso o cobrado. !"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/trescloud_cheques.py:77
+#: model:ir.model,name:trescloud_cheques.model_check_detail_workflow
+msgid "check.detail.workflow"
+msgstr "check.detail.workflow"
+
+#. module: trescloud_cheques
+#: code:addons/trescloud_cheques/account_voucher.py:114
+#, python-format
+msgid "Error while processing 'account.voucher' you can have only one check. !"
+msgstr "Error mientras procesa 'account.voucher', solo puede tener un cheque. !"
+
+#. module: trescloud_cheques
+#: sql_constraint:account.journal:0
+msgid "The name of the journal must be unique per company !"
+msgstr "El nombre del diario debe ser único por companía !"
+
+#. module: trescloud_cheques
+#: code:addons/trescloud_cheques/trescloud_cheques.py:85
 #, python-format
 msgid "Please add \"Check Sequence\" for journal %s.'%str(journal_id.name))\n"
 "                        }\n"
@@ -42,7 +53,13 @@ msgid "Please add \"Check Sequence\" for journal %s.'%str(journal_id.name))\n"
 "        res['check_number']=result[0]\n"
 "        res['new_no']=result[0]\n"
 "        journal_id = self.pool.get('account.journal"
-msgstr ""
+msgstr "Please add \"Check Sequence\" for journal %s.'%str(journal_id.name))\n"
+"                        }\n"
+"            return {'warning':warning}\n"
+"        result=self.get_id(cr, uid, journal_id.check_sequence.id , test='id', context=context)\n"
+"        res['check_number']=result[0]\n"
+"        res['new_no']=result[0]\n"
+"        journal_id = self.pool.get('account.journal"
 
 #. module: trescloud_cheques
 #: view:account.voucher:0
@@ -54,6 +71,13 @@ msgstr "Imprimir"
 #: field:check.check,state:0
 msgid "State"
 msgstr "Estado"
+
+#. module: trescloud_cheques
+#: model:ir.actions.act_window,help:trescloud_cheques.action_view_check
+msgid "With this module you can create and print new checks. You can also track the status of the check (like cancelled, charged, lost or rejected).\n"
+"It is related to vendor payments module and must have a journal configured as a check journal."
+msgstr "Con este módulo se puede crear e imprimir nuevos cheques. También se puede realizar el seguimiento del estado de los mismos (como cancelado, cobrado, perdido o rechazado).\n"
+"Está relacionado con módulo de pagos de proveedores y debe tener un diario configurado como un diario chequera."
 
 #. module: trescloud_cheques
 #: view:check.check:0
@@ -84,7 +108,7 @@ msgstr "Detalle de cheques"
 #. module: trescloud_cheques
 #: model:ir.actions.report.xml,name:trescloud_cheques.voucher_report
 msgid "Comprobante Ingreso-Egreso"
-msgstr ""
+msgstr "Comprobante Ingreso-Egreso"
 
 #. module: trescloud_cheques
 #: field:check.check,check_number:0
@@ -94,7 +118,7 @@ msgstr "Número de cheque"
 #. module: trescloud_cheques
 #: field:check.check,amount_in_words:0
 msgid " "
-msgstr ""
+msgstr " "
 
 #. module: trescloud_cheques
 #: view:account.voucher:0
@@ -132,13 +156,17 @@ msgstr "Rechazado"
 #. module: trescloud_cheques
 #: model:ir.model,name:trescloud_cheques.model_check_check
 msgid "check.check"
-msgstr ""
+msgstr "check.check"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/account_voucher.py:118
-#, python-format
-msgid "Error while processing 'account.voucher' you can only validate check in state printed!"
-msgstr "Error mientras procesa 'account.voucher', solo puedes validarla con un cheque en estado impreso! "
+#: view:check.check:0
+msgid "Workflow Details Line"
+msgstr "Linea de detalles del workflow"
+
+#. module: trescloud_cheques
+#: help:check.check,check_number:0
+msgid "check number"
+msgstr "Número de cheque"
 
 #. module: trescloud_cheques
 #: code:addons/trescloud_cheques/account_voucher.py:113
@@ -146,6 +174,22 @@ msgstr "Error mientras procesa 'account.voucher', solo puedes validarla con un c
 #, python-format
 msgid "Warning"
 msgstr "Advertencia"
+
+#. module: trescloud_cheques
+#: code:addons/trescloud_cheques/trescloud_cheques.py:50
+#, python-format
+msgid "Please add \"Check Sequence\" for journal %s.'%str(journal_id.name)))\n"
+"            res = self.get_id(cr, uid, journal_id.check_sequence.id, test='id', context=context)\n"
+"            return res and res[0]\n"
+"        \n"
+"        if 'active_id' in context:\n"
+"            voucher_id = self.pool.get('account.voucher"
+msgstr "Please add \"Check Sequence\" for journal %s.'%str(journal_id.name)))\n"
+"            res = self.get_id(cr, uid, journal_id.check_sequence.id, test='id', context=context)\n"
+"            return res and res[0]\n"
+"        \n"
+"        if 'active_id' in context:\n"
+"            voucher_id = self.pool.get('account.voucher"
 
 #. module: trescloud_cheques
 #: view:check.check:0
@@ -159,11 +203,9 @@ msgid "Impresion de cheque"
 msgstr "Impresión del cheque"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/account_voucher.py:104
-#: code:addons/trescloud_cheques/trescloud_cheques.py:158
-#, python-format
-msgid "Invalid action !"
-msgstr "Acción invalida !"
+#: field:check.detail.workflow,creation_date:0
+msgid "Date"
+msgstr "Fecha de la acción"
 
 #. module: trescloud_cheques
 #: help:check.check,new_no:0
@@ -172,8 +214,8 @@ msgstr "Introduzca el nuevo número de cheque aquí si desea actualizar"
 
 #. module: trescloud_cheques
 #: view:check.check:0
-msgid "Reprint"
-msgstr "Reimprimir"
+msgid "History"
+msgstr "Historia"
 
 #. module: trescloud_cheques
 #: code:addons/trescloud_cheques/account_voucher.py:104
@@ -182,11 +224,24 @@ msgid "Cannot delete Voucher(s) because there is a associated check. !"
 msgstr "No puede eliminar comprobante(s) porque hay un cheque asociado. !"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/trescloud_cheques.py:49
-#: code:addons/trescloud_cheques/trescloud_cheques.py:76
-#, python-format
-msgid "Warning!"
-msgstr "Advertencia!"
+#: view:check.check:0
+msgid "Audit Check"
+msgstr "Auditar Cheque"
+
+#. module: trescloud_cheques
+#: field:check.detail.workflow,user_id_from:0
+msgid "User"
+msgstr "Usuario"
+
+#. module: trescloud_cheques
+#: view:check.check:0
+msgid "Workflow Details"
+msgstr "Detalles del Workflow"
+
+#. module: trescloud_cheques
+#: view:check.check:0
+msgid "Payment"
+msgstr "Pago"
 
 #. module: trescloud_cheques
 #: view:check.check:0
@@ -206,6 +261,13 @@ msgid "Manage checks"
 msgstr "Gestionar cheques"
 
 #. module: trescloud_cheques
+#: code:addons/trescloud_cheques/account_voucher.py:104
+#: code:addons/trescloud_cheques/trescloud_cheques.py:166
+#, python-format
+msgid "Invalid action !"
+msgstr "Acción invalida !"
+
+#. module: trescloud_cheques
 #: field:check.check,amount:0
 msgid "Amount"
 msgstr "Total"
@@ -214,6 +276,11 @@ msgstr "Total"
 #: field:check.check,ver_p:0
 msgid "Verificacion"
 msgstr "Verificación"
+
+#. module: trescloud_cheques
+#: field:check.detail.workflow,state_prev:0
+msgid "Previous State"
+msgstr "Estado anterior"
 
 #. module: trescloud_cheques
 #: view:account.voucher:0
@@ -226,11 +293,16 @@ msgid "Search Check"
 msgstr "Buscar cheque"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/trescloud_cheques.py:205
+#: code:addons/trescloud_cheques/trescloud_cheques.py:220
 #: constraint:check.check:0
 #, python-format
 msgid "The number of check is incorrect, it must be of six digits XXXXXX, X is a number."
 msgstr "El número de cheque es incorrecto, debe tener 6 digitos XXXXXX, X es un número."
+
+#. module: trescloud_cheques
+#: field:check.check,audit:0
+msgid "Audited"
+msgstr "Auditado"
 
 #. module: trescloud_cheques
 #: view:check.check:0
@@ -239,12 +311,25 @@ msgid "Charged"
 msgstr "Cobrado"
 
 #. module: trescloud_cheques
+#: view:check.check:0
+msgid "Reprint"
+msgstr "Reimprimir"
+
+#. module: trescloud_cheques
+#: code:addons/trescloud_cheques/trescloud_cheques.py:50
+#: code:addons/trescloud_cheques/trescloud_cheques.py:57
+#: code:addons/trescloud_cheques/trescloud_cheques.py:84
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+
+#. module: trescloud_cheques
 #: view:account.voucher:0
 msgid "Checks Lines"
 msgstr "Detalle de cheques"
 
 #. module: trescloud_cheques
-#: code:addons/trescloud_cheques/trescloud_cheques.py:49
+#: code:addons/trescloud_cheques/trescloud_cheques.py:57
 #, python-format
 msgid "Please add \"Check Sequence\" for journal %s.'%str(voucher_id.journal_id.name)))\n"
 "            res = self.get_id(cr, uid, voucher_id.journal_id.check_sequence.id, test='id', context=context)\n"
@@ -261,7 +346,21 @@ msgid "Please add \"Check Sequence\" for journal %s.'%str(voucher_id.journal_id.
 "        res = []\n"
 "        if 'active_id' in context:\n"
 "            voucher_id = self.pool.get('account.voucher"
-msgstr ""
+msgstr "Please add \"Check Sequence\" for journal %s.'%str(voucher_id.journal_id.name)))\n"
+"            res = self.get_id(cr, uid, voucher_id.journal_id.check_sequence.id, test='id', context=context)\n"
+"            return res and res[0]\n"
+"        else:\n"
+"            return False\n"
+"        \n"
+"    def _get_new_no(self, cr, uid, context=None):\n"
+"        \"\"\"\n"
+"        Function to get the next number used to generate sequence\n"
+"        \"\"\"\n"
+"        if context is None:\n"
+"            context = {}\n"
+"        res = []\n"
+"        if 'active_id' in context:\n"
+"            voucher_id = self.pool.get('account.voucher"
 
 #. module: trescloud_cheques
 #: model:ir.model,name:trescloud_cheques.model_account_voucher
@@ -269,9 +368,9 @@ msgid "Accounting Voucher"
 msgstr "Comprobante contable"
 
 #. module: trescloud_cheques
-#: sql_constraint:account.journal:0
-msgid "The name of the journal must be unique per company !"
-msgstr "El nombre del diario debe ser único por companía !"
+#: field:check.detail.workflow,state_next:0
+msgid "Current State"
+msgstr "Estado Actual"
 
 #. module: trescloud_cheques
 #: field:check.check,payee_name:0
@@ -295,14 +394,17 @@ msgid "Current date"
 msgstr "Fecha"
 
 #. module: trescloud_cheques
+#: field:check.check,detail_check_ids:0
+msgid "unknown"
+msgstr "unknown"
+
+#. module: trescloud_cheques
 #: field:check.check,supplier:0
 msgid "Partner"
 msgstr "Cliente"
 
 #. module: trescloud_cheques
-#: model:ir.actions.act_window,help:trescloud_cheques.action_view_check
-msgid "With this module you can create and print new checks. You can also track the status of the check (like cancelled, charged, lost or rejected).\n"
-"It is related to vendor payments module and must have a journal configured as a check journal."
-msgstr "Con este módulo se puede crear e imprimir nuevos cheques. También puede realizar el seguimiento del estado de los cheques (como anulado, cobrado, perdido o rechazado).\n"
-"Está relacionado con el módulo de pagos a proveedores y debe tener un diario configurado como un diario cheques. "
+#: field:check.detail.workflow,check_id:0
+msgid "Check"
+msgstr "Cheque"
 
