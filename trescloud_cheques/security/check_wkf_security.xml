@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="check_wkf_rule_audit_user" model="res.groups">
+      <field name="name">Accounting / User Audit Checks</field>
+    </record>
+  </data>
+</openerp>
