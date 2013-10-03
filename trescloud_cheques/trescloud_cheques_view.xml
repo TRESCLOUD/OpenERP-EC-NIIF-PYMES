@@ -72,12 +72,15 @@
        <field name="arch" type="xml">
            <search string="Search Check">
               <group col="10" colspan="4">
-                   <filter name="draft" icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Checks"/>
-                   <filter name="printed" icon="gtk-print" string="Printed" domain="[('state','=','printed')]" help="Printed Checks"/>
-                   <filter name="charged" icon="terp-dolar" string="Charged" domain="[('state','=','charged')]" help="Charged Checks"/>
-                   <filter name="rejected" icon="terp-dolar_ok!" string="Rejected" domain="[('state','=','rejected')]" help="Reject Checks"/>
-                   <filter name="canceled" icon="gtk-cancel" string="Canceled" domain="[('state','=','canceled')]" help="Canceled Checks"/>
-                   <filter name="lost" icon="terp-gtk-media-pause" string="Lost" domain="[('state','=','lost')]" help="Lost Checks"/>
+                   <filter name="draft" icon="terp-document-new" string="Draft" domain="['|',('state','=','draft')]" help="Draft Checks"/>
+                   <filter name="printed" icon="gtk-print" string="Printed" domain="['|',('state','=','printed')]" help="Printed Checks"/>
+                   <filter name="charged" icon="terp-dolar" string="Charged" domain="['|',('state','=','charged')]" help="Charged Checks"/>
+                   <filter name="rejected" icon="terp-dolar_ok!" string="Rejected" domain="['|',('state','=','rejected')]" help="Reject Checks"/>
+                   <filter name="canceled" icon="gtk-cancel" string="Canceled" domain="['|',('state','=','canceled')]" help="Canceled Checks"/>
+                   <filter name="lost" icon="terp-gtk-media-pause" string="Lost" domain="['|',('state','=','lost')]" help="Lost Checks"/>
+                   <separator orientation="vertical"/>  
+                   <filter name="audited" icon="terp-camera_test" string="Auditado" domain="[('audit','=',True)]" help="Audit Checks"/>
+                   <filter name="unaudited" string="No Auditado" domain="[('audit','=',False)]" help="Unaudit Checks"/>
                    <separator orientation="vertical"/>                            
                    <field name="supplier"/>
                    <field name="check_number"/>
@@ -97,7 +100,8 @@
                 <field name="journal_id"/>
 	            <field name="check_number"/>				
 	            <field name="amount"/>
-	            <field name="state"/>	            
+	            <field name="state"/>
+	            <field name="audit"/>	            
 	        </tree>
 		</field>
 	</record>
