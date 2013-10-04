@@ -39,7 +39,7 @@
 	               <field name="audit" attrs="{'invisible':[('audit','=',False)]}" readonly="1" groups="trescloud_cheques.check_wkf_rule_audit_user" />
                </group>
 
-               <group col="9" colspan="9" groups="trescloud_cheques.check_wkf_rule_audit_user">
+               <group col="9" colspan="9" groups="account_payment.group_account_payment">
 	               <notebook colspan="4">
 	                   <page string="Workflow Details">
 	                       <field name="detail_check_ids" colspan="4" nolabel="1" readonly="1" >
