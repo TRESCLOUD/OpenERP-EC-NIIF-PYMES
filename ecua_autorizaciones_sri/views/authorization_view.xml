@@ -42,9 +42,9 @@
 			<field name="priority">17</field>
 			<field name="arch" type="xml">
 				<form string="SRI Autorization">
-					<label string="La edición de estos valores debe hacerse con extrema precausión, puede romper la integridad de sistema, por favor proceda con precaución" colspan="4"/>
+					<label string="The edition of this values must be done very carefully, can break the system integrity, please proced with caution." colspan="4"/>
 					<newline/>
-					<label string="Si desea crear una nueva autorización use el asistente en Contabilidad/Configuración/Configuración SRI/Creación de Autorización" colspan="4"/>
+					<label string="If you wish create a new authorization please use the creation wizard locate in Account/Configuration/SRI Configuration/Create SRI Authorization" colspan="4"/>
 					<newline/>
 					<field name="company_id" widget="selection" colspan="4" readonly="1" groups="base.group_multi_company"/>
 					<field name="number" readonly="0"/>
@@ -64,7 +64,7 @@
 	                        <field name="expired" readonly="1"/>
 						</tree>
 						<form string="Documentos Autorizados">
-							<label string="La edición de estos valores debe hacerse con extrema precausión, puede romper la integridad de sistema, por favor proceda con precaución" colspan="4"/>
+							<label string="The edition of this values must be done very carefully, can break the system integrity, please proced with caution." colspan="4"/>
 							<newline/>
 	                        <field name="name" readonly="0"/>
 	                        <!-- CASO PARTICULAR REVISAR EN INSTALACION -->
