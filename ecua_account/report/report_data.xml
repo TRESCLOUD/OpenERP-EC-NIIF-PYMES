@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="1">		
+		
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!  REPORTE - APUNTES CONTABLES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+		<record id="journal_items_report" model="ir.actions.report.xml">
+			<field name="name">Apuntes contables </field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">account.move.line</field>
+			<field name="report_name">print_report_journal_items</field>
+			<field name="report_type">aeroo</field>
+	    	<field name="in_format">oo-odt</field>
+			<field name='out_format' eval="ref('report_aeroo_ooo.report_mimetypes_pdf_odt')" />
+			<field name="report_rml">ecua_account/report/journal_items_report.odt</field>
+			<field name="parser_state">default</field>
+			<field name="tml_source">file</field>
+		</record>
+		
+		<record id="ir_values_journal_items_report" model="ir.values">
+			<field name="name">print_report_journal_items</field>
+			<field name="key2">client_print_multi</field>
+			<field eval="1" name="object"/>
+			<field eval="'ir.actions.report.xml,'+str(journal_items_report)" name="value" />
+			<field name="key">action</field>
+			<field name="model">account.move.line</field>
+		</record>
+
+	</data>
+</openerp>

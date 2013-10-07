@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+
+# -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors:TRESCLOUD Cia.Ltda                                                                           
-# Copyright (C) 2012                                  
+# @authors: Patricio Rangles                                                                           
+# Copyright (C) 2013 Trescloud Cia. Ltda.                                 
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
 #it under the terms of the GNU General Public License as published by   
@@ -19,36 +20,13 @@
 #                                                                       
 #You should have received a copy of the GNU General Public License      
 #along with this program.  If not, see http://www.gnu.org/licenses.
-#ice
 ########################################################################
-{
-   "name" : "Módulo de cheques para Ecuador",
-   "author" : "TRESCloud Cia. Ltda.",
-   "maintainer": 'TRESCloud Cia. Ltda.',
-   "website": 'http://www.trescloud.com',
-   'complexity': "easy",
-   "description": """Sistema gestión y control de CHEQUES
-   
-   Este sistema permite la impresión de los cheques y conocer el estado de los mismos.
-     
-   Desarrollador:
-   
-   Andrea García,
-   Carlos Yumbillo
-   
-   """,
-   "category": "Tesoreria",
-   "version" : "1.0",
-   'depends': ['base','account','account_payment'],
-   'init_xml': [],
-   'update_xml': [
-       'security/check_wkf_security.xml',
-       'security/ir.model.access.csv',        
-       'trescloud_cheques_view.xml',
-       'workflow/check_wkf.xml',
-       'account_voucher_view.xml',
-       'account_view.xml',
-       'report/report_data.xml',
-   ],
-   'installable': True,
-}
+
+#from osv import osv
+#from osv import fields
+#import decimal_precision as dp
+#from tools.translate import _
+#
+#class account_voucher(osv.osv):
+#    
+#account_voucher()

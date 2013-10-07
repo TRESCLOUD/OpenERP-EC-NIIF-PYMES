@@ -1,0 +1,24 @@
+<openerp>
+    <data>
+
+		 <record model="ir.ui.view" id="view_purchase_receipt_refund_form_inherit">
+                <field name="name">view.purchase.receipt.refund.form.inherit</field>
+                <field name="model">account.voucher</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+                <field name="arch" type="xml">
+                	<xpath expr="//field[@name='line_dr_ids']" position="replace">
+	                    <field name="line_dr_ids" on_change="onchange_price(line_dr_ids, tax_id, partner_id)" default_get="{'journal_id':journal_id,'partner_id':partner_id,'type':type}" colspan="4" nolabel="1" height="180">
+	                        <tree string="Expense Lines" editable="bottom">
+	                            <field name="account_id" domain="[('type','!=','view')]"/>
+	                            <field name="name"/>
+	                            <field name="amount"/>
+	                            <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+	                        </tree>
+	                    </field>
+                	</xpath>
+                </field>
+         </record>
+            
+    </data>
+</openerp>

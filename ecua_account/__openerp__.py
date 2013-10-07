@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors: Christopher Ormaza                                                                           
+# @authors: Christopher Ormaza, Patricio Rangles                                                                           
 # Copyright (C) 2012  Ecuadorenlinea.net                                 
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
@@ -36,15 +36,22 @@
                 "ecua_retenciones_manual",
                 "ecua_facturas_ice_manual",
                 ],
-    "author": "Christopher Ormaza",
-    "website": "http://openerpecuador.org",
+    "author": "TRESCLOUD Cia Ltda",
+    "website": "www.trescloud.com",
     "category": "Account",
     "description": """
-    This module provide :
+    This module install some common caracteristics for ecuadorian account
+    
+    Authors:
+    Christopher Ormaza
+    Patricio Rangles
+    Carlos Yumbillo
     
     """,
     "init_xml": [],
     'update_xml': [
+                   "report/report_data.xml",
+                   "views/account_move_line.xml",
                    "data/data.xml",
                    ],
     'demo_xml': [],

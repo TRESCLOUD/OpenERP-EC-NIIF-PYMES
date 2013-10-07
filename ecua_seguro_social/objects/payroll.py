@@ -567,7 +567,7 @@ class hr_payslip(osv.osv):
             timenow = slip.date_to
             self._check_date_employee(cr, uid, ids, context)
             if not slip.employee_id.partner_id:
-                raise osv.except_osv(_('Configuration Error!'),_("You must configure correct Partner for employee '%s' ") % (self.pool.get('hr.employee').name_get(cr, uid, [slip.employee_id.id,])[0][1]))
+                raise osv.except_osv(_('Configuration Error!'),_("You must select a Partner for the employee '%s' in Employee View") % (self.pool.get('hr.employee').name_get(cr, uid, [slip.employee_id.id,])[0][1]))
             line_ids = []
             debit_sum = 0.0
             credit_sum = 0.0

@@ -111,11 +111,11 @@ class account_voucher(osv.osv):
         for obj_voucher in self.browse(cr, uid, ids, context=context):
             if len(obj_voucher.check_ids)>1:
                 raise osv.except_osv(_('Warning'),
-                _("Error while processing 'account.voucher' you can have only one check!"))
+                _("Error while processing 'account.voucher' you can have only one check. !"))
             if obj_voucher.check_ids:
-                if obj_voucher.check_ids[0].state!='printed':
-                   raise osv.except_osv(_('Warning'),
-                   _("Error while processing 'account.voucher' you can only validate check in state printed!"))
+                if obj_voucher.check_ids[0].state not in ('printed','charged'):                    
+                    raise osv.except_osv(_('Warning'),
+                    _("Error while processing 'account.voucher'. You can only validate the payment with check in state printed or charged. !"))
                             
         return True 
     

@@ -215,7 +215,8 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
     
     _columns = {
-                'ref':fields.char('CEDULA/RUC', size=13),
+                # Modificado para que sepueda ingresar pasaportes de hasta 32 caracteres
+                'ref':fields.char('CEDULA/RUC', size=32),
                 'type_ref':fields.char('CEDULA/RUC Type', size=64, ),
                 'foreing':fields.boolean('Foreing?'),
                 'code': fields.function(_assign_code, string='Code sri', type='string', store=False, method=True, help='Used to generate the ats',),
