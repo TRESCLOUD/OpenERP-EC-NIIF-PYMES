@@ -166,6 +166,8 @@ class retention_wizard(osv.osv_memory):
         values = {}
         res = []
         doc_obj = self.pool.get('sri.type.document')
+        auto_obj=self.pool.get('sri.authorization')
+        auth_line_ids=0
         user = self.pool.get('res.users').browse(cr, uid, uid)
         for invoice in self.pool.get(context['active_model']).browse(cr , uid, context['active_ids']):
             date_invoice = invoice.date_invoice or time.strftime('%Y-%m-%d')
@@ -193,7 +195,16 @@ class retention_wizard(osv.osv_memory):
                     auth_line_id = doc_obj.search(cr, uid, [('name','=','withholding'), ('printer_id','=',printer_id), ('shop_id','=',shop_id)])
                     if not auth_line_id:
                         raise osv.except_osv(_('Error!'), _('No existe autorización para generar retenciones'))
-                    auth = doc_obj.browse(cr, uid, auth_line_id[0], context) or None
+                    for line in doc_obj.browse(cr,uid,auth_line_id):
+                        date =invoice.date_invoice
+                        if not date:
+                            date=time.strftime("%Y-%m-%d")
+                        if date<line.sri_authorization_id.expiration_date and date>line.sri_authorization_id.start_date:
+                            auth_line_ids=line.id
+                    if auth_line_ids:
+                        auth = doc_obj.browse(cr, uid, auth_line_ids, context) or None
+                    else:
+                        auth = doc_obj.browse(cr, uid, auth_line_id[0], context) or None
                     auth_number = auth.sri_authorization_id.number
                     auth_id = auth.sri_authorization_id.id
                     if ret.number_purchase and ret.authorization_purchase:
