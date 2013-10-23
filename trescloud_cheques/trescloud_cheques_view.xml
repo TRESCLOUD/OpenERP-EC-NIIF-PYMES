@@ -22,24 +22,24 @@
 	               <field name="current_date" attrs="{'readonly':[('state','!=','draft')]}" />	
 	               <newline/>
 	               <field name="amount_in_words" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','draft')]}"/>
-	               <field name="check_id" string="Payment" attrs="{'invisible':[('state','=','draft')]}" groups="trescloud_cheques.check_wkf_rule_audit_user"/> 	                                                                                         	               
+	               <field name="check_id" string="Payment" attrs="{'invisible':[('state','=','draft')]}" groups="trescloud_cheques.check_wkf_rule_normal"/> 	                                                                                         	               
 	           </group>     
                <group col="9" colspan="9">                   
                    <separator colspan="8"></separator>
                    <field name="state"/>
-                   <button name="check_draft_to_printed" string="Print" type="workflow" states="draft" icon="gtk-print"/>  
-                   <button name="reprint" string="Reprint" type="object" states="printed" icon="gtk-print"/>         	  
-				   <button name="action_charged" string="Charged" type="object" states="printed" icon="terp-dolar"/>	               
-	               <button name="action_rejected" string="Rejected" type="object" states="printed" icon="terp-dolar_ok!"/>
-	               <button name="action_canceled" string="Canceled" states="printed" icon="gtk-cancel" type="object"/> 
-	               <button name="action_lost" string="Lost" type="object" states="printed" icon="terp-gtk-media-pause"/>
+                   <button name="check_draft_to_printed" string="Print" type="workflow" states="draft" icon="gtk-print" groups="trescloud_cheques.check_wkf_rule_normal"/>  
+                   <button name="reprint" string="Reprint" type="object" states="printed" icon="gtk-print" groups="trescloud_cheques.check_wkf_rule_normal"/>         	  
+				   <button name="action_charged" string="Charged" type="object" states="printed" icon="terp-dolar" groups="trescloud_cheques.check_wkf_rule_normal"/>	               
+	               <button name="action_rejected" string="Rejected" type="object" states="printed" icon="terp-dolar_ok!" groups="trescloud_cheques.check_wkf_rule_normal"/>
+	               <button name="action_canceled" string="Canceled" states="printed" icon="gtk-cancel" type="object" groups="trescloud_cheques.check_wkf_rule_normal"/> 
+	               <button name="action_lost" string="Lost" type="object" states="printed" icon="terp-gtk-media-pause" groups="trescloud_cheques.check_wkf_rule_normal"/>
 	               <button name="audit_check" string="Audit Check" type="object" attrs="{'invisible':['|',('audit','!=', False),('state','=','draft')]}" icon="terp-camera_test" 
 	               groups="trescloud_cheques.check_wkf_rule_audit_user" />
 	               <newline/>
 	               <field name="audit" attrs="{'invisible':[('audit','=',False)]}" readonly="1" groups="trescloud_cheques.check_wkf_rule_audit_user" />
                </group>
 
-               <group col="9" colspan="9" groups="account_payment.group_account_payment">
+               <group col="9" colspan="9" groups="account_payment.group_account_payment,trescloud_cheques.check_wkf_rule_normal">
 	               <notebook colspan="4">
 	                   <page string="Workflow Details">
 	                       <field name="detail_check_ids" colspan="4" nolabel="1" readonly="1" >
