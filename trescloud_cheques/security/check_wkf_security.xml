@@ -4,5 +4,8 @@
     <record id="check_wkf_rule_audit_user" model="res.groups">
       <field name="name">Accounting / User Audit Checks</field>
     </record>
+    <record id="check_wkf_rule_normal" model="res.groups">
+      <field name="name">Accounting / User Checks Normal</field>
+    </record>
   </data>
 </openerp>
