@@ -523,7 +523,7 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 		</record>
 	</data>
 	
-	<data noupdate="1">
+	<data noupdate="0">
 		<record id="hr_salary_rule_horasextrasregularesparcial" model="hr.salary.rule">
 			<field name="code">HORA_EXTRA_REGULAR_PARCIAL</field>
 			<field eval="25" name="sequence"/>
@@ -541,7 +541,7 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 			<field eval="0" name="account_credit_partner"/>
 			<field name="name">Horas Extras Regulares Parcial</field>
 			<field name="condition_python">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours != 0</field>
-			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours * 1.5 * contract.wage / worked_days.WORK100.number_of_hours</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_REGULAR.number_of_hours * 1.5 * contract.wage / contract.legal_hours</field>
 			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
 			<field eval="0" name="use_partner_account"/>
 			<field eval="0" name="pay_to_other"/>
@@ -549,7 +549,7 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 			<field name="quantity">worked_days.HORA_EXTRA_REGULAR.number_of_hours</field>
 		</record>
 	</data>
-	<data noupdate="1">
+	<data noupdate="0">
 		<record id="hr_salary_rule_horasextrasextraordinariasparcial" model="hr.salary.rule">
 			<field name="code">HORA_EXTRA_EXTRAORDINARIA_PARCIAL</field>
 			<field eval="35" name="sequence"/>
@@ -580,7 +580,7 @@ result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours !=0</field>
 
 #result = rules.NET &gt; categories.NET * 0.10
 result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours != 0</field>
-			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours * 2.0 * contract.wage / worked_days.WORK100.number_of_hours</field>
+			<field name="amount_python_compute">result = worked_days.HORA_EXTRA_EXTRAORDINARIA.number_of_hours * 2.0 * contract.wage / contract.legal_hours</field>
 			<field model="account.account" name="account_debit" search="[('name', '=', u'SUELDOS, SALARIOS Y DEM\xc1S REMUNERACIONES')]"/>
 			<field eval="0" name="use_partner_account"/>
 			<field eval="0" name="pay_to_other"/>
