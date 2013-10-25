@@ -101,6 +101,7 @@ class hr_contract(osv.osv):
                 ('accumulated', 'Acumulado'),
                 ], 'Forma de Pago-Fondos de Reserva', select=True),
         'duration_contract': fields.function(_calculate_duration_contract, method=True, type='float', string='Duración del contrato en dias'),
+        'legal_hours':fields.float('Horas Legales',help='Used for wage calculations such as overtime'),
         }
     
     
@@ -145,6 +146,7 @@ class hr_contract(osv.osv):
         'working_hours':_get_working_hours,
         'journal_id':_get_journal,
         'struct_id':_get_struct,
+        'legal_hours':240,
     }
 
     def _check_dates(self, cr, uid, ids, context=None):

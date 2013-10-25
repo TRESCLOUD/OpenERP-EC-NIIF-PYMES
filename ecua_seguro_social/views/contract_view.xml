@@ -60,6 +60,7 @@
 						<field name="wage" />
 						<field name="type_id" widget="selection" />
 						<field name="method_payment" required="1" />
+						<field name="legal_hours"/>
 					</group>
 					<notebook>
 						<page string="Information">
