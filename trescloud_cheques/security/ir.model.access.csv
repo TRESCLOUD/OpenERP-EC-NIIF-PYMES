@@ -1,5 +1,6 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_check_check","check.check","model_check_check","account_payment.group_account_payment",1,1,1,0
-"full_access_check_check","full.check.check","model_check_check","account.group_account_manager",1,1,1,1
-"full_access_check_detail_workflow","full.check.detail.workflow","model_check_detail_workflow","trescloud_cheques.check_wkf_rule_audit_user",1,1,1,0
-"payment_access_check_detail_workflow","payment.check.detail.workflow","model_check_detail_workflow","account_payment.group_account_payment",1,1,1,0
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_check_check,check.check,model_check_check,account_payment.group_account_payment,1,1,1,0
+full_access_check_check,full.check.check,model_check_check,account.group_account_manager,1,1,1,1
+full_access_check_detail_workflow,full.check.detail.workflow,model_check_detail_workflow,trescloud_cheques.check_wkf_rule_audit_user,1,1,1,0
+payment_access_check_detail_workflow,payment.check.detail.workflow,model_check_detail_workflow,account_payment.group_account_payment,1,1,1,0
+full_access_check_detail_workflow,full.check.detail.workflow,model_check_detail_workflow,trescloud_cheques.check_wkf_rule_normal,,,,
