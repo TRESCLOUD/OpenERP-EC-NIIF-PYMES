@@ -2,7 +2,8 @@
 # -*- encoding: utf-8 -*-
 ########################################################################
 #                                                                       
-# @authors: Andrea Garcia                                                                      
+# @authors: Andrea Garcia
+# @company: TRESCloud Cia Ltda                                                                    
 # Copyright (C) 2012  Ecuadorenlinea.net                                 
 #                                                                       
 #This program is free software: you can redistribute it and/or modify   
@@ -34,7 +35,7 @@
     "website": "",
     "category": "Account",
     "description": """
-    This module provide :
+    This module add more sql constraint for invoice 
     
     """,
     "init_xml": [],
