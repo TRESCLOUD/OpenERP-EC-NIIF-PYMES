@@ -30,7 +30,11 @@
 					<field name="type_document_wizard_ids" nolabel="1" colspan="4" required="1" context="{'company_id':company_id}">
 						<form string="Document Description">
 							<separator string="Location" colspan="4"/>
-							<field name="shop_id" domain="[('company_id','=', parent.company_id)]" on_change="onchange_name(name, shop_id, printer_id, parent.auto_printer)"/>
+							<!-- 
+							NO SE UTILIZO EN ESTA VERSION MULTICOMPANIA 
+							<field name="shop_id" domain="[('company_id','=', parent.company_id)]" on_change="onchange_name(name, shop_id, printer_id, parent.auto_printer)"/> 
+							-->
+							<field name="shop_id" on_change="onchange_name(name, shop_id, printer_id, parent.auto_printer)"/>
 							<field name="printer_id"  domain="[('shop_id.id', '=', shop_id)]" on_change="onchange_name(name, shop_id, printer_id, parent.auto_printer)">
 								<tree string="Printers">
 									<field name="number"/>
