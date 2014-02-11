@@ -7,3 +7,5 @@ Incluye para la versión 6.0:
 - Modulos contables
 - Modulos de recursos humanos
 - Otros modulos relacionados a PYMES
+
+- Probando integración con Jira!!! at Andres
