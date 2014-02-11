@@ -9,3 +9,4 @@ Incluye para la versión 6.0:
 - Otros modulos relacionados a PYMES
 
 - Probando integración con Jira!!! at Andres
+- - Probando integración con Jira!!! at Andres
