@@ -40,7 +40,7 @@ class Parser(report_sxw.rml_parse):
     def _date_format(self, date):
         context = {}
         context.update({'tz': self.pool.get('res.users').browse(self.cr, self.uid, self.uid).context_tz or False})
-        new_date = date_time_zone.offset_format_timestamp(date, "%Y-%m-%d %H:%M:%S", DEFAULT_SERVER_DATETIME_FORMAT, server_to_client=False, context=context)        
+        new_date = date_time_zone.offset_format_timestamp(date, "%Y-%m-%d %H:%M:%S", DEFAULT_SERVER_DATETIME_FORMAT, server_to_client=True, context=context)        
         return new_date
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
