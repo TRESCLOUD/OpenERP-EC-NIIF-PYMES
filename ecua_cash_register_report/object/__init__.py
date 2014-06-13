@@ -21,4 +21,4 @@
 #along with this program.  If not, see http://www.gnu.org/licenses.
 ########################################################################
 import caja_reporte
-import caja_reporte_parser
+#import caja_reporte_parser

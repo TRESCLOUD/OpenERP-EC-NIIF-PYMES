@@ -61,6 +61,9 @@ class caja_reporte(osv.osv_memory):
         value['ordenes_venta_emitidas'] = self._ordenes_venta_emitidas(cr, uid, context = context)
         value['cobros_efec_cheq_consolidado'] = self._cobros_efectivo_cheque_consolidado(cr, uid, context = context)
         
+        #asigno la fecha que se ha modificado
+        value['date_format'] = date
+        
         return {'value': value}
 
     def _Ordenes_venta_sin_facturar(self, cr, uid, context = None):
@@ -388,6 +391,7 @@ class caja_reporte(osv.osv_memory):
 
 
     _columns = {
+        'date_format': fields.char('fecha formato', size=19, required=False),      
         'date': fields.datetime('fecha', required=True),
         'user_id': fields.many2one('res.users', 'Usuario', required=True),
         'shop_id': fields.many2one('sale.shop', 'Tienda', required=True),
@@ -405,6 +409,7 @@ class caja_reporte(osv.osv_memory):
                 }
     
     _defaults = { 
+        'date_format': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'user_id': lambda s, cr, uid, c: uid,
         'ovsf_ids': _Ordenes_venta_sin_facturar,

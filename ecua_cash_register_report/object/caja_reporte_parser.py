@@ -20,28 +20,28 @@
 #
 ##############################################################################
 
-from report import report_sxw
-from datetime import datetime,timedelta
-from tools.translate import _
-from tools import DEFAULT_SERVER_DATETIME_FORMAT
-from trc_mod_python import date_time_zone
-
-class Parser(report_sxw.rml_parse):
-   
-    _name = 'caja.reporte.parser'
-    
-    def __init__(self, cr, uid, name, context):
-        super(Parser, self).__init__(cr, uid, name, context)
-        self.cr = cr
-        self.uid = uid
-        self.localcontext.update({
-                'date_format': self._date_format,
-        })
-
-    def _date_format(self, date):
-        context = {}
-        context.update({'tz': self.pool.get('res.users').browse(self.cr, self.uid, self.uid).context_tz or False})
-        new_date = date_time_zone.offset_format_timestamp(date, "%Y-%m-%d %H:%M:%S", DEFAULT_SERVER_DATETIME_FORMAT, server_to_client=True, context=context)        
-        return new_date
+# from report import report_sxw
+# from datetime import datetime,timedelta
+# from tools.translate import _
+# from tools import DEFAULT_SERVER_DATETIME_FORMAT
+# from trc_mod_python import date_time_zone
+# 
+# class Parser(report_sxw.rml_parse):
+#    
+#     _name = 'caja.reporte.parser'
+#     
+#     def __init__(self, cr, uid, name, context):
+#         super(Parser, self).__init__(cr, uid, name, context)
+#         self.cr = cr
+#         self.uid = uid
+#         self.localcontext.update({
+#                 'date_format': self._date_format,
+#         })
+# 
+#     def _date_format(self, date):
+#         context = {}
+#         context.update({'tz': self.pool.get('res.users').browse(self.cr, self.uid, self.uid).context_tz or False})
+#         new_date = date_time_zone.offset_format_timestamp(date, "%Y-%m-%d %H:%M:%S", DEFAULT_SERVER_DATETIME_FORMAT, server_to_client=True, context=context)        
+#         return new_date
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
