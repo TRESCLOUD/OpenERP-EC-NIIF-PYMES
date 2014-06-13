@@ -30,12 +30,13 @@ class Parser(report_sxw.rml_parse):
    
     _name = 'caja.reporte.parser'
     
-    def __init__(self, cr, uid, name, context=None):
-        super(Parser, self).__init__(cr, uid, name, context=context)
+    def __init__(self, cr, uid, name, context):
+        super(Parser, self).__init__(cr, uid, name, context)
+        self.cr = cr
+        self.uid = uid
         self.localcontext.update({
                 'date_format': self._date_format,
         })
-        self.context = context
 
     def _date_format(self, date):
         context = {}
