@@ -20,16 +20,21 @@
 
 import time
 from datetime import date
-#from datetime import datetime
-#from dateutil.relativedelta import relativedelta
-
-#import pooler
-#import tools
 from osv import fields,osv
+from tools import DEFAULT_SERVER_DATETIME_FORMAT
+from trc_mod_python import date_time_zone
 
 class caja_reporte(osv.osv_memory):
     
     _name = 'caja.reporte'
+
+    def _date_format(self, cr, uid, context = None, date=False):
+        context = {}
+        context.update({'tz': self.pool.get('res.users').browse(cr, uid, uid).context_tz or False})
+        if not date:
+            date = time.strftime('%Y-%m-%d %H:%M:%S')
+        new_date = date_time_zone.offset_format_timestamp(date, "%Y-%m-%d %H:%M:%S", DEFAULT_SERVER_DATETIME_FORMAT, server_to_client=True, context=context)        
+        return new_date
 
     def is_today(self, date_compare, reference):
         """
@@ -62,7 +67,7 @@ class caja_reporte(osv.osv_memory):
         value['cobros_efec_cheq_consolidado'] = self._cobros_efectivo_cheque_consolidado(cr, uid, context = context)
         
         #asigno la fecha que se ha modificado
-        value['date_format'] = date
+        value['date_format'] = self._date_format(cr, uid, context=context, date=date)
         
         return {'value': value}
 
@@ -409,7 +414,7 @@ class caja_reporte(osv.osv_memory):
                 }
     
     _defaults = { 
-        'date_format': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'date_format': _date_format,
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'user_id': lambda s, cr, uid, c: uid,
         'ovsf_ids': _Ordenes_venta_sin_facturar,
