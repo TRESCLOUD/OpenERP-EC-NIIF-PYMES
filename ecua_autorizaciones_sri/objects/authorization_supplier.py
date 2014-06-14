@@ -174,7 +174,12 @@ class authorization_supplier(osv.osv):
                     if id_obj != id_model:
                         list_ids_exist.append(id_obj)
             if len(list_ids_exist) > 0 and partner:
-                raise osv.except_osv(_('Error!'), _("There is another document type %s with number '%s' for the partner %s") % (type, number,partner.name))
+                # Bug 1 en un millon, cuando coincide el cliente/proveedor 
+                # con una retencion en compra y venta del mismo numero
+                if obj:
+                    retencion = obj.browse(cr, uid, list_ids_exist[0])
+                    if retencion.authorization_sale:
+                        raise osv.except_osv(_('Error!'), _("There is another document type %s with number '%s' for the partner %s") % (type, number,partner.name))
         return True
     
     def create(self, cr, uid, values, context=None):
