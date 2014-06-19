@@ -448,7 +448,7 @@ class caja_reporte(osv.osv_memory):
         
         # create the data for the report, only when the system print the report
         # use the ids to instance this object and complete the info for the search
-        
+        self.write(cr, uid, ids, {'date_format':context['date_format']})
         
         return {
             'type': 'ir.actions.report.xml',

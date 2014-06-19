@@ -9,6 +9,8 @@
 	         <field name="arch" type="xml">
 	             <form string="Reporte de Caja">
 	             	<group col="6" colspan="4">
+		                <field name="date_format" readonly="1"
+		                invisible="1" />
 		                <field name="date" readonly="0" 
 		                on_change="onchange_date_user_id(date, user_id)"
 		                groups="account.group_account_user"/>
@@ -18,7 +20,8 @@
 				 	</group>
 				 	<newline/>
 	             	<group col="6" colspan="4">
-						<button name="imprimir" string="Imprimir Reporte de Caja" type="object"/>
+						<button name="imprimir" string="Imprimir Reporte de Caja" type="object"
+						context="{'date_format':date_format}"/>
 			 		</group>
 				 	<newline/>
                  	<notebook colspan="4">
